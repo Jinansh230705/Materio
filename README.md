@@ -1,2 +1,2 @@
-# index
+# Landing
 Default Landing Page for my static website Hosted on Github Pages
