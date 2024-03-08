@@ -1,64 +1,225 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>Materio</title>
     <style>
         body {
+            font-family: 'Apex New';
+    src: url('fonts/ApexNew-Medium.woff2');
             margin: 0;
             padding: 0;
-            background: #ecf0f1; /* Replace with your desired color */
-            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f4;
         }
 
-        .container {
+        header {
+            background-color: #333;
+            color: #fff;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1em;
         }
 
-        h1 {
-            color: #2c3e50;
+        header h1 {
+            margin: 0;
         }
 
-        a {
-            color: #3498db;
+        nav {
+            display: flex;
+        }
+
+        nav a {
             text-decoration: none;
-            font-weight: bold;
+            color: #fff;
+            margin: 0 10px;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 1em;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #555;
+        }
+
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Pages</h1>
-        <a href="https://jinansh230705.github.io/DOCS-S1/">CSE-All-Subjects-Materials</a>
-    </div>
 
-    <script src="https://giscus.app/client.js"
-        data-repo="Jinansh230705/jinansh230705.github.io"
-        data-repo-id="R_kgDOK_VkLg"
-        data-category="General"
-        data-category-id="DIC_kwDOK_VkLs4Cdl9E"
-        data-mapping="url"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="top"
-        data-theme="preferred_color_scheme"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-</script>
+<body>
+    <header>
+        <h1>Materio</h1>
+        <nav>
+            <a href="#" id="resourcesTab" onclick="changeTab('resources')">Resources</a>
+            <a href="chat.html" id="chatTab">Chat</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2>Welcome to Materio</h2>
+        <p>
+            Materio is a platform for learning and sharing knowledge. It's a place where you can find resources and chat with
+            other people about topics that interest you.
+        </p>
+    </section>
+
+    <form id="resourceForm">
+        <select id="semesterSelect" onchange="populateSubjects()">
+            <option value="1">1st Semester</option>
+            <option value="2">2nd Semester</option>
+        </select>
+        <select id="subjectSelect" onchange="populateChapters()">
+        </select>
+        <select id="chapterSelect">
+        </select>
+        <button type="button" onclick="displayContent()">Submit</button>
+    </form>
+
+    <div id="contentDisplay"></div>
+   
+    <script>
+        // JavaScript for tab switching
+        function changeTab(tab) {
+            const resourcesTab = document.getElementById('resourcesTab');
+            const chatTab = document.getElementById('chatTab');
+            const welcomeSection = document.getElementById('welcomeSection');
+            const resourceForm = document.getElementById('resourceForm');
+            const contentDisplay = document.getElementById('contentDisplay');
+            const giscus = document.getElementById('giscus');
+
+            if (tab === 'resources') {
+                resourcesTab.classList.add('active');
+                chatTab.classList.remove('active');
+                welcomeSection.style.display = 'block';
+                resourceForm.style.display = 'block';
+                contentDisplay.style.display = 'block';
+                giscus.style.visibility = 'hidden';
+                giscus.style.height = '0';
+            } else if (tab === 'chat') {
+                resourcesTab.classList.remove('active');
+                chatTab.classList.add('active');
+                welcomeSection.style.display = 'none';
+                resourceForm.style.display = 'none';
+                contentDisplay.style.display = 'none';
+                giscus.style.visibility = 'visible';
+                giscus.style.height = 'auto';
+            }
+        }
+
+        
+        window.onload = function() {
+            populateSubjects();
+            changeTab('resources'); // Hide the Giscus comment section when the page loads
+        }
+
+
+        // JavaScript for form handling
+        const subjects = {
+            '1': {
+                'oss': ['intro', 'case study', 'principles'],
+                'maths-1': ['fode', 'matrices', 'multivariable'],
+                'ctsd': ['pointers', 'loops', 'arrays', 'strings'],
+                'eee': ['semiconductors', 'sensors', 'diode']
+            },
+            '2': {
+                'CTSD-2': ['DMA', 'Preprocessor Directives', 'Enumerators, Structures, Unions', 'Searching and Sorting', 'Data Structures: List-Linear List'],
+                'Maths-2': ['HODE', 'Power Series', 'Laplace Transform', 'Fourier Integral', 'Vector Calculus', 'Multivariable Calculus (Integration)'],
+                'E-Physics': ['Modern Physics', 'Band Theory and Semiconductors', 'Materials', 'Laser and Fibre optics', 'Devices'],
+                'GCF': ['Cloud Concepts', 'Azure Services', 'Security, Privacy, Compliance, and Trust', 'Azure Pricing and Support', 'Azure SLA and Service Lifecycles'],
+                'DT': ['Overview of Design Thinking', 'Defining Needs, Ideation for Solutions,Prototyping', 'Testing the solution,Problem Solving Mindset', 'Human Centered Design, Design for the Enviroment', 'Design Thinking and Innovation Management Culture'],
+                'ICT': ['Lab'],
+                'ACTW': ['Developing Effective Listening Skills', 'Error Analysis', 'Delivering Different Types of Speeches', 'Professional Presentations', 'Essay writting', 'Reading Comprehension', 'Project Proposal', 'Misplaced Modifiers', 'Movie Rweviw', 'Narrative Writting', 'Writting Reports', 'Critical Thinking', 'Activity Session (Presentation)'],
+
+            }
+            
+        };
+
+        function populateSubjects() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const semester = semesterSelect.value;
+            const subjectList = subjects[semester];
+            subjectSelect.innerHTML = '';
+            for (let subject in subjectList) {
+                let option = document.createElement('option');
+                option.value = subject;
+                option.text = subject;
+                subjectSelect.appendChild(option);
+            }
+            populateChapters();
+        }
+
+        function populateChapters() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const chapterSelect = document.getElementById('chapterSelect');
+            const semester = semesterSelect.value;
+            const subject = subjectSelect.value;
+            const chapterList = subjects[semester][subject];
+            chapterSelect.innerHTML = '';
+            for (let chapter of chapterList) {
+                let option = document.createElement('option');
+                option.value = chapter;
+                option.text = chapter;
+                chapterSelect.appendChild(option);
+            }
+        }
+
+        function displayContent() {
+    const semesterSelect = document.getElementById('semesterSelect');
+    const subjectSelect = document.getElementById('subjectSelect');
+    const chapterSelect = document.getElementById('chapterSelect');
+    const semester = semesterSelect.value;
+    const subject = subjectSelect.value;
+    const chapter = chapterSelect.value;
+
+    // Get the URL of the PDF file based on the selected semester, subject, and chapter
+    // This depends on how you store and access the PDF files
+    const pdfUrl = getPdfUrl(semester, subject, chapter);
+
+    const contentDisplay = document.getElementById('contentDisplay');
+
+    // Create an object element
+    const objectElement = document.createElement('object');
+    objectElement.data = pdfUrl;
+    objectElement.type = 'application/pdf';
+    objectElement.width = '100%';
+    objectElement.height = '600px';
+
+    // Append the object element to the content display div
+    contentDisplay.innerHTML = '';
+    contentDisplay.appendChild(objectElement);
+}
+
+function getPdfUrl(semester, subject, chapter) {
+    // This function should return the URL of the PDF file based on the selected semester, subject, and chapter
+    // The implementation of this function depends on how you store and access the PDF files
+    // For the sake of this example, let's assume that the PDF files are stored in a 'pdfs' folder in the same directory as this HTML file
+    return `pdfs/${semester}/${subject}/${chapter}.pdf`;
+}
+        window.onload = function() {
+            populateSubjects();
+        }
+    </script>
+
+
 </body>
-</html>
