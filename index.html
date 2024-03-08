@@ -61,6 +61,43 @@
             line-height: 1.6;
             color: #555;
         }
+        
+        #resourceForm select, #resourceForm button {
+    flex-basis: 30%;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Apex New', sans-serif;
+}
+#resourceForm button {
+    background-color: #333;
+    color: #ffffff;
+    cursor: pointer;
+}
+#resourceForm button:hover {
+    background-color: #444;
+}
+.navbar, .footer {
+            background-color: #333;
+            color: #ffffff;
+            padding: 10px;
+        }
+        .navbar a, .footer a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+        }
+        .footer {
+            margin-top: 200px;
+            text-align: center;
+        }
+        .footer img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
 
     </style>
 </head>
@@ -221,5 +258,9 @@ function getPdfUrl(semester, subject, chapter) {
         }
     </script>
 
+<div class="footer">
+    Project hosted on <a href="https://github.com/Jinansh230705"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub logo"></a>
+</div>
 
 </body>
+</html>
