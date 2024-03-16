@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Materio</title>
     <style>
-        body {
+       body {
             font-family: 'Apex New','Segoe UI';
     src: url('fonts/ApexNew-Medium.woff2');
             margin: 0;
@@ -16,8 +16,9 @@
         }
 
         header {
-            background-color: #333;
-            color: #fff;
+            
+            background: linear-gradient(to right, rgba(200, 109, 109, 0.65), rgba(255, 238, 142, 0.65), rgba(109, 181, 200, 0.65));
+            color: #000000;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -45,14 +46,35 @@
             background-color: #555;
         }
 
+       .content {
+    padding: 20px; /* Adjust this value as needed */
+    margin-left: 135px;
+}
+
         section {
-            max-width: 800px;
-            margin: 2em auto;
+            max-width: 1000px;
+            margin: 1em auto;
             padding: 1em;
-            background-color: #fff;
+            background-color:rgba(228, 220, 174, 0.5);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+            border-radius: 10px;
         }
+         
+        .viewer { 
+            height: 600px;
+        }
+
+        .rounded-rectangle {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #FFE1CF;
+    border-radius: 15px;
+}
+
+.right-align {
+    float: right;
+    width: 33%;
+}
 
         h2 {
             color: #333;
@@ -65,14 +87,15 @@
         
         #resourceForm select, #resourceForm button {
     flex-basis: 30%;
-    padding: 15px;
-    font-size: 18px;
+    padding: 13px;
+    font-size: 15px;
     border: none;
     border-radius: 10px;
     font-family: 'Apex New', sans-serif;
+    background-color: rgba(255, 238, 142, 0.65);
 }
 #resourceForm button {
-    background-color: #333;
+    background-color: #FF8B49;
     color: #ffffff;
     cursor: pointer;
 }
@@ -80,8 +103,9 @@
     background-color: #444;
 }
 .navbar, .footer {
-            background-color: #333;
-            color: #ffffff;
+   
+            background: linear-gradient(to right, rgba(200, 109, 109, 0.65), rgba(255, 238, 142, 0.65), rgba(109, 181, 200, 0.65));
+            color: #000000;
             padding: 10px;
         }
         .navbar a, .footer a {
@@ -90,8 +114,9 @@
             padding: 10px;
         }
         .footer {
-            margin-top: 200px;
+            margin-top: 100px;
             text-align: center;
+            height: 80px;
         }
         .footer img {
             width: 20px;
@@ -113,28 +138,40 @@
         </nav>
     </header>
 
+   
+    <div class="content">
+        <h1>Welcome to Materio</h1>
+    </div>
+
     <section>
-        <h2>Welcome to Materio</h2>
+        <img src="deco/bag.png" alt="Bag" class="right-align">
+        <div class="rounded-rectangle">
+            Resources
+        </div>
         <p>
             Materio is a platform for learning and sharing knowledge. It's a place where you can find resources and chat with
             other people about topics that interest you.
         </p>
+        <form id="resourceForm">
+            <select id="semesterSelect" onchange="populateSubjects()">
+                <option value="1">1st Semester</option>
+                <option value="2" selected>2nd Semester</option>
+            </select>
+            <select id="subjectSelect" onchange="populateChapters()">
+            </select>
+            <select id="chapterSelect">
+            </select>
+            <button type="button" onclick="displayContent()">Submit</button>
+        </form>
     </section>
 
-    <form id="resourceForm">
-        <select id="semesterSelect" onchange="populateSubjects()">
-            <option value="1">1st Semester</option>
-            <option value="2" selected>2nd Semester</option>
-        </select>
-        <select id="subjectSelect" onchange="populateChapters()">
-        </select>
-        <select id="chapterSelect">
-        </select>
-        <button type="button" onclick="displayContent()">Submit</button>
-    </form>
-
-    <div id="contentDisplay"></div>
-   
+  
+    <section>
+        <div class="viewer">
+        <div id="contentDisplay"></div>
+        </div>
+    </section>
+    
     <script>
         // JavaScript for tab switching
         function changeTab(tab) {
@@ -262,7 +299,8 @@ function getPdfUrl(semester, subject, chapter) {
     </script>
 
 <div class="footer">
-    Project hosted on <a href="https://github.com/Jinansh230705"><img src="fonts/github-mark-white.svg" alt="GitHub logo"></a>
+    Project hosted on <a href="https://github.com/Jinansh230705"><img src="fonts/github-mark.svg" alt="GitHub logo"></a>
+    <p>&copy; Jinansh230705</p>
 </div>
 
 </body>
