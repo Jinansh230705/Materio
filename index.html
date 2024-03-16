@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -100,6 +101,7 @@
 
 
     </style>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
 </head>
 
 <body>
@@ -235,23 +237,24 @@
 
     const contentDisplay = document.getElementById('contentDisplay');
 
-    // Create an object element
-    const objectElement = document.createElement('object');
-    objectElement.data = pdfUrl;
-    objectElement.type = 'application/pdf';
-    objectElement.width = '100%';
-    objectElement.height = '600px';
+   // Create an Adobe DC View instance
+var adobeDCView = new AdobeDC.View({clientId: "<721da10e38e74fe48bdc681a89306858>", divId: "contentDisplay"});
 
-    // Append the object element to the content display div
-    contentDisplay.innerHTML = '';
-    contentDisplay.appendChild(objectElement);
-}
+// Configure the view
+var previewFilePromise = adobeDCView.previewFile({
+    content: {location: {url: pdfUrl}},
+    metaData: {fileName: pdfUrl.split("/").slice(-1)[0]}
+}, {embedMode: "SIZED_CONTAINER"});
+
+  
 
 function getPdfUrl(semester, subject, chapter) {
-    // This function should return the URL of the PDF file based on the selected semester, subject, and chapter
-    // The implementation of this function depends on how you store and access the PDF files
-    // For the sake of this example, let's assume that the PDF files are stored in a 'pdfs' folder in the same directory as this HTML file
-    return `pdfs/${semester}/${subject}/${chapter}.pdf`;
+     // This function should return the URL of the PDF file based on the selected semester, subject, and chapter
+     // The implementation of this function depends on how you store and access the PDF files
+     // For the sake of this example, let's assume that the PDF files are stored in a 'pdfs' folder in the same directory as this HTML file
+     var pdfUrl = `pdfs/${semester}/${subject}/${chapter}.pdf`;
+     return pdfUrl;
+        }
 }
         window.onload = function() {
             populateSubjects();
