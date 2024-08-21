@@ -132,7 +132,7 @@
                 // This function should return the URL of the PDF file based on the selected semester, subject, and chapter
                 // The implementation of this function depends on how you store and access the PDF files
                 // For the sake of this example, let's assume that the PDF files are stored in a 'pdfs' folder in the same directory as this HTML file
-                var pdfUrl = `pdfs/${semester}/${subject}/${chapter}.pdf`;
+                var pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${chapter}.pdf`;
                 return pdfUrl;
             }
         }
