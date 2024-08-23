@@ -1,4 +1,4 @@
-![Materio - logo](deco/1000165056.png)
+![Materio - logo](deco/temp.png)
 # Materio
 Materio is an All-in-One Place for all your study needs 
 - You can Access all the Materials of all Semester
