@@ -1,4 +1,4 @@
-![materio_white](https://github.com/user-attachments/assets/47e66b8c-d70b-46d0-9404-8862e4782a24)
+![Educational Resources_20240927_204427_0000](https://github.com/user-attachments/assets/13c92115-8d69-401b-bd92-60e9d61f840c)
 
 Materio is an All-in-One Place for all your study needs 
 - You can Access all the Materials of all Semester
