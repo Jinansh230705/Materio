@@ -62,7 +62,7 @@
             },
             '3': {
                 'Object Oriented Programming with Java': ['Design Introduction', 'Data types,variable,operators', 'Control Statements', 'Arrays', 'Object Oriented Programming', 'Inheritance', 'Strings, Packages and interfaces', 'Exception Handling', 'Multi Threading', 'Collections Framework'],
-                'Design of Data Structures': ['Introduction', 'Stacks, Recursion and Queue', 'Linked Lists', 'Searching and Sorting', 'Trees', 'Red Black Trees and AVL Trees', 'Hashing', 'Graphs', 'DSA USing C - 2nd Edition'],
+                'Design of Data Structures': ['Introduction', 'Stacks, Recursion and Queue', 'Linked Lists', 'Searching and Sorting', 'Trees', 'Red Black Trees and AVL Trees', 'Hashing', 'Graphs', 'DSA Using C - 2nd Edition'],
                 'Database Management Systems': ['Introduction', 'SQL', 'Data Models', 'Relational Data Model', 'Relational Database Design', 'Transaction', 'Query Processing', 'Security', 'PL/SQL Concepts'],
                 'Discrete Mathematics': ['Sets, Relation and Function', ' Principles of Mathematical Induction', 'Propositional Logic', 'Algebraic Structures and Morphism', 'Graphs and Trees'],
                 'Digital Electronics': ['Fundamentals of Digital Systems and logicfamilies', 'Minimization Techniques', 'Combinational Digital Circuits', 'SEQUENTIAL CIRCUITS', 'A/D and D/A Converters', 'Semiconductor Memories And Programmable Logic Devices'],
