@@ -61,6 +61,15 @@ section {
     border-radius: 10px;
 }
 
+notification {
+    max-width: 1000px;
+    margin: 1em auto;
+    padding: 1em;
+    background-color: rgba(174, 220, 228, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
 setting-dialog {
     display: none;
     position: fixed;
