@@ -68,6 +68,15 @@
                 'Digital Electronics': ['Fundamentals of Digital Systems and logicfamilies', 'Minimization Techniques', 'Combinational Digital Circuits', 'SEQUENTIAL CIRCUITS', 'A/D and D/A Converters', 'Semiconductor Memories And Programmable Logic Devices'],
                 'Professional Communication Skills': [],
 
+            },
+            '4': {
+                'Operating System':['Syllabus', 'Syllabus-lab', 'Introduction', 'Processes, Thread & Process Scheduling', 'Inter-Process Communictaion','Deadlocks', 'Memory Management', 'Virtual Memory', 'IO Systems', 'IO Systems, File & Disk Management'],
+                'Computer Organization and Microprocessor':['Syllabus', 'Syllabus-Lab', 'Introduction to Microprocessor 8085', 'Microprocessor Architecture and Interfacing', 'Programming Methods with Instructions', 'Additional Programming Techniques', '8085 Interrupts', 'Computer Organization - Register Transfer and Basic Computer Design Register Transfer','Computer Organization - Assembler and Memory Organization'],
+                'Computer Network':['Syllabus', 'Syllabus-Lab', 'Data Communication Components', 'Data Link Layer and Medium Acess Sub Layer', 'Network Layer', 'Transport Layer','Application Layer'],
+                'Programming in Python with Full Stack':['Syllabus','Syllabus-lab', 'Introduction to Python Programmning', 'Functions', 'Modules and Packages', 'Flask Framework', 'Django Framework', 'RESTful APIs'],
+                'Probability, Statistics and Numerical Methods':['Syllabus', 'Correlation, Regression and Curve fitting', 'Probability and Probabiltiy Distributions', 'Testing of Hypothesis', 'Finite Differences and Interpolation', 'Numerical Integration'],
+                'Professional Grooming and Personality Development':['Syllabus', 'Slef Development and Assesment', 'Corporate Etiquette', 'Public Speaking', 'Reading Skills Activity & Reading Comprehension', 'Listening Skills- Inquiry Based Listening Questions'],
+                'Competitive Coding':['Syllabus'],
             }
 
         };
