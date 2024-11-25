@@ -1,6 +1,3 @@
- // Notifications logic
-      // Array of notifications with date and time manually added
-     // Array of notifications with support for multiple links
      const notifications = [
         { 
                title: "DBMS Exam", 
