@@ -61,13 +61,35 @@ section {
     border-radius: 10px;
 }
 
-notification {
-    max-width: 1000px;
-    margin: 1em auto;
-    padding: 1em;
-    background-color: rgba(174, 220, 228, 0.5);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+@media (max-width: 768px) {
+    #resourceForm select {
+    width: 100%;
+}
+    .content {
+        padding: 10px;
+        margin-left: 0px;
+        /* text-align: center; */
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    section {
+        margin: 1em auto;
+        padding: 1em;
+        max-width: 85%;
+        border-radius: 10px;
+        box-shadow: none;
+    }
+
+    setting-dialog {
+        padding: 0px;
+        width: 120%;
+        position: absolute;
+
+        
+    }
 }
 
 setting-dialog {
@@ -87,6 +109,11 @@ setting-dialog {
     border-radius: 10px;
     font-family: 'Open Sauce One Regular', sans-serif;
     position: relative;
+}
+
+notification-dialog {
+    background-color: rgba(228, 220, 174);
+    border-radius: 10px;
 }
 
 .viewer {
@@ -123,6 +150,12 @@ p {
     border-radius: 10px;
     font-family: 'Apex New', sans-serif;
     background-color: rgba(255, 238, 142, 0.65);
+}
+
+#resourceForm select option {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #resourceForm button {
@@ -162,12 +195,105 @@ p {
     vertical-align: middle;
 }
 
+.icons {
+    display: flex;
+    align-items: center;
+    color: rgb(100, 100, 100);
+}
+
+.icons i {
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.dialog {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.dialog-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    color:#000000;
+}
+
+.close {
+    color: #FF8B49;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #ff3700;
+    text-decoration: none;
+    cursor: pointer;
+}
+/* Notification board styles */
+.notification-board {
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse; /* To show latest on top */
+    margin-top: 20px;
+    color: #000000;
+}
+
+.notification {
+    background-color: rgb(255, 247, 205);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    color:#000000;
+    border-left: 5px solid #BB5031;
+}
+
+.notification h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #000000;
+}
+
+.notification p {
+    margin: 5px 0 0;
+    color: #000000;
+    font-size: 0.9rem;
+}
+.notification .date-time {
+    font-size: 0.8rem;
+    color: #434343;
+    margin-top: 5px;
+}
+
+.notification-item {
+color: black;
+/* Other styles for the notification item */
+}
+
 
 
 /* Expresso Theme */
 body.expresso {
     background-color: #332F28;
     color: #E4DCAE;
+}
+
+body.expresso .notification p{
+    color: #000000;
 }
 
 body.expresso header {
