@@ -42,6 +42,20 @@
             }
         }
 
+        document.getElementById('notification-bell').onclick = function () {
+            document.getElementById('notification-dialog').style.display = 'block';
+        }
+
+        document.getElementById('close-notification-dialog').onclick = function () {
+            document.getElementById('notification-dialog').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('notification-dialog')) {
+                document.getElementById('notification-dialog').style.display = 'none';
+            }
+        }
+
         // JavaScript for form handling
         const subjects = {
             '1': {
@@ -74,7 +88,7 @@
                 'Computer Organization and Microprocessor':['Syllabus', 'Syllabus-Lab', 'Introduction to Microprocessor 8085', 'Microprocessor Architecture and Interfacing', 'Programming Methods with Instructions', 'Additional Programming Techniques', '8085 Interrupts', 'Computer Organization - Register Transfer and Basic Computer Design Register Transfer','Computer Organization - Assembler and Memory Organization'],
                 'Computer Network':['Syllabus', 'Syllabus-Lab', 'Data Communication Components', 'Data Link Layer and Medium Acess Sub Layer', 'Network Layer', 'Transport Layer','Application Layer'],
                 'Programming in Python with Full Stack':['Syllabus','Syllabus-lab', 'Introduction to Python Programmning', 'Functions', 'Modules and Packages', 'Flask Framework', 'Django Framework', 'RESTful APIs'],
-                'Probability, Statistics and Numerical Methods':['Syllabus', 'Correlation, Regression and Curve fitting', 'Probability and Probabiltiy Distributions', 'Testing of Hypothesis', 'Finite Differences and Interpolation', 'Numerical Integration'],
+                'Probability, Statistics and Numerical Methods':['Syllabus', 'Correlation, Regression and Curve fitting', 'Probability and Probability Distributions', 'Testing of Hypothesis', 'Finite Differences and Interpolation', 'Numerical Integration'],
                 'Professional Grooming and Personality Development':['Syllabus', 'Slef Development and Assesment', 'Corporate Etiquette', 'Public Speaking', 'Reading Skills Activity & Reading Comprehension', 'Listening Skills- Inquiry Based Listening Questions'],
                 'Competitive Coding':['Syllabus'],
             }
