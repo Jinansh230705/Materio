@@ -1,0 +1,48 @@
+<header>
+<h1>Materio</h1>
+        <nav>
+            <a href="/materio-internal/" id="resourcesTab" onclick="changeTab('resources')"><i class="fas fa-house" style="color: rgb(100, 100, 100);"></i></a>
+            <a href='/materio-internal/chat' id='chatTab'><i class="fas fa-comments" style="color:rgb(100, 100, 100);"></i></a>
+            <a href="/materio-internal/auth" id="blog"><i class="fas fa-blog" style="color:rgb(100, 100, 100);"></i></a>
+            <a href="#" onclick="toggleSettingsDialog()"><i id="settings-icon" class="fas fa-cog"
+                    style="color: rgb(100, 100, 100); "></i></a>
+
+            <div id="settings-dialog"
+                style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; padding: 50px; box-sizing: border-box;">
+                <div
+                    style="background: rgba(163, 156, 115, 0.8); padding: 20px; border-radius: 10px; font-family: 'Open Sauce One Regular', sans-serif; position: relative;">
+                    <i id="close-icon" class="fas fa-times"
+                        style="position: absolute; right: 10px; top: 10px; cursor: pointer; color: rgb(255, 94, 0);"
+                        onclick="toggleSettingsDialog()"></i>
+                    <h2>Settings</h2>
+                    <h3>Materio</h3>
+                    <p>Version: 30.11.24 </p>
+                    <p>Try Expresso 
+                        <label for="themeSwitch">:</label>
+                        <input type="checkbox" id="themeSwitch">
+                        <script src="https://materioa.netlify.app/static/assets/themegine.js"></script>
+                    </p>
+                    <p>Changelog:
+                        <a href="/materio-internal/changelog" style="color: purple;">View Release Notes</a>
+                    </p>
+
+                    <a href="legacy.html" style="color: purple;">Switch to Legacy mode</a>
+                </div>
+            </div>
+            <div class="icons">
+                <i class="fas fa-bell" id="notification-bell"></i>
+            </div>
+
+            <div id="notification-dialog" class="dialog">
+                    <div class="dialog-content" style="background-color: rgba(163, 156, 115, 0.8); border-radius: 10px; padding:20px; font-family: 'Open Sauce One Regular', sans-serif; position: relative; color:#000000">
+                    <h1>Notifications</h1>
+                    <span class="close" id="close-notification-dialog">&times;</span>
+                    <!-- Notification board container -->
+        <div class="notification-board" style="color:#000000;" id="notificationBoard">
+            <!-- Notifications will be dynamically added here -->
+        </div>
+                </div>
+            </div>
+
+        </nav>
+        </header>

@@ -1,0 +1,70 @@
+ body {
+            margin: 0;
+            padding: 0;
+            background: #ecf0f1;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Notification board styles */
+        .notification-board {
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column-reverse;
+            margin-top: 20px;
+        }
+
+        .notification {
+            background-color: #f7f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            border-left: 5px solid #3498db;
+        }
+
+        .notification h3 {
+            margin: 0;
+            font-size: 1rem;
+            color: #2c3e50;
+        }
+
+        .notification p {
+            margin: 5px 0 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .notification .date-time {
+            font-size: 0.8rem;
+            color: #95a5a6;
+            margin-top: 5px;
+        }

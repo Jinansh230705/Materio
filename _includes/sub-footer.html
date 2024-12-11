@@ -1,0 +1,22 @@
+
+<div id="skin-switch-container" style="text-align: center; margin-top: 20px;">
+  <label for="skin-switch">Select Theme:</label>
+  <select id="skin-switch" onchange="changeSkin()">
+    <option value="classic.scss">Classic</option>
+    <option value="dark.scss">Dark</option>
+    <option value="solarized.scss">Solarized</option>
+    <option value="solarized-dark.scss">Solarized Dark</option>
+    <option value="solarized-light.scss">Solarized Light</option>
+  </select>
+</div>
+
+<script>
+  document.getElementById("skin-switch-container").style.display = "block";
+  var metaTag = document.getElementById("stylesheet");
+  var SSHref = metaTag.href;
+  var SSName = (SSHref.substring(SSHref.lastIndexOf('/') + 1));
+  document.getElementById("skin-switch").value = SSName;
+  function changeSkin() {
+    metaTag.href = SSHref.replace(SSName, event.target.value);
+  }
+</script>

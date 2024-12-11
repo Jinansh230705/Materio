@@ -1,0 +1,61 @@
+// Placeholder to allow defining custom styles that override everything else.
+// (Use `_sass/minima/custom-variables.scss` to override variable defaults)
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400&display=swap');
+body {
+  font-family: 'Fira Sans', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Fira Sans', sans-serif;
+}
+
+.site-footer {
+    padding-bottom: 120px
+  }
+  .sub-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    &:before {
+      position: absolute;
+      display: table;
+      margin: -60px auto;
+      top: 1px;
+      left: 0;
+      right: 0;
+      content: "";
+      border: 30px solid;
+      cursor: pointer;
+      border-color: transparent transparent $brand-color;
+    }
+  }
+  #skin-switch-container {
+    display: none;
+    margin-left: -4px;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 0.8rem;
+    select {
+      margin: 0 2px;
+      padding: 5px 2px;
+      text-align: center;
+      font-size: 0.8rem;
+      border-radius: 5px;
+      &:focus-visible {
+        outline: none;
+      }
+    }
+  }
+  
+  .sub-footer, .sub-footer select {
+    color: $table-text-color;
+    background: $table-header-bg-color;
+    &::before {
+      border-color: transparent transparent $table-header-bg-color;
+    }
+  }
+  .post-title-image img {
+    float: right;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    max-height: 250px;
+}

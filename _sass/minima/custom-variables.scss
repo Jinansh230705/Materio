@@ -1,0 +1,21 @@
+// Placeholder to allow overriding predefined variables smoothly.
+//$my-color: #fffafa; //Snow
+//$my-color: #faebd7; //Antique White
+//$my-color: #bca7e5; // Pirple
+
+$my-color: #bca7e5;
+$brand-color:           $my-color;
+$brand-color-light:     lighten($brand-color, 5%);
+$brand-color-dark:      darken($brand-color, 35%);
+
+$site-title-color:      $brand-color-light;
+
+$text-color:            #bbbbbb;
+$background-color:      #181818;
+$code-background-color: #212121;
+
+$link-base-color:       adjust-hue($brand-color, 20);
+$link-visited-color:    $link-base-color;
+$link-hover-color:      adjust-hue($brand-color, 30);
+
+
