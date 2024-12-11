@@ -27,7 +27,7 @@ description: >- # this means to ignore newlines until "baseurl:"
  Blog for Materio to Share and Make My learning experience easy.
  Made with Jekyll and Hosted on Github Pages.
  Built by JTC. 
-baseurl: "/materio-internal" # the subpath of your site, e.g. /blog
+baseurl: "/Materio" # the subpath of your site, e.g. /blog
 url: "jinansh230705.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 
 # Build settings
