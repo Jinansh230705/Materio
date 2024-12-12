@@ -82,8 +82,8 @@ GEM
       strscan
     rouge (4.3.0)
     safe_yaml (1.0.5)
-    sass-embedded (1.77.8-x64-mingw-ucrt)
-      google-protobuf (~> 4.26)
+    sass-embedded (1.79.6-x64-mingw-ucrt)
+      google-protobuf (~> 4.27)
     sinatra (1.4.8)
       rack (~> 1.5)
       rack-protection (~> 1.4)
