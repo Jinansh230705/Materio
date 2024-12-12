@@ -1,10 +1,26 @@
 ---
 layout: default
 title: Changelog
-permalink: /changelog/
+permalink: /changelog
 ---
 <body>
-<h1>25.11.24</h1>
+<!-- <section> -->
+<section>
+<h1>12.12.24</h1>
+<h1>Materio V3</h1>
+<li>Introduced Jekyll templating</li>
+<li>Font Awesome V6 Icons in the Navbar instead of text enhancing visual appearance</li>
+<li>Introduced Blogs with Markdown formatting (Limited Access only for now)</li>
+<li>Consistent UI across all Materio Pages</li>
+<li>Bug Fixes and optimisations</li>
+<li><b> Secure:</b> The passwords are hashed before storing.</li>
+<ul>*Consistent UI includes only Home, Chat and Changelog sections of the site.</ul>
+<ul>*Blogs uses Customised flavor of Minima V3 Jekyll template.</ul>
+<ul>*Blogs access is currently limited to only authorised credentials, if you want access you can signup for the waitlist by sending mail to support.</ul>
+<ul>Support : materio.operable341@silomails.com</ul>
+</section>
+
+<h3>25.11.24</h3>
 <ul>
     <li>Fixed Bugs</li>
     <li>Fixed Padding and Improved CSS</li>
@@ -61,4 +77,5 @@ permalink: /changelog/
     <li>Chat based on Giscus API</li>
     <li>Chrome PDF viewer</li>
 </ul>
+<!-- </section> -->
 </body>
