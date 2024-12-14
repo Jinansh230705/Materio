@@ -126,38 +126,59 @@
             }
         }
 
-        function displayContent() {
-            const semesterSelect = document.getElementById('semesterSelect');
-            const subjectSelect = document.getElementById('subjectSelect');
-            const chapterSelect = document.getElementById('chapterSelect');
-            const semester = semesterSelect.value;
-            const subject = subjectSelect.value;
-           const chapter = chapterSelect.value;
-
-// Get the URL of the PDF file based on the selected semester, subject, and chapter
-// This depends on how you store and access the PDF files
-const pdfUrl = getPdfUrl(semester, subject, chapter);
-
-const contentDisplay = document.getElementById('contentDisplay');
-
-// Create an Adobe DC View instance
-var adobeDCView = new AdobeDC.View({ clientId: "9861b9fc546a4db9a108c724eb9e9b75", divId: "contentDisplay" });
-
-// Configure the view
-var previewFilePromise = adobeDCView.previewFile({
-    content: { location: { url: pdfUrl } },
-    metaData: { fileName: pdfUrl.split("/").slice(-1)[0] }
-}, { embedMode: "SIZED_CONTAINER" });
-
-function getPdfUrl(semester, subject, chapter) {
-    // This function should return the URL of the PDF file based on the selected semester, subject, and chapter
-    // The implementation of this function depends on how you store and access the PDF files
-    // For the sake of this example, let's assume that the PDF files are stored in a 'pdfs' folder in the same directory as this HTML file
+      // Function to fetch the Adobe client ID securely from Netlify Functions
+async function getAdobeClientId() {
+    const response = await fetch('/.netlify/functions/getAdobeClientId'); // Call the serverless function
+    const data = await response.json();
+    if (data.clientId) {
+      return data.clientId;
+    } else {
+      throw new Error("Failed to fetch Adobe Client ID");
+    }
+  }
+  
+  // Function to initialize the Adobe DC View and display the PDF
+  async function displayContent() {
+    const semesterSelect = document.getElementById('semesterSelect');
+    const subjectSelect = document.getElementById('subjectSelect');
+    const chapterSelect = document.getElementById('chapterSelect');
+    const semester = semesterSelect.value;
+    const subject = subjectSelect.value;
+    const chapter = chapterSelect.value;
+  
+    // Get the URL of the PDF file based on the selected semester, subject, and chapter
+    const pdfUrl = getPdfUrl(semester, subject, chapter);
+  
+    const contentDisplay = document.getElementById('contentDisplay');
+  
+    try {
+      // Fetch the Adobe client ID dynamically
+      const clientId = await getAdobeClientId();
+  
+      // Create an Adobe DC View instance with the dynamically fetched clientId
+      var adobeDCView = new AdobeDC.View({ clientId: clientId, divId: "contentDisplay" });
+  
+      // Configure the view
+      adobeDCView.previewFile({
+        content: { location: { url: pdfUrl } },
+        metaData: { fileName: pdfUrl.split("/").slice(-1)[0] }
+      }, { embedMode: "SIZED_CONTAINER" });
+  
+    } catch (err) {
+      console.error("Error initializing Adobe DC View:", err);
+      alert("Failed to load the document viewer. Please try again later.");
+    }
+  }
+  
+  // Function to generate the PDF URL
+  function getPdfUrl(semester, subject, chapter) {
+    // Example base URL for PDFs
     var baseUrl = 'https://cdn-materioa.netlify.app/pdfs';
     var pdfUrl = `${baseUrl}/${semester}/${subject}/${chapter}.pdf`;
     return pdfUrl;
-}
-        }
-        window.onload = function () {
-            populateSubjects();
-        }
+  }
+  
+  window.onload = function () {
+    populateSubjects(); // Your function to populate subjects
+  };
+  
