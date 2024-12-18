@@ -1,0 +1,34 @@
+{
+    "1": {
+        "oss": ["intro", "case study", "principles"],
+        "maths-1": ["fode", "matrices", "multivariable"],
+        "ctsd": ["pointers", "loops", "arrays", "strings"],
+        "eee": ["semiconductors", "sensors", "diode"]
+    },
+    "2": {
+        "CTSD-2": ["DMA", "Preprocessor Directives", "Enumerators, Structures, Unions", "Searching and Sorting", "Data Structures: List-Linear List"],
+        "Maths-2": ["HODE", "Power Series", "Laplace Transform", "Fourier Integral", "Vector Calculus", "Multivariable Calculus (Integration)", "Tutorial 1A", "Tutorial 1B", "Tutorial 2", "Tutorial 3", "Assignment 1", "Assignment 2", "Assignment 5", "Question Bank 1", "Question Bank 2", "PYQ_19.11.22", "PYQ_15.05.23", "PYQ_18.01.24"],
+        "E-Physics": ["Modern Physics", "Band Theory and Semiconductors", "Materials", "Laser and Fibre optics", "Devices", "Book for Optical Fibre", "Book for Laser", "Question Bank 1", "Assignment 1", "Assignment 2", "Important Questions"],
+        "GCF": ["Cloud Concepts", "Azure Services", "Security, Privacy, Compliance, and Trust", "Azure Pricing and Support", "Azure SLA and Service Lifecycles", "Azure Question Bank", "Assignment 1", "Important Questions", "QB for Mid Sem"],
+        "DT": ["Overview of Design Thinking", "Defining Needs, Ideation for Solutions,Prototyping", "Testing the solution,Problem Solving Mindset", "Human Centered Design, Design for the Enviroment", "Design Thinking and Innovation Management Culture"],
+        "ICT": ["Lab"],
+        "ACTW": ["Developing Effective Listening Skills", "Error Analysis", "Delivering Different Types of Speeches", "Professional Presentations", "Essay writting", "Reading Comprehension", "Project Proposal", "Misplaced Modifiers", "Movie Review", "Narrative Writting", "Writting Reports", "Critical Thinking", "Activity Session (Presentation)"]
+    },
+    "3": {
+        "Object Oriented Programming with Java": ["Design Introduction", "Data types,variable,operators", "Control Statements", "Arrays", "Object Oriented Programming", "Inheritance", "Strings, Packages and interfaces", "Exception Handling", "Multi Threading", "Collections Framework"],
+        "Design of Data Structures": ["Introduction", "Stacks, Recursion and Queue", "Linked Lists", "Searching and Sorting", "Trees", "Red Black Trees and AVL Trees", "Hashing", "Graphs", "DSA Using C - 2nd Edition"],
+        "Database Management Systems": ["Introduction", "SQL", "Data Models", "Relational Data Model", "Relational Database Design", "Transaction", "Query Processing", "Security", "PL/SQL Concepts"],
+        "Discrete Mathematics": ["Sets, Relation and Function", " Principles of Mathematical Induction", "Propositional Logic", "Algebraic Structures and Morphism", "Graphs and Trees"],
+        "Digital Electronics": ["Fundamentals of Digital Systems and logicfamilies", "Minimization Techniques", "Combinational Digital Circuits", "SEQUENTIAL CIRCUITS", "A/D and D/A Converters", "Semiconductor Memories And Programmable Logic Devices"],
+        "Professional Communication Skills": []
+    },
+    "4": {
+        "Operating System": ["Syllabus", "Syllabus-lab", "Introduction", "Processes, Thread & Process Scheduling", "Inter-Process Communictaion", "Deadlocks", "Memory Management", "Virtual Memory", "IO Systems", "IO Systems, File & Disk Management"],
+        "Computer Organization and Microprocessor": ["Syllabus", "Syllabus-Lab", "Introduction to Microprocessor 8085", "Microprocessor Architecture and Interfacing", "Programming Methods with Instructions", "Additional Programming Techniques", "8085 Interrupts", "Computer Organization - Register Transfer and Basic Computer Design Register Transfer", "Computer Organization - Assembler and Memory Organization"],
+        "Computer Network": ["Syllabus", "Syllabus-Lab", "Data Communication Components", "Data Link Layer and Medium Acess Sub Layer", "Network Layer", "Transport Layer", "Application Layer"],
+        "Programming in Python with Full Stack": ["Syllabus", "Syllabus-lab", "Introduction to Python Programmning", "Functions", "Modules and Packages", "Flask Framework", "Django Framework", "RESTful APIs"],
+        "Probability, Statistics and Numerical Methods": ["Syllabus", "Correlation, Regression and Curve fitting", "Probability and Probability Distributions", "Testing of Hypothesis", "Finite Differences and Interpolation", "Numerical Integration"],
+        "Professional Grooming and Personality Development": ["Syllabus", "Slef Development and Assesment", "Corporate Etiquette", "Public Speaking", "Reading Skills Activity & Reading Comprehension", "Listening Skills- Inquiry Based Listening Questions"],
+        "Competitive Coding": ["Syllabus"]
+    }
+}

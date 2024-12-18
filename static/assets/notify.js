@@ -1,18 +1,16 @@
      const notifications = [
         { 
-               title: "DBMS Exam", 
-               message: " DBMS Materials Can be accessed on PULMS under classroom section", 
-               date: "2024-11-09T15:24:00", 
-               links: [
-                   { url: "elearning.paruluniversity.ac.in", label: "PULMS" }
-               ]
+               title: "Materio V3 is Out", 
+               message: "Materio V3 is live! Now based on Jekyll checkout the Release Notes from Settings tab for more details.", 
+               date: "2024-12-12T20:30:00", 
+               links: []
            },
    
            { 
-               title: "Useful Links", 
-               message: "Other useful links (Gdrive)", 
-               date: "2024-11-11T14:00:00", 
-               links: [{url: "https://drive.google.com/drive/folders/1MJg9XOitcisGjBh9HLSySVTX7ZiyUesb?usp=drive_link", label:"Link 1"}, {url:"https://drive.google.com/drive/folders/15cKyJQY2zo9bob-lmM5WfOiftq0g1lML?usp=drive_link", label:"Link 2"}] 
+               title: "Materials Updated", 
+               message: "Few Materials have been added/updated in the PSNM ,OS, PPFSD and PGPD.", 
+               date: "2024-12-18T18:34:00", 
+               links: [] 
            }
            
           
