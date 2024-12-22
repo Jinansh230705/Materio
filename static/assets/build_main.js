@@ -94,7 +94,7 @@
             },
             
             'Miscellanoeus':{
-                'Miscellaneous':['Head First Java', 'DSA Using C - 2nd Edition']
+                'Misc.':['Head First Java', 'DSA Using C - 2nd Edition'],
 
             }
 
