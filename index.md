@@ -26,6 +26,11 @@ title: Materio - Home
                 <option value="2">2nd Semester</option>
                 <option value="3">3rd Semester</option>
                 <option value="4" selected>4th Semester</option>
+                <!-- <option value="5">5th Semester</option>
+                <option value="6">6th Semester</option>
+                <option value="7">7th Semester</option>
+                <option value="8">8th Semester</option> -->
+                <option value="9">Miscellaneous</option>
             </select>
             <select id="subjectSelect" onchange="populateChapters()">
             </select>
