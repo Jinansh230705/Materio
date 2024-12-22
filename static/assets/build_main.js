@@ -92,9 +92,8 @@
                 'Professional Grooming and Personality Development':['Syllabus', 'Self Development and Assesment', 'Corporate Etiquette', 'Public Speaking', 'Reading Skills Activity & Reading Comprehension', 'Listening Skills- Inquiry Based Listening Questions'],
                 'Competitive Coding':['Syllabus'],
             },
-            
-            'Miscellanoeus':{
-                'Misc.':['Head First Java', 'DSA Using C - 2nd Edition'],
+            '9':{
+                'Miscellaneous':['Head First Java', 'DSA Using C - 2nd Edition'],
 
             }
 
