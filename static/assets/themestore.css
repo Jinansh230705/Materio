@@ -178,7 +178,7 @@ p {
 
 .navbar a,
 .footer a {
-    color: #fbf1de;
+    color: #000000;
     text-decoration: none;
     padding: 10px;
 }
@@ -343,4 +343,9 @@ body.expresso .navbar,
 body.expresso .footer {
     background: rgba(241, 230, 184, 0.6);
     color: #000000;
+}
+
+body.expresso .navbar a,
+body.expresso .footer a {
+    color:#fbf1de;
 }
