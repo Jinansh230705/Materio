@@ -178,7 +178,7 @@ p {
 
 .navbar a,
 .footer a {
-    color: #ffffff;
+    color: #fbf1de;
     text-decoration: none;
     padding: 10px;
 }
@@ -186,13 +186,14 @@ p {
 .footer {
     margin-top: 100px;
     text-align: center;
-    height: 80px;
+    height: auto;
 }
 
 .footer img {
     width: 20px;
     height: 20px;
     vertical-align: middle;
+    color: #fbf1de;
 }
 
 .icons {

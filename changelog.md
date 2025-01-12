@@ -45,7 +45,7 @@ permalink: /changelog
     <li>Fixed Bugs</li>
 </ul>
 
-<h3>17.05.04</h3>
+<h3>17.05.24</h3>
 <ul>
     <li>Uploaded all Materials</li>
     <li>Added Question Banks and Important Questions</li>
@@ -62,14 +62,14 @@ permalink: /changelog
     <li>Fixed some bugs</li>
     </ul>
 
-    <h3>16.03.24_Weekly</h3>
+<h3>16.03.24_Weekly</h3>
 <ul>
     <li>Introduced New UI</li>
     <li>Adobe PDF Viewer API</li>
     <li>Shifted from Github Pages to Netlify</li>
 </ul>
 
-
+- Initial Launch of Materio
 <h3>08.03.24_Dev</h3>
 <ul>
     <li>Initial Launch of Materio</li>
