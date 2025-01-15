@@ -12,7 +12,7 @@ This Cookie Policy explains how Materio ("we," "us," or "our") uses cookies and 
 ---
 
 ### **1. What Are Cookies?**
-Cookies are small text files placed on your device by a website. They allow the website to recognize your device, store preferences, and improve user experience. Cookies may be "first-party" (set by our website) or "third-party" (set by external services).
+Cookies are small text files placed on your device by a website. They allow the website to recognize your device, store preferences, and improve user experience. Cookies may be "first-party" (set by our website) or "third-party" (set by external services). 
 
 ---
 
