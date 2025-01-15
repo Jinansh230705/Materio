@@ -72,7 +72,8 @@ We may update this Cookie Policy from time to time to reflect changes in technol
 If you have any questions about this Cookie Policy, please contact us at:
 
 Materio\
-materio.operable341@silomails.com
+<a href="mailto:materio.operable341@silomails.com">materio.operable341@silomails.com</a>
+
 
 
 

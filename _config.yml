@@ -53,7 +53,7 @@ whitelist:
 
 header_pages:
   - materio.md
-  - about.md
+  - afb.md
 
 show_excerpts: true
 # Disable Global feed generation
