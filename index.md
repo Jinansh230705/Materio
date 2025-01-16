@@ -4,6 +4,9 @@
 
 layout: default
 title: Materio - Home
+excerpt: Welcome to Materio, This is a place for all your study needs , find resources well organised or Chat with people to help on topics,solve doubts,ask or share resources,notes,materials.
+seo_title: Materio - a place for all your study needs. 
+seo_description: Materio is place where you can get all your study materials at one Place the site havings sections like, Materio - Home, Materio Chat or Chat, Materio Blogs or blog etc. Materioa also known as Materioa, materioa made by Jinansh Mehta - Jinansh230705 and Hosted on Github served by Netlify you can use it to get all the PDFs you need for your academics.
 ---
 <body>
 <div class="content">
@@ -45,5 +48,5 @@ title: Materio - Home
             <div id="contentDisplay"></div>
         </div>
     </section>
-     <!-- <script src="https://materioa.netlify.app/static/assets/notify.js"></script> -->
+  
     
