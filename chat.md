@@ -17,12 +17,12 @@ permalink: /chat/
         <!-- The Giscus comment section will be loaded here -->
     </div>
 
-    <script src="https://giscus.app/client.js"
-        data-repo="Jinansh230705/jinansh230705.github.io"
+<script src="https://giscus.app/client.js"
+        data-repo="Materioa/Materio"
         data-repo-id="R_kgDOK_VkLg"
-        data-category="Materio"
-        data-category-id="DIC_kwDOK_VkLs4Cdnim"
-        data-mapping="url"
+        data-category="Chat"
+        data-category-id="DIC_kwDOK_VkLs4CmdaW"
+        data-mapping="og:title"
         data-strict="0"
         data-reactions-enabled="1"
         data-emit-metadata="0"
