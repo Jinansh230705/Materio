@@ -186,3 +186,75 @@ async function getAdobeClientId() {
     populateSubjects(); // Your function to populate subjects
   };
   
+  function setupTracking(viewer) {
+    // Track when a user views a page
+    viewer.registerCallback(
+      AdobeDC.View.Enum.CallbackType.PAGE_VIEW,
+      function (event) {
+        console.log("Page viewed:", event.data.pageNumber);
+        gtag('event', 'pdf_page_view', {
+          event_category: 'Adobe PDF',
+          event_label: 'Page ' + event.data.pageNumber
+        });
+      }
+    );
+  
+    // Track when a user scrolls the document
+    viewer.registerCallback(
+      AdobeDC.View.Enum.CallbackType.DOCUMENT_SCROLL,
+      function () {
+        console.log("Document scrolled");
+        gtag('event', 'pdf_scroll', {
+          event_category: 'Adobe PDF',
+          event_label: 'User scrolled'
+        });
+      }
+    );
+  
+    // Track when the zoom level changes
+    viewer.registerCallback(
+      AdobeDC.View.Enum.CallbackType.ZOOM_LEVEL_CHANGED,
+      function (event) {
+        console.log("Zoom level changed:", event.data.zoomLevel);
+        gtag('event', 'pdf_zoom', {
+          event_category: 'Adobe PDF',
+          event_label: 'Zoom level: ' + event.data.zoomLevel,
+          value: event.data.zoomLevel
+        });
+      }
+    );
+  
+    // Track when a user adds an annotation
+    viewer.registerCallback(
+      AdobeDC.View.Enum.CallbackType.ANNOTATION_ADDED,
+      function (event) {
+        console.log("Annotation added:", event.data);
+        gtag('event', 'pdf_annotation', {
+          event_category: 'Adobe PDF',
+          event_label: 'Annotation added'
+        });
+      }
+    );
+  
+    // Track when a user enters/exits fullscreen mode
+    viewer.registerCallback(
+      AdobeDC.View.Enum.CallbackType.FULLSCREEN_MODE_CHANGED,
+      function (event) {
+        console.log("Fullscreen mode:", event.data.isFullScreen);
+        gtag('event', 'pdf_fullscreen', {
+          event_category: 'Adobe PDF',
+          event_label: event.data.isFullScreen ? 'Entered Fullscreen' : 'Exited Fullscreen'
+        });
+      }
+    );
+  
+    // Track time spent reading using a heartbeat method
+    setInterval(() => {
+      gtag('event', 'pdf_engagement', {
+        event_category: 'Adobe PDF',
+        event_label: 'Active reading session',
+        engagement_time: 15 // Assuming user is engaged every 15 seconds
+      });
+    }, 15000); // Sends engagement every 15 seconds
+  }
+  
