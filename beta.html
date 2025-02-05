@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materio</title>
+    <link rel="icon" type="image/x-icon" href="/deco/1000153013.png">
+    <link href="https://db.onlinewebfonts.com/c/cdf9e1a785f6767291f7e12174be6174?family=Open+Sauce+One+Regular"
+        rel="stylesheet">
+    <link href="https://db.onlinewebfonts.com/c/66761cc137992e659f355bf50b1307cc?family=ApexNew-Medium"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <!-- <link rel="stylesheet" href="themestore.css">  -->
+    <style>
+        /* Default Thermal Theme */
+        title {
+
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Open Sauce One Regular";
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #000000;
+        }
+
+        header {
+            font-family: "ApexNew-Medium";
+            background: linear-gradient(to right, rgba(200, 109, 109, 0.65), rgba(255, 238, 142, 0.65), rgba(109, 181, 200, 0.65));
+            color: #000000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em;
+        }
+
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 10px;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* nav a:hover {
+background-color: #555;
+} */
+
+        .content {
+            padding: 20px;
+            /* Adjust this value as needed */
+            margin-left: 135px;
+        }
+
+
+        section {
+        max-width: 1000px;
+        margin: 1em auto;
+        padding: 1em;
+        background-color: rgba(228, 220, 174, 0.5);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+    
+
+    
+    @media (max-width: 768px) {
+        #resourceForm select {
+        width: 100%;
+    }
+        .content {
+            padding: 10px;
+            margin-left: 0px;
+            /* text-align: center; */
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        section {
+            margin: 1em auto;
+            padding: 1em;
+            max-width: 85%;
+            border-radius: 10px;
+            box-shadow: none;
+        }
+
+        setting-dialog {
+            padding: 0px;
+            width: 120%;
+            position: absolute;
+
+            
+        }
+    }
+
+        setting-dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            padding: 50px;
+            box-sizing: border-box;
+
+            background: rgba(228, 220, 174);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Open Sauce One Regular', sans-serif;
+            position: relative;
+        }
+        notification-dialog {
+            background-color: rgba(228, 220, 174);
+            border-radius: 10px;
+        }
+
+        .viewer {
+            height: 600px;
+        }
+
+        .rounded-rectangle {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #FFE1CF;
+            border-radius: 15px;
+        }
+
+        .right-align {
+            float: right;
+            width: 33%;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        #resourceForm select,
+        #resourceForm button {
+            flex-basis: 30%;
+            padding: 13px;
+            font-size: 15px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Apex New', sans-serif;
+            background-color: rgba(255, 238, 142, 0.65);
+            margin: 5px;
+        }
+
+        #resourceForm button {
+            background-color: #FF8B49;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        #resourceForm select option {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+        #resourceForm button:hover {
+            background-color: #444;
+        }
+
+        .navbar,
+        .footer {
+
+            background: linear-gradient(to right, rgba(200, 109, 109, 0.65), rgba(255, 238, 142, 0.65), rgba(109, 181, 200, 0.65));
+            color: #000000;
+            padding: 10px;
+        }
+
+        .navbar a,
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .footer {
+            margin-top: 100px;
+            text-align: center;
+            height: 80px;
+        }
+
+        .footer img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        .skeuomorphic-box {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+            background: #e0e0e0;
+            box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+            color: rgb(100, 100, 100);
+        }
+
+        .icons i {
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .dialog {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .dialog-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            color:#000000;
+        }
+
+        .close {
+            color: #FF8B49;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #ff3700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Notification board styles */
+        .notification-board {
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column-reverse; /* To show latest on top */
+            margin-top: 20px;
+            color: #000000;
+        }
+
+        .notification {
+            background-color: rgb(255, 247, 205);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            color:#000000;
+            border-left: 5px solid #BB5031;
+        }
+
+        .notification h3 {
+            margin: 0;
+            font-size: 1rem;
+            color: #000000;
+        }
+
+        .notification p {
+            margin: 5px 0 0;
+            color: #000000;
+            font-size: 0.9rem;
+        }
+        .notification .date-time {
+            font-size: 0.8rem;
+            color: #434343;
+            margin-top: 5px;
+        }
+
+        .notification-item {
+    color: black;
+    /* Other styles for the notification item */
+}
+
+        /* Expresso Theme */
+        body.expresso {
+            background-color: #332F28;
+            color: #E4DCAE;
+        }
+
+        body.expresso .notification p{
+            color: #000000;
+        }
+
+        body.expresso header {
+            background: rgba(241, 230, 184, 0.6);
+            color: #000000;
+        }
+
+        body.expresso nav a {
+            color: #000000;
+        }
+
+        body.expresso section {
+            background-color: rgba(228, 220, 174, 0.5);
+            color: #FBF1DE;
+        }
+
+        body.expresso .rounded-rectangle {
+            background-color: rgba(255, 225, 207, 0.5);
+            color: #000000;
+        }
+
+        body.expresso h2 {
+            color: #333;
+        }
+
+        body.expresso p {
+            color: #FBF1DE;
+        }
+
+        body.expresso #resourceForm select,
+        body.expresso #resourceForm button {
+            font-family: 'Open Sauce One Regular', sans-serif;
+            background-color: rgba(213, 188, 154, 1);
+        }
+
+        body.expresso #resourceForm button {
+            background-color: #BB5031;
+            color: #ffffff;
+        }
+
+        body.expresso #resourceForm button:hover {
+            background-color: #ff3700;
+        }
+
+        body.expresso .navbar,
+        body.expresso .footer {
+            background: rgba(241, 230, 184, 0.6);
+            color: #000000;
+        }
+    </style>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Materio</h1>
+        <nav>
+            <a href="#" id="resourcesTab" onclick="changeTab('resources')">Resources</a>
+            <a href='/chat' id='chatTab'>Chat</a>
+            <a href="#" onclick="toggleSettingsDialog()"><i id="settings-icon" class="fas fa-cog"
+                    style="color: rgb(100, 100, 100); "></i></a>
+
+            <div id="settings-dialog"
+                style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; padding: 50px; box-sizing: border-box;">
+                <div
+                    style="background: rgba(163, 156, 115, 0.8); padding: 20px; border-radius: 10px; font-family: 'Open Sauce One Regular', sans-serif; position: relative;">
+                    <i id="close-icon" class="fas fa-times"
+                        style="position: absolute; right: 10px; top: 10px; cursor: pointer; color: rgb(255, 94, 0);"
+                        onclick="toggleSettingsDialog()"></i>
+                    <h2>Settings</h2>
+                    <p>About: Materio </p>
+                    <p>Version: </p>
+                    <p>Try Expresso
+                        <label for="themeSwitch">:</label>
+                        <input type="checkbox" id="themeSwitch">
+                        <script src="themegine.js"></script>
+                    </p>
+                    <p>Changelog:
+                        <a href="changelog.html" style="color: purple;">View Release Notes</a>
+                    </p>
+
+                    <a href="legacy.html" style="color: purple;">Switch to Legacy mode</a>
+                </div>
+            </div>
+            <div class="icons">
+                <i class="fas fa-bell" id="notification-bell"></i>
+            </div>
+
+            <div id="notification-dialog" class="dialog">
+                    <div class="dialog-content" style="background-color: rgba(163, 156, 115, 0.8); border-radius: 10px; padding:20px; font-family: 'Open Sauce One Regular', sans-serif; position: relative; color:#000000">
+                    <h1>Notifications</h1>
+                    <span class="close" id="close-notification-dialog">&times;</span>
+                    <!-- Notification board container -->
+        <div class="notification-board" style="color:#000000;" id="notificationBoard">
+            <!-- Notifications will be dynamically added here -->
+        </div>
+                </div>
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <div class="content">
+        <h1>Welcome to Materio</h1>
+    </div>
+
+    <section>
+        <img src="deco/bag.png" alt="Bag" class="right-align">
+        <div class="rounded-rectangle">
+            Resources
+        </div>
+        <p>
+            Materio is a platform for learning and sharing knowledge. It's a place where you can find resources and chat
+            with
+            other people about topics that interest you.
+        </p>
+        <form id="resourceForm">
+            <select id="semesterSelect" onchange="populateSubjects()">
+                <option value="1">1st Semester</option>
+                <option value="2">2nd Semester</option>
+                <option value="3">3rd Semester</option>
+                <option value="4" selected>4th Semester</option>
+            </select>
+            <select id="subjectSelect" onchange="populateChapters()">
+            </select>
+            <select id="chapterSelect">
+            </select>
+            <button type="button" onclick="displayContent()">Submit</button>
+        </form>
+    </section>
+
+
+    <section>
+        <div class="viewer">
+            <div id="contentDisplay"> <iframe id="pdf-iframe" width="100%" height="600px" style="border: none;  border-radius: 10px;"></iframe></div>
+        </div>
+    </section>
+
+    <script>
+        function toggleSettingsDialog() {
+            var dialog = document.getElementById('settings-dialog');
+            if (dialog.style.display === 'none') {
+                dialog.style.display = 'block';
+            } else {
+                dialog.style.display = 'none';
+            }
+        }
+
+        document.getElementById('notification-bell').onclick = function () {
+            document.getElementById('notification-dialog').style.display = 'block';
+        }
+
+        document.getElementById('close-notification-dialog').onclick = function () {
+            document.getElementById('notification-dialog').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('notification-dialog')) {
+                document.getElementById('notification-dialog').style.display = 'none';
+            }
+        }
+
+        let subjects = {};
+        fetch('https://cdn-materioa.netlify.app/subjects.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                subjects = data;
+                populateSemester(); 
+                populateSubjects();
+            })
+            .catch(error => {
+                console.error('Error loading subjects:', error);
+            });
+
+        function populateSemester() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            semesterSelect.innerHTML = '';
+            for (let semester in subjects) {
+                let option = document.createElement('option');
+                option.value = semester;
+                option.text = semester;
+                semesterSelect.appendChild(option);
+            }
+        }
+
+        function populateSubjects() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const semester = semesterSelect.value;
+            if(subjects[semester]) {
+                const subjectList = subjects[semester];
+                subjectSelect.innerHTML = '';
+                for (let subject in subjectList) {
+                    let option = document.createElement('option');
+                    option.value = subject;
+                    option.text = subject;
+                    subjectSelect.appendChild(option);
+                }
+                populateChapters();
+            }
+        }
+
+
+        function populateChapters() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const chapterSelect = document.getElementById('chapterSelect');
+            const semester = semesterSelect.value;
+            const subject = subjectSelect.value;
+            chapterSelect.innerHTML = '';
+            if (subjects[semester] && subjects[semester][subject]) {
+                const chapterList = subjects[semester][subject];
+                for (let chapter of chapterList) {
+                    let option = document.createElement('option');
+                    option.value = chapter;
+                    option.text = chapter;
+                    chapterSelect.appendChild(option);
+                }
+            }
+        }
+
+        function displayContent() {
+            const semester = document.getElementById('semesterSelect').value;
+            const subject = document.getElementById('subjectSelect').value;
+            const chapter = document.getElementById('chapterSelect').value;
+            const pdfUrl = getPdfUrl(semester, subject, chapter);
+
+            loadPDF(pdfUrl);
+        }
+
+        function getPdfUrl(semester, subject, chapter) {
+            return `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${chapter}.pdf`;
+        }
+
+        function loadPDF(url) {
+            const pdfIframe = document.getElementById("pdf-iframe");
+            pdfIframe.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(url)}`;
+        }
+
+
+        window.onload = function () {
+            populateSubjects();
+        }
+        // Notifications logic
+      // Array of notifications with date and time manually added
+     // Array of notifications with support for multiple links
+     const notifications = [
+     { 
+            title: "DBMS Exam", 
+            message: " DBMS Materials Can be accessed on PULMS under classroom section", 
+            date: "2024-11-09T15:24:00", 
+            links: [
+                { url: "elearning.paruluniversity.ac.in", label: "PULMS" }
+            ]
+        },
+
+        { 
+            title: "Useful Links", 
+            message: "Other useful links (Gdrive)", 
+            date: "2024-11-11T14:00:00", 
+            links: [{url: "https://drive.google.com/drive/folders/1MJg9XOitcisGjBh9HLSySVTX7ZiyUesb?usp=drive_link", label:"Link 1"}, {url:"https://drive.google.com/drive/folders/15cKyJQY2zo9bob-lmM5WfOiftq0g1lML?usp=drive_link", label:"Link 2"}] 
+        }
+        
+       
+    ];
+
+    // Function to format date and time
+    function formatDateTime(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString('en-US', { 
+            dateStyle: 'medium', 
+            timeStyle: 'short' 
+        });
+    }
+
+    // Function to display notifications
+    function displayNotifications() {
+        const notificationBoard = document.getElementById('notificationBoard');
+        notificationBoard.innerHTML = ''; // Clear the board before adding notifications
+
+        // Iterate over notifications and add the newest first
+        notifications.forEach(notification => {
+            const notificationElement = document.createElement('div');
+            notificationElement.classList.add('notification');
+            
+            // Generate links dynamically if any are provided
+            const linksHTML = notification.links.length > 0 
+                ? notification.links.map(link => `<a href="${link.url}" target="_blank" style="color: #3498db; text-decoration: none; font-weight: bold; display: block; margin-top: 5px;">${link.label || link.url}</a>`).join("")
+                : "";
+
+            notificationElement.innerHTML = `
+                <h3>${notification.title}</h3>
+                <p>${notification.message}</p>
+                <div class="date-time">Published on: ${formatDateTime(notification.date)}</div>
+                ${linksHTML}
+            `;
+            
+            notificationBoard.appendChild(notificationElement);
+        });
+    }
+
+    // Display notifications on page load
+    displayNotifications();
+
+    // Function to add a new notification with multiple links
+    function addNotification(title, message, date, links = []) {
+        notifications.unshift({ title, message, date, links });
+        displayNotifications(); // Refresh the notifications display
+    }
+    </script>
+
+    <div class="footer">
+        Project hosted on <a href="https://github.com/Jinansh230705"><img src="fonts/github-mark.svg"
+                alt="GitHub logo"></a>
+        <div class="skeuomorphic-box><a href=" sec/public_key.asc" target="_blank">Secured with OpenPGP</a></div>
+        <p>&copy; Jinansh230705</p>
+    </div>
+
+</body>
+
+</html>
