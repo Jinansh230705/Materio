@@ -612,9 +612,18 @@ function formatDateTime(dateString) {
 function displayNotifications() {
     const notificationBoard = document.getElementById('notificationBoard');
     notificationBoard.innerHTML = '';
-    notifications.sort((a, b) => new Date(b.date) - new Date(a.date));
-    
-    if (notifications.length === 0) {
+
+    // Compute the threshold date (20 days ago)
+    const twentyDaysAgo = new Date();
+    twentyDaysAgo.setDate(twentyDaysAgo.getDate() - 20);
+
+    // Filter out notifications older than 20 days
+    const validNotifications = notifications.filter(notification => new Date(notification.date) >= twentyDaysAgo);
+
+    // Sort valid notifications by date (newest first)
+    validNotifications.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    if (validNotifications.length === 0) {
         const noNotification = document.createElement('div');
         noNotification.classList.add('no-notifications');
         noNotification.textContent = "No New Notifications";
@@ -622,19 +631,23 @@ function displayNotifications() {
         return;
     }
 
-    notifications.forEach((notification) => {
+    validNotifications.forEach((notification) => {
         const container = document.createElement('div');
         container.classList.add('notification');
+
         const title = document.createElement('h3');
         title.textContent = notification.title;
         container.appendChild(title);
+
         const message = document.createElement('p');
         message.textContent = notification.message;
         container.appendChild(message);
+
         const date = document.createElement('span');
         date.classList.add('notification-date');
         date.textContent = formatDateTime(notification.date);
         container.appendChild(date);
+
         if (notification.links && notification.links.length > 0) {
             const linksContainer = document.createElement('div');
             linksContainer.classList.add('notification-links');
