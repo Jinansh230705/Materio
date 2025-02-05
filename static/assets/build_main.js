@@ -121,13 +121,13 @@ async function displayContent() {
         const clientId = await getAdobeClientId();
         var adobeDCView = new AdobeDC.View({ clientId: clientId, divId: "contentDisplay" });
         adobeDCView.previewFile({
-            content: { location: { url: pdfUrl } },
-            metaData: { fileName: pdfUrl.split("/").slice(-1)[0] }
-        }, { embedMode: "SIZED_CONTAINER", enableAnnotationAPIs: true });
-    } catch (err) {
+          content: { location: { url: pdfUrl } },
+          metaData: { fileName: pdfUrl.split("/").slice(-1)[0] }
+        }, { embedMode: "SIZED_CONTAINER" });
+      } catch (err) {
         console.error("Error initializing Adobe DC View:", err);
         alert("Failed to load the document viewer. Please try again later.");
-    }
+      }
 }
 
 function getPdfUrl(semester, subject, chapter) {
