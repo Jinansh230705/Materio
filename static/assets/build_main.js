@@ -1,1 +1,225 @@
-const _0x4623e2=_0x5bfa;function _0x5bfa(_0x4679d5,_0x584014){const _0x24ff03=_0x24ff();return _0x5bfa=function(_0x5bfa8d,_0x3c8086){_0x5bfa8d=_0x5bfa8d-0xe6;let _0xc3c74b=_0x24ff03[_0x5bfa8d];return _0xc3c74b;},_0x5bfa(_0x4679d5,_0x584014);}(function(_0x3b4176,_0x2fb952){const _0x51720d=_0x5bfa,_0xf721b2=_0x3b4176();while(!![]){try{const _0x5a15e9=-parseInt(_0x51720d(0xf6))/0x1+-parseInt(_0x51720d(0x124))/0x2+-parseInt(_0x51720d(0xf7))/0x3+-parseInt(_0x51720d(0x11a))/0x4+parseInt(_0x51720d(0x11d))/0x5*(-parseInt(_0x51720d(0x134))/0x6)+parseInt(_0x51720d(0x117))/0x7+parseInt(_0x51720d(0xec))/0x8;if(_0x5a15e9===_0x2fb952)break;else _0xf721b2['push'](_0xf721b2['shift']());}catch(_0x30a7da){_0xf721b2['push'](_0xf721b2['shift']());}}}(_0x24ff,0x575a7));function toggleSettingsDialog(){const _0x29e48a=_0x5bfa;var _0x5238bf=document['getElementById'](_0x29e48a(0x122));_0x5238bf[_0x29e48a(0x135)][_0x29e48a(0xf5)]===_0x29e48a(0x12d)?_0x5238bf[_0x29e48a(0x135)][_0x29e48a(0xf5)]=_0x29e48a(0x108):_0x5238bf[_0x29e48a(0x135)]['display']=_0x29e48a(0x12d);}document['getElementById'](_0x4623e2(0x105))[_0x4623e2(0xef)]=function(){const _0xafa8dc=_0x4623e2;document[_0xafa8dc(0x107)](_0xafa8dc(0x104))[_0xafa8dc(0x135)][_0xafa8dc(0xf5)]=_0xafa8dc(0x108);},document['getElementById'](_0x4623e2(0x103))[_0x4623e2(0xef)]=function(){const _0x5b8958=_0x4623e2;document['getElementById'](_0x5b8958(0x104))[_0x5b8958(0x135)]['display']=_0x5b8958(0x12d);},window['onclick']=function(_0x44fe84){const _0x4f24bc=_0x4623e2;_0x44fe84['target']==document[_0x4f24bc(0x107)](_0x4f24bc(0x104))&&(document['getElementById'](_0x4f24bc(0x104))[_0x4f24bc(0x135)][_0x4f24bc(0xf5)]='none');};let subjects={};fetch('https://cdn-materioa.netlify.app/subjects.json')[_0x4623e2(0x12f)](_0x27ba2f=>{const _0x245d83=_0x4623e2;if(!_0x27ba2f['ok'])throw new Error(_0x245d83(0x100)+_0x27ba2f[_0x245d83(0x10d)]);return _0x27ba2f[_0x245d83(0xf2)]();})[_0x4623e2(0x12f)](_0x26947d=>{subjects=_0x26947d,populateSemester(),populateSubjects();})[_0x4623e2(0xe7)](_0x4a0948=>{console['error']('Error\x20loading\x20subjects:',_0x4a0948);});function populateSemester(){const _0x4b4f74=_0x4623e2,_0x46a200=document[_0x4b4f74(0x107)]('semesterSelect');_0x46a200[_0x4b4f74(0x12a)]='';for(let _0x368cab in subjects){let _0x34af4f=document[_0x4b4f74(0x11f)](_0x4b4f74(0xf3));_0x34af4f['value']=_0x368cab,_0x34af4f[_0x4b4f74(0x12b)]=_0x368cab,_0x46a200[_0x4b4f74(0x129)](_0x34af4f);}}function _0x24ff(){const _0x2e6de4=['Enum','Annotation\x20added:','Page\x20viewed:','status','pageNumber','value','FULLSCREEN_MODE_CHANGED','pdf_page_view','AnnotationEvents','CallbackType','getAnnotationManager','clientId','registerCallback','444367DiCqss','User\x20scrolled','pdf_fullscreen','296940UDNdXv','isFullScreen','/.netlify/functions/getAdobeClientId','299555AusTKy','zoomLevel','createElement','chapterSelect','split','settings-dialog','Zoom\x20level\x20changed:','122854bHzLoH','log','addEventListener','SIZED_CONTAINER','Active\x20reading\x20session','appendChild','innerHTML','text','data','none','ANNOTATION_DELETED','then','pdf_zoom','pdf_annotation','.pdf','ANNOTATION_ADDED','60kkTffA','style','pdf_engagement','catch','subjectSelect','View','https://cdn-materioa.netlify.app/pdfs','contentDisplay','17337784oiAppX','ZOOM_LEVEL_CHANGED','Fullscreen\x20mode:','onclick','Document\x20scrolled','Annotation\x20added','json','option','ANNOTATION_UPDATED','display','507000NfSutI','1893399QkfPuM','Adobe\x20PDF','semesterSelect','event','Zoom\x20level:\x20','slice','pdf_scroll','Annotation\x20updated:','Failed\x20to\x20fetch\x20Adobe\x20Client\x20ID','HTTP\x20error!\x20status:\x20','Page\x20','Annotation\x20deleted:','close-notification-dialog','notification-dialog','notification-bell','Exited\x20Fullscreen','getElementById','block','Error\x20initializing\x20Adobe\x20DC\x20View:'];_0x24ff=function(){return _0x2e6de4;};return _0x24ff();}function populateSubjects(){const _0x201b04=_0x4623e2,_0x5c6c88=document[_0x201b04(0x107)]('semesterSelect'),_0x20e2b6=document[_0x201b04(0x107)](_0x201b04(0xe8)),_0x2ea4cd=_0x5c6c88[_0x201b04(0x10f)];if(subjects[_0x2ea4cd]){const _0x2390b9=subjects[_0x2ea4cd];_0x20e2b6[_0x201b04(0x12a)]='';for(let _0x164880 in _0x2390b9){let _0x467e10=document['createElement'](_0x201b04(0xf3));_0x467e10[_0x201b04(0x10f)]=_0x164880,_0x467e10[_0x201b04(0x12b)]=_0x164880,_0x20e2b6[_0x201b04(0x129)](_0x467e10);}populateChapters();}}function populateChapters(){const _0x334e13=_0x4623e2,_0x73d6ea=document[_0x334e13(0x107)]('semesterSelect'),_0x3f7e44=document[_0x334e13(0x107)](_0x334e13(0xe8)),_0x3253c4=document[_0x334e13(0x107)](_0x334e13(0x120)),_0x653a12=_0x73d6ea[_0x334e13(0x10f)],_0x5fe04c=_0x3f7e44['value'];_0x3253c4[_0x334e13(0x12a)]='';if(subjects[_0x653a12]&&subjects[_0x653a12][_0x5fe04c]){const _0x3c04d7=subjects[_0x653a12][_0x5fe04c];for(let _0x5557fa of _0x3c04d7){let _0x5d1f6d=document[_0x334e13(0x11f)](_0x334e13(0xf3));_0x5d1f6d[_0x334e13(0x10f)]=_0x5557fa,_0x5d1f6d[_0x334e13(0x12b)]=_0x5557fa,_0x3253c4[_0x334e13(0x129)](_0x5d1f6d);}}}async function getAdobeClientId(){const _0x1eca0e=_0x4623e2,_0x6fb101=await fetch(_0x1eca0e(0x11c)),_0x2ff29f=await _0x6fb101[_0x1eca0e(0xf2)]();if(_0x2ff29f[_0x1eca0e(0x115)])return _0x2ff29f[_0x1eca0e(0x115)];else throw new Error(_0x1eca0e(0xff));}async function displayContent(){const _0x334436=_0x4623e2,_0x259433=document['getElementById'](_0x334436(0xf9)),_0x224849=document[_0x334436(0x107)](_0x334436(0xe8)),_0x356d1e=document[_0x334436(0x107)](_0x334436(0x120)),_0x5e2f97=_0x259433[_0x334436(0x10f)],_0x16b811=_0x224849[_0x334436(0x10f)],_0x4665bd=_0x356d1e[_0x334436(0x10f)],_0x3ed8b4=_0x470383(_0x5e2f97,_0x16b811,_0x4665bd),_0x5b42ee=document[_0x334436(0x107)](_0x334436(0xeb));try{const _0x260f0c=await getAdobeClientId();var _0x4cf8ec=new AdobeDC[(_0x334436(0xe9))]({'clientId':_0x260f0c,'divId':_0x334436(0xeb)});_0x4cf8ec['previewFile']({'content':{'location':{'url':_0x3ed8b4}},'metaData':{'fileName':_0x3ed8b4[_0x334436(0x121)]('/')[_0x334436(0xfc)](-0x1)[0x0]}},{'embedMode':_0x334436(0x127),'enableAnnotationAPIs':!![],'includePDFAnnotations':!![]}),_0x4cf8ec[_0x334436(0x114)]()[_0x334436(0x12f)](_0x454fbd=>{const _0x59dc37=_0x334436;_0x454fbd[_0x59dc37(0x126)](AdobeDC[_0x59dc37(0xe9)][_0x59dc37(0x10a)][_0x59dc37(0x112)]['ANNOTATION_ADDED'],_0x4e03b8=>{console['log']('Annotation\x20added:',_0x4e03b8);}),_0x454fbd[_0x59dc37(0x126)](AdobeDC['View'][_0x59dc37(0x10a)][_0x59dc37(0x112)][_0x59dc37(0x12e)],_0x383e4a=>{const _0x2a9467=_0x59dc37;console['log'](_0x2a9467(0x102),_0x383e4a);}),_0x454fbd[_0x59dc37(0x126)](AdobeDC[_0x59dc37(0xe9)][_0x59dc37(0x10a)][_0x59dc37(0x112)][_0x59dc37(0xf4)],_0x2afea8=>{const _0x1703b3=_0x59dc37;console[_0x1703b3(0x125)](_0x1703b3(0xfe),_0x2afea8);});});}catch(_0x3db222){console['error'](_0x334436(0x109),_0x3db222),alert('Failed\x20to\x20load\x20the\x20document\x20viewer.\x20Please\x20try\x20again\x20later.');}function _0x470383(_0x528703,_0x5e1623,_0x334204){const _0x7e169a=_0x334436;var _0x340c28=_0x7e169a(0xea),_0x5b638d=_0x340c28+'/'+_0x528703+'/'+_0x5e1623+'/'+_0x334204+_0x7e169a(0x132);return _0x5b638d;}window['onload']=function(){populateSubjects();};function _0xf4c7b1(_0x22addf){const _0x329bac=_0x334436;_0x22addf[_0x329bac(0x116)](AdobeDC[_0x329bac(0xe9)]['Enum'][_0x329bac(0x113)]['PAGE_VIEW'],function(_0x2ef073){const _0x13d720=_0x329bac;console[_0x13d720(0x125)](_0x13d720(0x10c),_0x2ef073['data'][_0x13d720(0x10e)]),gtag(_0x13d720(0xfa),_0x13d720(0x111),{'event_category':'Adobe\x20PDF','event_label':_0x13d720(0x101)+_0x2ef073[_0x13d720(0x12c)]['pageNumber']});}),_0x22addf['registerCallback'](AdobeDC['View'][_0x329bac(0x10a)][_0x329bac(0x113)]['DOCUMENT_SCROLL'],function(){const _0x1928e3=_0x329bac;console[_0x1928e3(0x125)](_0x1928e3(0xf0)),gtag(_0x1928e3(0xfa),_0x1928e3(0xfd),{'event_category':_0x1928e3(0xf8),'event_label':_0x1928e3(0x118)});}),_0x22addf['registerCallback'](AdobeDC[_0x329bac(0xe9)][_0x329bac(0x10a)]['CallbackType'][_0x329bac(0xed)],function(_0x207871){const _0x219cc8=_0x329bac;console[_0x219cc8(0x125)](_0x219cc8(0x123),_0x207871['data'][_0x219cc8(0x11e)]),gtag(_0x219cc8(0xfa),_0x219cc8(0x130),{'event_category':_0x219cc8(0xf8),'event_label':_0x219cc8(0xfb)+_0x207871[_0x219cc8(0x12c)]['zoomLevel'],'value':_0x207871[_0x219cc8(0x12c)][_0x219cc8(0x11e)]});}),_0x22addf[_0x329bac(0x116)](AdobeDC[_0x329bac(0xe9)]['Enum'][_0x329bac(0x113)][_0x329bac(0x133)],function(_0x499ccf){const _0x24dc32=_0x329bac;console[_0x24dc32(0x125)](_0x24dc32(0x10b),_0x499ccf[_0x24dc32(0x12c)]),gtag(_0x24dc32(0xfa),_0x24dc32(0x131),{'event_category':_0x24dc32(0xf8),'event_label':_0x24dc32(0xf1)});}),_0x22addf[_0x329bac(0x116)](AdobeDC['View']['Enum'][_0x329bac(0x113)][_0x329bac(0x110)],function(_0x340015){const _0x4c9431=_0x329bac;console['log'](_0x4c9431(0xee),_0x340015['data'][_0x4c9431(0x11b)]),gtag('event',_0x4c9431(0x119),{'event_category':_0x4c9431(0xf8),'event_label':_0x340015[_0x4c9431(0x12c)][_0x4c9431(0x11b)]?'Entered\x20Fullscreen':_0x4c9431(0x106)});}),setInterval(()=>{const _0xb24be2=_0x329bac;gtag(_0xb24be2(0xfa),_0xb24be2(0xe6),{'event_category':_0xb24be2(0xf8),'event_label':_0xb24be2(0x128),'engagement_time':0xf});},0x3a98);}}
+function toggleSettingsDialog() {
+  var dialog = document.getElementById('settings-dialog');
+  if (dialog.style.display === 'none') {
+    dialog.style.display = 'block';
+  } else {
+    dialog.style.display = 'none';
+  }
+}
+
+document.getElementById('notification-bell').onclick = function () {
+  document.getElementById('notification-dialog').style.display = 'block';
+}
+
+document.getElementById('close-notification-dialog').onclick = function () {
+  document.getElementById('notification-dialog').style.display = 'none';
+}
+
+window.onclick = function (event) {
+  if (event.target == document.getElementById('notification-dialog')) {
+    document.getElementById('notification-dialog').style.display = 'none';
+  }
+}
+
+let subjects = {};
+const semesterMapping = {
+  "1": "1st Semester",
+  "2": "2nd Semester",
+  "3": "3rd Semester",
+  "4": "4th Semester",
+  "9": "Miscelleneous"
+};
+fetch('https://cdn-materioa.netlify.app/subjects.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    subjects = data;
+    populateSemester();
+    populateSubjects();
+  })
+  .catch(error => {
+    console.error('Error loading subjects:', error);
+  });
+
+function populateSemester() {
+  const semesterSelect = document.getElementById('semesterSelect');
+  semesterSelect.innerHTML = '';
+  for (let semester in subjects) {
+    let option = document.createElement('option');
+    option.value = semester;
+    option.text = semesterMapping[semester] || semester;
+    if (semester === "4") {
+      option.selected = true;
+    }
+    semesterSelect.appendChild(option);
+  }
+}
+
+function populateSubjects() {
+  const semesterSelect = document.getElementById('semesterSelect');
+  const subjectSelect = document.getElementById('subjectSelect');
+  const semester = semesterSelect.value;
+  if (subjects[semester]) {
+    const subjectList = subjects[semester];
+    subjectSelect.innerHTML = '';
+    for (let subject in subjectList) {
+      let option = document.createElement('option');
+      option.value = subject;
+      option.text = subject;
+      subjectSelect.appendChild(option);
+    }
+    populateChapters();
+  }
+}
+
+
+function populateChapters() {
+  const semesterSelect = document.getElementById('semesterSelect');
+  const subjectSelect = document.getElementById('subjectSelect');
+  const chapterSelect = document.getElementById('chapterSelect');
+  const semester = semesterSelect.value;
+  const subject = subjectSelect.value;
+  chapterSelect.innerHTML = '';
+  if (subjects[semester] && subjects[semester][subject]) {
+    const chapterList = subjects[semester][subject];
+    for (let chapter of chapterList) {
+      let option = document.createElement('option');
+      option.value = chapter;
+      option.text = chapter;
+      chapterSelect.appendChild(option);
+    }
+  }
+}
+
+// Function to fetch the Adobe client ID securely from Netlify Functions
+async function getAdobeClientId() {
+  const response = await fetch('/.netlify/functions/getAdobeClientId'); // Call the serverless function
+  const data = await response.json();
+  if (data.clientId) {
+    return data.clientId;
+  } else {
+    throw new Error("Failed to fetch Adobe Client ID");
+  }
+}
+
+async function displayContent() {
+  const semesterSelect = document.getElementById('semesterSelect');
+  const subjectSelect = document.getElementById('subjectSelect');
+  const chapterSelect = document.getElementById('chapterSelect');
+  const semester = semesterSelect.value;
+  const subject = subjectSelect.value;
+  const chapter = chapterSelect.value;
+  const pdfUrl = getPdfUrl(semester, subject, chapter);
+
+  const contentDisplay = document.getElementById('contentDisplay');
+
+  try {
+    const clientId = await getAdobeClientId();
+    var adobeDCView = new AdobeDC.View({ clientId: clientId, divId: "contentDisplay" });
+
+    adobeDCView.previewFile({
+      content: { location: { url: pdfUrl } },
+      metaData: { fileName: pdfUrl.split("/").slice(-1)[0] }
+    }, {
+      embedMode: "SIZED_CONTAINER",
+      enableAnnotationAPIs: true,
+      includePDFAnnotations: true
+    });
+
+    adobeDCView.getAnnotationManager().then(annotationManager => {
+      annotationManager.addEventListener(AdobeDC.View.Enum.AnnotationEvents.ANNOTATION_ADDED, event => {
+        console.log("Annotation added:", event);
+      });
+
+      annotationManager.addEventListener(AdobeDC.View.Enum.AnnotationEvents.ANNOTATION_DELETED, event => {
+        console.log("Annotation deleted:", event);
+      });
+
+      annotationManager.addEventListener(AdobeDC.View.Enum.AnnotationEvents.ANNOTATION_UPDATED, event => {
+        console.log("Annotation updated:", event);
+      });
+    });
+
+  } catch (err) {
+    console.error("Error initializing Adobe DC View:", err);
+    alert("Failed to load the document viewer. Please try again later.");
+  }
+
+
+  function getPdfUrl(semester, subject, chapter) {
+    var baseUrl = 'https://cdn-materioa.netlify.app/pdfs';
+    var pdfUrl = `${baseUrl}/${semester}/${subject}/${chapter}.pdf`;
+    return pdfUrl;
+  }
+
+  window.onload = function () {
+    populateSubjects();
+  };
+
+  //GA4 Measurements
+  function setupTracking(viewer) {
+    viewer.registerCallback(
+      AdobeDC.View.Enum.CallbackType.PAGE_VIEW,
+      function (event) {
+        console.log("Page viewed:", event.data.pageNumber);
+        gtag('event', 'pdf_page_view', {
+          event_category: 'Adobe PDF',
+          event_label: 'Page ' + event.data.pageNumber
+        });
+      }
+    );
+    viewer.registerCallback(
+      AdobeDC.View.Enum.CallbackType.DOCUMENT_SCROLL,
+      function () {
+        console.log("Document scrolled");
+        gtag('event', 'pdf_scroll', {
+          event_category: 'Adobe PDF',
+          event_label: 'User scrolled'
+        });
+      }
+    );
+
+    viewer.registerCallback(
+      AdobeDC.View.Enum.CallbackType.ZOOM_LEVEL_CHANGED,
+      function (event) {
+        console.log("Zoom level changed:", event.data.zoomLevel);
+        gtag('event', 'pdf_zoom', {
+          event_category: 'Adobe PDF',
+          event_label: 'Zoom level: ' + event.data.zoomLevel,
+          value: event.data.zoomLevel
+        });
+      }
+    );
+    viewer.registerCallback(
+      AdobeDC.View.Enum.CallbackType.ANNOTATION_ADDED,
+      function (event) {
+        console.log("Annotation added:", event.data);
+        gtag('event', 'pdf_annotation', {
+          event_category: 'Adobe PDF',
+          event_label: 'Annotation added'
+        });
+      }
+    );
+    viewer.registerCallback(
+      AdobeDC.View.Enum.CallbackType.FULLSCREEN_MODE_CHANGED,
+      function (event) {
+        console.log("Fullscreen mode:", event.data.isFullScreen);
+        gtag('event', 'pdf_fullscreen', {
+          event_category: 'Adobe PDF',
+          event_label: event.data.isFullScreen ? 'Entered Fullscreen' : 'Exited Fullscreen'
+        });
+      }
+    );
+    setInterval(() => {
+      gtag('event', 'pdf_engagement', {
+        event_category: 'Adobe PDF',
+        event_label: 'Active reading session',
+        engagement_time: 15
+      });
+    }, 15000);
+  }
+}

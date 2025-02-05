@@ -68,46 +68,47 @@ background-color: #555;
 
 
         section {
-        max-width: 1000px;
-        margin: 1em auto;
-        padding: 1em;
-        background-color: rgba(228, 220, 174, 0.5);
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-    }
-    
-
-    
-    @media (max-width: 768px) {
-        #resourceForm select {
-        width: 100%;
-    }
-        .content {
-            padding: 10px;
-            margin-left: 0px;
-            /* text-align: center; */
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        section {
+            max-width: 1000px;
             margin: 1em auto;
             padding: 1em;
-            max-width: 85%;
+            background-color: rgba(228, 220, 174, 0.5);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            box-shadow: none;
         }
 
-        setting-dialog {
-            padding: 0px;
-            width: 120%;
-            position: absolute;
 
-            
+
+        @media (max-width: 768px) {
+            #resourceForm select {
+                width: 100%;
+            }
+
+            .content {
+                padding: 10px;
+                margin-left: 0px;
+                /* text-align: center; */
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            section {
+                margin: 1em auto;
+                padding: 1em;
+                max-width: 85%;
+                border-radius: 10px;
+                box-shadow: none;
+            }
+
+            setting-dialog {
+                padding: 0px;
+                width: 120%;
+                position: absolute;
+
+
+            }
         }
-    }
 
         setting-dialog {
             display: none;
@@ -127,6 +128,7 @@ background-color: #555;
             font-family: 'Open Sauce One Regular', sans-serif;
             position: relative;
         }
+
         notification-dialog {
             background-color: rgba(228, 220, 174);
             border-radius: 10px;
@@ -176,10 +178,10 @@ background-color: #555;
         }
 
         #resourceForm select option {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
         #resourceForm button:hover {
             background-color: #444;
@@ -251,7 +253,7 @@ background-color: #555;
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
-            color:#000000;
+            color: #000000;
         }
 
         .close {
@@ -267,13 +269,15 @@ background-color: #555;
             text-decoration: none;
             cursor: pointer;
         }
+
         /* Notification board styles */
         .notification-board {
             width: 100%;
             max-height: 300px;
             overflow-y: auto;
             display: flex;
-            flex-direction: column-reverse; /* To show latest on top */
+            flex-direction: column-reverse;
+            /* To show latest on top */
             margin-top: 20px;
             color: #000000;
         }
@@ -284,7 +288,7 @@ background-color: #555;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-bottom: 10px;
-            color:#000000;
+            color: #000000;
             border-left: 5px solid #BB5031;
         }
 
@@ -299,6 +303,7 @@ background-color: #555;
             color: #000000;
             font-size: 0.9rem;
         }
+
         .notification .date-time {
             font-size: 0.8rem;
             color: #434343;
@@ -306,9 +311,9 @@ background-color: #555;
         }
 
         .notification-item {
-    color: black;
-    /* Other styles for the notification item */
-}
+            color: black;
+            /* Other styles for the notification item */
+        }
 
         /* Expresso Theme */
         body.expresso {
@@ -316,7 +321,7 @@ background-color: #555;
             color: #E4DCAE;
         }
 
-        body.expresso .notification p{
+        body.expresso .notification p {
             color: #000000;
         }
 
@@ -389,12 +394,12 @@ background-color: #555;
                         style="position: absolute; right: 10px; top: 10px; cursor: pointer; color: rgb(255, 94, 0);"
                         onclick="toggleSettingsDialog()"></i>
                     <h2>Settings</h2>
-                    <p>About: Materio </p>
-                    <p>Version: </p>
+                    <p>About: Materio Beta </p>
+                    <p>Version: V4.0.BETA.PRE </p>
                     <p>Try Expresso
                         <label for="themeSwitch">:</label>
                         <input type="checkbox" id="themeSwitch">
-                        <script src="themegine.js"></script>
+                        <script src="https://materioa.netlify.app/static/assets/themegine.js"></script>
                     </p>
                     <p>Changelog:
                         <a href="changelog.html" style="color: purple;">View Release Notes</a>
@@ -408,13 +413,14 @@ background-color: #555;
             </div>
 
             <div id="notification-dialog" class="dialog">
-                    <div class="dialog-content" style="background-color: rgba(163, 156, 115, 0.8); border-radius: 10px; padding:20px; font-family: 'Open Sauce One Regular', sans-serif; position: relative; color:#000000">
+                <div class="dialog-content"
+                    style="background-color: rgba(163, 156, 115, 0.8); border-radius: 10px; padding:20px; font-family: 'Open Sauce One Regular', sans-serif; position: relative; color:#000000">
                     <h1>Notifications</h1>
                     <span class="close" id="close-notification-dialog">&times;</span>
                     <!-- Notification board container -->
-        <div class="notification-board" style="color:#000000;" id="notificationBoard">
-            <!-- Notifications will be dynamically added here -->
-        </div>
+                    <div class="notification-board" style="color:#000000;" id="notificationBoard">
+                        <!-- Notifications will be dynamically added here -->
+                    </div>
                 </div>
             </div>
 
@@ -428,7 +434,7 @@ background-color: #555;
     </div>
 
     <section>
-        <img src="deco/bag.png" alt="Bag" class="right-align">
+        <img src="https://materioa.netlify.app/static/res/bag.png" alt="Bag" class="right-align">
         <div class="rounded-rectangle">
             Resources
         </div>
@@ -455,7 +461,8 @@ background-color: #555;
 
     <section>
         <div class="viewer">
-            <div id="contentDisplay"> <iframe id="pdf-iframe" width="100%" height="600px" style="border: none;  border-radius: 10px;"></iframe></div>
+            <div id="contentDisplay"> <iframe id="pdf-iframe" width="100%" height="600px"
+                    style="border: none;  border-radius: 10px;"></iframe></div>
         </div>
     </section>
 
@@ -484,6 +491,13 @@ background-color: #555;
         }
 
         let subjects = {};
+        const semesterMapping = {
+            "1": "1st Semester",
+            "2": "2nd Semester",
+            "3": "3rd Semester",
+            "4": "4th Semester",
+            "9": "Miscelleneous"
+        };
         fetch('https://cdn-materioa.netlify.app/subjects.json')
             .then(response => {
                 if (!response.ok) {
@@ -493,7 +507,7 @@ background-color: #555;
             })
             .then(data => {
                 subjects = data;
-                populateSemester(); 
+                populateSemester();
                 populateSubjects();
             })
             .catch(error => {
@@ -506,7 +520,10 @@ background-color: #555;
             for (let semester in subjects) {
                 let option = document.createElement('option');
                 option.value = semester;
-                option.text = semester;
+                option.text = semesterMapping[semester] || semester;
+                if (semester === "4") {
+                    option.selected = true;
+                }
                 semesterSelect.appendChild(option);
             }
         }
@@ -515,7 +532,7 @@ background-color: #555;
             const semesterSelect = document.getElementById('semesterSelect');
             const subjectSelect = document.getElementById('subjectSelect');
             const semester = semesterSelect.value;
-            if(subjects[semester]) {
+            if (subjects[semester]) {
                 const subjectList = subjects[semester];
                 subjectSelect.innerHTML = '';
                 for (let subject in subjectList) {
@@ -570,71 +587,71 @@ background-color: #555;
             populateSubjects();
         }
         // Notifications logic
-      // Array of notifications with date and time manually added
-     // Array of notifications with support for multiple links
-     const notifications = [
-     { 
-            title: "DBMS Exam", 
-            message: " DBMS Materials Can be accessed on PULMS under classroom section", 
-            date: "2024-11-09T15:24:00", 
-            links: [
-                { url: "elearning.paruluniversity.ac.in", label: "PULMS" }
-            ]
-        },
+        // Array of notifications with date and time manually added
+        // Array of notifications with support for multiple links
+        const notifications = [
+            {
+                title: "DBMS Exam",
+                message: " DBMS Materials Can be accessed on PULMS under classroom section",
+                date: "2024-11-09T15:24:00",
+                links: [
+                    { url: "elearning.paruluniversity.ac.in", label: "PULMS" }
+                ]
+            },
 
-        { 
-            title: "Useful Links", 
-            message: "Other useful links (Gdrive)", 
-            date: "2024-11-11T14:00:00", 
-            links: [{url: "https://drive.google.com/drive/folders/1MJg9XOitcisGjBh9HLSySVTX7ZiyUesb?usp=drive_link", label:"Link 1"}, {url:"https://drive.google.com/drive/folders/15cKyJQY2zo9bob-lmM5WfOiftq0g1lML?usp=drive_link", label:"Link 2"}] 
+            {
+                title: "Useful Links",
+                message: "Other useful links (Gdrive)",
+                date: "2024-11-11T14:00:00",
+                links: [{ url: "https://drive.google.com/drive/folders/1MJg9XOitcisGjBh9HLSySVTX7ZiyUesb?usp=drive_link", label: "Link 1" }, { url: "https://drive.google.com/drive/folders/15cKyJQY2zo9bob-lmM5WfOiftq0g1lML?usp=drive_link", label: "Link 2" }]
+            }
+
+
+        ];
+
+        // Function to format date and time
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', {
+                dateStyle: 'medium',
+                timeStyle: 'short'
+            });
         }
-        
-       
-    ];
 
-    // Function to format date and time
-    function formatDateTime(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleString('en-US', { 
-            dateStyle: 'medium', 
-            timeStyle: 'short' 
-        });
-    }
+        // Function to display notifications
+        function displayNotifications() {
+            const notificationBoard = document.getElementById('notificationBoard');
+            notificationBoard.innerHTML = ''; // Clear the board before adding notifications
 
-    // Function to display notifications
-    function displayNotifications() {
-        const notificationBoard = document.getElementById('notificationBoard');
-        notificationBoard.innerHTML = ''; // Clear the board before adding notifications
+            // Iterate over notifications and add the newest first
+            notifications.forEach(notification => {
+                const notificationElement = document.createElement('div');
+                notificationElement.classList.add('notification');
 
-        // Iterate over notifications and add the newest first
-        notifications.forEach(notification => {
-            const notificationElement = document.createElement('div');
-            notificationElement.classList.add('notification');
-            
-            // Generate links dynamically if any are provided
-            const linksHTML = notification.links.length > 0 
-                ? notification.links.map(link => `<a href="${link.url}" target="_blank" style="color: #3498db; text-decoration: none; font-weight: bold; display: block; margin-top: 5px;">${link.label || link.url}</a>`).join("")
-                : "";
+                // Generate links dynamically if any are provided
+                const linksHTML = notification.links.length > 0
+                    ? notification.links.map(link => `<a href="${link.url}" target="_blank" style="color: #3498db; text-decoration: none; font-weight: bold; display: block; margin-top: 5px;">${link.label || link.url}</a>`).join("")
+                    : "";
 
-            notificationElement.innerHTML = `
+                notificationElement.innerHTML = `
                 <h3>${notification.title}</h3>
                 <p>${notification.message}</p>
                 <div class="date-time">Published on: ${formatDateTime(notification.date)}</div>
                 ${linksHTML}
             `;
-            
-            notificationBoard.appendChild(notificationElement);
-        });
-    }
 
-    // Display notifications on page load
-    displayNotifications();
+                notificationBoard.appendChild(notificationElement);
+            });
+        }
 
-    // Function to add a new notification with multiple links
-    function addNotification(title, message, date, links = []) {
-        notifications.unshift({ title, message, date, links });
-        displayNotifications(); // Refresh the notifications display
-    }
+        // Display notifications on page load
+        displayNotifications();
+
+        // Function to add a new notification with multiple links
+        function addNotification(title, message, date, links = []) {
+            notifications.unshift({ title, message, date, links });
+            displayNotifications(); // Refresh the notifications display
+        }
     </script>
 
     <div class="footer">
