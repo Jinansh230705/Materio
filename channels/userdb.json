@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "username": "user1",
+      "passwordHash": "ef92b778bafe771e89245b89ecbc356f2f1bc7df8b7babc2dd52e6e5d2f98465"
+    },
+    {
+      "username": "Jinansh",
+      "passwordHash": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"
+    }
+  ]
+}
