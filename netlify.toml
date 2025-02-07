@@ -1,2 +1,24 @@
 [build.environment]
 RUBY_VERSION = "3.1.4"
+
+[[headers]]
+  for = "/channels/userdb.json"
+  [headers.values]
+  status = 401
+
+[[headers]]
+  for = "/beta.html"
+  [headers.values]
+  status = 401
+
+[[redirects]]
+  from = "/channels/userdb.json"
+  to = "/404"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/beta.html"
+  to = "/404"
+  status = 302
+  force = true
