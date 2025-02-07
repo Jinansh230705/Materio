@@ -18,6 +18,12 @@ RUBY_VERSION = "3.1.4"
   status = 302
   force = true
 
+[[redirects]]
+  from = "/labs/*"
+  to = "/403"
+  status = 403
+  force = true
+
 
 
 
