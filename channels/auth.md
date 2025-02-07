@@ -36,7 +36,7 @@ permalink: /auth
         const hashedPassword = await hashPassword(password);
 
         // Fetch the user data from the server
-        const response = await fetch('/data/users.json'); // Adjust path if needed
+        const response = await fetch('userdb.json'); // Adjust path if needed
         if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
         const users = await response.json();
 
