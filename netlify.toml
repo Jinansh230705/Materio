@@ -13,12 +13,34 @@ RUBY_VERSION = "3.1.4"
 
 [[redirects]]
   from = "/channels/userdb.json"
-  to = "/404"
+  to = "/401"
   status = 302
   force = true
 
 [[redirects]]
   from = "/beta.html"
-  to = "/404"
+  to = "/401"
   status = 302
   force = true
+
+[[redirects]]
+  from = "/users.json"
+  to = "/401"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/data/users.json"
+  to = "/401"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/data/*"
+  to = "/401"
+  status = 302
+  force = true
+
+
+
+  
