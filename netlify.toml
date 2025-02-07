@@ -2,20 +2,9 @@
 RUBY_VERSION = "3.1.4"
 
 [[headers]]
-  for = "/channels/userdb.json"
-  [headers.values]
-  status = 401
-
-[[headers]]
   for = "/beta.html"
   [headers.values]
   status = 401
-
-[[redirects]]
-  from = "/channels/userdb.json"
-  to = "/401"
-  status = 302
-  force = true
 
 [[redirects]]
   from = "/beta.html"
@@ -29,17 +18,17 @@ RUBY_VERSION = "3.1.4"
   status = 302
   force = true
 
-[[redirects]]
-  from = "/data/users.json"
-  to = "/401"
-  status = 302
-  force = true
+[[headers]]
+  for = "/channels/userdb.json"
+  [headers.values]
+  Access-Control-Allow-Origin = "https://materioa.netlify.app"
+  Access-Control-Allow-Methods = "GET"
 
-[[redirects]]
-  from = "/data/*"
-  to = "/401"
-  status = 302
-  force = true
+[[headers]]
+  for = "/data/users.json"
+  [headers.values]
+  Access-Control-Allow-Origin = "https://materioa.netlify.app"
+  Access-Control-Allow-Methods = "GET"
 
 
 
