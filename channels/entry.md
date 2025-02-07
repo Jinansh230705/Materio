@@ -1,7 +1,7 @@
 ---
 layout: auth
-title: Acess Beta Channel
-permalink: /channels/auth
+title: Access Beta Channel
+permalink: /channels/entry
 ---
 <link rel="stylesheet" href="/assets/css/portalpages.css">
 <body>
@@ -36,7 +36,7 @@ permalink: /channels/auth
         const hashedPassword = await hashPassword(password);
 
         // Fetch the user data from the server
-        const response = await fetch('userdb.json'); // Adjust path if needed
+        const response = await fetch('/channels/userdb.json'); // Adjust path if needed
         if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
         const users = await response.json();
 
