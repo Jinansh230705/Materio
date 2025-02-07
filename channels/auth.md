@@ -1,7 +1,7 @@
 ---
 layout: auth
-title: Login
-permalink: /auth
+title: Acess Beta Channel
+permalink: /channels/auth
 ---
 <link rel="stylesheet" href="/assets/css/portalpages.css">
 <body>
