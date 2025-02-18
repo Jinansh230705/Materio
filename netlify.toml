@@ -24,6 +24,11 @@ RUBY_VERSION = "3.1.4"
   status = 403
   force = true
 
+[[redirects]]
+  from = "/p"
+  to = "/.netlify/functions/auth"
+  status = 200
+  force = true
 
 
 
