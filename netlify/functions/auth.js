@@ -5,15 +5,18 @@ exports.handler = async (event) => {
 
     if (queryString.ref === allowedRef) {
         return {
-            statusCode: 200,
-            body: "Access Granted. Page is loading...",
+            statusCode: 302, 
+            headers: {
+                Location: "/p", 
+            },
+            body: "Redirecting...",
         };
     }
 
     return {
         statusCode: 302,
         headers: {
-            Location: "/403.html",
+            Location: "/403",
         },
         body: "Redirecting...",
     };
