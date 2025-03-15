@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materio</title>
+    <link rel="icon" type="image/x-icon" href="/deco/1000153013.png">
+    <link href="https://db.onlinewebfonts.com/c/cdf9e1a785f6767291f7e12174be6174?family=Open+Sauce+One+Regular"
+        rel="stylesheet">
+    <link href="https://db.onlinewebfonts.com/c/66761cc137992e659f355bf50b1307cc?family=ApexNew-Medium"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <!-- <link rel="stylesheet" href="themestore.css">  -->
+    <style>
+        /* Default Thermal Theme */
+        title {
+
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Open Sauce One Regular";
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #000000;
+        }
+
+        header {
+            font-family: "ApexNew-Medium";
+            background: linear-gradient(to right, rgba(200, 109, 109, 0.65), rgba(255, 238, 142, 0.65), rgba(109, 181, 200, 0.65));
+            color: #000000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em;
+        }
+
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 10px;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* nav a:hover {
+background-color: #555;
+} */
+
+        .content {
+            padding: 20px;
+            /* Adjust this value as needed */
+            margin-left: 135px;
+        }
+
+
+        section {
+            max-width: 1000px;
+            margin: 1em auto;
+            padding: 1em;
+            background-color: rgba(228, 220, 174, 0.5);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+       /* From Uiverse.io by rishichawda */ 
+/* The switch - the box around the slider */
+#theme-toggle-button {
+  font-size: 17px;
+  position: static;
+  display: inline-block;
+  width: 3em;
+  cursor: pointer;
+}
+
+/* Hide default HTML checkbox */
+#toggle {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+#container,
+#patches,
+#stars,
+#button,
+#sun,
+#moon,
+#cloud {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.25s;
+}
+
+/* night sky background */
+#toggle:checked + svg #container {
+  fill: #2b4360;
+}
+
+/* move button to right when checked */
+#toggle:checked + svg #button {
+  transform: translate(28px, 2.333px);
+}
+
+/* show/hide sun and moon based on checkbox state */
+#sun {
+  opacity: 1;
+}
+
+#toggle:checked + svg #sun {
+  opacity: 0;
+}
+
+#moon {
+  opacity: 0;
+}
+
+#toggle:checked + svg #moon {
+  opacity: 1;
+}
+
+/* show or hide background items on checkbox state */
+#cloud {
+  opacity: 1;
+}
+
+#toggle:checked + svg #cloud {
+  opacity: 0;
+}
+
+#stars {
+  opacity: 0;
+}
+
+#toggle:checked + svg #stars {
+  opacity: 1;
+}
+
+
+
+
+        @media (max-width: 768px) {
+            #resourceForm select {
+                width: 100%;
+            }
+
+            .content {
+                padding: 10px;
+                margin-left: 0px;
+                /* text-align: center; */
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            section {
+                margin: 1em auto;
+                padding: 1em;
+                max-width: 85%;
+                border-radius: 10px;
+                box-shadow: none;
+            }
+
+            setting-dialog {
+                padding: 0px;
+                width: 120%;
+                position: absolute;
+
+
+            }
+        }
+
+        setting-dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            padding: 50px;
+            box-sizing: border-box;
+
+            background: rgba(228, 220, 174);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Open Sauce One Regular', sans-serif;
+            position: relative;
+        }
+
+        notification-dialog {
+            background-color: rgba(228, 220, 174);
+            border-radius: 10px;
+        }
+
+        .viewer {
+            height: 600px;
+        }
+
+        .rounded-rectangle {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #FFE1CF;
+            border-radius: 15px;
+        }
+
+        .right-align {
+            float: right;
+            width: 33%;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #555;
+        }
+
+        #resourceForm select,
+        #resourceForm button {
+            flex-basis: 30%;
+            padding: 13px;
+            font-size: 15px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Apex New', sans-serif;
+            background-color: rgba(255, 238, 142, 0.65);
+            margin: 5px;
+            overflow: hidden;
+    text-overflow: ellipsis;
+        }
+
+        #resourceForm button {
+            background-color: #FF8B49;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        #resourceForm select option {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #resourceForm button:hover {
+            background-color: #444;
+        }
+
+        .navbar,
+        .footer {
+
+            background: linear-gradient(to right, rgba(200, 109, 109, 0.65), rgba(255, 238, 142, 0.65), rgba(109, 181, 200, 0.65));
+            color: #000000;
+            padding: 10px;
+        }
+
+        .navbar a,
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .footer {
+            margin-top: 100px;
+            text-align: center;
+            height: 80px;
+        }
+
+        .footer img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+        .skeuomorphic-box {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+            background: #e0e0e0;
+            box-shadow: inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+            color: rgb(100, 100, 100);
+        }
+
+        .icons i {
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .dialog {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .dialog-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            color: #000000;
+        }
+
+        .close {
+            color: #FF8B49;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #ff3700;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Notification board styles */
+        .notification-board {
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column-reverse;
+            /* To show latest on top */
+            margin-top: 20px;
+            color: #000000;
+        }
+
+        .notification {
+            background-color: rgb(255, 247, 205);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            color: #000000;
+            border-left: 5px solid #BB5031;
+        }
+
+        .notification h3 {
+            margin: 0;
+            font-size: 1rem;
+            color: #000000;
+        }
+
+        .notification p {
+            margin: 5px 0 0;
+            color: #000000;
+            font-size: 0.9rem;
+        }
+
+        .notification .date-time {
+            font-size: 0.8rem;
+            color: #434343;
+            margin-top: 5px;
+        }
+
+        .notification-item {
+            color: black;
+            /* Other styles for the notification item */
+        }
+
+        /* Expresso Theme */
+        body.expresso {
+            background-color: #332F28;
+            color: #E4DCAE;
+        }
+
+        body.expresso .notification p {
+            color: #000000;
+        }
+
+        body.expresso header {
+            background: rgba(241, 230, 184, 0.6);
+            color: #000000;
+        }
+
+        body.expresso nav a {
+            color: #000000;
+        }
+
+        body.expresso section {
+            background-color: rgba(228, 220, 174, 0.5);
+            color: #FBF1DE;
+        }
+
+        body.expresso .rounded-rectangle {
+            background-color: rgba(255, 225, 207, 0.5);
+            color: #000000;
+        }
+
+        body.expresso h2 {
+            color: #333;
+        }
+
+        body.expresso p {
+            color: #FBF1DE;
+        }
+
+        body.expresso #resourceForm select,
+        body.expresso #resourceForm button {
+            font-family: 'Open Sauce One Regular', sans-serif;
+            background-color: rgba(213, 188, 154, 1);
+        }
+
+        body.expresso #resourceForm button {
+            background-color: #BB5031;
+            color: #ffffff;
+        }
+
+        body.expresso #resourceForm button:hover {
+            background-color: #ff3700;
+        }
+
+        body.expresso .navbar,
+        body.expresso .footer {
+            background: rgba(241, 230, 184, 0.6);
+            color: #000000;
+        }
+
+
+        header nav {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Adjust gap as needed */
+        }
+
+        /* Update toggle styles to remove fixed width and use flex */
+        #theme-toggle-button {
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            /* Remove width to let the toggle size adjust naturally */
+        }
+
+        /* Optionally, ensure all nav children are vertically centered */
+        header nav > * {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Ensure the container displays its children side-by-side */
+        .side-by-side-container {
+            display: flex;
+            gap: 20px;
+            max-width: 100%;
+            margin: 1em auto;
+            align-items: flex-start;
+            /* Prevent horizontal scrolling */
+            flex-wrap: nowrap;
+            flex-basis: 30%;
+        }
+
+        /* Fixed square dimensions for resource form */
+        .resource-section {
+            flex: 0 0 320px; /* Adjust width to your liking */
+            height: 350px;   /* Square size */
+            background-color: rgba(228, 220, 174, 0.5);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            padding: 1em;
+            margin-left: 50px;
+            overflow:hidden;
+            overflow: hidden;
+    text-overflow: ellipsis;
+        }
+
+        /* Viewer section takes the remaining space */
+        .viewer-section {
+            flex: 1;
+            background: inherit;
+            width: 70%;
+            margin-right: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .side-by-side-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <style>
+    #theme-toggle-button {
+        font-size: 17px;
+        display: inline-block;
+        width: 3em;
+        cursor: pointer;
+        position: static;
+    }
+</style>
+    <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Materio</h1>
+        <nav>
+<label id="theme-toggle-button">
+    <input type="checkbox" id="toggle">
+    <svg viewBox="0 0 69.667 44" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(3.5 3.5)" data-name="Component 15 – 1" id="Component_15_1">
+        
+        
+        <g filter="url(#container)" transform="matrix(1, 0, 0, 1, -3.5, -3.5)">
+          <rect fill="#83cbd8" transform="translate(3.5 3.5)" rx="17.5" height="35" width="60.667" data-name="container" id="container"></rect>
+        </g>
+        
+        <g transform="translate(2.333 2.333)" id="button">
+          
+          <g data-name="sun" id="sun">
+            <g filter="url(#sun-outer)" transform="matrix(1, 0, 0, 1, -5.83, -5.83)">
+              <circle fill="#f8e664" transform="translate(5.83 5.83)" r="15.167" cy="15.167" cx="15.167" data-name="sun-outer" id="sun-outer-2"></circle>
+            </g>
+            <g filter="url(#sun)" transform="matrix(1, 0, 0, 1, -5.83, -5.83)">
+              <path fill="rgba(246,254,247,0.29)" transform="translate(9.33 9.33)" d="M11.667,0A11.667,11.667,0,1,1,0,11.667,11.667,11.667,0,0,1,11.667,0Z" data-name="sun" id="sun-3"></path>
+            </g>
+            <circle fill="#fcf4b9" transform="translate(8.167 8.167)" r="7" cy="7" cx="7" id="sun-inner"></circle>
+          </g>
+          
+            
+          <g data-name="moon" id="moon">
+            <g filter="url(#moon)" transform="matrix(1, 0, 0, 1, -31.5, -5.83)">
+              <circle fill="#cce6ee" transform="translate(31.5 5.83)" r="15.167" cy="15.167" cx="15.167" data-name="moon" id="moon-3"></circle>
+            </g>
+            <g fill="#a6cad0" transform="translate(-24.415 -1.009)" id="patches">
+              <circle transform="translate(43.009 4.496)" r="2" cy="2" cx="2"></circle>
+              <circle transform="translate(39.366 17.952)" r="2" cy="2" cx="2" data-name="patch"></circle>
+              <circle transform="translate(33.016 8.044)" r="1" cy="1" cx="1" data-name="patch"></circle>
+              <circle transform="translate(51.081 18.888)" r="1" cy="1" cx="1" data-name="patch"></circle>
+              <circle transform="translate(33.016 22.503)" r="1" cy="1" cx="1" data-name="patch"></circle>
+              <circle transform="translate(50.081 10.53)" r="1.5" cy="1.5" cx="1.5" data-name="patch"></circle>
+            </g>
+          </g>
+        </g>
+        
+        
+        <g filter="url(#cloud)" transform="matrix(1, 0, 0, 1, -3.5, -3.5)">
+          <path fill="#fff" transform="translate(-3466.47 -160.94)" d="M3512.81,173.815a4.463,4.463,0,0,1,2.243.62.95.95,0,0,1,.72-1.281,4.852,4.852,0,0,1,2.623.519c.034.02-.5-1.968.281-2.716a2.117,2.117,0,0,1,2.829-.274,1.821,1.821,0,0,1,.854,1.858c.063.037,2.594-.049,3.285,1.273s-.865,2.544-.807,2.626a12.192,12.192,0,0,1,2.278.892c.553.448,1.106,1.992-1.62,2.927a7.742,7.742,0,0,1-3.762-.3c-1.28-.49-1.181-2.65-1.137-2.624s-1.417,2.2-2.623,2.2a4.172,4.172,0,0,1-2.394-1.206,3.825,3.825,0,0,1-2.771.774c-3.429-.46-2.333-3.267-2.2-3.55A3.721,3.721,0,0,1,3512.81,173.815Z" data-name="cloud" id="cloud"></path>
+        </g>
+  
+        
+        <g fill="#def8ff" transform="translate(3.585 1.325)" id="stars">
+          <path transform="matrix(-1, 0.017, -0.017, -1, 24.231, 3.055)" d="M.774,0,.566.559,0,.539.458.933.25,1.492l.485-.361.458.394L1.024.953,1.509.592.943.572Z"></path>
+          <path transform="matrix(-0.777, 0.629, -0.629, -0.777, 23.185, 12.358)" d="M1.341.529.836.472.736,0,.505.46,0,.4.4.729l-.231.46L.605.932l.4.326L.9.786Z" data-name="star"></path>
+          <path transform="matrix(0.438, 0.899, -0.899, 0.438, 23.177, 29.735)" d="M.015,1.065.475.9l.285.365L.766.772l.46-.164L.745.494.751,0,.481.407,0,.293.285.658Z" data-name="star"></path>
+          <path transform="translate(12.677 0.388) rotate(104)" d="M1.161,1.6,1.059,1,1.574.722.962.607.86,0,.613.572,0,.457.446.881.2,1.454l.516-.274Z" data-name="star"></path>
+          <path transform="matrix(-0.07, 0.998, -0.998, -0.07, 11.066, 15.457)" d="M.873,1.648l.114-.62L1.579.945,1.03.62,1.144,0,.706.464.157.139.438.7,0,1.167l.592-.083Z" data-name="star"></path>
+          <path transform="translate(8.326 28.061) rotate(11)" d="M.593,0,.638.724,0,.982l.7.211.045.724.36-.64.7.211L1.342.935,1.7.294,1.063.552Z" data-name="star"></path>
+          <path transform="translate(5.012 5.962) rotate(172)" d="M.816,0,.5.455,0,.311.323.767l-.312.455.516-.215.323.456L.827.911,1.343.7.839.552Z" data-name="star"></path>
+          <path transform="translate(2.218 14.616) rotate(169)" d="M1.261,0,.774.571.114.3.487.967,0,1.538.728,1.32l.372.662.047-.749.728-.218L1.215.749Z" data-name="star"></path>
+        </g>
+      </g>
+    </svg>
+  </label>
+            <a href="#" id="resourcesTab" onclick="changeTab('resources')">Resources</a>
+            <a href='/chat' id='chatTab'>Chat</a>
+            <a href="#" onclick="toggleSettingsDialog()"><i id="settings-icon" class="fas fa-cog"
+                    style="color: rgb(100, 100, 100); "></i></a>
+
+            <div id="settings-dialog"
+                style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; padding: 50px; box-sizing: border-box;">
+                <div
+                    style="background: rgba(163, 156, 115, 0.8); padding: 20px; border-radius: 10px; font-family: 'Open Sauce One Regular', sans-serif; position: relative;">
+                    <i id="close-icon" class="fas fa-times"
+                        style="position: absolute; right: 10px; top: 10px; cursor: pointer; color: rgb(255, 94, 0);"
+                        onclick="toggleSettingsDialog()"></i>
+                    <h2>Settings</h2>
+                    <p>About: Materio Beta </p>
+                    <p>Version: V4.0.BETA.PRE </p>
+                        <!-- included themegine.js int the script section -->
+                    <p>Changelog:
+                        <a href="changelog.html" style="color: purple;">View Release Notes</a>
+                    </p>
+
+                    <a href="legacy.html" style="color: purple;">Switch to Legacy mode</a>
+                </div>
+            </div>
+            <div class="icons">
+                <i class="fas fa-bell" id="notification-bell"></i>
+            </div>
+
+            <div id="notification-dialog" class="dialog">
+                <div class="dialog-content"
+                    style="background-color: rgba(163, 156, 115, 0.8); border-radius: 10px; padding:20px; font-family: 'Open Sauce One Regular', sans-serif; position: relative; color:#000000">
+                    <h1>Notifications</h1>
+                    <span class="close" id="close-notification-dialog">&times;</span>
+                    <!-- Notification board container -->
+                    <div class="notification-board" style="color:#000000;" id="notificationBoard">
+                        <!-- Notifications will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+
+    </header>
+    <!-- New side-by-side container for resource form and viewer -->
+    <div class="side-by-side-container">
+        <!-- Resource form as a square on the side -->
+        <section class="resource-section">
+            <strong><h1>What do you want to read today?</h1></strong> 
+            <form id="resourceForm">
+                <!-- Semester Dropdown -->
+                <select id="semesterSelect">
+                    <option value="1">1st Semester</option>
+                    <option value="2">2nd Semester</option>
+                    <option value="3">3rd Semester</option>
+                    <option value="4" selected>4th Semester</option>
+                    <option value="9">Miscellaneous</option>
+                </select>
+            
+                <!-- Subject Dropdown -->
+                <select id="subjectSelect">
+                    <option value="">Select Subject</option>
+                </select>
+            
+                <!-- Type Dropdown -->
+                <select id="typeSelect">
+                    <option value="">Select Type</option>
+                </select>
+            
+                <!-- Chapter Dropdown -->
+                <select id="chapterSelect">
+                    <option value="">Select Chapter</option>
+                </select>
+            
+                <!-- Submit Button -->
+                <button type="button" onclick="displayContent()">Submit</button>
+            </form>
+        </section>
+
+        <!-- Viewer Section -->
+        <section class="viewer-section">
+            <div class="viewer">
+                <div id="contentDisplay">
+                    <iframe id="pdf-iframe" width="100%" height="600px" style="border: none; border-radius: 10px;"></iframe>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function toggleSettingsDialog() {
+            var dialog = document.getElementById('settings-dialog');
+            if (dialog.style.display === 'none') {
+                dialog.style.display = 'block';
+            } else {
+                dialog.style.display = 'none';
+            }
+        }
+
+        document.getElementById('notification-bell').onclick = function () {
+            document.getElementById('notification-dialog').style.display = 'block';
+        }
+
+        document.getElementById('close-notification-dialog').onclick = function () {
+            document.getElementById('notification-dialog').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('notification-dialog')) {
+                document.getElementById('notification-dialog').style.display = 'none';
+            }
+        }
+
+        let subjects = {};
+
+        // Fetch JSON data
+        fetch('data.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                subjects = data;
+                console.log("Fetched JSON Data:", subjects); // Debugging log
+                populateSubjects(); // Initialize dropdowns
+            })
+            .catch(error => {
+                console.error('Error loading subjects:', error);
+            });
+
+        function populateSubjects() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const semester = semesterSelect.value;
+            if (subjects[semester]) {
+                const subjectList = subjects[semester];
+                subjectSelect.innerHTML = '<option value="">Select Subject</option>';
+                for (let subject in subjectList) {
+                    let option = document.createElement('option');
+                    option.value = subject;
+                    option.text = subject;
+                    subjectSelect.appendChild(option);
+                }
+                populateTypes(); // Populate types after subjects
+            }
+        }
+
+        function populateTypes() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const typeSelect = document.getElementById('typeSelect');
+            const semester = semesterSelect.value;
+            const subject = subjectSelect.value;
+            typeSelect.innerHTML = '<option value="">Select Type</option>';
+
+            if (subjects[semester] && subjects[semester][subject]) {
+                const contentList = subjects[semester][subject];
+                const types = new Set(contentList.map(item => item.type)); // Extract unique types
+                for (let type of types) {
+                    let option = document.createElement('option');
+                    option.value = type;
+                    option.text = type;
+                    typeSelect.appendChild(option);
+                }
+                populateChapters(); // Populate chapters after types
+            }
+        }
+
+        function populateChapters() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const typeSelect = document.getElementById('typeSelect');
+            const chapterSelect = document.getElementById('chapterSelect');
+            const semester = semesterSelect.value;
+            const subject = subjectSelect.value;
+            const type = typeSelect.value;
+            chapterSelect.innerHTML = '<option value="">Select Chapter</option>';
+
+            if (subjects[semester] && subjects[semester][subject]) {
+                const contentList = subjects[semester][subject];
+                const filteredContent = contentList.find(item => item.type === type); // Find matching type
+                if (filteredContent && filteredContent.content) {
+                    for (let item of filteredContent.content) {
+                        let option = document.createElement('option');
+                        option.value = item;
+                        option.text = item;
+                        chapterSelect.appendChild(option);
+                    }
+                }
+            }
+        }
+
+function displayContent() {
+    const semester = document.getElementById('semesterSelect').value;
+    const subject = document.getElementById('subjectSelect').value;
+    const type = document.getElementById('typeSelect').value;
+    const chapter = document.getElementById('chapterSelect').value;
+    const pdfUrl = getPdfUrl(semester, subject, type, chapter);
+
+    loadPDF(pdfUrl);
+}
+
+function getPdfUrl(semester, subject, type, chapter) {
+    return `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${type}/${chapter}.pdf`;
+}
+
+function loadPDF(url) {
+    const pdfIframe = document.getElementById("pdf-iframe");
+    pdfIframe.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(url)}`;
+}
+
+window.onload = function () {
+    populateSubjects();
+};
+
+// Event Listeners for Dropdown Changes
+document.getElementById('semesterSelect').addEventListener('change', () => {
+    populateSubjects();
+});
+
+document.getElementById('subjectSelect').addEventListener('change', () => {
+    populateTypes();
+});
+
+document.getElementById('typeSelect').addEventListener('change', () => {
+    populateChapters();
+});
+        // Notifications logic
+        let notifications = [];
+fetch('https://cdn-materioa.netlify.app/notifications.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        notifications = data;
+        displayNotifications();
+    })
+    .catch(error => {
+        console.error('Error loading notifications:', error);
+    });
+function formatDateTime(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleString('en-US', { 
+        dateStyle: 'medium', 
+        timeStyle: 'short' 
+    });
+}
+function displayNotifications() {
+    const notificationBoard = document.getElementById('notificationBoard');
+    notificationBoard.innerHTML = '';
+
+    // Compute the threshold date (20 days ago)
+    const twentyDaysAgo = new Date();
+    twentyDaysAgo.setDate(twentyDaysAgo.getDate() - 20);
+
+    // Filter out notifications older than 20 days
+    const validNotifications = notifications.filter(notification => new Date(notification.date) >= twentyDaysAgo);
+
+    // Sort valid notifications by date (newest first)
+    validNotifications.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    if (validNotifications.length === 0) {
+        const noNotification = document.createElement('div');
+        noNotification.classList.add('no-notifications');
+        noNotification.textContent = "No New Notifications";
+        notificationBoard.appendChild(noNotification);
+        return;
+    }
+
+    validNotifications.forEach((notification) => {
+        const container = document.createElement('div');
+        container.classList.add('notification');
+
+        const title = document.createElement('h3');
+        title.textContent = notification.title;
+        container.appendChild(title);
+
+        const message = document.createElement('p');
+        message.textContent = notification.message;
+        container.appendChild(message);
+
+        const date = document.createElement('span');
+        date.classList.add('notification-date');
+        date.textContent = formatDateTime(notification.date);
+        container.appendChild(date);
+
+        if (notification.links && notification.links.length > 0) {
+            const linksContainer = document.createElement('div');
+            linksContainer.classList.add('notification-links');
+            notification.links.forEach(linkObj => {
+                const link = document.createElement('a');
+                link.href = linkObj.url;
+                link.textContent = linkObj.text;
+                linksContainer.appendChild(link);
+            });
+            container.appendChild(linksContainer);
+        }
+        notificationBoard.appendChild(container);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const toggle = document.getElementById('toggle');
+    toggle.addEventListener('change', () => {
+        if (toggle.checked) {
+            document.body.classList.add('expresso');
+            document.body.classList.remove('thermal');
+        } else {
+            document.body.classList.add('thermal');
+            document.body.classList.remove('expresso');
+        }
+    });
+
+    // Set initial theme based on user preference or default to light theme
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        toggle.checked = true;
+        document.body.classList.add('expresso');
+    } else {
+        document.body.classList.add('thermal');
+    }
+});
+    </script>
+
+    <div class="footer">
+        Project hosted on <a href="https://github.com/Jinansh230705"><img src="fonts/github-mark.svg"
+                alt="GitHub logo"></a>
+        <div class="skeuomorphic-box><a href=" sec/public_key.asc" target="_blank">Secured with OpenPGP</a></div>
+        <p>&copy; Jinansh230705</p>
+    </div>
+
+</body>
+
+</html>

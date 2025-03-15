@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Population Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        select, button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        #pdf-iframe {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dropdown Population Test</h1>
+    <form id="resourceForm">
+        <!-- Semester Dropdown -->
+        <select id="semesterSelect">
+            <option value="">Select Semester</option>
+            <option value="1">1st Semester</option>
+            <option value="2">2nd Semester</option>
+            <option value="3">3rd Semester</option>
+            <option value="4" selected>4th Semester</option>
+            <option value="9">Miscellaneous</option>
+        </select>
+
+        <!-- Subject Dropdown -->
+        <select id="subjectSelect">
+            <option value="">Select Subject</option>
+        </select>
+
+        <!-- Type Dropdown -->
+        <select id="typeSelect">
+            <option value="">Select Type</option>
+        </select>
+
+        <!-- Chapter Dropdown -->
+        <select id="chapterSelect">
+            <option value="">Select Chapter</option>
+        </select>
+
+        <!-- Submit Button -->
+        <button type="button" onclick="displayContent()">Submit</button>
+    </form>
+
+    <!-- PDF Viewer -->
+    <iframe id="pdf-iframe" src=""></iframe>
+
+    <script>
+        let subjects = {};
+
+        // Fetch JSON data
+        fetch('data.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                subjects = data;
+                console.log("Fetched JSON Data:", subjects); // Debugging log
+                populateSubjects(); // Initialize dropdowns
+            })
+            .catch(error => {
+                console.error('Error loading subjects:', error);
+            });
+
+        function populateSubjects() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const semester = semesterSelect.value;
+            if (subjects[semester]) {
+                const subjectList = subjects[semester];
+                subjectSelect.innerHTML = '<option value="">Select Subject</option>';
+                for (let subject in subjectList) {
+                    let option = document.createElement('option');
+                    option.value = subject;
+                    option.text = subject;
+                    subjectSelect.appendChild(option);
+                }
+                populateTypes(); // Populate types after subjects
+            }
+        }
+
+        function populateTypes() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const typeSelect = document.getElementById('typeSelect');
+            const semester = semesterSelect.value;
+            const subject = subjectSelect.value;
+            typeSelect.innerHTML = '<option value="">Select Type</option>';
+
+            if (subjects[semester] && subjects[semester][subject]) {
+                const contentList = subjects[semester][subject];
+                const types = new Set(contentList.map(item => item.type)); // Extract unique types
+                for (let type of types) {
+                    let option = document.createElement('option');
+                    option.value = type;
+                    option.text = type;
+                    typeSelect.appendChild(option);
+                }
+                populateChapters(); // Populate chapters after types
+            }
+        }
+
+        function populateChapters() {
+            const semesterSelect = document.getElementById('semesterSelect');
+            const subjectSelect = document.getElementById('subjectSelect');
+            const typeSelect = document.getElementById('typeSelect');
+            const chapterSelect = document.getElementById('chapterSelect');
+            const semester = semesterSelect.value;
+            const subject = subjectSelect.value;
+            const type = typeSelect.value;
+            chapterSelect.innerHTML = '<option value="">Select Chapter</option>';
+
+            if (subjects[semester] && subjects[semester][subject]) {
+                const contentList = subjects[semester][subject];
+                const filteredContent = contentList.find(item => item.type === type); // Find matching type
+                if (filteredContent && filteredContent.content) {
+                    for (let item of filteredContent.content) {
+                        let option = document.createElement('option');
+                        option.value = item;
+                        option.text = item;
+                        chapterSelect.appendChild(option);
+                    }
+                }
+            }
+        }
+
+        function displayContent() {
+            const semester = document.getElementById('semesterSelect').value;
+            const subject = document.getElementById('subjectSelect').value;
+            const type = document.getElementById('typeSelect').value;
+            const chapter = document.getElementById('chapterSelect').value;
+            const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${type}/${chapter}.pdf`;
+
+            console.log("Generated PDF URL:", pdfUrl);
+            loadPDF(pdfUrl);
+        }
+
+        function loadPDF(url) {
+            const pdfIframe = document.getElementById("pdf-iframe");
+            pdfIframe.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(url)}`;
+        }
+
+        // Event Listeners
+        document.getElementById('semesterSelect').addEventListener('change', populateSubjects);
+        document.getElementById('subjectSelect').addEventListener('change', populateTypes);
+        document.getElementById('typeSelect').addEventListener('change', populateChapters);
+
+        // Initialize
+        populateSubjects();
+    </script>
+</body>
+</html>

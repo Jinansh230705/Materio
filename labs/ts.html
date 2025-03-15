@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar with Tabbed Content</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="ui top menu">
+        <div class="header item">
+            <img src="https://materioa.netlify.app/static/res/materio_black.svg" height="32px" width="120px" alt="Materio Logo">
+        </div>
+    </div>
+
+    <div class="ui grid" style="margin-top: 1em;">
+        <div class="four wide column">
+            <div class="ui vertical menu">
+                <a class="item active tab-link" data-tab="home">
+                    <i class="fas fa-home"></i> Home
+                </a>
+                <a class="item tab-link" data-tab="chat">
+                    <i class="fas fa-comments"></i> Chat
+                </a>
+                <a class="item tab-link" data-tab="notifications">
+                    <i class="fas fa-bell"></i> Notifications
+                </a>
+                <a class="item tab-link" data-tab="settings">
+                    <i class="fas fa-cog"></i> Settings
+                </a>
+            </div>
+        </div>
+        <div class="twelve wide column">
+            <div class="ui segment">
+                <div id="home" class="tab-content active">
+                    <button class="ui button" id="submitButton">Submit</button>
+                    
+                    <!-- Popup Modal -->
+                    <div class="ui modal" id="popup">
+                        <i class="close icon"></i>
+                        <div class="header">
+                            Welcome to the Popup!
+                        </div>
+                        <div class="content" id="popupContent">
+                            <p>This is a white popup that almost covers the entire browser screen.</p>
+                            <p>You can add any content here.</p>
+                        </div>
+                        <div class="actions">
+                            <div class="ui button" id="closePopup">Close</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="chat" class="tab-content" style="display: none;">
+                    <h2 class="ui header">Chat</h2>
+                    <p>This is the Chat page.</p>
+                </div>
+                <div id="notifications" class="tab-content" style="display: none;">
+                    <h2 class="ui header">Notifications</h2>
+                </div>
+                <div id="settings" class="tab-content" style="display: none;">
+                    <h2 class="ui header">Settings</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+s3LZ+7D8h9BOtWLJ7bCNQcJZ1jEwZqXQ1ZL+L0="
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script>
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Remove active class and hide all tab contents
+                    tabLinks.forEach(tab => tab.classList.remove('active'));
+                    tabContents.forEach(content => content.style.display = 'none');
+                    
+                    // Activate current tab
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).style.display = 'block';
+                });
+            });
+        });
+
+        // Popup Modal functionality using Semantic UI
+        $(document).ready(function() {
+            $('#submitButton').on('click', function() {
+                $('#popup').modal('show');
+            });
+
+            $('#closePopup, .close.icon').on('click', function() {
+                $('#popup').modal('hide');
+            });
+        });
+    </script>
+</body>
+</html>
