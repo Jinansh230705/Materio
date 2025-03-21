@@ -9,76 +9,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-    <script></script>
     <style>
-        body {
-            margin: 0;
-            font-family: "Manrope", sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
+        /* Global Color Declarations */
+        :root {
+            --primary-bg: #ffffff;
+            --secondary: #ff8400;
+            --dark-bg: #121212;
+            --dark-header: #222222;
+            --dark-border: #444444;
+            --border: #d1d1d1;
+            --navbar: rgb(229, 229, 229);
+            --navbar-grey: rgb(203, 203, 203);
+            --dark-nav: rgb(210, 210, 210);
+            --card: #f8f8f8;
+            --dark-card: #333333;
+            --slider-bg: #ccc;
         }
 
-        header {
-            background-color: #ffffff;
-            color: #333;
-            padding: 10px;
-            text-align: left;
-            height: 40px;
-            border-bottom-style: solid;
-            border-color: #d1d1d1;
-            background-image: url('https://materioa.netlify.app/static/res/materio_black.svg');
-            background-repeat: no-repeat;
-            background-size: 120px 32px;
-            background-position: 20px center;
-
-        }
-
-        .container {
-            display: flex;
-            flex: 1;
-        }
-
-        .navbar {
-            background-color: #ffffff;
-            color: rgb(229, 229, 229);
-            width: 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-            position: sticky;
-            /* box-shadow: inset 6px 6px 10px 0 rgba(77, 77, 77, 0.2), inset -6px -6px 10px 0 rgba(255, 255, 255, 0.5); */
-            border-right-style: solid;
-            border-color: #d1d1d1;
-        }
-
-        .navbar a {
-            color: rgb(203, 203, 203);
-            text-decoration: none;
-            padding: 10px;
-            width: 100%;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: larger;
-            position: relative;
-            transition: transform 0.3s ease, color 0.3s ease;
-
-
-        }
-
-        .navbar a i {
-            margin-right: 10px;
-        }
-
-        .navbar a.active {
-            color: #ff8400;
-            transform: translateX(5px);
-            /* text-shadow: 2px 2px 4px #000000; */
-        }
-
+        /* Animations Declaration */
         @keyframes slideIn {
             from {
                 width: 0;
@@ -87,66 +35,6 @@
             to {
                 width: 100%;
             }
-        }
-
-        .content {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .card-one {
-            border-radius: 15px;
-            background-color: #f8f8f8;
-            padding: 20px;
-            margin: 20px 0;
-            min-height: 150px;
-        }
-
-        .card-layout {
-            border-radius: 15px;
-            background-color: #f8f8f8;
-            padding: 20px;
-            margin: 20px 0;
-            min-height: 30px;
-        }
-
-        .tab-content {
-            display: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-            /* Ensure the element still takes up space if needed */
-            position: relative;
-        }
-
-        .tab-content.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #popup {
-            display: none;
-            /* Hidden by default */
-            position: fixed;
-            top: 2%;
-            /* Leave a small margin at the top */
-            left: 2%;
-            /* Leave a small margin on the sides */
-            width: 95%;
-            /* Cover 90% of the screen width */
-            height: 95%;
-            /* Cover 90% of the screen height */
-            background-color: white;
-            /* White background */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            /* Add a shadow for better visibility */
-            z-index: 1000;
-            /* Ensure it's on top of everything */
-            overflow: auto;
-            /* Add scroll if content overflows */
-            border-radius: 10px;
-            /* Optional: Rounded corners */
-            animation: popupFadeIn 0.3s ease-in-out;
         }
 
         @keyframes popupFadeIn {
@@ -161,23 +49,6 @@
             }
         }
 
-        #popupContent {
-            padding: 20px;
-        }
-
-        #closePopup {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            /* moved from left to right */
-            background: transparent;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #333;
-            outline: none;
-        }
-
         @keyframes popupFadeOut {
             from {
                 opacity: 1;
@@ -190,7 +61,136 @@
             }
         }
 
-        /* When the popup is closing, trigger the fade-out animation */
+        /* CSS Start */
+        body {
+            margin: 0;
+            font-family: "Manrope", sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: var(--primary-bg);
+            color: #333;
+            padding: 10px;
+            text-align: left;
+            height: 40px;
+            border-bottom-style: solid;
+            border-color: var(--border);
+            background-image: url('https://materioa.netlify.app/static/res/materio_black.svg');
+            background-repeat: no-repeat;
+            background-size: 120px 32px;
+            background-position: 20px center;
+
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: var(--primary-bg);
+            color: var(--navbar);
+            width: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            position: sticky;
+            border-right-style: solid;
+            border-color: var(--border);
+        }
+
+        .navbar a {
+            color: var(--navbar-grey);
+            text-decoration: none;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: larger;
+            position: relative;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar a i {
+            margin-right: 10px;
+        }
+
+        .navbar a.active {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .card-one {
+            border-radius: 15px;
+            background-color: var(--card);
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 150px;
+        }
+
+        .card-layout {
+            border-radius: 15px;
+            background-color: var(--card);
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 30px;
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            position: relative;
+        }
+
+        .tab-content.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #popup {
+            display: none;
+            position: fixed;
+            top: 2%;
+            left: 2%;
+            width: 95%;
+            height: 95%;
+            background-color: var(--primary-bg);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow: auto;
+            border-radius: 10px;
+            animation: popupFadeIn 0.3s ease-in-out;
+        }
+
+        #popupContent {
+            padding: 20px;
+        }
+
+        #closePopup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            outline: none;
+        }
+
         #popup.closing {
             animation: popupFadeOut 0.3s ease-in-out;
         }
@@ -199,15 +199,11 @@
             display: block;
         }
 
-        /* Existing styles... */
-
         .switch {
             position: relative;
             display: inline-block;
             width: 40px;
-            /* reduced width */
             height: 24px;
-            /* reduced height */
         }
 
         .switch input {
@@ -223,83 +219,78 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background-color: var(--slider-bg);
             transition: .4s;
             border-radius: 24px;
-            /* half of height for smoother rounding */
         }
 
         .slider:before {
             position: absolute;
             content: "";
             height: 18px;
-            /* reduced from 26px */
             width: 18px;
-            /* reduced from 26px */
             left: 3px;
             bottom: 3px;
-            background-color: white;
+            background-color: var(--primary-bg);
             transition: .4s;
             border-radius: 50%;
         }
 
         input:checked+.slider {
-            background-color: #ff8400;
+            background-color: var(--secondary);
         }
 
         input:checked+.slider:before {
             transform: translateX(16px);
-            /* adjusted to 40px width */
         }
 
-        /* New container for the toggle and the text */
         .toggle-container {
             display: flex;
             align-items: center;
             gap: 8px;
-            /* space between toggle and text */
         }
 
-        /* Dark mode styles */
+        /* Dark Mode */
         body.dark-mode {
-            background-color: #121212;
-            color: #ffffff;
+            background-color: var(--dark-bg);
+            color: var(--primary-bg);
         }
 
         header.dark-mode {
-            background-color: #222222;
-            color: #ffffff;
-            border-color: #444444;
+            background-color: var(--dark-header);
+            color: var(--primary-bg);
+            border-color: var(--dark-border);
             background-image: url('https://materioa.netlify.app/static/res/materio_white.png');
             background-repeat: no-repeat;
             background-size: 120px 32px;
             background-position: 20px center;
         }
 
-        #popup.dark-mode{
-            background-color: #222222;
-            color: white;
+        #popup.dark-mode {
+            background-color: var(--dark-header);
+            color: var(--primary-bg);
         }
 
         .navbar.dark-mode {
-            background-color: #222222;
-            border-color: #444444;
+            background-color: var(--dark-header);
+            border-color: var(--dark-border);
         }
 
         .navbar.dark-mode a {
-            color: rgb(210, 210, 210);
+            color: var(--dark-nav);
         }
 
         .card-layout.dark-mode {
-            background-color: #333333;
-            color: #ffffff;
+            background-color: var(--dark-card);
+            color: var(--primary-bg);
         }
 
         .card-one.dark-mode {
-            background-color: #333333;
-            color: #ffffff;
+            background-color: var(--dark-card);
+            color: var(--primary-bg);
         }
 
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -314,7 +305,7 @@
                 position: fixed;
                 bottom: 0;
                 border-top-style: solid;
-                border-color: #d1d1d1;
+                border-color: var(--border);
             }
 
             .navbar a {
@@ -323,22 +314,19 @@
             }
 
             .navbar a.active {
-                color: #ff8400;
+                color: var(--secondary);
                 transform: translateY(-5px);
             }
 
             .content {
                 margin-bottom: 60px;
-                /* Adjust based on navbar height */
             }
         }
     </style>
 </head>
-
 <body>
     <header>
     </header>
-
     <div class="container">
         <nav class="navbar">
             <a href="#" class="tab-link active" data-tab="home">
@@ -354,12 +342,9 @@
                 <i class="fas fa-cog"></i>
             </a>
         </nav>
-
         <div class="content">
             <div id="home" class="tab-content active">
                 <button id="submitButton">Submit</button>
-
-                <!-- Popup Window -->
                 <div id="popup">
                     <button id="closePopup"><i class="fas fa-times"></i></button>
                     <div id="popupContent">
@@ -369,7 +354,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="chat" class="tab-content">
                 <h2>Chat</h2>
                 <p>This is the Chat page.</p>
@@ -383,8 +367,8 @@
             <div id="settings" class="tab-content">
                 <h1>Settings</h1>
                 <div class="card-one" id="versionInfo">
-
                 </div>
+
                 <div class="card-layout" id="themeCard">
                     <div class="toggle-container">
                         <span>Enable Dark Mode</span>
@@ -394,10 +378,13 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="card-one" id="details">
+                    <h1> About</h1>
+                </div>
             </div>
 
             <script>
-
                 const submitButton = document.getElementById('submitButton');
                 const popup = document.getElementById('popup');
                 const closePopup = document.getElementById('closePopup');
@@ -428,18 +415,13 @@
                     });
                 });
 
-                // When opening the popup, ensure any previous closing state is removed.
                 submitButton.addEventListener('click', () => {
                     popup.classList.remove('closing');
                     popup.style.display = 'block';
                 });
-
-                // When the close button is clicked, add the "closing" class to trigger the fade-out.
                 closePopup.addEventListener('click', () => {
                     popup.classList.add('closing');
                 });
-
-                // Once the fade-out animation ends, hide the popup and clean up the class.
                 popup.addEventListener('animationend', (event) => {
                     if (event.animationName === 'popupFadeOut') {
                         popup.style.display = 'none';
@@ -455,7 +437,8 @@
                         document.querySelector('.content'),
                         document.getElementById('themeCard'),
                         document.getElementById('popup'),
-                        document.getElementById('versionInfo')
+                        document.getElementById('versionInfo'),
+                        document.getElementById('details')
                     ];
                     elements.forEach(el => {
                         if (this.checked) {
@@ -466,59 +449,18 @@
                     });
                 });
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    themeToggle.checked = true;
-    const elements = [
-        document.body,
-        document.querySelector('header'),
-        document.querySelector('.navbar'),
-        document.querySelector('.content'),
-        document.getElementById('themeCard'),
-        document.getElementById('popup'),
-        document.getElementById('versionInfo')
-    ];
-    elements.forEach(el => el.classList.add('dark-mode'));
-}
-
-
+                    themeToggle.checked = true;
+                    const elements = [
+                        document.body,
+                        document.querySelector('header'),
+                        document.querySelector('.navbar'),
+                        document.querySelector('.content'),
+                        document.getElementById('themeCard'),
+                        document.getElementById('popup'),
+                        document.getElementById('versionInfo')
+                    ];
+                    elements.forEach(el => el.classList.add('dark-mode'));
+                }
             </script>
-            <script> (function () {
-                const authToken = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
-            
-                if (!authToken) {
-                    sessionStorage.setItem("redirectAfterLogin", window.location.pathname);
-                    window.location.href = "/channels/entry";
-                } else {
-                    injectLogoutButton();
-                }
-            
-                function injectLogoutButton() {
-                    const footer = document.querySelector("footer") || document.body;
-            
-                    const logoutButton = document.createElement("button");
-                    logoutButton.textContent = "Logout";
-                    logoutButton.style.cssText = `
-                        font-family: 'Open Sauce One Regular', sans-serif;
-                        font-weight: bold;
-                        position: fixed; 
-                        bottom: 10px; 
-                        right: 10px; 
-                        padding: 10px 15px; 
-                        background: #BB5031; 
-                        color: #ffffff; 
-                        border: none; 
-                        cursor: pointer; 
-                        border-radius: 5px;
-                    `;
-            
-                    logoutButton.addEventListener("click", function () {
-                        localStorage.removeItem("authToken");
-                        sessionStorage.removeItem("authToken");
-                        window.location.href = "/channels/entry";
-                    });
-            
-                    footer.appendChild(logoutButton);
-                }
-            })();   </script>
 </body>
-
 </html>
