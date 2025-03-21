@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://materioa.netlify.app/</loc>
+  <lastmod>2025-03-21T13:49:13+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://materioa.netlify.app/chat/</loc>
+  <lastmod>2025-03-21T13:49:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://materioa.netlify.app/blog/</loc>
+  <lastmod>2025-03-21T13:49:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://materioa.netlify.app/changelog</loc>
+  <lastmod>2025-03-21T13:49:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://materioa.netlify.app/legacy</loc>
+  <lastmod>2025-03-21T13:49:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://materioa.netlify.app/about</loc>
+  <lastmod>2025-03-21T13:49:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://materioa.netlify.app/cookies-policy</loc>
+  <lastmod>2025-03-21T13:49:13+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://materioa.netlify.app/blog/about</loc>
+  <lastmod>2025-03-21T13:49:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://materioa.netlify.app/2024/11/26/python-cheatsheet</loc>
+  <lastmod>2025-03-21T13:49:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://materioa.netlify.app/2024/08/28/java-cheetsheet</loc>
+  <lastmod>2025-03-21T13:49:13+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
