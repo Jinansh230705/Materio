@@ -26,6 +26,7 @@ author:
 description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "materioa.netlify.app" # the base hostname & protocol for your site, e.g. http://example.com
+google_analytics: GTM-M6PC6RJL
 
 # Build settings
 theme: minima

@@ -4,13 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
     <title>Materio Labs - v4</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://materioa.netlify.app/static/assets/notify.js" crossorigin>
-    <script></script>
     <style>
         body {
             margin: 0;
@@ -259,6 +266,7 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            width: 100%;
         }
 
         #readingSelectionForm select:focus {
@@ -416,6 +424,7 @@
                 bottom: 0;
                 border-top-style: solid;
                 border-color: #d1d1d1;
+                z-index: 1010;
             }
 
             .navbar a {
@@ -439,12 +448,24 @@
             }
 
             #readingSelectionForm select {
+                min-width: 280px;
                 width: 100%;
+                max-width: 330px;
             }
 
             .content {
                 margin-bottom: 60px;
                 /* Adjust based on navbar height */
+            }
+
+            /* 1. Truncate tooltip content for mobile */
+            .info-icon .tooltip {
+                display: -webkit-box;
+        max-width: 150px; /* adjust as needed */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        white-space: normal;
+        text-overflow: clip; 
             }
         }
 
@@ -571,6 +592,10 @@
 </head>
 
 <body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6PC6RJL" height="0" width="0"
+    style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
     <header>
     </header>
 
@@ -598,25 +623,25 @@
                         <div>
                             <label for="semesterSelect"></label>
                             <select id="semesterSelect">
-                                <option value="">--Select Semester--</option>
+                                <option value="">Select Semester</option>
                             </select>
                         </div>
                         <div>
                             <label for="subjectSelect"></label>
                             <select id="subjectSelect" disabled>
-                                <option value="">--Select Subject--</option>
+                                <option value="">Select Subject</option>
                             </select>
                         </div>
                         <div>
                             <label for="categorySelect"></label>
                             <select id="categorySelect" disabled>
-                                <option value=""></option>
+                                <option value="">Select Category</option>
                             </select>
                         </div>
                         <div>
                             <label for="topicSelect"></label>
                             <select id="topicSelect" disabled>
-                                <option value="">--Select Topic--</option>
+                                <option value="">Select Topic</option>
                             </select>
                         </div>
                     </form>
@@ -699,6 +724,66 @@
             </div>
 
             <script>
+                // Place these functions at the top of your <script> block
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == " ") c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// Then update your DOMContentLoaded event listener for handling tabs:
+document.addEventListener("DOMContentLoaded", function () {
+    // Check for an active tab in the cookies, defaulting to 'home'
+    const activeTab = getCookie("activeTab") || "home";
+
+    // Ensure all tabs are deactivated first
+    const tabLinks = document.querySelectorAll(".tab-link");
+    const tabContents = document.querySelectorAll(".tab-content");
+    tabLinks.forEach(link => link.classList.remove("active"));
+    tabContents.forEach(content => content.classList.remove("active"));
+
+    // Activate the tab stored in the cookie if it exists
+    const selectedTabLink = document.querySelector(`.tab-link[data-tab="${activeTab}"]`);
+    if (selectedTabLink) {
+        selectedTabLink.classList.add("active");
+        document.getElementById(activeTab)?.classList.add("active");
+    } else {
+        // Fallback to default tab (home)
+        document.querySelector('.tab-link[data-tab="home"]').classList.add("active");
+        document.getElementById("home").classList.add("active");
+    }
+
+    // Add a click listener on the tab links to update cookie value
+    tabLinks.forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+            // Deactivate all tabs
+            tabLinks.forEach(tab => tab.classList.remove("active"));
+            tabContents.forEach(content => content.classList.remove("active"));
+            // Activate selected tab
+            this.classList.add("active");
+            const tab = this.getAttribute("data-tab");
+            document.getElementById(tab)?.classList.add("active");
+            // Store active tab in cookie for 7 days
+            setCookie("activeTab", tab, 7);
+        });
+    });
+});
                 const submitButton = document.getElementById('submitButton');
                 const popup = document.getElementById('popup');
                 const closePopup = document.getElementById('closePopup');
@@ -918,6 +1003,107 @@
                     popup.style.display = 'block';
                 });
             </script>
+            <!-- GA4 Tracking -->
+             <script>
+                // Custom GA4 tracking script
+(function(){
+    // Ensure GA4 (gtag) is loaded
+    if (!window.gtag) {
+        console.warn("GA4 (gtag) not loaded.");
+        return;
+    }
+    
+    // Helper to send events to GA4
+    function trackEvent(eventName, params) {
+        window.gtag('event', eventName, params);
+    }
+
+    // Track overall page engagement time
+    const pageLoadTime = Date.now();
+    window.addEventListener("beforeunload", function() {
+        const engagementTime = Date.now() - pageLoadTime;
+        trackEvent("page_engagement", { engagement_time_ms: engagementTime });
+    });
+
+    // Track all button clicks
+    document.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", function() {
+            trackEvent("button_click", { event_label: this.id || this.innerText });
+        });
+    });
+
+    // Track navbar tab switches
+    document.querySelectorAll(".tab-link").forEach((tab) => {
+        tab.addEventListener("click", function() {
+            trackEvent("nav_tab_switch", { event_label: this.getAttribute("data-tab") });
+        });
+    });
+
+    // Track page scroll events (throttled to one event per second)
+    let scrollTimeout;
+    window.addEventListener("scroll", function() {
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            trackEvent("page_scroll", { scroll_y: window.scrollY });
+        }, 1000);
+    });
+
+    // PDF viewer engagement tracking
+    let pdfEngagementTime = 0;
+    let pdfTimer = null;
+    
+    // Start counting PDF engagement time (in milliseconds)
+    function startPdfTimer() {
+        if (!pdfTimer) {
+            pdfTimer = setInterval(() => {
+                pdfEngagementTime += 1000; // Increase by 1 second each interval
+            }, 1000);
+            trackEvent("pdf_view_start", {});
+        }
+    }
+    
+    // Stop the timer and send the engagement time event
+    function stopPdfTimer() {
+        if (pdfTimer) {
+            clearInterval(pdfTimer);
+            pdfTimer = null;
+            trackEvent("pdf_engagement", { engagement_time_ms: pdfEngagementTime });
+            pdfEngagementTime = 0;
+        }
+    }
+    
+    // Setup PDF tracking when the PDF iframe is loaded
+    function setupPdfTracking() {
+        const pdfIframe = document.getElementById("pdf-iframe");
+        if (pdfIframe) {
+            pdfIframe.addEventListener("load", startPdfTimer);
+        }
+    }
+    setupPdfTracking();
+    
+    // Stop PDF timer when the popup hides (assuming display changes to "none")
+    const popup = document.getElementById("popup");
+    if(popup){
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.target.style.display === "none") {
+                    stopPdfTimer();
+                }
+            });
+        });
+        observer.observe(popup, { attributes: true, attributeFilter: ["style"] });
+    }
+    
+    // Listen for messages from the PDF viewer (if it sends any via postMessage)
+    window.addEventListener("message", (event) => {
+        // Optionally check event.origin if you know the expected domain
+        if (event.origin.includes("mozilla.github.io")) {
+            // Log any PDF interactions (scrolling pages, highlighting, annotations, etc.)
+            trackEvent("pdf_interaction", { data: event.data });
+        }
+    });
+})();
+             </script>
 </body>
 
 </html>
