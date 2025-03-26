@@ -1,0 +1,114 @@
+{
+    "1": {
+        "oss": [
+            {"type": "Chapters", "content": ["intro", "case study", "principles"]}
+        ],
+        "maths-1": [
+            {"type": "Chapters", "content": ["fode", "matrices", "multivariable"]}
+        ],
+        "ctsd": [
+            {"type": "Chapters", "content": ["pointers", "loops", "arrays", "strings"]}
+        ],
+        "eee": [
+            {"type": "Chapters", "content": ["semiconductors", "sensors", "diode"]}
+        ]
+    },
+    "2": {
+        "CTSD-2": [
+            {"type": "Chapters", "content": ["DMA", "Preprocessor Directives", "Enumerators, Structures, Unions", "Searching and Sorting", "Data Structures: List-Linear List"]}
+        ],
+        "Maths-2": [
+            {"type": "Chapters", "content": ["HODE", "Power Series", "Laplace Transform", "Fourier Integral", "Vector Calculus", "Multivariable Calculus (Integration)"]},
+            {"type": "Tutorials", "content": ["Tutorial 1A", "Tutorial 1B", "Tutorial 2", "Tutorial 3"]},
+            {"type": "Assignments", "content": ["Assignment 1", "Assignment 2", "Assignment 5"]},
+            {"type": "Question Banks", "content": ["Question Bank 1", "Question Bank 2"]},
+            {"type": "Previous Year Papers", "content": ["PYQ_19.11.22", "PYQ_15.05.23", "PYQ_18.01.24"]}
+        ],
+        "E-Physics": [
+            {"type": "Chapters", "content": ["Modern Physics", "Band Theory and Semiconductors", "Materials", "Laser and Fibre optics", "Devices"]},
+            {"type": "Reference Books", "content": ["Book for Optical Fibre", "Book for Laser"]},
+            {"type": "Question Banks", "content": ["Question Bank 1"]},
+            {"type": "Assignments", "content": ["Assignment 1", "Assignment 2"]},
+            {"type": "Important Questions", "content": ["Important Questions"]}
+        ],
+        "GCF": [
+            {"type": "Chapters", "content": ["Cloud Concepts", "Azure Services", "Security, Privacy, Compliance, and Trust", "Azure Pricing and Support", "Azure SLA and Service Lifecycles"]},
+            {"type": "Question Banks", "content": ["Azure Question Bank", "QB for Mid Sem"]},
+            {"type": "Assignments", "content": ["Assignment 1"]},
+            {"type": "Important Questions", "content": ["Important Questions"]}
+        ],
+        "DT": [
+            {"type": "Chapters", "content": ["Overview of Design Thinking", "Defining Needs, Ideation for Solutions,Prototyping", "Testing the solution,Problem Solving Mindset", "Human Centered Design, Design for the Environment", "Design Thinking and Innovation Management Culture"]}
+        ],
+        "ICT": [
+            {"type": "Lab", "content": ["Lab"]}
+        ],
+        "ACTW": [
+            {"type": "Chapters", "content": ["Developing Effective Listening Skills", "Error Analysis", "Delivering Different Types of Speeches", "Professional Presentations", "Essay writing", "Reading Comprehension", "Project Proposal", "Misplaced Modifiers", "Movie Review", "Narrative Writing", "Writing Reports", "Critical Thinking", "Activity Session (Presentation)"]}
+        ]
+    },
+    "3": {
+        "Object Oriented Programming with Java": [
+            {"type": "Chapters", "content": ["Design Introduction", "Data types,variable,operators", "Control Statements", "Arrays", "Object Oriented Programming", "Inheritance", "Strings, Packages and interfaces", "Exception Handling", "Multi Threading", "Collections Framework"]}
+        ],
+        "Design of Data Structures": [
+            {"type": "Chapters", "content": ["Introduction", "Stacks, Recursion and Queue", "Linked Lists", "Searching and Sorting", "Trees", "Red Black Trees and AVL Trees", "Hashing", "Graphs"]}
+        ],
+        "Database Management Systems": [
+            {"type": "Chapters", "content": ["Introduction", "SQL", "Data Models", "Relational Data Model", "Relational Database Design", "Transaction", "Query Processing", "Security", "PL/SQL Concepts"]}
+        ],
+        "Discrete Mathematics": [
+            {"type": "Chapters", "content": ["Sets, Relation and Function", "Principles of Mathematical Induction", "Propositional Logic", "Algebraic Structures and Morphism", "Graphs and Trees"]}
+        ],
+        "Digital Electronics": [
+            {"type": "Chapters", "content": ["Fundamentals of Digital Systems and logic families", "Minimization Techniques", "Combinational Digital Circuits", "SEQUENTIAL CIRCUITS", "A/D and D/A Converters", "Semiconductor Memories And Programmable Logic Devices"]}
+        ],
+        "Professional Communication Skills": []
+    },
+    "4": {
+        "Operating System": [
+            {"type": "Syllabus", "content": ["Syllabus", "Syllabus-lab"]},
+            {"type": "Chapters", "content": ["Introduction", "Processes, Thread & Process Scheduling", "Inter-Process Communication", "Deadlocks", "Memory Management", "Virtual Memory", "IO Systems", "IO Systems, File & Disk Management"]},
+            {"type": "Assignments", "content": ["Assignment -1", "Assignment -1.1", "Assignment -2", "Assignment -2.1"]},
+            {"type": "Question Banks", "content": ["Question Bank Unit 1 - 3"]},
+            {"type": "Previous Year Papers", "content": ["28-12-17", "11-06-18", "12-12-18", "27-05-19"]}
+        ],
+        "Computer Organization and Microprocessor": [
+            {"type": "Syllabus", "content": ["Syllabus", "Syllabus-Lab"]},
+            {"type": "Chapters", "content": ["Introduction to Microprocessor 8085", "Instruction Set of 8085", "Microprocessor Architecture and Interfacing - 1", "Microprocessor Architecture and Interfacing - 2", "Programming Methods with Instructions", "Additional Programming Techniques", "8085 Interrupts", "Computer Organization - Register Transfer and Basic Computer Design Register Transfer", "Computer Organization - Assembler and Memory Organization"]},
+            {"type": "Assignments", "content": ["Assignment 1", "Assignment 2"]},
+            {"type": "Question Banks", "content": ["Short and Long Answers", "Question Bank with Answers"]},
+            {"type": "Reference Books", "content": ["Microprocessor (8085) and its Applications - Book"]},
+            {"type": "Previous Year Papers", "content": ["04-10-21", "08-08-22", "12-10-22", "30-03-22", "29-01-24"]}
+        ],
+        "Computer Network": [
+            {"type": "Syllabus", "content": ["Syllabus", "Syllabus-Lab"]},
+            {"type": "Chapters", "content": ["Data Communication Components", "Data Link Layer and Medium Access Sub Layer", "Network Layer", "Transport Layer", "Application Layer"]}
+        ],
+        "Programming in Python with Full Stack": [
+            {"type": "Syllabus", "content": ["Syllabus", "Syllabus-lab"]},
+            {"type": "Chapters", "content": ["Introduction to Python Programming", "Functions", "Modules and Packages", "Flask Framework", "Django Framework", "RESTful APIs"]},
+            {"type": "Question Banks", "content": ["Question Bank - 1", "Question Bank -2", "Mid Sem Question Bank with Answers"]}
+        ],
+        "Probability, Statistics and Numerical Methods": [
+            {"type": "Syllabus", "content": ["Syllabus"]},
+            {"type": "Chapters", "content": ["Correlation, Regression and Curve fitting", "Probability and Probability Distributions", "Solution of a System of Linear Equations, Roots of Algebraic and Transcendental Equations", "Testing of Hypothesis", "Finite Differences and Interpolation", "Numerical Integration"]},
+            {"type": "Tutorials", "content": ["Tutorial 1", "Tutorial 2"]},
+            {"type": "Assignments", "content": ["Assignment 1", "Assignment 1A", "Assignment 2"]},
+            {"type": "Reference Tables", "content": ["Normal Table"]},
+            {"type": "Previous Year Papers", "content": ["12-02-21", "12-03-21", "06-04-22", "01-05-24"]}
+        ],
+        "Professional Grooming and Personality Development": [
+            {"type": "Syllabus", "content": ["Syllabus"]},
+            {"type": "Chapters", "content": ["Self Development and Assessment", "Corporate Etiquette", "Public Speaking", "Reading Skills Activity & Reading Comprehension", "Listening Skills- Inquiry Based Listening Questions"]}
+        ],
+        "Competitive Coding": [
+            {"type": "Syllabus", "content": ["Syllabus"]}
+        ]
+    },
+    "9": {
+        "Miscellaneous": [
+            {"type": "Reference Books", "content": ["Head First Java", "DSA Using C - 2nd Edition"]}
+        ]
+    }
+}

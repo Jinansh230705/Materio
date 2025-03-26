@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://materioa.netlify.app/static/assets/notify.js" crossorigin>
     <script></script>
     <style>
         body {
@@ -31,7 +32,8 @@
             background-repeat: no-repeat;
             background-size: 120px 32px;
             background-position: 20px center;
-
+            min-height: 40px;
+            padding: 10px;
         }
 
         .container {
@@ -77,6 +79,12 @@
             color: #ff8400;
             transform: translateX(5px);
             /* text-shadow: 2px 2px 4px #000000; */
+        }
+
+        a,
+        p {
+            color: #000000;
+            text-decoration: none;
         }
 
         @keyframes slideIn {
@@ -162,20 +170,31 @@
         }
 
         #popupContent {
-            padding: 20px;
+            padding: 5px;
+            height: calc(100% - 15px);
+            /* 5px top + 5px bottom */
+            box-sizing: border-box;
         }
 
         #closePopup {
             position: absolute;
-            top: 10px;
+            top: 5px;
+            /* shifted a bit upward */
             right: 10px;
-            /* moved from left to right */
             background: transparent;
             border: none;
-            font-size: 24px;
+            font-size: 20px;
+            /* made smaller */
             cursor: pointer;
-            color: #333;
+            color: #ff8400;
+            /* reddish-orange color */
             outline: none;
+            transition: color 0.3s ease;
+        }
+
+        #closePopup:hover {
+            color: red;
+            /* changes to red on hover */
         }
 
         @keyframes popupFadeOut {
@@ -199,7 +218,71 @@
             display: block;
         }
 
-        /* Existing styles... */
+        #readingSelectionForm {
+            font-family: "Manrope", sans-serif;
+            ;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+
+        }
+
+        #readingSelectionForm>div {
+            font-family: "Manrope", sans-serif;
+            ;
+            flex: 1 1 220px;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+        }
+
+        #readingSelectionForm label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+        }
+
+        #readingSelectionForm select {
+            font-family: "Manrope", sans-serif;
+            ;
+            max-width: 1000px;
+            box-sizing: border-box;
+            padding: 6px 8px;
+            margin: 0;
+            font-size: 14px;
+            border-radius: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #readingSelectionForm select:focus {
+            border: 2px solid;
+            border-color: #ff8400;
+            outline: none;
+        }
+
+        #submitButton {
+            background-color: #ff8400;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: "Manrope", sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #submitButton:hover {
+            background-color: #e67300;
+            /* Slightly darker on hover */
+        }
 
         .switch {
             position: relative;
@@ -276,7 +359,7 @@
             background-position: 20px center;
         }
 
-        #popup.dark-mode{
+        #popup.dark-mode {
             background-color: #222222;
             color: white;
         }
@@ -290,6 +373,11 @@
             color: rgb(210, 210, 210);
         }
 
+        .navbar.dark-mode a.active {
+            color: #ff8400;
+            transform: translateX(5px);
+        }
+
         .card-layout.dark-mode {
             background-color: #333333;
             color: #ffffff;
@@ -297,6 +385,19 @@
 
         .card-one.dark-mode {
             background-color: #333333;
+            color: #ffffff;
+        }
+
+        body.dark-mode #readingSelectionForm select {
+            background-color: #444444;
+            /* a lighter fill than the card-one dark mode (#333333) */
+            color: #ffffff;
+            border: 1px solid #555555;
+            /* optionally a lighter border */
+        }
+
+        body.dark-mode a,
+        body.dark-mode p {
             color: #ffffff;
         }
 
@@ -327,10 +428,144 @@
                 transform: translateY(-5px);
             }
 
+            #readingSelectionForm {
+                flex-direction: column;
+                padding: 2px;
+                gap: 5px;
+            }
+
+            #readingSelectionForm>div {
+                flex: 1 1 100%;
+            }
+
+            #readingSelectionForm select {
+                width: 100%;
+            }
+
             .content {
                 margin-bottom: 60px;
                 /* Adjust based on navbar height */
             }
+        }
+
+        /* Popup default styling */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 2%;
+            left: 2%;
+            width: 95%;
+            height: 95%;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow: auto;
+            border-radius: 10px;
+            animation: popupFadeIn 0.3s ease-in-out;
+        }
+
+        /* Controls container for fullscreen & close buttons */
+        .popup-controls {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .popup-controls button {
+            background: transparent;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            color: #ff8400;
+            outline: none;
+            transition: color 0.3s ease;
+            width: 2px;
+            height: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-controls button:hover {
+            color: red;
+        }
+
+        /* Fullscreen mode overrides */
+        #popup.fullscreen {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        #popup.fullscreen #popupContent {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        #popup.fullscreen iframe {
+            height: calc(100% - 28px) !important;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        .info-icon {
+            display: inline-block;
+            cursor: default;
+            margin-left: 10px;
+            position: relative;
+            border: 1px solid #ff8400;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            background-color: #ff8400;
+            color: white;
+            font-size: 12px;
+        }
+
+        .info-icon .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 110%;
+            /* Positions tooltip to the right of the icon */
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #444444;
+            color: #fff;
+            padding: 5px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-size: 12px;
+            font-family: "Manrope", sans-serif;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-icon .tooltip::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            /* Arrow points from the left of the tooltip */
+            transform: translateY(-55%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent rgb(102, 102, 102) transparent transparent;
+        }
+
+        .info-icon:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
         }
     </style>
 </head>
@@ -357,23 +592,70 @@
 
         <div class="content">
             <div id="home" class="tab-content active">
-                <button id="submitButton">Submit</button>
+                <div class="card-one" id="reading">
+                    <h2>What are you reading today?</h2>
+                    <form id="readingSelectionForm">
+                        <div>
+                            <label for="semesterSelect"></label>
+                            <select id="semesterSelect">
+                                <option value="">--Select Semester--</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="subjectSelect"></label>
+                            <select id="subjectSelect" disabled>
+                                <option value="">--Select Subject--</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="categorySelect"></label>
+                            <select id="categorySelect" disabled>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="topicSelect"></label>
+                            <select id="topicSelect" disabled>
+                                <option value="">--Select Topic--</option>
+                            </select>
+                        </div>
+                    </form>
 
-                <!-- Popup Window -->
+                    <button id="submitButton">Submit</button>
+                </div>
+
+
                 <div id="popup">
-                    <button id="closePopup"><i class="fas fa-times"></i></button>
+                    <div class="popup-controls">
+                        <button id="fullscreenButton" style="margin-right: 40px; margin-top:5px;"><i
+                                class="fas fa-expand"></i></button>
+                        <button id="closePopup"><i class="fas fa-times"></i></button>
+                    </div>
                     <div id="popupContent">
-                        <h2>Welcome to the Popup!</h2>
-                        <p>This is a white popup that almost covers the entire browser screen.</p>
-                        <p>You can add any content here.</p>
+                        <!-- PDF iframe will be loaded here -->
                     </div>
                 </div>
             </div>
 
             <div id="chat" class="tab-content">
-                <h2>Chat</h2>
-                <p>This is the Chat page.</p>
+                <h1>
+                    Chat
+                    <i class="fas fa-info info-icon">
+                        <span class="tooltip" style="font-weight: normal;">You can chat here by signing with github and
+                            ask doubts or discuss topics, Formatting with Markdown is supported.</span>
+                    </i>
+                </h1>
+                <div id="giscus" data-repo="Materioa/Materio">
+                    <!-- The Giscus comment section will be loaded here -->
+                </div>
+                <script src="https://giscus.app/client.js" data-repo="Materioa/Materio" data-repo-id="R_kgDOK_VkLg"
+                    data-category="Chat" data-category-id="DIC_kwDOK_VkLs4CmdaW" data-mapping="title" data-strict="0"
+                    data-reactions-enabled="0" data-emit-metadata="0" data-input-position="top"
+                    data-theme="noborder_dark" data-lang="en" crossorigin="anonymous" async>
+                    </script>
+
             </div>
+
             <div id="notifications" class="tab-content">
                 <h1>Notifications</h1>
                 <div class="notification-board" style="color:#000000;" id="notificationBoard">
@@ -383,8 +665,10 @@
             <div id="settings" class="tab-content">
                 <h1>Settings</h1>
                 <div class="card-one" id="versionInfo">
-
+                    <img src="https://materioa.netlify.app/static/res/v4_logo.png" height="150px" width="150px"
+                        style="display: block; margin: 0 auto;">
                 </div>
+
                 <div class="card-layout" id="themeCard">
                     <div class="toggle-container">
                         <span>Enable Dark Mode</span>
@@ -394,25 +678,59 @@
                         </label>
                     </div>
                 </div>
+
+                <div class="card-layout" id="vi">
+                    <p>Version: 4.0</p>
+                    <p>Build: 26/03/2025</p>
+                </div>
+                <div class="card-layout" id="notices">
+                    <p><i class="fas fa-circle-info"><span><a href="/about"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    About</a></span></i></p>
+                    <hr>
+                    <p><i class="fas fa-scroll"><span><a href="/LICENSE"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    License</a></span></i></p>
+                    <hr>
+                    <p><i class="fas fa-cookie"><span><a href="/cookies-policy"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    Cookies</a></span></i></p>
+                </div>
             </div>
 
             <script>
-
                 const submitButton = document.getElementById('submitButton');
                 const popup = document.getElementById('popup');
                 const closePopup = document.getElementById('closePopup');
+
                 submitButton.addEventListener('click', () => {
+                    const semester = document.getElementById('semesterSelect').value;
+                    const subject = document.getElementById('subjectSelect').value;
+                    const categorySelect = document.getElementById('categorySelect');
+                    const topic = document.getElementById('topicSelect').value;
+                    if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
+                        alert('Please select a semester, subject, category, and topic.');
+                        return;
+                    }
+                    const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+
+                    document.getElementById('popupContent').innerHTML =
+                        `<iframe id="pdf-iframe" style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
+         src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+
+                    popup.classList.remove('closing');
                     popup.style.display = 'block';
                 });
                 closePopup.addEventListener('click', () => {
-                    popup.style.display = 'none';
-                });
-                window.addEventListener('click', (event) => {
-                    if (event.target === popup) {
-                        popup.style.display = 'none';
-                    }
+                    popup.classList.add('closing');
                 });
 
+                popup.addEventListener('animationend', (event) => {
+                    if (event.animationName === 'popupFadeOut') {
+                        popup.style.display = 'none';
+                        popup.classList.remove('closing');
+                    }
+                });
                 document.addEventListener('DOMContentLoaded', function () {
                     const tabLinks = document.querySelectorAll('.tab-link');
                     const tabContents = document.querySelectorAll('.tab-content');
@@ -428,23 +746,90 @@
                     });
                 });
 
-                // When opening the popup, ensure any previous closing state is removed.
-                submitButton.addEventListener('click', () => {
-                    popup.classList.remove('closing');
-                    popup.style.display = 'block';
-                });
+                // ...existing code for dropdowns and other listeners...
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Fetch data from data.json and populate the dropdowns dynamically
+                    fetch('data.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            const semesterSelect = document.getElementById('semesterSelect');
 
-                // When the close button is clicked, add the "closing" class to trigger the fade-out.
-                closePopup.addEventListener('click', () => {
-                    popup.classList.add('closing');
-                });
+                            // Populate semester dropdown based on top-level keys (e.g. "1", "2", etc.)
+                            for (let sem in data) {
+                                const option = document.createElement('option');
+                                option.value = sem;
+                                option.textContent = "Semester " + sem;
+                                semesterSelect.appendChild(option);
+                            }
 
-                // Once the fade-out animation ends, hide the popup and clean up the class.
-                popup.addEventListener('animationend', (event) => {
-                    if (event.animationName === 'popupFadeOut') {
-                        popup.style.display = 'none';
-                        popup.classList.remove('closing');
-                    }
+                            semesterSelect.addEventListener('change', function () {
+                                clearSelect('subjectSelect', '--Select Subject--');
+                                clearSelect('categorySelect', '--Select Category--');
+                                clearSelect('topicSelect', '--Select Topic--');
+                                const semKey = this.value;
+                                if (!semKey) return;
+                                const subjects = data[semKey];
+                                const subjectSelect = document.getElementById('subjectSelect');
+                                for (let subject in subjects) {
+                                    const option = document.createElement('option');
+                                    option.value = subject;
+                                    option.textContent = subject;
+                                    subjectSelect.appendChild(option);
+                                }
+                                subjectSelect.disabled = false;
+                            });
+
+                            document.getElementById('subjectSelect').addEventListener('change', function () {
+                                clearSelect('categorySelect', '--Select Category--');
+                                clearSelect('topicSelect', '--Select Topic--');
+                                const semKey = document.getElementById('semesterSelect').value;
+                                const subjectKey = this.value;
+                                if (!subjectKey) return;
+                                // The subject value is an array of category objects
+                                const categoriesArr = data[semKey][subjectKey];
+                                const categorySelect = document.getElementById('categorySelect');
+                                if (categoriesArr && categoriesArr.length) {
+                                    categoriesArr.forEach((catObj, idx) => {
+                                        const option = document.createElement('option');
+                                        option.value = idx; // Use index to reference the category object
+                                        option.textContent = catObj.type;
+                                        categorySelect.appendChild(option);
+                                    });
+                                    categorySelect.disabled = false;
+                                }
+                            });
+
+                            document.getElementById('categorySelect').addEventListener('change', function () {
+                                clearSelect('topicSelect', '--Select Topic--');
+                                const semKey = document.getElementById('semesterSelect').value;
+                                const subjectKey = document.getElementById('subjectSelect').value;
+                                const categoryIndex = this.value;
+                                if (categoryIndex === '') return;
+                                const catObj = data[semKey][subjectKey][categoryIndex];
+                                const topics = catObj.content;
+                                const topicSelect = document.getElementById('topicSelect');
+                                if (topics && topics.length > 0) {
+                                    topics.forEach(topic => {
+                                        const option = document.createElement('option');
+                                        option.value = topic;
+                                        option.textContent = topic;
+                                        topicSelect.appendChild(option);
+                                    });
+                                    topicSelect.disabled = false;
+                                }
+                            });
+
+                            function clearSelect(selectId, placeholder) {
+                                const select = document.getElementById(selectId);
+                                select.innerHTML = '';
+                                const option = document.createElement('option');
+                                option.value = '';
+                                option.textContent = placeholder;
+                                select.appendChild(option);
+                                select.disabled = true;
+                            }
+                        })
+                        .catch(err => console.error('Error loading data:', err));
                 });
 
                 themeToggle.addEventListener('change', function () {
@@ -455,7 +840,10 @@
                         document.querySelector('.content'),
                         document.getElementById('themeCard'),
                         document.getElementById('popup'),
-                        document.getElementById('versionInfo')
+                        document.getElementById('versionInfo'),
+                        document.getElementById('reading'),
+                        document.getElementById('notices'),
+                        document.getElementById('vi')
                     ];
                     elements.forEach(el => {
                         if (this.checked) {
@@ -466,20 +854,69 @@
                     });
                 });
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    themeToggle.checked = true;
-    const elements = [
-        document.body,
-        document.querySelector('header'),
-        document.querySelector('.navbar'),
-        document.querySelector('.content'),
-        document.getElementById('themeCard'),
-        document.getElementById('popup'),
-        document.getElementById('versionInfo')
-    ];
-    elements.forEach(el => el.classList.add('dark-mode'));
-}
+                    themeToggle.checked = true;
+                    const elements = [
+                        document.body,
+                        document.querySelector('header'),
+                        document.querySelector('.navbar'),
+                        document.querySelector('.content'),
+                        document.getElementById('themeCard'),
+                        document.getElementById('popup'),
+                        document.getElementById('versionInfo'),
+                        document.getElementById('reading'),
+                        document.getElementById('notices'),
+                        document.getElementById('vi')
+                    ];
+                    elements.forEach(el => el.classList.add('dark-mode'));
+                }
+                document.addEventListener("DOMContentLoaded", function () {
+                    const isDark = document.body.classList.contains("dark-mode") ||
+                        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                    const giscusScript = document.querySelector('script[src="https://giscus.app/client.js"]');
+                    if (giscusScript) {
+                        giscusScript.setAttribute('data-theme', isDark ? 'noborder_dark' : 'noborder_light');
+                    }
+                });
 
+                const fullscreenButton = document.getElementById('fullscreenButton');
 
+                // Toggle fullscreen mode when fullscreenButton is clicked
+                fullscreenButton.addEventListener('click', () => {
+                    // If not in fullscreen, request fullscreen
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().then(() => {
+                            popup.classList.add('fullscreen');
+                        }).catch(err => {
+                            console.error(`Failed to enable fullscreen mode: ${err.message}`);
+                        });
+                    } else {
+                        // Exit fullscreen
+                        document.exitFullscreen().then(() => {
+                            popup.classList.remove('fullscreen');
+                        }).catch(err => {
+                            console.error(`Failed to exit fullscreen mode: ${err.message}`);
+                        });
+                    }
+                });
+
+                submitButton.addEventListener('click', () => {
+                    const semester = document.getElementById('semesterSelect').value;
+                    const subject = document.getElementById('subjectSelect').value;
+                    const categorySelect = document.getElementById('categorySelect');
+                    const topic = document.getElementById('topicSelect').value;
+
+                    if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
+                        alert('Please select a semester, subject, category, and topic.');
+                        return;
+                    }
+
+                    const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+                    document.getElementById('popupContent').innerHTML =
+                        `<iframe id="pdf-iframe" style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
+      src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+                    popup.classList.remove('closing');
+                    popup.style.display = 'block';
+                });
             </script>
 </body>
 

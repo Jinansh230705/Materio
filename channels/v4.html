@@ -9,24 +9,84 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://materioa.netlify.app/static/assets/notify.js" crossorigin>
+    <script></script>
     <style>
-        /* Global Color Declarations */
-        :root {
-            --primary-bg: #ffffff;
-            --secondary: #ff8400;
-            --dark-bg: #121212;
-            --dark-header: #222222;
-            --dark-border: #444444;
-            --border: #d1d1d1;
-            --navbar: rgb(229, 229, 229);
-            --navbar-grey: rgb(203, 203, 203);
-            --dark-nav: rgb(210, 210, 210);
-            --card: #f8f8f8;
-            --dark-card: #333333;
-            --slider-bg: #ccc;
+        body {
+            margin: 0;
+            font-family: "Manrope", sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
 
-        /* Animations Declaration */
+        header {
+            background-color: #ffffff;
+            color: #333;
+            padding: 10px;
+            text-align: left;
+            height: 40px;
+            border-bottom-style: solid;
+            border-color: #d1d1d1;
+            background-image: url('https://materioa.netlify.app/static/res/materio_black.svg');
+            background-repeat: no-repeat;
+            background-size: 120px 32px;
+            background-position: 20px center;
+            min-height: 40px;
+            padding: 10px;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            color: rgb(229, 229, 229);
+            width: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            position: sticky;
+            /* box-shadow: inset 6px 6px 10px 0 rgba(77, 77, 77, 0.2), inset -6px -6px 10px 0 rgba(255, 255, 255, 0.5); */
+            border-right-style: solid;
+            border-color: #d1d1d1;
+        }
+
+        .navbar a {
+            color: rgb(203, 203, 203);
+            text-decoration: none;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: larger;
+            position: relative;
+            transition: transform 0.3s ease, color 0.3s ease;
+
+
+        }
+
+        .navbar a i {
+            margin-right: 10px;
+        }
+
+        .navbar a.active {
+            color: #ff8400;
+            transform: translateX(5px);
+            /* text-shadow: 2px 2px 4px #000000; */
+        }
+
+        a,
+        p {
+            color: #000000;
+            text-decoration: none;
+        }
+
         @keyframes slideIn {
             from {
                 width: 0;
@@ -35,6 +95,66 @@
             to {
                 width: 100%;
             }
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .card-one {
+            border-radius: 15px;
+            background-color: #f8f8f8;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 150px;
+        }
+
+        .card-layout {
+            border-radius: 15px;
+            background-color: #f8f8f8;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 30px;
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            /* Ensure the element still takes up space if needed */
+            position: relative;
+        }
+
+        .tab-content.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #popup {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            top: 2%;
+            /* Leave a small margin at the top */
+            left: 2%;
+            /* Leave a small margin on the sides */
+            width: 95%;
+            /* Cover 90% of the screen width */
+            height: 95%;
+            /* Cover 90% of the screen height */
+            background-color: white;
+            /* White background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* Add a shadow for better visibility */
+            z-index: 1000;
+            /* Ensure it's on top of everything */
+            overflow: auto;
+            /* Add scroll if content overflows */
+            border-radius: 10px;
+            /* Optional: Rounded corners */
+            animation: popupFadeIn 0.3s ease-in-out;
         }
 
         @keyframes popupFadeIn {
@@ -49,6 +169,34 @@
             }
         }
 
+        #popupContent {
+            padding: 5px;
+            height: calc(100% - 15px);
+            /* 5px top + 5px bottom */
+            box-sizing: border-box;
+        }
+
+        #closePopup {
+            position: absolute;
+            top: 5px;
+            /* shifted a bit upward */
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            /* made smaller */
+            cursor: pointer;
+            color: #ff8400;
+            /* reddish-orange color */
+            outline: none;
+            transition: color 0.3s ease;
+        }
+
+        #closePopup:hover {
+            color: red;
+            /* changes to red on hover */
+        }
+
         @keyframes popupFadeOut {
             from {
                 opacity: 1;
@@ -61,136 +209,7 @@
             }
         }
 
-        /* CSS Start */
-        body {
-            margin: 0;
-            font-family: "Manrope", sans-serif;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        header {
-            background-color: var(--primary-bg);
-            color: #333;
-            padding: 10px;
-            text-align: left;
-            height: 40px;
-            border-bottom-style: solid;
-            border-color: var(--border);
-            background-image: url('https://materioa.netlify.app/static/res/materio_black.svg');
-            background-repeat: no-repeat;
-            background-size: 120px 32px;
-            background-position: 20px center;
-
-        }
-
-        .container {
-            display: flex;
-            flex: 1;
-        }
-
-        .navbar {
-            background-color: var(--primary-bg);
-            color: var(--navbar);
-            width: 50px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 20px;
-            position: sticky;
-            border-right-style: solid;
-            border-color: var(--border);
-        }
-
-        .navbar a {
-            color: var(--navbar-grey);
-            text-decoration: none;
-            padding: 10px;
-            width: 100%;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: larger;
-            position: relative;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .navbar a i {
-            margin-right: 10px;
-        }
-
-        .navbar a.active {
-            color: var(--secondary);
-            transform: translateX(5px);
-        }
-
-        .content {
-            flex: 1;
-            padding: 20px;
-        }
-
-        .card-one {
-            border-radius: 15px;
-            background-color: var(--card);
-            padding: 20px;
-            margin: 20px 0;
-            min-height: 150px;
-        }
-
-        .card-layout {
-            border-radius: 15px;
-            background-color: var(--card);
-            padding: 20px;
-            margin: 20px 0;
-            min-height: 30px;
-        }
-
-        .tab-content {
-            display: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-            position: relative;
-        }
-
-        .tab-content.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        #popup {
-            display: none;
-            position: fixed;
-            top: 2%;
-            left: 2%;
-            width: 95%;
-            height: 95%;
-            background-color: var(--primary-bg);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            overflow: auto;
-            border-radius: 10px;
-            animation: popupFadeIn 0.3s ease-in-out;
-        }
-
-        #popupContent {
-            padding: 20px;
-        }
-
-        #closePopup {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: transparent;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #333;
-            outline: none;
-        }
-
+        /* When the popup is closing, trigger the fade-out animation */
         #popup.closing {
             animation: popupFadeOut 0.3s ease-in-out;
         }
@@ -199,11 +218,79 @@
             display: block;
         }
 
+        #readingSelectionForm {
+            font-family: "Manrope", sans-serif;
+            ;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+
+        }
+
+        #readingSelectionForm>div {
+            font-family: "Manrope", sans-serif;
+            ;
+            flex: 1 1 220px;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+        }
+
+        #readingSelectionForm label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+        }
+
+        #readingSelectionForm select {
+            font-family: "Manrope", sans-serif;
+            ;
+            max-width: 1000px;
+            box-sizing: border-box;
+            padding: 6px 8px;
+            margin: 0;
+            font-size: 14px;
+            border-radius: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #readingSelectionForm select:focus {
+            border: 2px solid;
+            border-color: #ff8400;
+            outline: none;
+        }
+
+        #submitButton {
+            background-color: #ff8400;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: "Manrope", sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #submitButton:hover {
+            background-color: #e67300;
+            /* Slightly darker on hover */
+        }
+
         .switch {
             position: relative;
             display: inline-block;
             width: 40px;
+            /* reduced width */
             height: 24px;
+            /* reduced height */
         }
 
         .switch input {
@@ -219,47 +306,53 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: var(--slider-bg);
+            background-color: #ccc;
             transition: .4s;
             border-radius: 24px;
+            /* half of height for smoother rounding */
         }
 
         .slider:before {
             position: absolute;
             content: "";
             height: 18px;
+            /* reduced from 26px */
             width: 18px;
+            /* reduced from 26px */
             left: 3px;
             bottom: 3px;
-            background-color: var(--primary-bg);
+            background-color: white;
             transition: .4s;
             border-radius: 50%;
         }
 
         input:checked+.slider {
-            background-color: var(--secondary);
+            background-color: #ff8400;
         }
 
         input:checked+.slider:before {
             transform: translateX(16px);
+            /* adjusted to 40px width */
         }
 
+        /* New container for the toggle and the text */
         .toggle-container {
             display: flex;
             align-items: center;
             gap: 8px;
+            /* space between toggle and text */
         }
 
-        /* Dark Mode */
+        /* Dark mode styles */
         body.dark-mode {
-            background-color: var(--dark-bg);
-            color: var(--primary-bg);
+            background-color: #121212;
+            color: #ffffff;
         }
 
         header.dark-mode {
-            background-color: var(--dark-header);
-            color: var(--primary-bg);
-            border-color: var(--dark-border);
+            background-color: #222222;
+            color: #ffffff;
+            border-color: #444444;
             background-image: url('https://materioa.netlify.app/static/res/materio_white.png');
             background-repeat: no-repeat;
             background-size: 120px 32px;
@@ -267,30 +360,47 @@
         }
 
         #popup.dark-mode {
-            background-color: var(--dark-header);
-            color: var(--primary-bg);
+            background-color: #222222;
+            color: white;
         }
 
         .navbar.dark-mode {
-            background-color: var(--dark-header);
-            border-color: var(--dark-border);
+            background-color: #222222;
+            border-color: #444444;
         }
 
         .navbar.dark-mode a {
-            color: var(--dark-nav);
+            color: rgb(210, 210, 210);
+        }
+
+        .navbar.dark-mode a.active {
+            color: #ff8400;
+            transform: translateX(5px);
         }
 
         .card-layout.dark-mode {
-            background-color: var(--dark-card);
-            color: var(--primary-bg);
+            background-color: #333333;
+            color: #ffffff;
         }
 
         .card-one.dark-mode {
-            background-color: var(--dark-card);
-            color: var(--primary-bg);
+            background-color: #333333;
+            color: #ffffff;
         }
 
-        /* Mobile Responsive */
+        body.dark-mode #readingSelectionForm select {
+            background-color: #444444;
+            /* a lighter fill than the card-one dark mode (#333333) */
+            color: #ffffff;
+            border: 1px solid #555555;
+            /* optionally a lighter border */
+        }
+
+        body.dark-mode a,
+        body.dark-mode p {
+            color: #ffffff;
+        }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -305,7 +415,7 @@
                 position: fixed;
                 bottom: 0;
                 border-top-style: solid;
-                border-color: var(--border);
+                border-color: #d1d1d1;
             }
 
             .navbar a {
@@ -314,19 +424,156 @@
             }
 
             .navbar a.active {
-                color: var(--secondary);
+                color: #ff8400;
                 transform: translateY(-5px);
+            }
+
+            #readingSelectionForm {
+                flex-direction: column;
+                padding: 2px;
+                gap: 5px;
+            }
+
+            #readingSelectionForm>div {
+                flex: 1 1 100%;
+            }
+
+            #readingSelectionForm select {
+                width: 100%;
             }
 
             .content {
                 margin-bottom: 60px;
+                /* Adjust based on navbar height */
             }
+        }
+
+        /* Popup default styling */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 2%;
+            left: 2%;
+            width: 95%;
+            height: 95%;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow: auto;
+            border-radius: 10px;
+            animation: popupFadeIn 0.3s ease-in-out;
+        }
+
+        /* Controls container for fullscreen & close buttons */
+        .popup-controls {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .popup-controls button {
+            background: transparent;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            color: #ff8400;
+            outline: none;
+            transition: color 0.3s ease;
+            width: 2px;
+            height: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-controls button:hover {
+            color: red;
+        }
+
+        /* Fullscreen mode overrides */
+        #popup.fullscreen {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        #popup.fullscreen #popupContent {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        #popup.fullscreen iframe {
+            height: calc(100% - 28px) !important;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        .info-icon {
+            display: inline-block;
+            cursor: default;
+            margin-left: 10px;
+            position: relative;
+            border: 1px solid #ff8400;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            background-color: #ff8400;
+            color: white;
+            font-size: 12px;
+        }
+
+        .info-icon .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 110%;
+            /* Positions tooltip to the right of the icon */
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #444444;
+            color: #fff;
+            padding: 5px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-size: 12px;
+            font-family: "Manrope", sans-serif;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-icon .tooltip::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            /* Arrow points from the left of the tooltip */
+            transform: translateY(-55%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent rgb(102, 102, 102) transparent transparent;
+        }
+
+        .info-icon:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
         }
     </style>
 </head>
+
 <body>
     <header>
     </header>
+
     <div class="container">
         <nav class="navbar">
             <a href="#" class="tab-link active" data-tab="home">
@@ -342,22 +589,73 @@
                 <i class="fas fa-cog"></i>
             </a>
         </nav>
+
         <div class="content">
             <div id="home" class="tab-content active">
-                <button id="submitButton">Submit</button>
+                <div class="card-one" id="reading">
+                    <h2>What are you reading today?</h2>
+                    <form id="readingSelectionForm">
+                        <div>
+                            <label for="semesterSelect"></label>
+                            <select id="semesterSelect">
+                                <option value="">--Select Semester--</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="subjectSelect"></label>
+                            <select id="subjectSelect" disabled>
+                                <option value="">--Select Subject--</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="categorySelect"></label>
+                            <select id="categorySelect" disabled>
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="topicSelect"></label>
+                            <select id="topicSelect" disabled>
+                                <option value="">--Select Topic--</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <button id="submitButton">Submit</button>
+                </div>
+
+
                 <div id="popup">
-                    <button id="closePopup"><i class="fas fa-times"></i></button>
+                    <div class="popup-controls">
+                        <button id="fullscreenButton" style="margin-right: 40px; margin-top:5px;"><i
+                                class="fas fa-expand"></i></button>
+                        <button id="closePopup"><i class="fas fa-times"></i></button>
+                    </div>
                     <div id="popupContent">
-                        <h2>Welcome to the Popup!</h2>
-                        <p>This is a white popup that almost covers the entire browser screen.</p>
-                        <p>You can add any content here.</p>
+                        <!-- PDF iframe will be loaded here -->
                     </div>
                 </div>
             </div>
+
             <div id="chat" class="tab-content">
-                <h2>Chat</h2>
-                <p>This is the Chat page.</p>
+                <h1>
+                    Chat
+                    <i class="fas fa-info info-icon">
+                        <span class="tooltip" style="font-weight: normal;">You can chat here by signing with github and
+                            ask doubts or discuss topics, Formatting with Markdown is supported.</span>
+                    </i>
+                </h1>
+                <div id="giscus" data-repo="Materioa/Materio">
+                    <!-- The Giscus comment section will be loaded here -->
+                </div>
+                <script src="https://giscus.app/client.js" data-repo="Materioa/Materio" data-repo-id="R_kgDOK_VkLg"
+                    data-category="Chat" data-category-id="DIC_kwDOK_VkLs4CmdaW" data-mapping="title" data-strict="0"
+                    data-reactions-enabled="0" data-emit-metadata="0" data-input-position="top"
+                    data-theme="noborder_dark" data-lang="en" crossorigin="anonymous" async>
+                    </script>
+
             </div>
+
             <div id="notifications" class="tab-content">
                 <h1>Notifications</h1>
                 <div class="notification-board" style="color:#000000;" id="notificationBoard">
@@ -367,6 +665,8 @@
             <div id="settings" class="tab-content">
                 <h1>Settings</h1>
                 <div class="card-one" id="versionInfo">
+                    <img src="https://materioa.netlify.app/static/res/v4_logo.png" height="150px" width="150px"
+                        style="display: block; margin: 0 auto;">
                 </div>
 
                 <div class="card-layout" id="themeCard">
@@ -379,8 +679,22 @@
                     </div>
                 </div>
 
-                <div class="card-one" id="details">
-                    <h1> About</h1>
+                <div class="card-layout" id="vi">
+                    <p>Version: 4.0</p>
+                    <p>Build: 26/03/2025</p>
+                </div>
+                <div class="card-layout" id="notices">
+                    <p><i class="fas fa-circle-info"><span><a href="/about"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    About</a></span></i></p>
+                    <hr>
+                    <p><i class="fas fa-scroll"><span><a href="/LICENSE"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    License</a></span></i></p>
+                    <hr>
+                    <p><i class="fas fa-cookie"><span><a href="/cookies-policy"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    Cookies</a></span></i></p>
                 </div>
             </div>
 
@@ -388,18 +702,35 @@
                 const submitButton = document.getElementById('submitButton');
                 const popup = document.getElementById('popup');
                 const closePopup = document.getElementById('closePopup');
+
                 submitButton.addEventListener('click', () => {
+                    const semester = document.getElementById('semesterSelect').value;
+                    const subject = document.getElementById('subjectSelect').value;
+                    const categorySelect = document.getElementById('categorySelect');
+                    const topic = document.getElementById('topicSelect').value;
+                    if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
+                        alert('Please select a semester, subject, category, and topic.');
+                        return;
+                    }
+                    const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+
+                    document.getElementById('popupContent').innerHTML =
+                        `<iframe id="pdf-iframe" style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
+         src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+
+                    popup.classList.remove('closing');
                     popup.style.display = 'block';
                 });
                 closePopup.addEventListener('click', () => {
-                    popup.style.display = 'none';
-                });
-                window.addEventListener('click', (event) => {
-                    if (event.target === popup) {
-                        popup.style.display = 'none';
-                    }
+                    popup.classList.add('closing');
                 });
 
+                popup.addEventListener('animationend', (event) => {
+                    if (event.animationName === 'popupFadeOut') {
+                        popup.style.display = 'none';
+                        popup.classList.remove('closing');
+                    }
+                });
                 document.addEventListener('DOMContentLoaded', function () {
                     const tabLinks = document.querySelectorAll('.tab-link');
                     const tabContents = document.querySelectorAll('.tab-content');
@@ -415,18 +746,90 @@
                     });
                 });
 
-                submitButton.addEventListener('click', () => {
-                    popup.classList.remove('closing');
-                    popup.style.display = 'block';
-                });
-                closePopup.addEventListener('click', () => {
-                    popup.classList.add('closing');
-                });
-                popup.addEventListener('animationend', (event) => {
-                    if (event.animationName === 'popupFadeOut') {
-                        popup.style.display = 'none';
-                        popup.classList.remove('closing');
-                    }
+                // ...existing code for dropdowns and other listeners...
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Fetch data from data.json and populate the dropdowns dynamically
+                    fetch('data.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            const semesterSelect = document.getElementById('semesterSelect');
+
+                            // Populate semester dropdown based on top-level keys (e.g. "1", "2", etc.)
+                            for (let sem in data) {
+                                const option = document.createElement('option');
+                                option.value = sem;
+                                option.textContent = "Semester " + sem;
+                                semesterSelect.appendChild(option);
+                            }
+
+                            semesterSelect.addEventListener('change', function () {
+                                clearSelect('subjectSelect', '--Select Subject--');
+                                clearSelect('categorySelect', '--Select Category--');
+                                clearSelect('topicSelect', '--Select Topic--');
+                                const semKey = this.value;
+                                if (!semKey) return;
+                                const subjects = data[semKey];
+                                const subjectSelect = document.getElementById('subjectSelect');
+                                for (let subject in subjects) {
+                                    const option = document.createElement('option');
+                                    option.value = subject;
+                                    option.textContent = subject;
+                                    subjectSelect.appendChild(option);
+                                }
+                                subjectSelect.disabled = false;
+                            });
+
+                            document.getElementById('subjectSelect').addEventListener('change', function () {
+                                clearSelect('categorySelect', '--Select Category--');
+                                clearSelect('topicSelect', '--Select Topic--');
+                                const semKey = document.getElementById('semesterSelect').value;
+                                const subjectKey = this.value;
+                                if (!subjectKey) return;
+                                // The subject value is an array of category objects
+                                const categoriesArr = data[semKey][subjectKey];
+                                const categorySelect = document.getElementById('categorySelect');
+                                if (categoriesArr && categoriesArr.length) {
+                                    categoriesArr.forEach((catObj, idx) => {
+                                        const option = document.createElement('option');
+                                        option.value = idx; // Use index to reference the category object
+                                        option.textContent = catObj.type;
+                                        categorySelect.appendChild(option);
+                                    });
+                                    categorySelect.disabled = false;
+                                }
+                            });
+
+                            document.getElementById('categorySelect').addEventListener('change', function () {
+                                clearSelect('topicSelect', '--Select Topic--');
+                                const semKey = document.getElementById('semesterSelect').value;
+                                const subjectKey = document.getElementById('subjectSelect').value;
+                                const categoryIndex = this.value;
+                                if (categoryIndex === '') return;
+                                const catObj = data[semKey][subjectKey][categoryIndex];
+                                const topics = catObj.content;
+                                const topicSelect = document.getElementById('topicSelect');
+                                if (topics && topics.length > 0) {
+                                    topics.forEach(topic => {
+                                        const option = document.createElement('option');
+                                        option.value = topic;
+                                        option.textContent = topic;
+                                        topicSelect.appendChild(option);
+                                    });
+                                    topicSelect.disabled = false;
+                                }
+                            });
+
+                            function clearSelect(selectId, placeholder) {
+                                const select = document.getElementById(selectId);
+                                select.innerHTML = '';
+                                const option = document.createElement('option');
+                                option.value = '';
+                                option.textContent = placeholder;
+                                select.appendChild(option);
+                                select.disabled = true;
+                            }
+                        })
+                        .catch(err => console.error('Error loading data:', err));
                 });
 
                 themeToggle.addEventListener('change', function () {
@@ -438,7 +841,9 @@
                         document.getElementById('themeCard'),
                         document.getElementById('popup'),
                         document.getElementById('versionInfo'),
-                        document.getElementById('details')
+                        document.getElementById('reading'),
+                        document.getElementById('notices'),
+                        document.getElementById('vi')
                     ];
                     elements.forEach(el => {
                         if (this.checked) {
@@ -457,10 +862,62 @@
                         document.querySelector('.content'),
                         document.getElementById('themeCard'),
                         document.getElementById('popup'),
-                        document.getElementById('versionInfo')
+                        document.getElementById('versionInfo'),
+                        document.getElementById('reading'),
+                        document.getElementById('notices'),
+                        document.getElementById('vi')
                     ];
                     elements.forEach(el => el.classList.add('dark-mode'));
                 }
+                document.addEventListener("DOMContentLoaded", function () {
+                    const isDark = document.body.classList.contains("dark-mode") ||
+                        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                    const giscusScript = document.querySelector('script[src="https://giscus.app/client.js"]');
+                    if (giscusScript) {
+                        giscusScript.setAttribute('data-theme', isDark ? 'noborder_dark' : 'noborder_light');
+                    }
+                });
+
+                const fullscreenButton = document.getElementById('fullscreenButton');
+
+                // Toggle fullscreen mode when fullscreenButton is clicked
+                fullscreenButton.addEventListener('click', () => {
+                    // If not in fullscreen, request fullscreen
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().then(() => {
+                            popup.classList.add('fullscreen');
+                        }).catch(err => {
+                            console.error(`Failed to enable fullscreen mode: ${err.message}`);
+                        });
+                    } else {
+                        // Exit fullscreen
+                        document.exitFullscreen().then(() => {
+                            popup.classList.remove('fullscreen');
+                        }).catch(err => {
+                            console.error(`Failed to exit fullscreen mode: ${err.message}`);
+                        });
+                    }
+                });
+
+                submitButton.addEventListener('click', () => {
+                    const semester = document.getElementById('semesterSelect').value;
+                    const subject = document.getElementById('subjectSelect').value;
+                    const categorySelect = document.getElementById('categorySelect');
+                    const topic = document.getElementById('topicSelect').value;
+
+                    if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
+                        alert('Please select a semester, subject, category, and topic.');
+                        return;
+                    }
+
+                    const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+                    document.getElementById('popupContent').innerHTML =
+                        `<iframe id="pdf-iframe" style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
+      src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+                    popup.classList.remove('closing');
+                    popup.style.display = 'block';
+                });
             </script>
 </body>
+
 </html>
