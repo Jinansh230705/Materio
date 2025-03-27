@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://materioa.netlify.app/static/assets/notify.js" crossorigin>
+    <script src="/static/assets/v4_27032025_notify.js" defer crossorigin></script>
     <style>
         body {
             margin: 0;
@@ -29,38 +29,54 @@
         }
 
         header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+
+            z-index: 1000;
             background-color: #ffffff;
             color: #333;
             padding: 10px;
             text-align: left;
-            height: 40px;
-            border-bottom-style: solid;
-            border-color: #d1d1d1;
+            border-bottom: 1px solid #d1d1d1;
             background-image: url('https://materioa.netlify.app/static/res/materio_black.svg');
             background-repeat: no-repeat;
             background-size: 120px 32px;
             background-position: 20px center;
-            min-height: 40px;
-            padding: 10px;
         }
 
         .container {
+            margin-top: 60px;
+
+            margin-left: 50px;
+
             display: flex;
             flex: 1;
         }
 
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
         .navbar {
-            background-color: #ffffff;
-            color: rgb(229, 229, 229);
+            position: fixed;
+            top: 60px;
+
+            left: 0;
             width: 50px;
+            height: calc(100% - 60px);
+
+            background-color: #ffffff;
+            border-right: 1px solid #d1d1d1;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding-top: 20px;
-            position: sticky;
-            /* box-shadow: inset 6px 6px 10px 0 rgba(77, 77, 77, 0.2), inset -6px -6px 10px 0 rgba(255, 255, 255, 0.5); */
-            border-right-style: solid;
-            border-color: #d1d1d1;
+            z-index: 999;
         }
 
         .navbar a {
@@ -76,7 +92,6 @@
             position: relative;
             transition: transform 0.3s ease, color 0.3s ease;
 
-
         }
 
         .navbar a i {
@@ -86,7 +101,7 @@
         .navbar a.active {
             color: #ff8400;
             transform: translateX(5px);
-            /* text-shadow: 2px 2px 4px #000000; */
+
         }
 
         a,
@@ -131,7 +146,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.5s ease, visibility 0.5s ease;
-            /* Ensure the element still takes up space if needed */
+
             position: relative;
         }
 
@@ -142,26 +157,26 @@
 
         #popup {
             display: none;
-            /* Hidden by default */
+
             position: fixed;
             top: 2%;
-            /* Leave a small margin at the top */
+
             left: 2%;
-            /* Leave a small margin on the sides */
+
             width: 95%;
-            /* Cover 90% of the screen width */
+
             height: 95%;
-            /* Cover 90% of the screen height */
+
             background-color: white;
-            /* White background */
+
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            /* Add a shadow for better visibility */
+
             z-index: 1000;
-            /* Ensure it's on top of everything */
+
             overflow: auto;
-            /* Add scroll if content overflows */
+
             border-radius: 10px;
-            /* Optional: Rounded corners */
+
             animation: popupFadeIn 0.3s ease-in-out;
         }
 
@@ -180,29 +195,29 @@
         #popupContent {
             padding: 5px;
             height: calc(100% - 15px);
-            /* 5px top + 5px bottom */
+
             box-sizing: border-box;
         }
 
         #closePopup {
             position: absolute;
             top: 5px;
-            /* shifted a bit upward */
+
             right: 10px;
             background: transparent;
             border: none;
             font-size: 20px;
-            /* made smaller */
+
             cursor: pointer;
             color: #ff8400;
-            /* reddish-orange color */
+
             outline: none;
             transition: color 0.3s ease;
         }
 
         #closePopup:hover {
             color: red;
-            /* changes to red on hover */
+
         }
 
         @keyframes popupFadeOut {
@@ -217,7 +232,7 @@
             }
         }
 
-        /* When the popup is closing, trigger the fade-out animation */
+
         #popup.closing {
             animation: popupFadeOut 0.3s ease-in-out;
         }
@@ -290,16 +305,16 @@
 
         #submitButton:hover {
             background-color: #e67300;
-            /* Slightly darker on hover */
+
         }
 
         .switch {
             position: relative;
             display: inline-block;
             width: 40px;
-            /* reduced width */
+
             height: 24px;
-            /* reduced height */
+
         }
 
         .switch input {
@@ -318,16 +333,16 @@
             background-color: #ccc;
             transition: .4s;
             border-radius: 24px;
-            /* half of height for smoother rounding */
+
         }
 
         .slider:before {
             position: absolute;
             content: "";
             height: 18px;
-            /* reduced from 26px */
+
             width: 18px;
-            /* reduced from 26px */
+
             left: 3px;
             bottom: 3px;
             background-color: white;
@@ -341,18 +356,18 @@
 
         input:checked+.slider:before {
             transform: translateX(16px);
-            /* adjusted to 40px width */
+
         }
 
-        /* New container for the toggle and the text */
+
         .toggle-container {
             display: flex;
             align-items: center;
             gap: 8px;
-            /* space between toggle and text */
+
         }
 
-        /* Dark mode styles */
+
         body.dark-mode {
             background-color: #121212;
             color: #ffffff;
@@ -410,7 +425,8 @@
 
         @media (max-width: 768px) {
             .container {
-                flex-direction: column;
+                margin-left: 0;
+                margin-right: 0;
             }
 
             .navbar {
@@ -421,8 +437,9 @@
                 padding-top: 0;
                 position: fixed;
                 bottom: 0;
-                border-top-style: solid;
-                border-color: #d1d1d1;
+                top: auto;
+                border-top: 1px solid #d1d1d1;
+                border-right: none;
                 z-index: 1010;
             }
 
@@ -457,6 +474,10 @@
                 max-width: 330px;
             }
 
+            #popup {
+                z-index: 2000 !important;
+            }
+
             .content {
                 margin-bottom: 60px;
             }
@@ -471,7 +492,7 @@
             }
         }
 
-        /* Popup default styling */
+
         #popup {
             display: none;
             position: fixed;
@@ -487,7 +508,7 @@
             animation: popupFadeIn 0.3s ease-in-out;
         }
 
-        /* Controls container for fullscreen & close buttons */
+
         .popup-controls {
             position: absolute;
             top: 5px;
@@ -518,7 +539,7 @@
             color: red;
         }
 
-        /* Fullscreen mode overrides */
+
         #popup.fullscreen {
             top: 0;
             left: 0;
@@ -561,7 +582,7 @@
             opacity: 0;
             position: absolute;
             left: 110%;
-            /* Positions tooltip to the right of the icon */
+
             top: 50%;
             transform: translateY(-50%);
             background-color: #444444;
@@ -579,7 +600,7 @@
             position: absolute;
             top: 50%;
             right: 100%;
-            transform: translateY(-55%); 
+            transform: translateY(-55%);
             border-width: 5px;
             border-style: solid;
             border-color: transparent rgb(102, 102, 102) transparent transparent;
@@ -588,6 +609,53 @@
         .info-icon:hover .tooltip {
             visibility: visible;
             opacity: 1;
+        }
+
+
+        .notification {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .notification h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+
+        .notification p {
+            margin: 5px 0;
+        }
+
+
+        .notification-date {
+            display: block;
+            font-size: 12px;
+            color: #888888;
+        }
+
+
+
+        body.dark-mode .notification {
+            background: #444444;
+            color: #ffffff;
+            box-shadow: none;
+        }
+
+        body.dark-mode .notification-date {
+            color: #bbbbbb;
+        }
+
+
+        @media (max-width: 768px) {
+            .notification-board {
+                max-height: 200px;
+            }
         }
     </style>
 </head>
@@ -684,10 +752,11 @@
 
             <div id="notifications" class="tab-content">
                 <h1>Notifications</h1>
-                <div class="notification-board" style="color:#000000;" id="notificationBoard">
-                    <!-- Notifications will be dynamically added here -->
+                <div id="notificationBoard" style="color:#000000;">
+                    <!-- Notification cards will be dynamically added here -->
                 </div>
             </div>
+
             <div id="settings" class="tab-content">
                 <h1>Settings</h1>
                 <div class="card-one" id="versionInfo">
@@ -705,7 +774,7 @@
                     </div>
                 </div>
 
-                <div class="card-layout" id="vi">
+                <div class="card-layout" id="about">
                     <p>Version: 4.0</p>
                     <p>Build: 26/03/2025</p>
                 </div>
@@ -725,7 +794,6 @@
             </div>
 
             <script>
-                // Place these functions at the top of your <script> block
                 function setCookie(name, value, days) {
                     var expires = "";
                     if (days) {
@@ -746,41 +814,30 @@
                     }
                     return null;
                 }
-
-                // Then update your DOMContentLoaded event listener for handling tabs:
                 document.addEventListener("DOMContentLoaded", function () {
-                    // Check for an active tab in the cookies, defaulting to 'home'
                     const activeTab = getCookie("activeTab") || "home";
-
-                    // Ensure all tabs are deactivated first
                     const tabLinks = document.querySelectorAll(".tab-link");
                     const tabContents = document.querySelectorAll(".tab-content");
                     tabLinks.forEach(link => link.classList.remove("active"));
                     tabContents.forEach(content => content.classList.remove("active"));
 
-                    // Activate the tab stored in the cookie if it exists
                     const selectedTabLink = document.querySelector(`.tab-link[data-tab="${activeTab}"]`);
                     if (selectedTabLink) {
                         selectedTabLink.classList.add("active");
                         document.getElementById(activeTab)?.classList.add("active");
                     } else {
-                        // Fallback to default tab (home)
                         document.querySelector('.tab-link[data-tab="home"]').classList.add("active");
                         document.getElementById("home").classList.add("active");
                     }
 
-                    // Add a click listener on the tab links to update cookie value
                     tabLinks.forEach(link => {
                         link.addEventListener("click", function (e) {
                             e.preventDefault();
-                            // Deactivate all tabs
                             tabLinks.forEach(tab => tab.classList.remove("active"));
                             tabContents.forEach(content => content.classList.remove("active"));
-                            // Activate selected tab
                             this.classList.add("active");
                             const tab = this.getAttribute("data-tab");
                             document.getElementById(tab)?.classList.add("active");
-                            // Store active tab in cookie for 7 days
                             setCookie("activeTab", tab, 7);
                         });
                     });
@@ -832,45 +889,36 @@
                     });
                 });
 
-                // ...existing code for dropdowns and other listeners...
                 document.addEventListener('DOMContentLoaded', function () {
-                    // Fetch data from data.json and populate the dropdowns dynamically
                     fetch('data.json')
                         .then(response => response.json())
                         .then(data => {
                             const semesterMapping = {
-                                "9": "Additional Resources"  // Rename semester 9
+                                "9": "Additional Resources"
                             };
 
                             const semesterSelect = document.getElementById('semesterSelect');
-
-                            // Clear existing options if needed
                             semesterSelect.innerHTML = '';
-                            // Add a placeholder option
                             const placeholder = document.createElement('option');
                             placeholder.value = '';
                             placeholder.textContent = 'Select Semester';
                             semesterSelect.appendChild(placeholder);
 
-                            // Populate semester dropdown based on top-level keys (e.g. "1", "2", etc.)
                             for (let sem in data) {
                                 const option = document.createElement('option');
                                 option.value = sem;
-                                // Use a mapping if exists, otherwise default to "Semester " + sem
                                 option.textContent = semesterMapping[sem] ? semesterMapping[sem] : "Semester " + sem;
-                                // Set semester 4 as default selected
+
                                 if (sem === "4") {
                                     option.selected = true;
                                 }
                                 semesterSelect.appendChild(option);
                             }
 
-                            // Trigger the change event if a default is already selected
                             if (semesterSelect.value) {
                                 semesterSelect.dispatchEvent(new Event('change'));
                             }
 
-                            // Existing change listener for semesterSelect remains the same:
                             semesterSelect.addEventListener('change', function () {
                                 clearSelect('subjectSelect', '--Select Subject--');
                                 clearSelect('categorySelect', '--Select Category--');
@@ -894,17 +942,24 @@
                                 const semKey = document.getElementById('semesterSelect').value;
                                 const subjectKey = this.value;
                                 if (!subjectKey) return;
-                                // The subject value is an array of category objects
                                 const categoriesArr = data[semKey][subjectKey];
                                 const categorySelect = document.getElementById('categorySelect');
                                 if (categoriesArr && categoriesArr.length) {
+                                    let defaultSet = false;
                                     categoriesArr.forEach((catObj, idx) => {
                                         const option = document.createElement('option');
-                                        option.value = idx; // Use index to reference the category object
+                                        option.value = idx;
                                         option.textContent = catObj.type;
+                                        if (catObj.type.trim().toLowerCase() === "chapters") {
+                                            option.selected = true;
+                                            defaultSet = true;
+                                        }
                                         categorySelect.appendChild(option);
                                     });
                                     categorySelect.disabled = false;
+                                    if (defaultSet) {
+                                        categorySelect.dispatchEvent(new Event('change'));
+                                    }
                                 }
                             });
 
@@ -941,6 +996,7 @@
                         .catch(err => console.error('Error loading data:', err));
                 });
 
+                const themeToggle = document.getElementById('themeToggle');
                 themeToggle.addEventListener('change', function () {
                     const elements = [
                         document.body,
@@ -952,16 +1008,12 @@
                         document.getElementById('versionInfo'),
                         document.getElementById('reading'),
                         document.getElementById('notices'),
-                        document.getElementById('vi')
+                        document.getElementById('notificationBoard'),
+                        document.getElementById('about')
                     ];
-                    elements.forEach(el => {
-                        if (this.checked) {
-                            el.classList.add('dark-mode');
-                        } else {
-                            el.classList.remove('dark-mode');
-                        }
-                    });
+                    elements.forEach(el => el && (this.checked ? el.classList.add('dark-mode') : el.classList.remove('dark-mode')));
                 });
+
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     themeToggle.checked = true;
                     const elements = [
@@ -974,7 +1026,7 @@
                         document.getElementById('versionInfo'),
                         document.getElementById('reading'),
                         document.getElementById('notices'),
-                        document.getElementById('vi')
+                        document.getElementById('about')
                     ];
                     elements.forEach(el => el.classList.add('dark-mode'));
                 }
@@ -988,10 +1040,7 @@
                 });
 
                 const fullscreenButton = document.getElementById('fullscreenButton');
-
-                // Toggle fullscreen mode when fullscreenButton is clicked
                 fullscreenButton.addEventListener('click', () => {
-                    // If not in fullscreen, request fullscreen
                     if (!document.fullscreenElement) {
                         document.documentElement.requestFullscreen().then(() => {
                             popup.classList.add('fullscreen');
@@ -999,7 +1048,6 @@
                             console.error(`Failed to enable fullscreen mode: ${err.message}`);
                         });
                     } else {
-                        // Exit fullscreen
                         document.exitFullscreen().then(() => {
                             popup.classList.remove('fullscreen');
                         }).catch(err => {
@@ -1027,24 +1075,20 @@
                     popup.style.display = 'block';
                 });
 
-                // Fetch data and populate the dropdowns dynamically
                 fetch('data.json')
                     .then(response => response.json())
                     .then(data => {
                         const semesterMapping = {
-                            "9": "Additional Resources"  // Rename semester 9
+                            "9": "Additional Resources"
                         };
 
                         const semesterSelect = document.getElementById('semesterSelect');
-
-                        // Clear existing options if needed and add a placeholder option
                         semesterSelect.innerHTML = '';
                         const placeholder = document.createElement('option');
                         placeholder.value = '';
                         placeholder.textContent = 'Select Semester';
                         semesterSelect.appendChild(placeholder);
 
-                        // Populate semester dropdown based on top-level keys
                         for (let sem in data) {
                             const option = document.createElement('option');
                             option.value = sem;
@@ -1052,15 +1096,11 @@
                             semesterSelect.appendChild(option);
                         }
 
-                        // Set default selected value to "4" explicitly
                         semesterSelect.value = "4";
-
-                        // Dispatch change event so that dependent dropdowns are populated
                         if (semesterSelect.value) {
                             semesterSelect.dispatchEvent(new Event('change'));
                         }
 
-                        // Change listener for semesterSelect:
                         semesterSelect.addEventListener('change', function () {
                             clearSelect('subjectSelect', '--Select Subject--');
                             clearSelect('categorySelect', '--Select Category--');
@@ -1078,8 +1118,6 @@
                             subjectSelect.disabled = false;
                         });
 
-                        // ...remaining listeners for subjectSelect, categorySelect, etc.
-                        
                         function clearSelect(selectId, placeholderText) {
                             const select = document.getElementById(selectId);
                             select.innerHTML = '';
@@ -1094,41 +1132,35 @@
             </script>
             <!-- GA4 Tracking -->
             <script>
-                // Custom GA4 tracking script
                 (function () {
-                    // Ensure GA4 (gtag) is loaded
+
                     if (!window.gtag) {
                         console.warn("GA4 (gtag) not loaded.");
                         return;
                     }
 
-                    // Helper to send events to GA4
                     function trackEvent(eventName, params) {
                         window.gtag('event', eventName, params);
                     }
 
-                    // Track overall page engagement time
                     const pageLoadTime = Date.now();
                     window.addEventListener("beforeunload", function () {
                         const engagementTime = Date.now() - pageLoadTime;
                         trackEvent("page_engagement", { engagement_time_ms: engagementTime });
                     });
 
-                    // Track all button clicks
                     document.querySelectorAll("button").forEach((btn) => {
                         btn.addEventListener("click", function () {
                             trackEvent("button_click", { event_label: this.id || this.innerText });
                         });
                     });
 
-                    // Track navbar tab switches
                     document.querySelectorAll(".tab-link").forEach((tab) => {
                         tab.addEventListener("click", function () {
                             trackEvent("nav_tab_switch", { event_label: this.getAttribute("data-tab") });
                         });
                     });
 
-                    // Track page scroll events (throttled to one event per second)
                     let scrollTimeout;
                     window.addEventListener("scroll", function () {
                         if (scrollTimeout) clearTimeout(scrollTimeout);
@@ -1137,21 +1169,18 @@
                         }, 1000);
                     });
 
-                    // PDF viewer engagement tracking
                     let pdfEngagementTime = 0;
                     let pdfTimer = null;
 
-                    // Start counting PDF engagement time (in milliseconds)
                     function startPdfTimer() {
                         if (!pdfTimer) {
                             pdfTimer = setInterval(() => {
-                                pdfEngagementTime += 1000; // Increase by 1 second each interval
+                                pdfEngagementTime += 1000;
                             }, 1000);
                             trackEvent("pdf_view_start", {});
                         }
                     }
 
-                    // Stop the timer and send the engagement time event
                     function stopPdfTimer() {
                         if (pdfTimer) {
                             clearInterval(pdfTimer);
@@ -1161,7 +1190,6 @@
                         }
                     }
 
-                    // Setup PDF tracking when the PDF iframe is loaded
                     function setupPdfTracking() {
                         const pdfIframe = document.getElementById("pdf-iframe");
                         if (pdfIframe) {
@@ -1170,7 +1198,6 @@
                     }
                     setupPdfTracking();
 
-                    // Stop PDF timer when the popup hides (assuming display changes to "none")
                     const popup = document.getElementById("popup");
                     if (popup) {
                         const observer = new MutationObserver((mutations) => {
@@ -1183,11 +1210,10 @@
                         observer.observe(popup, { attributes: true, attributeFilter: ["style"] });
                     }
 
-                    // Listen for messages from the PDF viewer (if it sends any via postMessage)
                     window.addEventListener("message", (event) => {
-                        // Optionally check event.origin if you know the expected domain
+
                         if (event.origin.includes("mozilla.github.io")) {
-                            // Log any PDF interactions (scrolling pages, highlighting, annotations, etc.)
+
                             trackEvent("pdf_interaction", { data: event.data });
                         }
                     });
