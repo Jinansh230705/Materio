@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function (w, d, s, l, i) {
-        w[l] = w[l] || []; w[l].push({
-            'gtm.start':
-                new Date().getTime(), event: 'gtm.js'
-        }); var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
     <title>Materio Labs - v4</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -398,10 +398,8 @@
 
         body.dark-mode #readingSelectionForm select {
             background-color: #444444;
-            /* a lighter fill than the card-one dark mode (#333333) */
             color: #ffffff;
             border: 1px solid #555555;
-            /* optionally a lighter border */
         }
 
         body.dark-mode a,
@@ -437,6 +435,11 @@
                 transform: translateY(-5px);
             }
 
+            .navbar.dark-mode a.active {
+                color: #ff8400;
+                transform: translateY(-5px);
+            }
+
             #readingSelectionForm {
                 flex-direction: column;
                 padding: 2px;
@@ -455,17 +458,15 @@
 
             .content {
                 margin-bottom: 60px;
-                /* Adjust based on navbar height */
             }
 
-            /* 1. Truncate tooltip content for mobile */
             .info-icon .tooltip {
                 display: -webkit-box;
-        max-width: 150px; /* adjust as needed */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        white-space: normal;
-        text-overflow: clip; 
+                max-width: 150px;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                white-space: normal;
+                text-overflow: clip;
             }
         }
 
@@ -577,8 +578,7 @@
             position: absolute;
             top: 50%;
             right: 100%;
-            /* Arrow points from the left of the tooltip */
-            transform: translateY(-55%);
+            transform: translateY(-55%); 
             border-width: 5px;
             border-style: solid;
             border-color: transparent rgb(102, 102, 102) transparent transparent;
@@ -593,9 +593,9 @@
 
 <body>
     <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6PC6RJL" height="0" width="0"
-    style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6PC6RJL" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <header>
     </header>
 
@@ -725,65 +725,65 @@
 
             <script>
                 // Place these functions at the top of your <script> block
-function setCookie(name, value, days) {
-    var expires = "";
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
+                function setCookie(name, value, days) {
+                    var expires = "";
+                    if (days) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                        expires = "; expires=" + date.toUTCString();
+                    }
+                    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+                }
 
-function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(";");
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == " ") c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
+                function getCookie(name) {
+                    var nameEQ = name + "=";
+                    var ca = document.cookie.split(";");
+                    for (var i = 0; i < ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == " ") c = c.substring(1, c.length);
+                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                    }
+                    return null;
+                }
 
-// Then update your DOMContentLoaded event listener for handling tabs:
-document.addEventListener("DOMContentLoaded", function () {
-    // Check for an active tab in the cookies, defaulting to 'home'
-    const activeTab = getCookie("activeTab") || "home";
+                // Then update your DOMContentLoaded event listener for handling tabs:
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Check for an active tab in the cookies, defaulting to 'home'
+                    const activeTab = getCookie("activeTab") || "home";
 
-    // Ensure all tabs are deactivated first
-    const tabLinks = document.querySelectorAll(".tab-link");
-    const tabContents = document.querySelectorAll(".tab-content");
-    tabLinks.forEach(link => link.classList.remove("active"));
-    tabContents.forEach(content => content.classList.remove("active"));
+                    // Ensure all tabs are deactivated first
+                    const tabLinks = document.querySelectorAll(".tab-link");
+                    const tabContents = document.querySelectorAll(".tab-content");
+                    tabLinks.forEach(link => link.classList.remove("active"));
+                    tabContents.forEach(content => content.classList.remove("active"));
 
-    // Activate the tab stored in the cookie if it exists
-    const selectedTabLink = document.querySelector(`.tab-link[data-tab="${activeTab}"]`);
-    if (selectedTabLink) {
-        selectedTabLink.classList.add("active");
-        document.getElementById(activeTab)?.classList.add("active");
-    } else {
-        // Fallback to default tab (home)
-        document.querySelector('.tab-link[data-tab="home"]').classList.add("active");
-        document.getElementById("home").classList.add("active");
-    }
+                    // Activate the tab stored in the cookie if it exists
+                    const selectedTabLink = document.querySelector(`.tab-link[data-tab="${activeTab}"]`);
+                    if (selectedTabLink) {
+                        selectedTabLink.classList.add("active");
+                        document.getElementById(activeTab)?.classList.add("active");
+                    } else {
+                        // Fallback to default tab (home)
+                        document.querySelector('.tab-link[data-tab="home"]').classList.add("active");
+                        document.getElementById("home").classList.add("active");
+                    }
 
-    // Add a click listener on the tab links to update cookie value
-    tabLinks.forEach(link => {
-        link.addEventListener("click", function (e) {
-            e.preventDefault();
-            // Deactivate all tabs
-            tabLinks.forEach(tab => tab.classList.remove("active"));
-            tabContents.forEach(content => content.classList.remove("active"));
-            // Activate selected tab
-            this.classList.add("active");
-            const tab = this.getAttribute("data-tab");
-            document.getElementById(tab)?.classList.add("active");
-            // Store active tab in cookie for 7 days
-            setCookie("activeTab", tab, 7);
-        });
-    });
-});
+                    // Add a click listener on the tab links to update cookie value
+                    tabLinks.forEach(link => {
+                        link.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            // Deactivate all tabs
+                            tabLinks.forEach(tab => tab.classList.remove("active"));
+                            tabContents.forEach(content => content.classList.remove("active"));
+                            // Activate selected tab
+                            this.classList.add("active");
+                            const tab = this.getAttribute("data-tab");
+                            document.getElementById(tab)?.classList.add("active");
+                            // Store active tab in cookie for 7 days
+                            setCookie("activeTab", tab, 7);
+                        });
+                    });
+                });
                 const submitButton = document.getElementById('submitButton');
                 const popup = document.getElementById('popup');
                 const closePopup = document.getElementById('closePopup');
@@ -800,7 +800,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
 
                     document.getElementById('popupContent').innerHTML =
-                        `<iframe id="pdf-iframe" style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
+                        `<iframe id="pdf-iframe" scrolling='no' allowfullscreen webkitallowfullscreen style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
          src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
 
                     popup.classList.remove('closing');
@@ -837,13 +837,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     fetch('data.json')
                         .then(response => response.json())
                         .then(data => {
+                            const semesterMapping = {
+                                "9": "Additional Resources"  // Rename semester 9
+                            };
+
                             const semesterSelect = document.getElementById('semesterSelect');
 
                             // Populate semester dropdown based on top-level keys (e.g. "1", "2", etc.)
                             for (let sem in data) {
                                 const option = document.createElement('option');
                                 option.value = sem;
-                                option.textContent = "Semester " + sem;
+                                // Use a mapping if exists, otherwise default to "Semester " + sem
+                                option.textContent = semesterMapping[sem] ? semesterMapping[sem] : "Semester " + sem;
+                                // Set semester 4 as default selected
+                                if (sem === "4") {
+                                    option.selected = true;
+                                }
                                 semesterSelect.appendChild(option);
                             }
 
@@ -1004,106 +1013,106 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             </script>
             <!-- GA4 Tracking -->
-             <script>
+            <script>
                 // Custom GA4 tracking script
-(function(){
-    // Ensure GA4 (gtag) is loaded
-    if (!window.gtag) {
-        console.warn("GA4 (gtag) not loaded.");
-        return;
-    }
-    
-    // Helper to send events to GA4
-    function trackEvent(eventName, params) {
-        window.gtag('event', eventName, params);
-    }
+                (function () {
+                    // Ensure GA4 (gtag) is loaded
+                    if (!window.gtag) {
+                        console.warn("GA4 (gtag) not loaded.");
+                        return;
+                    }
 
-    // Track overall page engagement time
-    const pageLoadTime = Date.now();
-    window.addEventListener("beforeunload", function() {
-        const engagementTime = Date.now() - pageLoadTime;
-        trackEvent("page_engagement", { engagement_time_ms: engagementTime });
-    });
+                    // Helper to send events to GA4
+                    function trackEvent(eventName, params) {
+                        window.gtag('event', eventName, params);
+                    }
 
-    // Track all button clicks
-    document.querySelectorAll("button").forEach((btn) => {
-        btn.addEventListener("click", function() {
-            trackEvent("button_click", { event_label: this.id || this.innerText });
-        });
-    });
+                    // Track overall page engagement time
+                    const pageLoadTime = Date.now();
+                    window.addEventListener("beforeunload", function () {
+                        const engagementTime = Date.now() - pageLoadTime;
+                        trackEvent("page_engagement", { engagement_time_ms: engagementTime });
+                    });
 
-    // Track navbar tab switches
-    document.querySelectorAll(".tab-link").forEach((tab) => {
-        tab.addEventListener("click", function() {
-            trackEvent("nav_tab_switch", { event_label: this.getAttribute("data-tab") });
-        });
-    });
+                    // Track all button clicks
+                    document.querySelectorAll("button").forEach((btn) => {
+                        btn.addEventListener("click", function () {
+                            trackEvent("button_click", { event_label: this.id || this.innerText });
+                        });
+                    });
 
-    // Track page scroll events (throttled to one event per second)
-    let scrollTimeout;
-    window.addEventListener("scroll", function() {
-        if (scrollTimeout) clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            trackEvent("page_scroll", { scroll_y: window.scrollY });
-        }, 1000);
-    });
+                    // Track navbar tab switches
+                    document.querySelectorAll(".tab-link").forEach((tab) => {
+                        tab.addEventListener("click", function () {
+                            trackEvent("nav_tab_switch", { event_label: this.getAttribute("data-tab") });
+                        });
+                    });
 
-    // PDF viewer engagement tracking
-    let pdfEngagementTime = 0;
-    let pdfTimer = null;
-    
-    // Start counting PDF engagement time (in milliseconds)
-    function startPdfTimer() {
-        if (!pdfTimer) {
-            pdfTimer = setInterval(() => {
-                pdfEngagementTime += 1000; // Increase by 1 second each interval
-            }, 1000);
-            trackEvent("pdf_view_start", {});
-        }
-    }
-    
-    // Stop the timer and send the engagement time event
-    function stopPdfTimer() {
-        if (pdfTimer) {
-            clearInterval(pdfTimer);
-            pdfTimer = null;
-            trackEvent("pdf_engagement", { engagement_time_ms: pdfEngagementTime });
-            pdfEngagementTime = 0;
-        }
-    }
-    
-    // Setup PDF tracking when the PDF iframe is loaded
-    function setupPdfTracking() {
-        const pdfIframe = document.getElementById("pdf-iframe");
-        if (pdfIframe) {
-            pdfIframe.addEventListener("load", startPdfTimer);
-        }
-    }
-    setupPdfTracking();
-    
-    // Stop PDF timer when the popup hides (assuming display changes to "none")
-    const popup = document.getElementById("popup");
-    if(popup){
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.target.style.display === "none") {
-                    stopPdfTimer();
-                }
-            });
-        });
-        observer.observe(popup, { attributes: true, attributeFilter: ["style"] });
-    }
-    
-    // Listen for messages from the PDF viewer (if it sends any via postMessage)
-    window.addEventListener("message", (event) => {
-        // Optionally check event.origin if you know the expected domain
-        if (event.origin.includes("mozilla.github.io")) {
-            // Log any PDF interactions (scrolling pages, highlighting, annotations, etc.)
-            trackEvent("pdf_interaction", { data: event.data });
-        }
-    });
-})();
-             </script>
+                    // Track page scroll events (throttled to one event per second)
+                    let scrollTimeout;
+                    window.addEventListener("scroll", function () {
+                        if (scrollTimeout) clearTimeout(scrollTimeout);
+                        scrollTimeout = setTimeout(() => {
+                            trackEvent("page_scroll", { scroll_y: window.scrollY });
+                        }, 1000);
+                    });
+
+                    // PDF viewer engagement tracking
+                    let pdfEngagementTime = 0;
+                    let pdfTimer = null;
+
+                    // Start counting PDF engagement time (in milliseconds)
+                    function startPdfTimer() {
+                        if (!pdfTimer) {
+                            pdfTimer = setInterval(() => {
+                                pdfEngagementTime += 1000; // Increase by 1 second each interval
+                            }, 1000);
+                            trackEvent("pdf_view_start", {});
+                        }
+                    }
+
+                    // Stop the timer and send the engagement time event
+                    function stopPdfTimer() {
+                        if (pdfTimer) {
+                            clearInterval(pdfTimer);
+                            pdfTimer = null;
+                            trackEvent("pdf_engagement", { engagement_time_ms: pdfEngagementTime });
+                            pdfEngagementTime = 0;
+                        }
+                    }
+
+                    // Setup PDF tracking when the PDF iframe is loaded
+                    function setupPdfTracking() {
+                        const pdfIframe = document.getElementById("pdf-iframe");
+                        if (pdfIframe) {
+                            pdfIframe.addEventListener("load", startPdfTimer);
+                        }
+                    }
+                    setupPdfTracking();
+
+                    // Stop PDF timer when the popup hides (assuming display changes to "none")
+                    const popup = document.getElementById("popup");
+                    if (popup) {
+                        const observer = new MutationObserver((mutations) => {
+                            mutations.forEach((mutation) => {
+                                if (mutation.target.style.display === "none") {
+                                    stopPdfTimer();
+                                }
+                            });
+                        });
+                        observer.observe(popup, { attributes: true, attributeFilter: ["style"] });
+                    }
+
+                    // Listen for messages from the PDF viewer (if it sends any via postMessage)
+                    window.addEventListener("message", (event) => {
+                        // Optionally check event.origin if you know the expected domain
+                        if (event.origin.includes("mozilla.github.io")) {
+                            // Log any PDF interactions (scrolling pages, highlighting, annotations, etc.)
+                            trackEvent("pdf_interaction", { data: event.data });
+                        }
+                    });
+                })();
+            </script>
 </body>
 
 </html>
