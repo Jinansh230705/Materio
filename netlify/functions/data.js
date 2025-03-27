@@ -4,6 +4,8 @@ const path = require("path");
 exports.handler = async (event) => {
     const allowedReferrers = [
         "https://materioa.netlify.app",  
+        "https://materioa.netlify.app/channels/v4",
+        "https://materioa.netlify.app/labs/v4",
         "https://cdn-materioa.netlify.app"
     ];
 
