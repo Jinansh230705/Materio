@@ -13,6 +13,7 @@
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
     <title>Materio Labs - v4</title>
+    <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/lab.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -843,6 +844,14 @@
 
                             const semesterSelect = document.getElementById('semesterSelect');
 
+                            // Clear existing options if needed
+                            semesterSelect.innerHTML = '';
+                            // Add a placeholder option
+                            const placeholder = document.createElement('option');
+                            placeholder.value = '';
+                            placeholder.textContent = 'Select Semester';
+                            semesterSelect.appendChild(placeholder);
+
                             // Populate semester dropdown based on top-level keys (e.g. "1", "2", etc.)
                             for (let sem in data) {
                                 const option = document.createElement('option');
@@ -856,6 +865,12 @@
                                 semesterSelect.appendChild(option);
                             }
 
+                            // Trigger the change event if a default is already selected
+                            if (semesterSelect.value) {
+                                semesterSelect.dispatchEvent(new Event('change'));
+                            }
+
+                            // Existing change listener for semesterSelect remains the same:
                             semesterSelect.addEventListener('change', function () {
                                 clearSelect('subjectSelect', '--Select Subject--');
                                 clearSelect('categorySelect', '--Select Category--');
@@ -1011,6 +1026,71 @@
                     popup.classList.remove('closing');
                     popup.style.display = 'block';
                 });
+
+                // Fetch data and populate the dropdowns dynamically
+                fetch('data.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const semesterMapping = {
+                            "9": "Additional Resources"  // Rename semester 9
+                        };
+
+                        const semesterSelect = document.getElementById('semesterSelect');
+
+                        // Clear existing options if needed and add a placeholder option
+                        semesterSelect.innerHTML = '';
+                        const placeholder = document.createElement('option');
+                        placeholder.value = '';
+                        placeholder.textContent = 'Select Semester';
+                        semesterSelect.appendChild(placeholder);
+
+                        // Populate semester dropdown based on top-level keys
+                        for (let sem in data) {
+                            const option = document.createElement('option');
+                            option.value = sem;
+                            option.textContent = (semesterMapping[sem]) ? semesterMapping[sem] : "Semester " + sem;
+                            semesterSelect.appendChild(option);
+                        }
+
+                        // Set default selected value to "4" explicitly
+                        semesterSelect.value = "4";
+
+                        // Dispatch change event so that dependent dropdowns are populated
+                        if (semesterSelect.value) {
+                            semesterSelect.dispatchEvent(new Event('change'));
+                        }
+
+                        // Change listener for semesterSelect:
+                        semesterSelect.addEventListener('change', function () {
+                            clearSelect('subjectSelect', '--Select Subject--');
+                            clearSelect('categorySelect', '--Select Category--');
+                            clearSelect('topicSelect', '--Select Topic--');
+                            const semKey = this.value;
+                            if (!semKey) return;
+                            const subjects = data[semKey];
+                            const subjectSelect = document.getElementById('subjectSelect');
+                            for (let subject in subjects) {
+                                const option = document.createElement('option');
+                                option.value = subject;
+                                option.textContent = subject;
+                                subjectSelect.appendChild(option);
+                            }
+                            subjectSelect.disabled = false;
+                        });
+
+                        // ...remaining listeners for subjectSelect, categorySelect, etc.
+                        
+                        function clearSelect(selectId, placeholderText) {
+                            const select = document.getElementById(selectId);
+                            select.innerHTML = '';
+                            const option = document.createElement('option');
+                            option.value = '';
+                            option.textContent = placeholderText;
+                            select.appendChild(option);
+                            select.disabled = true;
+                        }
+                    })
+                    .catch(err => console.error('Error loading data:', err));
             </script>
             <!-- GA4 Tracking -->
             <script>
