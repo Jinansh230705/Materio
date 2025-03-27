@@ -104,10 +104,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 });
 
-                // ...existing code for dropdowns and other listeners...
                 document.addEventListener('DOMContentLoaded', function () {
                     // Fetch data from data.json and populate the dropdowns dynamically
-                    fetch('data.json')
+                    fetch('https://cdn-materioa.netlify.app/databases/beta/resource.lib.json')
                         .then(response => response.json())
                         .then(data => {
                             const semesterSelect = document.getElementById('semesterSelect');

@@ -4,3 +4,6 @@ _site
 .jekyll-metadata
 vendor
 
+
+# Local Netlify folder
+.netlify

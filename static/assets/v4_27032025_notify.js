@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (!window.devMode) {
-    fetch('https://cdn-materioa.netlify.app/notifications.json')
+    fetch('https://cdn-materioa.netlify.app/.netlify/functions/data?file=notifications')
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -79,19 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (validNotifications.length === 0) {
       const card = document.createElement('div');
       card.classList.add('card-layout');
+      card.id = 'notify';
       card.textContent = "No New Notifications";
       container.appendChild(card);
       return;
     }
 
-    validNotifications.forEach((notification, index) => {
+    validNotifications.forEach(notification => {
       const card = document.createElement('div');
       card.classList.add('card-layout');
-      card.id = `notify-${index}`;
-
-      if (document.body.classList.contains('dark-mode')) {
-        card.classList.add('dark-mode');
-      }
+      card.id = 'notify';
 
       const title = document.createElement('h3');
       title.textContent = notification.title;
@@ -117,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         card.appendChild(linksContainer);
       }
-
       container.appendChild(card);
     });
   }

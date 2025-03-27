@@ -651,6 +651,63 @@
             color: #bbbbbb;
         }
 
+        /* Unified changelog box */
+#changeLogDetails {
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    background-color: #fafafa;
+    padding: 8px 10px;
+    max-height: 40px;  /* initial height to only show the summary */
+    overflow: hidden;
+    transition: max-height 1.0s ease;
+}
+
+/* Style the summary so it looks like a button */
+#changeLogDetails summary {
+    -webkit-appearance: none;
+    appearance: none;
+    list-style: none;
+    cursor: pointer;
+    outline: none;
+    font-family: "Manrope", sans-serif;
+    margin: 0;
+}
+
+/* Remove the default down arrow */
+#changeLogDetails summary::-webkit-details-marker {
+    display: none;
+}
+
+/* When the details element is open, expand the box */
+#changeLogDetails[open] {
+    max-height: 500px; /* Adjust as needed */
+}
+
+/* Hide any border/background from the inner log container; it will share the parent */
+#changeLogContent {
+    padding-top: 10px;
+    opacity: 0;
+    transition: opacity 1.0s ease;
+    background: none;
+    border: none;
+    font-family: "Manrope", sans-serif;
+}
+
+/* Fade in the log text on open */
+#changeLogDetails[open] #changeLogContent {
+    opacity: 1;
+}
+
+/* Dark mode overrides */
+body.dark-mode #changeLogDetails {
+    background-color: #333333;
+    border-color: #555555;
+    color: #ffffff;
+}
+body.dark-mode #changeLogDetails[open] {
+    /* You can optionally adjust the expanded background for dark mode */
+    background-color: #444444;
+}
 
         @media (max-width: 768px) {
             .notification-board {
@@ -775,8 +832,14 @@
                 </div>
 
                 <div class="card-layout" id="about">
-                    <p>Version: 4.0</p>
-                    <p>Build: 26/03/2025</p>
+                    <p id="versionInfoText">Version: </p>
+    <p id="buildInfoText">Build: </p>
+    <details id="changeLogDetails">
+        <summary>Changelog</summary>
+        <div id="changeLogContent">
+            <!-- log will appear here -->
+        </div>
+    </details>
                 </div>
                 <div class="card-layout" id="notices">
                     <p><i class="fas fa-circle-info"><span><a href="/about"
@@ -890,7 +953,7 @@
                 });
 
                 document.addEventListener('DOMContentLoaded', function () {
-                    fetch('data.json')
+                    fetch('https://cdn-materioa.netlify.app/.netlify/functions/data?file=resource.lib')
                         .then(response => response.json())
                         .then(data => {
                             const semesterMapping = {
@@ -920,9 +983,9 @@
                             }
 
                             semesterSelect.addEventListener('change', function () {
-                                clearSelect('subjectSelect', '--Select Subject--');
-                                clearSelect('categorySelect', '--Select Category--');
-                                clearSelect('topicSelect', '--Select Topic--');
+                                clearSelect('subjectSelect', 'Select Subject');
+                                clearSelect('categorySelect', 'Select Category');
+                                clearSelect('topicSelect', 'Select Topic');
                                 const semKey = this.value;
                                 if (!semKey) return;
                                 const subjects = data[semKey];
@@ -937,8 +1000,8 @@
                             });
 
                             document.getElementById('subjectSelect').addEventListener('change', function () {
-                                clearSelect('categorySelect', '--Select Category--');
-                                clearSelect('topicSelect', '--Select Topic--');
+                                clearSelect('categorySelect', 'Select Category');
+                                clearSelect('topicSelect', 'Select Topic');
                                 const semKey = document.getElementById('semesterSelect').value;
                                 const subjectKey = this.value;
                                 if (!subjectKey) return;
@@ -964,7 +1027,7 @@
                             });
 
                             document.getElementById('categorySelect').addEventListener('change', function () {
-                                clearSelect('topicSelect', '--Select Topic--');
+                                clearSelect('topicSelect', 'Select Topic');
                                 const semKey = document.getElementById('semesterSelect').value;
                                 const subjectKey = document.getElementById('subjectSelect').value;
                                 const categoryIndex = this.value;
@@ -998,6 +1061,7 @@
 
                 const themeToggle = document.getElementById('themeToggle');
                 themeToggle.addEventListener('change', function () {
+                    // Existing elements
                     const elements = [
                         document.body,
                         document.querySelector('header'),
@@ -1011,7 +1075,17 @@
                         document.getElementById('notificationBoard'),
                         document.getElementById('about')
                     ];
-                    elements.forEach(el => el && (this.checked ? el.classList.add('dark-mode') : el.classList.remove('dark-mode')));
+
+                    // Append all notification cards (they all share id "notify")
+                    const notifyCards = document.querySelectorAll('#notify');
+                    notifyCards.forEach(card => elements.push(card));
+
+                    // Toggle dark-mode class on all collected elements
+                    elements.forEach(el => {
+                        if (el) {
+                            this.checked ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
+                        }
+                    });
                 });
 
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -1075,7 +1149,7 @@
                     popup.style.display = 'block';
                 });
 
-                fetch('data.json')
+                fetch('https://cdn-materioa.netlify.app/.netlify/functions/data?file=resource.lib')
                     .then(response => response.json())
                     .then(data => {
                         const semesterMapping = {
@@ -1102,9 +1176,9 @@
                         }
 
                         semesterSelect.addEventListener('change', function () {
-                            clearSelect('subjectSelect', '--Select Subject--');
-                            clearSelect('categorySelect', '--Select Category--');
-                            clearSelect('topicSelect', '--Select Topic--');
+                            clearSelect('subjectSelect', 'Select Subject');
+                            clearSelect('categorySelect', 'Select Category');
+                            clearSelect('topicSelect', 'Select Topic');
                             const semKey = this.value;
                             if (!semKey) return;
                             const subjects = data[semKey];
@@ -1219,6 +1293,52 @@
                     });
                 })();
             </script>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+        var url = window.location.href;
+        var branch = "stable";
+        if (url.indexOf("/channels/") !== -1) {
+            branch = "channels";
+        } else if (url.indexOf("/labs") !== -1) {
+            branch = "labs";
+        }
+        fetch('https://materioa.netlify.app/.netlify/functions/data?file=releases')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(releases) {
+                var releaseFound = null;
+                for (var i = 0; i < releases.length; i++) {
+                    if (releases[i].branch.toLowerCase() === branch) {
+                        releaseFound = releases[i];
+                        break;
+                    }
+                }
+                if (releaseFound) {
+                    var versionElem = document.getElementById("versionInfoText");
+                    var buildElem = document.getElementById("buildInfoText");
+                    var logElem = document.getElementById("changeLogContent");
+                    versionElem.textContent = "Version: " + releaseFound.version;
+                    buildElem.textContent = "Build: " + releaseFound.build;
+                    if (Array.isArray(releaseFound.logs)) {
+                        var html = "";
+                        for (var j = 0; j < releaseFound.logs.length; j++) {
+                            html += "<p>" + releaseFound.logs[j] + "</p>";
+                        }
+                        logElem.innerHTML = html;
+                    } else {
+                        logElem.textContent = releaseFound.logs;
+                    }
+                } else {
+                    document.getElementById("changeLogContent").textContent = "No changelog available for this branch.";
+                }
+            })
+            .catch(function(err) {
+                console.error("Error loading releases:", err);
+            });
+    });
+    </script>
 </body>
 
 </html>
