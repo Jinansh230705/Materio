@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (!window.devMode) {
-    fetch('https://cdn-materioa.netlify.app/.netlify/functions/data?file=notifications')
+    fetch('https://cdn-materioa.netlify.app/notifications.json')
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

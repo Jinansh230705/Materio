@@ -953,7 +953,7 @@ body.dark-mode #changeLogDetails[open] {
                 });
 
                 document.addEventListener('DOMContentLoaded', function () {
-                    fetch('https://cdn-materioa.netlify.app/.netlify/functions/data?file=resource.lib')
+                    fetch('data.json')
                         .then(response => response.json())
                         .then(data => {
                             const semesterMapping = {
@@ -1149,7 +1149,7 @@ body.dark-mode #changeLogDetails[open] {
                     popup.style.display = 'block';
                 });
 
-                fetch('https://cdn-materioa.netlify.app/.netlify/functions/data?file=resource.lib')
+                fetch('data.json')
                     .then(response => response.json())
                     .then(data => {
                         const semesterMapping = {
@@ -1303,7 +1303,7 @@ body.dark-mode #changeLogDetails[open] {
         } else if (url.indexOf("/labs") !== -1) {
             branch = "labs";
         }
-        fetch('https://materioa.netlify.app/.netlify/functions/data?file=releases')
+        fetch('releases.json')
             .then(function(response) {
                 return response.json();
             })
