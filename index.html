@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
     <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
                 'gtm.start':
@@ -36,11 +37,12 @@
             height: 40px;
 
             z-index: 1000;
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
             color: #333;
             padding: 10px;
             text-align: left;
-            border-bottom: 1px solid #d1d1d1;
+            border-bottom: 1px solid rgba(209, 209, 209, 0.5);
             background-image: url('https://materioa.netlify.app/static/res/materio_black.svg');
             background-repeat: no-repeat;
             background-size: 120px 32px;
@@ -69,9 +71,8 @@
             left: 0;
             width: 50px;
             height: calc(100% - 60px);
-
-            background-color: #ffffff;
-            border-right: 1px solid #d1d1d1;
+            background-color: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -374,9 +375,11 @@
         }
 
         header.dark-mode {
-            background-color: #222222;
+            background-color: rgba(34, 34, 34, 0.5);
+            /* Semi-transparent dark */
+            backdrop-filter: blur(10px);
             color: #ffffff;
-            border-color: #444444;
+            border-color: rgba(68, 68, 68, 0.5);
             background-image: url('https://materioa.netlify.app/static/res/materio_white.png');
             background-repeat: no-repeat;
             background-size: 120px 32px;
@@ -389,8 +392,9 @@
         }
 
         .navbar.dark-mode {
-            background-color: #222222;
-            border-color: #444444;
+            background-color: rgba(34, 34, 34, 0.5);
+            backdrop-filter: blur(10px);
+            border-color: rgba(68, 68, 68, 0.5);
         }
 
         .navbar.dark-mode a {
@@ -652,62 +656,65 @@
         }
 
         /* Unified changelog box */
-#changeLogDetails {
-    border: 1px solid #d1d1d1;
-    border-radius: 10px;
-    background-color: #fafafa;
-    padding: 8px 10px;
-    max-height: 40px;  /* initial height to only show the summary */
-    overflow: hidden;
-    transition: max-height 1.0s ease;
-}
+        #changeLogDetails {
+            border: 1px solid #d1d1d1;
+            border-radius: 10px;
+            background-color: #fafafa;
+            padding: 8px 10px;
+            max-height: 40px;
+            /* initial height to only show the summary */
+            overflow: hidden;
+            transition: max-height 1.0s ease;
+        }
 
-/* Style the summary so it looks like a button */
-#changeLogDetails summary {
-    -webkit-appearance: none;
-    appearance: none;
-    list-style: none;
-    cursor: pointer;
-    outline: none;
-    font-family: "Manrope", sans-serif;
-    margin: 0;
-}
+        /* Style the summary so it looks like a button */
+        #changeLogDetails summary {
+            -webkit-appearance: none;
+            appearance: none;
+            list-style: none;
+            cursor: pointer;
+            outline: none;
+            font-family: "Manrope", sans-serif;
+            margin: 0;
+        }
 
-/* Remove the default down arrow */
-#changeLogDetails summary::-webkit-details-marker {
-    display: none;
-}
+        /* Remove the default down arrow */
+        #changeLogDetails summary::-webkit-details-marker {
+            display: none;
+        }
 
-/* When the details element is open, expand the box */
-#changeLogDetails[open] {
-    max-height: 500px; /* Adjust as needed */
-}
+        /* When the details element is open, expand the box */
+        #changeLogDetails[open] {
+            max-height: 500px;
+            /* Adjust as needed */
+        }
 
-/* Hide any border/background from the inner log container; it will share the parent */
-#changeLogContent {
-    padding-top: 10px;
-    opacity: 0;
-    transition: opacity 1.0s ease;
-    background: none;
-    border: none;
-    font-family: "Manrope", sans-serif;
-}
+        /* Hide any border/background from the inner log container; it will share the parent */
+        #changeLogContent {
+            padding-top: 10px;
+            opacity: 0;
+            transition: opacity 1.0s ease;
+            background: none;
+            border: none;
+            font-family: "Manrope", sans-serif;
+        }
 
-/* Fade in the log text on open */
-#changeLogDetails[open] #changeLogContent {
-    opacity: 1;
-}
+        /* Fade in the log text on open */
+        #changeLogDetails[open] #changeLogContent {
+            opacity: 1;
+        }
 
-/* Dark mode overrides */
-body.dark-mode #changeLogDetails {
-    background-color: #333333;
-    border-color: #555555;
-    color: #ffffff;
-}
-body.dark-mode #changeLogDetails[open] {
-    /* You can optionally adjust the expanded background for dark mode */
-    background-color: #444444;
-}
+        /* Dark mode overrides */
+        body.dark-mode #changeLogDetails {
+            background-color: #333333;
+            border-color: #555555;
+            color: #ffffff;
+        }
+
+        body.dark-mode #changeLogDetails[open] {
+            /* You can optionally adjust the expanded background for dark mode */
+            background-color: #444444;
+        }
 
         @media (max-width: 768px) {
             .notification-board {
@@ -833,13 +840,13 @@ body.dark-mode #changeLogDetails[open] {
 
                 <div class="card-layout" id="about">
                     <p id="versionInfoText">Version: </p>
-    <p id="buildInfoText">Build: </p>
-    <details id="changeLogDetails">
-        <summary>Changelog</summary>
-        <div id="changeLogContent">
-            <!-- log will appear here -->
-        </div>
-    </details>
+                    <p id="buildInfoText">Build: </p>
+                    <details id="changeLogDetails">
+                        <summary>Changelog</summary>
+                        <div id="changeLogContent">
+                            <!-- log will appear here -->
+                        </div>
+                    </details>
                 </div>
                 <div class="card-layout" id="notices">
                     <p><i class="fas fa-circle-info"><span><a href="/about"
@@ -1076,19 +1083,19 @@ body.dark-mode #changeLogDetails[open] {
                         document.getElementById('about')
                     ];
 
-                    
+
 
                     // Append all notification cards (they all share id "notify")
                     const notifyCards = document.querySelectorAll('#notify');
-    notifyCards.forEach(card => elements.push(card));
+                    notifyCards.forEach(card => elements.push(card));
 
-    elements.forEach(el => {
-        if (el) {
-            this.checked ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
-        }
-    });
-});
-                
+                    elements.forEach(el => {
+                        if (el) {
+                            this.checked ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
+                        }
+                    });
+                });
+
 
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     themeToggle.checked = true;
@@ -1299,153 +1306,156 @@ body.dark-mode #changeLogDetails[open] {
                 })();
             </script>
 
-<script>
-    window.addEventListener("DOMContentLoaded", function() {
-        var url = window.location.href;
-        var branch = "stable";
-        if (url.indexOf("/channels/") !== -1) {
-            branch = "channels";
-        } else if (url.indexOf("/labs") !== -1) {
-            branch = "labs";
-        }
-        fetch('/channels/releases.json')
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(releases) {
-                var releaseFound = null;
-                for (var i = 0; i < releases.length; i++) {
-                    if (releases[i].branch.toLowerCase() === branch) {
-                        releaseFound = releases[i];
-                        break;
+            <script>
+                window.addEventListener("DOMContentLoaded", function () {
+                    var url = window.location.href;
+                    var branch = "stable";
+                    if (url.indexOf("/channels/") !== -1) {
+                        branch = "channels";
+                    } else if (url.indexOf("/labs") !== -1) {
+                        branch = "labs";
                     }
-                }
-                if (releaseFound) {
-                    var versionElem = document.getElementById("versionInfoText");
-                    var buildElem = document.getElementById("buildInfoText");
-                    var logElem = document.getElementById("changeLogContent");
-                    versionElem.textContent = "Version: " + releaseFound.version;
-                    buildElem.textContent = "Build: " + releaseFound.build;
-                    if (Array.isArray(releaseFound.logs)) {
-                        var html = "";
-                        for (var j = 0; j < releaseFound.logs.length; j++) {
-                            html += "<p>" + releaseFound.logs[j] + "</p>";
+                    fetch('/channels/releases.json')
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (releases) {
+                            var releaseFound = null;
+                            for (var i = 0; i < releases.length; i++) {
+                                if (releases[i].branch.toLowerCase() === branch) {
+                                    releaseFound = releases[i];
+                                    break;
+                                }
+                            }
+                            if (releaseFound) {
+                                var versionElem = document.getElementById("versionInfoText");
+                                var buildElem = document.getElementById("buildInfoText");
+                                var logElem = document.getElementById("changeLogContent");
+                                versionElem.textContent = "Version: " + releaseFound.version;
+                                buildElem.textContent = "Build: " + releaseFound.build;
+                                if (Array.isArray(releaseFound.logs)) {
+                                    var html = "";
+                                    for (var j = 0; j < releaseFound.logs.length; j++) {
+                                        html += "<p>" + releaseFound.logs[j] + "</p>";
+                                    }
+                                    logElem.innerHTML = html;
+                                } else {
+                                    logElem.textContent = releaseFound.logs;
+                                }
+                            } else {
+                                document.getElementById("changeLogContent").textContent = "No changelog available for this branch.";
+                            }
+                        })
+                        .catch(function (err) {
+                            console.error("Error loading releases:", err);
+                        });
+                });
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const themeToggle = document.getElementById('themeToggle');
+
+                    function setCookie(name, value, days) {
+                        let expires = "";
+                        if (days) {
+                            const date = new Date();
+                            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                            expires = "; expires=" + date.toUTCString();
                         }
-                        logElem.innerHTML = html;
-                    } else {
-                        logElem.textContent = releaseFound.logs;
+                        document.cookie = name + "=" + value + expires + "; path=/";
                     }
-                } else {
-                    document.getElementById("changeLogContent").textContent = "No changelog available for this branch.";
-                }
-            })
-            .catch(function(err) {
-                console.error("Error loading releases:", err);
-            });
-    });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    const themeToggle = document.getElementById('themeToggle');
 
-    function setCookie(name, value, days) {
-        let expires = "";
-        if (days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + value + expires + "; path=/";
-    }
+                    function getCookie(name) {
+                        const nameEQ = name + "=";
+                        const ca = document.cookie.split(";");
+                        for (let i = 0; i < ca.length; i++) {
+                            let c = ca[i].trim();
+                            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+                        }
+                        return null;
+                    }
 
-    function getCookie(name) {
-        const nameEQ = name + "=";
-        const ca = document.cookie.split(";");
-        for (let i = 0; i < ca.length; i++) {
-            let c = ca[i].trim();
-            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
-        }
-        return null;
-    }
+                    function applyTheme(isDark) {
+                        const elements = [
+                            document.body,
+                            document.querySelector('header'),
+                            document.querySelector('.navbar'),
+                            document.querySelector('.content'),
+                            document.getElementById('themeCard'),
+                            document.getElementById('popup'),
+                            document.getElementById('versionInfo'),
+                            document.getElementById('reading'),
+                            document.getElementById('notices'),
+                            document.getElementById('notificationBoard'),
+                            document.getElementById('about')
+                        ];
 
-    function applyTheme(isDark) {
-        const elements = [
-            document.body,
-            document.querySelector('header'),
-            document.querySelector('.navbar'),
-            document.querySelector('.content'),
-            document.getElementById('themeCard'),
-            document.getElementById('popup'),
-            document.getElementById('versionInfo'),
-            document.getElementById('reading'),
-            document.getElementById('notices'),
-            document.getElementById('notificationBoard'),
-            document.getElementById('about')
-        ];
+                        // Select notification cards dynamically
+                        const notifyCards = document.querySelectorAll('#notify');
+                        notifyCards.forEach(card => elements.push(card));
 
-        // Select notification cards dynamically
-        const notifyCards = document.querySelectorAll('#notify');
-        notifyCards.forEach(card => elements.push(card));
+                        elements.forEach(el => {
+                            if (el) {
+                                isDark ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
+                            }
+                        });
 
-        elements.forEach(el => {
-            if (el) {
-                isDark ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
-            }
-        });
+                        // Update Giscus theme dynamically
+                        const giscusFrame = document.querySelector("iframe.giscus-frame");
+                        if (giscusFrame) {
+                            giscusFrame.contentWindow.postMessage(
+                                { giscus: { setConfig: { theme: isDark ? "noborder_dark" : "noborder_light" } } },
+                                "https://giscus.app"
+                            );
+                        }
+                    }
 
-        // Update Giscus theme dynamically
-        const giscusFrame = document.querySelector("iframe.giscus-frame");
-        if (giscusFrame) {
-            giscusFrame.contentWindow.postMessage(
-                { giscus: { setConfig: { theme: isDark ? "noborder_dark" : "noborder_light" } } },
-                "https://giscus.app"
-            );
-        }
-    }
+                    // Check for saved user preference
+                    let userTheme = getCookie("theme");
+                    if (userTheme === "dark") {
+                        themeToggle.checked = true;
+                        applyTheme(true);
+                    } else if (userTheme === "light") {
+                        themeToggle.checked = false;
+                        applyTheme(false);
+                    } else {
+                        // If no preference found, use system preference
+                        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                        themeToggle.checked = systemPrefersDark;
+                        applyTheme(systemPrefersDark);
+                    }
 
-    // Check for saved user preference
-    let userTheme = getCookie("theme");
-    if (userTheme === "dark") {
-        themeToggle.checked = true;
-        applyTheme(true);
-    } else if (userTheme === "light") {
-        themeToggle.checked = false;
-        applyTheme(false);
-    } else {
-        // If no preference found, use system preference
-        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        themeToggle.checked = systemPrefersDark;
-        applyTheme(systemPrefersDark);
-    }
-
-    // Event listener for theme toggle
-    themeToggle.addEventListener("change", function () {
-        const isDark = this.checked;
-        setCookie("theme", isDark ? "dark" : "light", 30); // Store user preference for 30 days
-        applyTheme(isDark);
-    });
-});
-function updateThemeColor() {
-    const isDarkMode = document.body.classList.contains("dark-mode"); // Adjust based on your dark mode class
+                    // Event listener for theme toggle
+                    themeToggle.addEventListener("change", function () {
+                        const isDark = this.checked;
+                        setCookie("theme", isDark ? "dark" : "light", 30); // Store user preference for 30 days
+                        applyTheme(isDark);
+                    });
+                });
+                function updateThemeColor() {
+    const isDarkMode = document.body.classList.contains("dark-mode");
     const metaThemeColor = document.querySelector("meta[name=theme-color]");
 
-    if (isDarkMode) {
-        metaThemeColor.setAttribute("content", "#121212"); // Dark mode color
-    } else {
-        metaThemeColor.setAttribute("content", "#FF6600"); // Light mode color
+    if (metaThemeColor) {
+        metaThemeColor.setAttribute("content", isDarkMode ? "rgba(34, 34, 34, 0.5)" : "rgba(255, 255, 255, 0.5)");
     }
 }
 
-// Call this function when theme toggles
-document.getElementById("theme-toggle").addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    updateThemeColor();
-});
+// Event Listener for Theme Toggle
+const themeChoice = document.getElementById("themeToggle");
 
-// Set initial color on load
+if (themeChoice) {
+    themeChoice.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        updateThemeColor();
+    });
+}
+
+// Apply correct theme on page load
 document.addEventListener("DOMContentLoaded", updateThemeColor);
 
-    </script>
+
+            </script>
 </body>
 
 </html>
