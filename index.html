@@ -1393,10 +1393,13 @@ body.dark-mode #changeLogDetails[open] {
             }
         });
 
-        // Update Giscus theme if present
-        const giscusScript = document.querySelector('script[src="https://giscus.app/client.js"]');
-        if (giscusScript) {
-            giscusScript.setAttribute('data-theme', isDark ? 'noborder_dark' : 'noborder_light');
+        // Update Giscus theme dynamically
+        const giscusFrame = document.querySelector("iframe.giscus-frame");
+        if (giscusFrame) {
+            giscusFrame.contentWindow.postMessage(
+                { giscus: { setConfig: { theme: isDark ? "noborder_dark" : "noborder_light" } } },
+                "https://giscus.app"
+            );
         }
     }
 
