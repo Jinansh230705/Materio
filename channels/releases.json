@@ -1,0 +1,107 @@
+[
+
+    {
+        "branch": "channels",
+        "version": "4.0",
+        "build": "26/03/2025",
+        "logs": ["Materio v4", "Visual overhaul"]
+    },
+    {
+        "branch": "channels",
+        "build": "12.12.24",
+        "version": "Materio V3",
+        "logs": [
+            "Introduced Jekyll templating",
+            "Font Awesome V6 Icons in the Navbar instead of text enhancing visual appearance",
+            "Introduced Blogs with Markdown formatting (Limited Access only for now)",
+            "Consistent UI across all Materio Pages",
+            "Bug Fixes and optimisations",
+            "Secure: The passwords are hashed before storing.",
+            "*Consistent UI includes only Home, Chat and Changelog sections of the site.",
+            "*Blogs uses Customised flavor of Minima V3 Jekyll template.",
+            "*Blogs access is currently limited to only authorised credentials, if you want access you can signup for the waitlist by sending mail to support.",
+            "Support : materio.operable341@silomails.com"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "25.11.24",
+        "version": "",
+        "logs": [
+            "Fixed Bugs",
+            "Fixed Padding and Improved CSS",
+            "Mobile Responsive UI",
+            "Added Notification Center"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "03.11.24",
+        "version": "",
+        "logs": [
+            "Added New Materials",
+            "Removed Editor",
+            "Fixed 404 page",
+            "Fixed Changelog and About Pages"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "18.05.24",
+        "version": "C67_ALPHA",
+        "logs": [
+            "Added support for Themes",
+            "Added toggle for Settings",
+            "Legacy Mode (Pages)",
+            "Fixed Fonts",
+            "Fixed Bugs"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "17.05.24",
+        "version": "",
+        "logs": [
+            "Uploaded all Materials",
+            "Added Question Banks and Important Questions"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "29.04.24",
+        "version": "Weekly",
+        "logs": [
+            "Added Materials"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "29.03.24",
+        "version": "Weekly",
+        "logs": [
+            "Added new Resources",
+            "Fixed some bugs"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "16.03.24",
+        "version": "Weekly",
+        "logs": [
+            "Introduced New UI",
+            "Adobe PDF Viewer API",
+            "Shifted from Github Pages to Netlify"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "08.03.24",
+        "version": "Dev",
+        "logs": [
+            "Initial Launch of Materio",
+            "Resources and Chat features",
+            "Chat based on Giscus API",
+            "Chrome PDF viewer"
+        ]
+    }
+]
