@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
+    <title>Materio - Home</title>
+    <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <script src="/static/assets/v4_27032025_notify.js" defer crossorigin></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Manrope", sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+
+            z-index: 1000;
+            background-color: #ffffff;
+            color: #333;
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #d1d1d1;
+            background-image: url('https://materioa.netlify.app/static/res/materio_black.svg');
+            background-repeat: no-repeat;
+            background-size: 120px 32px;
+            background-position: 20px center;
+        }
+
+        .container {
+            margin-top: 60px;
+
+            margin-left: 50px;
+
+            display: flex;
+            flex: 1;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 60px;
+
+            left: 0;
+            width: 50px;
+            height: calc(100% - 60px);
+
+            background-color: #ffffff;
+            border-right: 1px solid #d1d1d1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+            z-index: 999;
+        }
+
+        .navbar a {
+            color: rgb(203, 203, 203);
+            text-decoration: none;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: larger;
+            position: relative;
+            transition: transform 0.3s ease, color 0.3s ease;
+
+        }
+
+        .navbar a i {
+            margin-right: 10px;
+        }
+
+        .navbar a.active {
+            color: #ff8400;
+            transform: translateX(5px);
+
+        }
+
+        a,
+        p {
+            color: #000000;
+            text-decoration: none;
+        }
+
+        @keyframes slideIn {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .card-one {
+            border-radius: 15px;
+            background-color: #f8f8f8;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 150px;
+        }
+
+        .card-layout {
+            border-radius: 15px;
+            background-color: #f8f8f8;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 30px;
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+
+            position: relative;
+        }
+
+        .tab-content.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #popup {
+            display: none;
+
+            position: fixed;
+            top: 2%;
+
+            left: 2%;
+
+            width: 95%;
+
+            height: 95%;
+
+            background-color: white;
+
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+            z-index: 1000;
+
+            overflow: auto;
+
+            border-radius: 10px;
+
+            animation: popupFadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes popupFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        #popupContent {
+            padding: 5px;
+            height: calc(100% - 15px);
+
+            box-sizing: border-box;
+        }
+
+        #closePopup {
+            position: absolute;
+            top: 5px;
+
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+
+            cursor: pointer;
+            color: #ff8400;
+
+            outline: none;
+            transition: color 0.3s ease;
+        }
+
+        #closePopup:hover {
+            color: red;
+
+        }
+
+        @keyframes popupFadeOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            to {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        }
+
+
+        #popup.closing {
+            animation: popupFadeOut 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        #readingSelectionForm {
+            font-family: "Manrope", sans-serif;
+            ;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: flex-start;
+            margin-bottom: 20px;
+
+        }
+
+        #readingSelectionForm>div {
+            font-family: "Manrope", sans-serif;
+            ;
+            flex: 1 1 220px;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+        }
+
+        #readingSelectionForm label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            text-transform: capitalize;
+        }
+
+        #readingSelectionForm select {
+            font-family: "Manrope", sans-serif;
+            ;
+            max-width: 1000px;
+            box-sizing: border-box;
+            padding: 6px 8px;
+            margin: 0;
+            font-size: 14px;
+            border-radius: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        #readingSelectionForm select:focus {
+            border: 2px solid;
+            border-color: #ff8400;
+            outline: none;
+        }
+
+        #submitButton {
+            background-color: #ff8400;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: "Manrope", sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #submitButton:hover {
+            background-color: #e67300;
+
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+
+            height: 24px;
+
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+
+            width: 18px;
+
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #ff8400;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(16px);
+
+        }
+
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+        }
+
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        header.dark-mode {
+            background-color: #222222;
+            color: #ffffff;
+            border-color: #444444;
+            background-image: url('https://materioa.netlify.app/static/res/materio_white.png');
+            background-repeat: no-repeat;
+            background-size: 120px 32px;
+            background-position: 20px center;
+        }
+
+        #popup.dark-mode {
+            background-color: #222222;
+            color: white;
+        }
+
+        .navbar.dark-mode {
+            background-color: #222222;
+            border-color: #444444;
+        }
+
+        .navbar.dark-mode a {
+            color: rgb(210, 210, 210);
+        }
+
+        .navbar.dark-mode a.active {
+            color: #ff8400;
+            transform: translateX(5px);
+        }
+
+        .card-layout.dark-mode {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        .card-one.dark-mode {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        body.dark-mode #readingSelectionForm select {
+            background-color: #444444;
+            color: #ffffff;
+            border: 1px solid #555555;
+        }
+
+        body.dark-mode a,
+        body.dark-mode p {
+            color: #ffffff;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+            .navbar {
+                width: 100%;
+                height: 60px;
+                flex-direction: row;
+                justify-content: space-around;
+                padding-top: 0;
+                position: fixed;
+                bottom: 0;
+                top: auto;
+                border-top: 1px solid #d1d1d1;
+                border-right: none;
+                z-index: 1010;
+            }
+
+            .navbar a {
+                width: auto;
+                padding: 10px 20px;
+            }
+
+            .navbar a.active {
+                color: #ff8400;
+                transform: translateY(-5px);
+            }
+
+            .navbar.dark-mode a.active {
+                color: #ff8400;
+                transform: translateY(-5px);
+            }
+
+            #readingSelectionForm {
+                flex-direction: column;
+                padding: 2px;
+                gap: 5px;
+            }
+
+            #readingSelectionForm>div {
+                flex: 1 1 100%;
+            }
+
+            #readingSelectionForm select {
+                min-width: 280px;
+                width: 100%;
+                max-width: 330px;
+            }
+
+            #popup {
+                z-index: 2000 !important;
+            }
+
+            .content {
+                margin-bottom: 60px;
+            }
+
+            .info-icon .tooltip {
+                display: -webkit-box;
+                max-width: 150px;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                white-space: normal;
+                text-overflow: clip;
+            }
+        }
+
+
+        #popup {
+            display: none;
+            position: fixed;
+            top: 2%;
+            left: 2%;
+            width: 95%;
+            height: 95%;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow: auto;
+            border-radius: 10px;
+            animation: popupFadeIn 0.3s ease-in-out;
+        }
+
+
+        .popup-controls {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .popup-controls button {
+            background: transparent;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            color: #ff8400;
+            outline: none;
+            transition: color 0.3s ease;
+            width: 2px;
+            height: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-controls button:hover {
+            color: red;
+        }
+
+
+        #popup.fullscreen {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        #popup.fullscreen #popupContent {
+            padding: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+        #popup.fullscreen iframe {
+            height: calc(100% - 28px) !important;
+            margin: 0;
+            border-radius: 0;
+        }
+
+        .info-icon {
+            display: inline-block;
+            cursor: default;
+            margin-left: 10px;
+            position: relative;
+            border: 1px solid #ff8400;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            background-color: #ff8400;
+            color: white;
+            font-size: 12px;
+        }
+
+        .info-icon .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 110%;
+
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #444444;
+            color: #fff;
+            padding: 5px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            font-size: 12px;
+            font-family: "Manrope", sans-serif;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-icon .tooltip::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            transform: translateY(-55%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent rgb(102, 102, 102) transparent transparent;
+        }
+
+        .info-icon:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+
+        .notification {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .notification h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+
+        .notification p {
+            margin: 5px 0;
+        }
+
+
+        .notification-date {
+            display: block;
+            font-size: 12px;
+            color: #888888;
+        }
+
+
+
+        body.dark-mode .notification {
+            background: #444444;
+            color: #ffffff;
+            box-shadow: none;
+        }
+
+        body.dark-mode .notification-date {
+            color: #bbbbbb;
+        }
+
+        /* Unified changelog box */
+#changeLogDetails {
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    background-color: #fafafa;
+    padding: 8px 10px;
+    max-height: 40px;  /* initial height to only show the summary */
+    overflow: hidden;
+    transition: max-height 1.0s ease;
+}
+
+/* Style the summary so it looks like a button */
+#changeLogDetails summary {
+    -webkit-appearance: none;
+    appearance: none;
+    list-style: none;
+    cursor: pointer;
+    outline: none;
+    font-family: "Manrope", sans-serif;
+    margin: 0;
+}
+
+/* Remove the default down arrow */
+#changeLogDetails summary::-webkit-details-marker {
+    display: none;
+}
+
+/* When the details element is open, expand the box */
+#changeLogDetails[open] {
+    max-height: 500px; /* Adjust as needed */
+}
+
+/* Hide any border/background from the inner log container; it will share the parent */
+#changeLogContent {
+    padding-top: 10px;
+    opacity: 0;
+    transition: opacity 1.0s ease;
+    background: none;
+    border: none;
+    font-family: "Manrope", sans-serif;
+}
+
+/* Fade in the log text on open */
+#changeLogDetails[open] #changeLogContent {
+    opacity: 1;
+}
+
+/* Dark mode overrides */
+body.dark-mode #changeLogDetails {
+    background-color: #333333;
+    border-color: #555555;
+    color: #ffffff;
+}
+body.dark-mode #changeLogDetails[open] {
+    /* You can optionally adjust the expanded background for dark mode */
+    background-color: #444444;
+}
+
+        @media (max-width: 768px) {
+            .notification-board {
+                max-height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6PC6RJL" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <header>
+    </header>
+
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="tab-link active" data-tab="home">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="#" class="tab-link" data-tab="chat">
+                <i class="fas fa-comments"></i>
+            </a>
+            <a href="#" class="tab-link" data-tab="notifications">
+                <i class="fas fa-bell"></i>
+            </a>
+            <a href="#" class="tab-link" data-tab="settings">
+                <i class="fas fa-cog"></i>
+            </a>
+        </nav>
+
+        <div class="content">
+            <div id="home" class="tab-content active">
+                <div class="card-one" id="reading">
+                    <h2>What are you reading today?</h2>
+                    <form id="readingSelectionForm">
+                        <div>
+                            <label for="semesterSelect"></label>
+                            <select id="semesterSelect">
+                                <option value="">Select Semester</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="subjectSelect"></label>
+                            <select id="subjectSelect" disabled>
+                                <option value="">Select Subject</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="categorySelect"></label>
+                            <select id="categorySelect" disabled>
+                                <option value="">Select Category</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="topicSelect"></label>
+                            <select id="topicSelect" disabled>
+                                <option value="">Select Topic</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <button id="submitButton">Submit</button>
+                </div>
+
+
+                <div id="popup">
+                    <div class="popup-controls">
+                        <button id="fullscreenButton" style="margin-right: 40px; margin-top:5px;"><i
+                                class="fas fa-expand"></i></button>
+                        <button id="closePopup"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div id="popupContent">
+                        <!-- PDF iframe will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="chat" class="tab-content">
+                <h1>
+                    Chat
+                    <i class="fas fa-info info-icon">
+                        <span class="tooltip" style="font-weight: normal;">You can chat here by signing with github and
+                            ask doubts or discuss topics, Formatting with Markdown is supported.</span>
+                    </i>
+                </h1>
+                <div id="giscus" data-repo="Materioa/Materio">
+                    <!-- The Giscus comment section will be loaded here -->
+                </div>
+                <script src="https://giscus.app/client.js" data-repo="Materioa/Materio" data-repo-id="R_kgDOK_VkLg"
+                    data-category="Chat" data-category-id="DIC_kwDOK_VkLs4CmdaW" data-mapping="title" data-strict="0"
+                    data-reactions-enabled="0" data-emit-metadata="0" data-input-position="top"
+                    data-theme="noborder_dark" data-lang="en" crossorigin="anonymous" async>
+                    </script>
+
+            </div>
+
+            <div id="notifications" class="tab-content">
+                <h1>Notifications</h1>
+                <div id="notificationBoard" style="color:#000000;">
+                    <!-- Notification cards will be dynamically added here -->
+                </div>
+            </div>
+
+            <div id="settings" class="tab-content">
+                <h1>Settings</h1>
+                <div class="card-one" id="versionInfo">
+                    <img src="https://materioa.netlify.app/static/res/v4_logo.png" height="150px" width="150px"
+                        style="display: block; margin: 0 auto;">
+                </div>
+
+                <div class="card-layout" id="themeCard">
+                    <div class="toggle-container">
+                        <span>Enable Dark Mode</span>
+                        <label class="switch">
+                            <input type="checkbox" id="themeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="card-layout" id="about">
+                    <p id="versionInfoText">Version: </p>
+    <p id="buildInfoText">Build: </p>
+    <details id="changeLogDetails">
+        <summary>Changelog</summary>
+        <div id="changeLogContent">
+            <!-- log will appear here -->
+        </div>
+    </details>
+                </div>
+                <div class="card-layout" id="notices">
+                    <p><i class="fas fa-circle-info"><span><a href="/about"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    About</a></span></i></p>
+                    <hr>
+                    <p><i class="fas fa-scroll"><span><a href="/LICENSE"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    License</a></span></i></p>
+                    <hr>
+                    <p><i class="fas fa-cookie"><span><a href="/cookies-policy"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    Cookies</a></span></i></p>
+                </div>
+            </div>
+
+            <script>
+                function setCookie(name, value, days) {
+                    var expires = "";
+                    if (days) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                        expires = "; expires=" + date.toUTCString();
+                    }
+                    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+                }
+
+                function getCookie(name) {
+                    var nameEQ = name + "=";
+                    var ca = document.cookie.split(";");
+                    for (var i = 0; i < ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) == " ") c = c.substring(1, c.length);
+                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                    }
+                    return null;
+                }
+                document.addEventListener("DOMContentLoaded", function () {
+                    const activeTab = getCookie("activeTab") || "home";
+                    const tabLinks = document.querySelectorAll(".tab-link");
+                    const tabContents = document.querySelectorAll(".tab-content");
+                    tabLinks.forEach(link => link.classList.remove("active"));
+                    tabContents.forEach(content => content.classList.remove("active"));
+
+                    const selectedTabLink = document.querySelector(`.tab-link[data-tab="${activeTab}"]`);
+                    if (selectedTabLink) {
+                        selectedTabLink.classList.add("active");
+                        document.getElementById(activeTab)?.classList.add("active");
+                    } else {
+                        document.querySelector('.tab-link[data-tab="home"]').classList.add("active");
+                        document.getElementById("home").classList.add("active");
+                    }
+
+                    tabLinks.forEach(link => {
+                        link.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            tabLinks.forEach(tab => tab.classList.remove("active"));
+                            tabContents.forEach(content => content.classList.remove("active"));
+                            this.classList.add("active");
+                            const tab = this.getAttribute("data-tab");
+                            document.getElementById(tab)?.classList.add("active");
+                            setCookie("activeTab", tab, 7);
+                        });
+                    });
+                });
+                const submitButton = document.getElementById('submitButton');
+                const popup = document.getElementById('popup');
+                const closePopup = document.getElementById('closePopup');
+
+                submitButton.addEventListener('click', () => {
+                    const semester = document.getElementById('semesterSelect').value;
+                    const subject = document.getElementById('subjectSelect').value;
+                    const categorySelect = document.getElementById('categorySelect');
+                    const topic = document.getElementById('topicSelect').value;
+                    if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
+                        alert('Please select a semester, subject, category, and topic.');
+                        return;
+                    }
+                    const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+
+                    document.getElementById('popupContent').innerHTML =
+                        `<iframe id="pdf-iframe" scrolling='no' allowfullscreen webkitallowfullscreen style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
+         src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+
+                    popup.classList.remove('closing');
+                    popup.style.display = 'block';
+                });
+                closePopup.addEventListener('click', () => {
+                    popup.classList.add('closing');
+                });
+
+                popup.addEventListener('animationend', (event) => {
+                    if (event.animationName === 'popupFadeOut') {
+                        popup.style.display = 'none';
+                        popup.classList.remove('closing');
+                    }
+                });
+                document.addEventListener('DOMContentLoaded', function () {
+                    const tabLinks = document.querySelectorAll('.tab-link');
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabLinks.forEach(link => {
+                        link.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            tabLinks.forEach(tab => tab.classList.remove('active'));
+                            tabContents.forEach(content => content.classList.remove('active'));
+                            this.classList.add('active');
+                            const tab = this.getAttribute('data-tab');
+                            document.getElementById(tab).classList.add('active');
+                        });
+                    });
+                });
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    fetch('https://cdn-materioa.netlify.app/databases/beta/resource.lib.json')
+                        .then(response => response.json())
+                        .then(data => {
+                            const semesterMapping = {
+                                "9": "Additional Resources"
+                            };
+
+                            const semesterSelect = document.getElementById('semesterSelect');
+                            semesterSelect.innerHTML = '';
+                            const placeholder = document.createElement('option');
+                            placeholder.value = '';
+                            placeholder.textContent = 'Select Semester';
+                            semesterSelect.appendChild(placeholder);
+
+                            for (let sem in data) {
+                                const option = document.createElement('option');
+                                option.value = sem;
+                                option.textContent = semesterMapping[sem] ? semesterMapping[sem] : "Semester " + sem;
+
+                                if (sem === "4") {
+                                    option.selected = true;
+                                }
+                                semesterSelect.appendChild(option);
+                            }
+
+                            if (semesterSelect.value) {
+                                semesterSelect.dispatchEvent(new Event('change'));
+                            }
+
+                            semesterSelect.addEventListener('change', function () {
+                                clearSelect('subjectSelect', 'Select Subject');
+                                clearSelect('categorySelect', 'Select Category');
+                                clearSelect('topicSelect', 'Select Topic');
+                                const semKey = this.value;
+                                if (!semKey) return;
+                                const subjects = data[semKey];
+                                const subjectSelect = document.getElementById('subjectSelect');
+                                for (let subject in subjects) {
+                                    const option = document.createElement('option');
+                                    option.value = subject;
+                                    option.textContent = subject;
+                                    subjectSelect.appendChild(option);
+                                }
+                                subjectSelect.disabled = false;
+                            });
+
+                            document.getElementById('subjectSelect').addEventListener('change', function () {
+                                clearSelect('categorySelect', 'Select Category');
+                                clearSelect('topicSelect', 'Select Topic');
+                                const semKey = document.getElementById('semesterSelect').value;
+                                const subjectKey = this.value;
+                                if (!subjectKey) return;
+                                const categoriesArr = data[semKey][subjectKey];
+                                const categorySelect = document.getElementById('categorySelect');
+                                if (categoriesArr && categoriesArr.length) {
+                                    let defaultSet = false;
+                                    categoriesArr.forEach((catObj, idx) => {
+                                        const option = document.createElement('option');
+                                        option.value = idx;
+                                        option.textContent = catObj.type;
+                                        if (catObj.type.trim().toLowerCase() === "chapters") {
+                                            option.selected = true;
+                                            defaultSet = true;
+                                        }
+                                        categorySelect.appendChild(option);
+                                    });
+                                    categorySelect.disabled = false;
+                                    if (defaultSet) {
+                                        categorySelect.dispatchEvent(new Event('change'));
+                                    }
+                                }
+                            });
+
+                            document.getElementById('categorySelect').addEventListener('change', function () {
+                                clearSelect('topicSelect', 'Select Topic');
+                                const semKey = document.getElementById('semesterSelect').value;
+                                const subjectKey = document.getElementById('subjectSelect').value;
+                                const categoryIndex = this.value;
+                                if (categoryIndex === '') return;
+                                const catObj = data[semKey][subjectKey][categoryIndex];
+                                const topics = catObj.content;
+                                const topicSelect = document.getElementById('topicSelect');
+                                if (topics && topics.length > 0) {
+                                    topics.forEach(topic => {
+                                        const option = document.createElement('option');
+                                        option.value = topic;
+                                        option.textContent = topic;
+                                        topicSelect.appendChild(option);
+                                    });
+                                    topicSelect.disabled = false;
+                                }
+                            });
+
+                            function clearSelect(selectId, placeholder) {
+                                const select = document.getElementById(selectId);
+                                select.innerHTML = '';
+                                const option = document.createElement('option');
+                                option.value = '';
+                                option.textContent = placeholder;
+                                select.appendChild(option);
+                                select.disabled = true;
+                            }
+                        })
+                        .catch(err => console.error('Error loading data:', err));
+                });
+
+                const themeToggle = document.getElementById('themeToggle');
+                themeToggle.addEventListener('change', function () {
+                    // Existing elements
+                    const elements = [
+                        document.body,
+                        document.querySelector('header'),
+                        document.querySelector('.navbar'),
+                        document.querySelector('.content'),
+                        document.getElementById('themeCard'),
+                        document.getElementById('popup'),
+                        document.getElementById('versionInfo'),
+                        document.getElementById('reading'),
+                        document.getElementById('notices'),
+                        document.getElementById('notificationBoard'),
+                        document.getElementById('about')
+                    ];
+
+                    
+
+                    // Append all notification cards (they all share id "notify")
+                    const notifyCards = document.querySelectorAll('#notify');
+                    notifyCards.forEach(card => elements.push(card));
+
+                    // Toggle dark-mode class on all collected elements
+                    elements.forEach(el => {
+                        if (el) {
+                            this.checked ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
+                        }
+                    });
+                });
+
+                
+
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    themeToggle.checked = true;
+                    const elements = [
+                        document.body,
+                        document.querySelector('header'),
+                        document.querySelector('.navbar'),
+                        document.querySelector('.content'),
+                        document.getElementById('themeCard'),
+                        document.getElementById('popup'),
+                        document.getElementById('versionInfo'),
+                        document.getElementById('reading'),
+                        document.getElementById('notices'),
+                        document.getElementById('about'),
+                        document.getElementById('notificationBoard')
+                    ];
+                    // Append all notification cards (they all share id "notify")
+                    elements.forEach(el => el.classList.add('dark-mode'));
+                }
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    const isDark = document.body.classList.contains("dark-mode") ||
+                        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                    const giscusScript = document.querySelector('script[src="https://giscus.app/client.js"]');
+                    if (giscusScript) {
+                        giscusScript.setAttribute('data-theme', isDark ? 'noborder_dark' : 'noborder_light');
+                    }
+                });
+
+                const fullscreenButton = document.getElementById('fullscreenButton');
+                fullscreenButton.addEventListener('click', () => {
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().then(() => {
+                            popup.classList.add('fullscreen');
+                        }).catch(err => {
+                            console.error(`Failed to enable fullscreen mode: ${err.message}`);
+                        });
+                    } else {
+                        document.exitFullscreen().then(() => {
+                            popup.classList.remove('fullscreen');
+                        }).catch(err => {
+                            console.error(`Failed to exit fullscreen mode: ${err.message}`);
+                        });
+                    }
+                });
+
+                submitButton.addEventListener('click', () => {
+                    const semester = document.getElementById('semesterSelect').value;
+                    const subject = document.getElementById('subjectSelect').value;
+                    const categorySelect = document.getElementById('categorySelect');
+                    const topic = document.getElementById('topicSelect').value;
+
+                    if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
+                        alert('Please select a semester, subject, category, and topic.');
+                        return;
+                    }
+
+                    const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+                    document.getElementById('popupContent').innerHTML =
+                        `<iframe id="pdf-iframe" style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
+      src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+                    popup.classList.remove('closing');
+                    popup.style.display = 'block';
+                });
+
+                fetch('https://cdn-materioa.netlify.app/databases/beta/resource.lib.json')
+                    .then(response => response.json())
+                    .then(data => {
+                        const semesterMapping = {
+                            "9": "Additional Resources"
+                        };
+
+                        const semesterSelect = document.getElementById('semesterSelect');
+                        semesterSelect.innerHTML = '';
+                        const placeholder = document.createElement('option');
+                        placeholder.value = '';
+                        placeholder.textContent = 'Select Semester';
+                        semesterSelect.appendChild(placeholder);
+
+                        for (let sem in data) {
+                            const option = document.createElement('option');
+                            option.value = sem;
+                            option.textContent = (semesterMapping[sem]) ? semesterMapping[sem] : "Semester " + sem;
+                            semesterSelect.appendChild(option);
+                        }
+
+                        semesterSelect.value = "4";
+                        if (semesterSelect.value) {
+                            semesterSelect.dispatchEvent(new Event('change'));
+                        }
+
+                        semesterSelect.addEventListener('change', function () {
+                            clearSelect('subjectSelect', 'Select Subject');
+                            clearSelect('categorySelect', 'Select Category');
+                            clearSelect('topicSelect', 'Select Topic');
+                            const semKey = this.value;
+                            if (!semKey) return;
+                            const subjects = data[semKey];
+                            const subjectSelect = document.getElementById('subjectSelect');
+                            for (let subject in subjects) {
+                                const option = document.createElement('option');
+                                option.value = subject;
+                                option.textContent = subject;
+                                subjectSelect.appendChild(option);
+                            }
+                            subjectSelect.disabled = false;
+                        });
+
+                        function clearSelect(selectId, placeholderText) {
+                            const select = document.getElementById(selectId);
+                            select.innerHTML = '';
+                            const option = document.createElement('option');
+                            option.value = '';
+                            option.textContent = placeholderText;
+                            select.appendChild(option);
+                            select.disabled = true;
+                        }
+                    })
+                    .catch(err => console.error('Error loading data:', err));
+            </script>
+            <!-- GA4 Tracking -->
+            <script>
+                (function () {
+
+                    if (!window.gtag) {
+                        console.warn("GA4 (gtag) not loaded.");
+                        return;
+                    }
+
+                    function trackEvent(eventName, params) {
+                        window.gtag('event', eventName, params);
+                    }
+
+                    const pageLoadTime = Date.now();
+                    window.addEventListener("beforeunload", function () {
+                        const engagementTime = Date.now() - pageLoadTime;
+                        trackEvent("page_engagement", { engagement_time_ms: engagementTime });
+                    });
+
+                    document.querySelectorAll("button").forEach((btn) => {
+                        btn.addEventListener("click", function () {
+                            trackEvent("button_click", { event_label: this.id || this.innerText });
+                        });
+                    });
+
+                    document.querySelectorAll(".tab-link").forEach((tab) => {
+                        tab.addEventListener("click", function () {
+                            trackEvent("nav_tab_switch", { event_label: this.getAttribute("data-tab") });
+                        });
+                    });
+
+                    let scrollTimeout;
+                    window.addEventListener("scroll", function () {
+                        if (scrollTimeout) clearTimeout(scrollTimeout);
+                        scrollTimeout = setTimeout(() => {
+                            trackEvent("page_scroll", { scroll_y: window.scrollY });
+                        }, 1000);
+                    });
+
+                    let pdfEngagementTime = 0;
+                    let pdfTimer = null;
+
+                    function startPdfTimer() {
+                        if (!pdfTimer) {
+                            pdfTimer = setInterval(() => {
+                                pdfEngagementTime += 1000;
+                            }, 1000);
+                            trackEvent("pdf_view_start", {});
+                        }
+                    }
+
+                    function stopPdfTimer() {
+                        if (pdfTimer) {
+                            clearInterval(pdfTimer);
+                            pdfTimer = null;
+                            trackEvent("pdf_engagement", { engagement_time_ms: pdfEngagementTime });
+                            pdfEngagementTime = 0;
+                        }
+                    }
+
+                    function setupPdfTracking() {
+                        const pdfIframe = document.getElementById("pdf-iframe");
+                        if (pdfIframe) {
+                            pdfIframe.addEventListener("load", startPdfTimer);
+                        }
+                    }
+                    setupPdfTracking();
+
+                    const popup = document.getElementById("popup");
+                    if (popup) {
+                        const observer = new MutationObserver((mutations) => {
+                            mutations.forEach((mutation) => {
+                                if (mutation.target.style.display === "none") {
+                                    stopPdfTimer();
+                                }
+                            });
+                        });
+                        observer.observe(popup, { attributes: true, attributeFilter: ["style"] });
+                    }
+
+                    window.addEventListener("message", (event) => {
+
+                        if (event.origin.includes("mozilla.github.io")) {
+
+                            trackEvent("pdf_interaction", { data: event.data });
+                        }
+                    });
+                })();
+            </script>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+        var url = window.location.href;
+        var branch = "stable";
+        if (url.indexOf("/channels/") !== -1) {
+            branch = "channels";
+        } else if (url.indexOf("/labs") !== -1) {
+            branch = "labs";
+        }
+        fetch('/channels/releases.json')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(releases) {
+                var releaseFound = null;
+                for (var i = 0; i < releases.length; i++) {
+                    if (releases[i].branch.toLowerCase() === branch) {
+                        releaseFound = releases[i];
+                        break;
+                    }
+                }
+                if (releaseFound) {
+                    var versionElem = document.getElementById("versionInfoText");
+                    var buildElem = document.getElementById("buildInfoText");
+                    var logElem = document.getElementById("changeLogContent");
+                    versionElem.textContent = "Version: " + releaseFound.version;
+                    buildElem.textContent = "Build: " + releaseFound.build;
+                    if (Array.isArray(releaseFound.logs)) {
+                        var html = "";
+                        for (var j = 0; j < releaseFound.logs.length; j++) {
+                            html += "<p>" + releaseFound.logs[j] + "</p>";
+                        }
+                        logElem.innerHTML = html;
+                    } else {
+                        logElem.textContent = releaseFound.logs;
+                    }
+                } else {
+                    document.getElementById("changeLogContent").textContent = "No changelog available for this branch.";
+                }
+            })
+            .catch(function(err) {
+                console.error("Error loading releases:", err);
+            });
+    });
+    </script>
+</body>
+
+</html>

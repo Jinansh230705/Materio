@@ -1,5 +1,10 @@
 [
-
+    {
+        "branch": "stable",
+        "version": "4.0.1",
+        "build": "28/03/2025",
+        "logs": ["Materio v4", "Visual refresh and mobile friendly UI","Added a new Category option for better navigation and organization"]
+    },
     {
         "branch": "channels",
         "version": "4.0",
@@ -7,7 +12,7 @@
         "logs": ["Materio v4", "Visual overhaul"]
     },
     {
-        "branch": "channels",
+        "branch": "stable",
         "build": "12.12.24",
         "version": "Materio V3",
         "logs": [
