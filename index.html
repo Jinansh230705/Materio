@@ -1080,16 +1080,14 @@ body.dark-mode #changeLogDetails[open] {
 
                     // Append all notification cards (they all share id "notify")
                     const notifyCards = document.querySelectorAll('#notify');
-                    notifyCards.forEach(card => elements.push(card));
+    notifyCards.forEach(card => elements.push(card));
 
-                    // Toggle dark-mode class on all collected elements
-                    elements.forEach(el => {
-                        if (el) {
-                            this.checked ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
-                        }
-                    });
-                });
-
+    elements.forEach(el => {
+        if (el) {
+            this.checked ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
+        }
+    });
+});
                 
 
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -1345,6 +1343,86 @@ body.dark-mode #changeLogDetails[open] {
                 console.error("Error loading releases:", err);
             });
     });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const themeToggle = document.getElementById('themeToggle');
+
+    function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+        }
+        return null;
+    }
+
+    function applyTheme(isDark) {
+        const elements = [
+            document.body,
+            document.querySelector('header'),
+            document.querySelector('.navbar'),
+            document.querySelector('.content'),
+            document.getElementById('themeCard'),
+            document.getElementById('popup'),
+            document.getElementById('versionInfo'),
+            document.getElementById('reading'),
+            document.getElementById('notices'),
+            document.getElementById('notificationBoard'),
+            document.getElementById('about')
+        ];
+
+        // Select notification cards dynamically
+        const notifyCards = document.querySelectorAll('#notify');
+        notifyCards.forEach(card => elements.push(card));
+
+        elements.forEach(el => {
+            if (el) {
+                isDark ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
+            }
+        });
+
+        // Update Giscus theme if present
+        const giscusScript = document.querySelector('script[src="https://giscus.app/client.js"]');
+        if (giscusScript) {
+            giscusScript.setAttribute('data-theme', isDark ? 'noborder_dark' : 'noborder_light');
+        }
+    }
+
+    // Check for saved user preference
+    let userTheme = getCookie("theme");
+    if (userTheme === "dark") {
+        themeToggle.checked = true;
+        applyTheme(true);
+    } else if (userTheme === "light") {
+        themeToggle.checked = false;
+        applyTheme(false);
+    } else {
+        // If no preference found, use system preference
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        themeToggle.checked = systemPrefersDark;
+        applyTheme(systemPrefersDark);
+    }
+
+    // Event listener for theme toggle
+    themeToggle.addEventListener("change", function () {
+        const isDark = this.checked;
+        setCookie("theme", isDark ? "dark" : "light", 30); // Store user preference for 30 days
+        applyTheme(isDark);
+    });
+});
+
     </script>
 </body>
 

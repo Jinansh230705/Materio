@@ -73,50 +73,63 @@ document.addEventListener('DOMContentLoaded', () => {
     cutoff.setDate(cutoff.getDate() - 20);
 
     const validNotifications = notifications
-      .filter(n => new Date(n.date) >= cutoff)
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
+        .filter(n => new Date(n.date) >= cutoff)
+        .sort((a, b) => new Date(b.date) - new Date(a.date));
 
     if (validNotifications.length === 0) {
-      const card = document.createElement('div');
-      card.classList.add('card-layout');
-      card.id = 'notify';
-      card.textContent = "No New Notifications";
-      container.appendChild(card);
-      return;
+        const card = document.createElement('div');
+        card.classList.add('card-layout');
+        card.id = 'notify';
+        card.textContent = "No New Notifications";
+
+        // Apply dark mode if needed
+        if (document.body.classList.contains('dark-mode')) {
+            card.classList.add('dark-mode');
+        }
+
+        container.appendChild(card);
+        return;
     }
 
     validNotifications.forEach(notification => {
-      const card = document.createElement('div');
-      card.classList.add('card-layout');
-      card.id = 'notify';
+        const card = document.createElement('div');
+        card.classList.add('card-layout');
+        card.id = 'notify';
 
-      const title = document.createElement('h3');
-      title.textContent = notification.title;
-      card.appendChild(title);
+        const title = document.createElement('h3');
+        title.textContent = notification.title;
+        card.appendChild(title);
 
-      const message = document.createElement('p');
-      message.textContent = notification.message;
-      card.appendChild(message);
+        const message = document.createElement('p');
+        message.textContent = notification.message;
+        card.appendChild(message);
 
-      const dateElem = document.createElement('span');
-      dateElem.classList.add('notification-date');
-      dateElem.textContent = formatDateTime(notification.date);
-      card.appendChild(dateElem);
+        const dateElem = document.createElement('span');
+        dateElem.classList.add('notification-date');
+        dateElem.textContent = formatDateTime(notification.date);
+        card.appendChild(dateElem);
 
-      if (notification.links && notification.links.length > 0) {
-        const linksContainer = document.createElement('div');
-        linksContainer.classList.add('notification-links');
-        notification.links.forEach(linkObj => {
-          const link = document.createElement('a');
-          link.href = linkObj.url;
-          link.textContent = linkObj.text;
-          linksContainer.appendChild(link);
-        });
-        card.appendChild(linksContainer);
-      }
-      container.appendChild(card);
+        if (notification.links && notification.links.length > 0) {
+            const linksContainer = document.createElement('div');
+            linksContainer.classList.add('notification-links');
+            notification.links.forEach(linkObj => {
+                const link = document.createElement('a');
+                link.href = linkObj.url;
+                link.textContent = linkObj.text;
+                linksContainer.appendChild(link);
+            });
+            card.appendChild(linksContainer);
+        }
+
+        // Apply dark mode if needed
+        if (document.body.classList.contains('dark-mode')) {
+            card.classList.add('dark-mode');
+        }
+
+        container.appendChild(card);
     });
-  }
+}
+
 
   function updateNotificationBadge(notifications) {
 
