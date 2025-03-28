@@ -1,0 +1,694 @@
+body {
+    margin: 0;
+    font-family: "Manrope", sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+
+    z-index: 1000;
+    background-color: #ffffff;
+    color: #333;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #d1d1d1;
+    background-image: url('https://materioa.netlify.app/static/res/materio_black.svg');
+    background-repeat: no-repeat;
+    background-size: 120px 32px;
+    background-position: 20px center;
+}
+
+.container {
+    margin-top: 60px;
+
+    margin-left: 50px;
+
+    display: flex;
+    flex: 1;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.navbar {
+    position: fixed;
+    top: 60px;
+
+    left: 0;
+    width: 50px;
+    height: calc(100% - 60px);
+
+    background-color: #ffffff;
+    border-right: 1px solid #d1d1d1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    z-index: 999;
+}
+
+.navbar a {
+    color: rgb(203, 203, 203);
+    text-decoration: none;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: larger;
+    position: relative;
+    transition: transform 0.3s ease, color 0.3s ease;
+
+}
+
+.navbar a i {
+    margin-right: 10px;
+}
+
+.navbar a.active {
+    color: #ff8400;
+    transform: translateX(5px);
+
+}
+
+a,
+p {
+    color: #000000;
+    text-decoration: none;
+}
+
+@keyframes slideIn {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.card-one {
+    border-radius: 15px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    margin: 20px 0;
+    min-height: 150px;
+}
+
+.card-layout {
+    border-radius: 15px;
+    background-color: #f8f8f8;
+    padding: 20px;
+    margin: 20px 0;
+    min-height: 30px;
+}
+
+.tab-content {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+
+    position: relative;
+}
+
+.tab-content.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+#popup {
+    display: none;
+
+    position: fixed;
+    top: 2%;
+
+    left: 2%;
+
+    width: 95%;
+
+    height: 95%;
+
+    background-color: white;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    z-index: 1000;
+
+    overflow: auto;
+
+    border-radius: 10px;
+
+    animation: popupFadeIn 0.3s ease-in-out;
+}
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+#popupContent {
+    padding: 5px;
+    height: calc(100% - 15px);
+
+    box-sizing: border-box;
+}
+
+#closePopup {
+    position: absolute;
+    top: 5px;
+
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+
+    cursor: pointer;
+    color: #ff8400;
+
+    outline: none;
+    transition: color 0.3s ease;
+}
+
+#closePopup:hover {
+    color: red;
+
+}
+
+@keyframes popupFadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+
+#popup.closing {
+    animation: popupFadeOut 0.3s ease-in-out;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+#readingSelectionForm {
+    font-family: "Manrope", sans-serif;
+    ;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+}
+
+#readingSelectionForm>div {
+    font-family: "Manrope", sans-serif;
+    ;
+    flex: 1 1 220px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+#readingSelectionForm label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+}
+
+#readingSelectionForm select {
+    font-family: "Manrope", sans-serif;
+    ;
+    max-width: 1000px;
+    box-sizing: border-box;
+    padding: 6px 8px;
+    margin: 0;
+    font-size: 14px;
+    border-radius: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+#readingSelectionForm select:focus {
+    border: 2px solid;
+    border-color: #ff8400;
+    outline: none;
+}
+
+#submitButton {
+    background-color: #ff8400;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: "Manrope", sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#submitButton:hover {
+    background-color: #e67300;
+
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+
+    height: 24px;
+
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+
+    width: 18px;
+
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #ff8400;
+}
+
+input:checked+.slider:before {
+    transform: translateX(16px);
+
+}
+
+
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+}
+
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+header.dark-mode {
+    background-color: #222222;
+    color: #ffffff;
+    border-color: #444444;
+    background-image: url('https://materioa.netlify.app/static/res/materio_white.png');
+    background-repeat: no-repeat;
+    background-size: 120px 32px;
+    background-position: 20px center;
+}
+
+#popup.dark-mode {
+    background-color: #222222;
+    color: white;
+}
+
+.navbar.dark-mode {
+    background-color: #222222;
+    border-color: #444444;
+}
+
+.navbar.dark-mode a {
+    color: rgb(210, 210, 210);
+}
+
+.navbar.dark-mode a.active {
+    color: #ff8400;
+    transform: translateX(5px);
+}
+
+.card-layout.dark-mode {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.card-one.dark-mode {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+body.dark-mode #readingSelectionForm select {
+    background-color: #444444;
+    color: #ffffff;
+    border: 1px solid #555555;
+}
+
+body.dark-mode a,
+body.dark-mode p {
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .navbar {
+        width: 100%;
+        height: 60px;
+        flex-direction: row;
+        justify-content: space-around;
+        padding-top: 0;
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        border-top: 1px solid #d1d1d1;
+        border-right: none;
+        z-index: 1010;
+    }
+
+    .navbar a {
+        width: auto;
+        padding: 10px 20px;
+    }
+
+    .navbar a.active {
+        color: #ff8400;
+        transform: translateY(-5px);
+    }
+
+    .navbar.dark-mode a.active {
+        color: #ff8400;
+        transform: translateY(-5px);
+    }
+
+    #readingSelectionForm {
+        flex-direction: column;
+        padding: 2px;
+        gap: 5px;
+    }
+
+    #readingSelectionForm>div {
+        flex: 1 1 100%;
+    }
+
+    #readingSelectionForm select {
+        min-width: 280px;
+        width: 100%;
+        max-width: 330px;
+    }
+
+    #popup {
+        z-index: 2000 !important;
+    }
+
+    .content {
+        margin-bottom: 60px;
+    }
+
+    .info-icon .tooltip {
+        display: -webkit-box;
+        max-width: 150px;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        white-space: normal;
+        text-overflow: clip;
+    }
+}
+
+
+#popup {
+    display: none;
+    position: fixed;
+    top: 2%;
+    left: 2%;
+    width: 95%;
+    height: 95%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow: auto;
+    border-radius: 10px;
+    animation: popupFadeIn 0.3s ease-in-out;
+}
+
+
+.popup-controls {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    z-index: 10;
+}
+
+.popup-controls button {
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    color: #ff8400;
+    outline: none;
+    transition: color 0.3s ease;
+    width: 2px;
+    height: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-controls button:hover {
+    color: red;
+}
+
+
+#popup.fullscreen {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: 0;
+}
+
+#popup.fullscreen #popupContent {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+#popup.fullscreen iframe {
+    height: calc(100% - 28px) !important;
+    margin: 0;
+    border-radius: 0;
+}
+
+.info-icon {
+    display: inline-block;
+    cursor: default;
+    margin-left: 10px;
+    position: relative;
+    border: 1px solid #ff8400;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    background-color: #ff8400;
+    color: white;
+    font-size: 12px;
+}
+
+.info-icon .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    left: 110%;
+
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #444444;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-size: 12px;
+    font-family: "Manrope", sans-serif;
+    transition: opacity 0.3s ease;
+}
+
+.info-icon .tooltip::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    transform: translateY(-55%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent rgb(102, 102, 102) transparent transparent;
+}
+
+.info-icon:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.notification {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.notification h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+.notification p {
+    margin: 5px 0;
+}
+
+
+.notification-date {
+    display: block;
+    font-size: 12px;
+    color: #888888;
+}
+
+
+
+body.dark-mode .notification {
+    background: #444444;
+    color: #ffffff;
+    box-shadow: none;
+}
+
+body.dark-mode .notification-date {
+    color: #bbbbbb;
+}
+
+/* Unified changelog box */
+#changeLogDetails {
+border: 1px solid #d1d1d1;
+border-radius: 10px;
+background-color: #fafafa;
+padding: 8px 10px;
+max-height: 40px;  /* initial height to only show the summary */
+overflow: hidden;
+transition: max-height 1.0s ease;
+}
+
+/* Style the summary so it looks like a button */
+#changeLogDetails summary {
+-webkit-appearance: none;
+appearance: none;
+list-style: none;
+cursor: pointer;
+outline: none;
+font-family: "Manrope", sans-serif;
+margin: 0;
+}
+
+/* Remove the default down arrow */
+#changeLogDetails summary::-webkit-details-marker {
+display: none;
+}
+
+/* When the details element is open, expand the box */
+#changeLogDetails[open] {
+max-height: 500px; /* Adjust as needed */
+}
+
+/* Hide any border/background from the inner log container; it will share the parent */
+#changeLogContent {
+padding-top: 10px;
+opacity: 0;
+transition: opacity 1.0s ease;
+background: none;
+border: none;
+font-family: "Manrope", sans-serif;
+}
+
+/* Fade in the log text on open */
+#changeLogDetails[open] #changeLogContent {
+opacity: 1;
+}
+
+/* Dark mode overrides */
+body.dark-mode #changeLogDetails {
+background-color: #333333;
+border-color: #555555;
+color: #ffffff;
+}
+body.dark-mode #changeLogDetails[open] {
+/* You can optionally adjust the expanded background for dark mode */
+background-color: #444444;
+}
+
+@media (max-width: 768px) {
+    .notification-board {
+        max-height: 200px;
+    }
+}

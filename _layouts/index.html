@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <!-- Site Imports -->
+    <link rel="stylesheet" href="https://materioa.netlify.app/v4/styles/style_v4_26032025_full.css">
+    <script src="https://materioa.netlify.app/v4/scripts/v4_26032025_main.js" defer crossorigin></script>
+    <script src="https://materioa.netlify.app/v4/scripts/cust_ga4_track.js" defer crossorigin></script>
+    <script src="https://materioa.netlify.app/v4/scripts/v4_27032025_notify.js" defer crossorigin></script>
+    <script src="https://materioa.netlify.app/v4/scripts/v4_27032025_versions.js" defer crossorigin></script>
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6PC6RJL" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <header>
+    </header>
+
+    <div class="container">
+        <nav class="navbar">
+            <a href="#" class="tab-link active" data-tab="home">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="#" class="tab-link" data-tab="chat">
+                <i class="fas fa-comments"></i>
+            </a>
+            <a href="#" class="tab-link" data-tab="notifications">
+                <i class="fas fa-bell"></i>
+            </a>
+            <a href="#" class="tab-link" data-tab="settings">
+                <i class="fas fa-cog"></i>
+            </a>
+        </nav>
+
+        <div class="content">
+            <div id="home" class="tab-content active">
+                <div class="card-one" id="reading">
+                    <h2>What are you reading today?</h2>
+                    <form id="readingSelectionForm">
+                        <div>
+                            <label for="semesterSelect"></label>
+                            <select id="semesterSelect">
+                                <option value="">Select Semester</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="subjectSelect"></label>
+                            <select id="subjectSelect" disabled>
+                                <option value="">Select Subject</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="categorySelect"></label>
+                            <select id="categorySelect" disabled>
+                                <option value="">Select Category</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="topicSelect"></label>
+                            <select id="topicSelect" disabled>
+                                <option value="">Select Topic</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <button id="submitButton">Submit</button>
+                </div>
+
+
+                <div id="popup">
+                    <div class="popup-controls">
+                        <button id="fullscreenButton" style="margin-right: 40px; margin-top:5px;"><i
+                                class="fas fa-expand"></i></button>
+                        <button id="closePopup"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div id="popupContent">
+                        <!-- PDF iframe will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="chat" class="tab-content">
+                <h1>
+                    Chat
+                    <i class="fas fa-info info-icon">
+                        <span class="tooltip" style="font-weight: normal;">You can chat here by signing with github and
+                            ask doubts or discuss topics, Formatting with Markdown is supported.</span>
+                    </i>
+                </h1>
+                <div id="giscus" data-repo="Materioa/Materio">
+                    <!-- The Giscus comment section will be loaded here -->
+                </div>
+                <script src="https://giscus.app/client.js" data-repo="Materioa/Materio" data-repo-id="R_kgDOK_VkLg"
+                    data-category="Chat" data-category-id="DIC_kwDOK_VkLs4CmdaW" data-mapping="title" data-strict="0"
+                    data-reactions-enabled="0" data-emit-metadata="0" data-input-position="top"
+                    data-theme="noborder_dark" data-lang="en" crossorigin="anonymous" async>
+                    </script>
+
+            </div>
+
+            <div id="notifications" class="tab-content">
+                <h1>Notifications</h1>
+                <div id="notificationBoard" style="color:#000000;">
+                    <!-- Notification cards will be dynamically added here -->
+                </div>
+            </div>
+
+            <div id="settings" class="tab-content">
+                <h1>Settings</h1>
+                <div class="card-one" id="versionInfo">
+                    <img src="https://materioa.netlify.app/static/res/v4_logo.png" height="150px" width="150px"
+                        style="display: block; margin: 0 auto;">
+                </div>
+
+                <div class="card-layout" id="themeCard">
+                    <div class="toggle-container">
+                        <span>Enable Dark Mode</span>
+                        <label class="switch">
+                            <input type="checkbox" id="themeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="card-layout" id="about">
+                    <p id="versionInfoText">Version: </p>
+                    <p id="buildInfoText">Build: </p>
+                    <details id="changeLogDetails">
+                        <summary>Changelog</summary>
+                        <div id="changeLogContent">
+                            <!-- log will appear here -->
+                        </div>
+                    </details>
+                </div>
+                <div class="card-layout" id="notices">
+                    <p><i class="fas fa-circle-info"><span><a href="/about"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    About</a></span></i></p>
+                    <hr>
+                    <p><i class="fas fa-scroll"><span><a href="/LICENSE"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    License</a></span></i></p>
+                    <hr>
+                    <p><i class="fas fa-cookie"><span><a href="/cookies-policy"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    Cookies</a></span></i></p>
+                </div>
+            </div>
+
+
+
+</body>
+
+</html>
