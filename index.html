@@ -1425,6 +1425,25 @@ body.dark-mode #changeLogDetails[open] {
         applyTheme(isDark);
     });
 });
+function updateThemeColor() {
+    const isDarkMode = document.body.classList.contains("dark-mode"); // Adjust based on your dark mode class
+    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+
+    if (isDarkMode) {
+        metaThemeColor.setAttribute("content", "#121212"); // Dark mode color
+    } else {
+        metaThemeColor.setAttribute("content", "#FF6600"); // Light mode color
+    }
+}
+
+// Call this function when theme toggles
+document.getElementById("theme-toggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    updateThemeColor();
+});
+
+// Set initial color on load
+document.addEventListener("DOMContentLoaded", updateThemeColor);
 
     </script>
 </body>
