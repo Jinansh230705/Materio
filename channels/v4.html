@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ffffff">
     <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
                 'gtm.start':
@@ -12,16 +13,17 @@
                 j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
-    <title>Materio Labs - v4</title>
-    <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/lab.ico">
+    <title>Materio - Home | Materio</title>
+    <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/favicon.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-    <script src="/static/assets/v4_27032025_notify.js" defer crossorigin></script>
+    <script src="../static/assets/v4_27032025_notify.js"></script>
     <style>
         body {
             margin: 0;
+            background-color:#fffffe; ;
             font-family: "Manrope", sans-serif;
             display: flex;
             flex-direction: column;
@@ -34,44 +36,63 @@
             left: 0;
             right: 0;
             height: 40px;
-
             z-index: 1000;
-            background-color: #ffffff;
+            background-color: rgba(255, 245, 223, 0.5);
+            backdrop-filter: blur(10px);
             color: #333;
             padding: 10px;
             text-align: left;
-            border-bottom: 1px solid #d1d1d1;
+            border-bottom: 1px solid rgba(209, 209, 209, 0.5);
             background-image: url('https://materioa.netlify.app/static/res/materio_black.svg');
             background-repeat: no-repeat;
             background-size: 120px 32px;
             background-position: 20px center;
         }
 
-        .container {
-            margin-top: 60px;
+       /* Remove vertical margin from the container and use padding for header spacing */
+.container {
+    padding-top: 60px; /* space for header */
+    margin-left: 50px;
+    display: flex;
+    flex: 1;
+}
 
-            margin-left: 50px;
+/* Remove scrolling from .content */
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto; /* disable scrolling */
+}
 
-            display: flex;
-            flex: 1;
-        }
+/* Ensure #home fills its parent and disable its overflow */
+#home {
+    position: relative;
+    height: 100%;
+    overflow-y: hidden;
+}
 
-        .content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
+/* Use the pseudo-element to cover the full #home area */
+#home.active::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    background-image: url('../static/res/hero.png');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+}
 
         .navbar {
             position: fixed;
             top: 60px;
-
             left: 0;
             width: 50px;
             height: calc(100% - 60px);
-
-            background-color: #ffffff;
-            border-right: 1px solid #d1d1d1;
+            background-color: rgba(255, 245, 223, 0.5);
+            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -80,7 +101,7 @@
         }
 
         .navbar a {
-            color: rgb(203, 203, 203);
+            color: rgb(150, 150, 150);
             text-decoration: none;
             padding: 10px;
             width: 100%;
@@ -127,7 +148,8 @@
 
         .card-one {
             border-radius: 15px;
-            background-color: #f8f8f8;
+            background-color:  rgba(255, 245, 223, 0.5);
+            backdrop-filter: blur(10px);
             padding: 20px;
             margin: 20px 0;
             min-height: 150px;
@@ -272,7 +294,8 @@
 
         #readingSelectionForm select {
             font-family: "Manrope", sans-serif;
-            ;
+            opacity: 60%;
+            backdrop-filter: blur(10px);
             max-width: 1000px;
             box-sizing: border-box;
             padding: 6px 8px;
@@ -374,9 +397,11 @@
         }
 
         header.dark-mode {
-            background-color: #222222;
+            background-color: rgba(33, 33, 33, 0.5);
+            /* Semi-transparent dark */
+            backdrop-filter: blur(10px);
             color: #ffffff;
-            border-color: #444444;
+            border-color: rgba(68, 68, 68, 0.5);
             background-image: url('https://materioa.netlify.app/static/res/materio_white.png');
             background-repeat: no-repeat;
             background-size: 120px 32px;
@@ -389,8 +414,9 @@
         }
 
         .navbar.dark-mode {
-            background-color: #222222;
-            border-color: #444444;
+            background-color: rgba(34, 34, 34, 0.5);
+            backdrop-filter: blur(10px);
+            border-color: rgba(68, 68, 68, 0.5);
         }
 
         .navbar.dark-mode a {
@@ -408,7 +434,8 @@
         }
 
         .card-one.dark-mode {
-            background-color: #333333;
+            background-color: rgb(51, 51, 51,0.5);
+            backdrop-filter: blur(10px);
             color: #ffffff;
         }
 
@@ -424,6 +451,10 @@
         }
 
         @media (max-width: 768px) {
+
+            #home.active::before {
+                background-image: url("../static/res/hero_mobile.png");
+            }
             .container {
                 margin-left: 0;
                 margin-right: 0;
@@ -652,62 +683,65 @@
         }
 
         /* Unified changelog box */
-#changeLogDetails {
-    border: 1px solid #d1d1d1;
-    border-radius: 10px;
-    background-color: #fafafa;
-    padding: 8px 10px;
-    max-height: 40px;  /* initial height to only show the summary */
-    overflow: hidden;
-    transition: max-height 1.0s ease;
-}
+        #changeLogDetails {
+            border: 1px solid #d1d1d1;
+            border-radius: 10px;
+            background-color: #fafafa;
+            padding: 8px 10px;
+            max-height: 40px;
+            /* initial height to only show the summary */
+            overflow: hidden;
+            transition: max-height 1.0s ease;
+        }
 
-/* Style the summary so it looks like a button */
-#changeLogDetails summary {
-    -webkit-appearance: none;
-    appearance: none;
-    list-style: none;
-    cursor: pointer;
-    outline: none;
-    font-family: "Manrope", sans-serif;
-    margin: 0;
-}
+        /* Style the summary so it looks like a button */
+        #changeLogDetails summary {
+            -webkit-appearance: none;
+            appearance: none;
+            list-style: none;
+            cursor: pointer;
+            outline: none;
+            font-family: "Manrope", sans-serif;
+            margin: 0;
+        }
 
-/* Remove the default down arrow */
-#changeLogDetails summary::-webkit-details-marker {
-    display: none;
-}
+        /* Remove the default down arrow */
+        #changeLogDetails summary::-webkit-details-marker {
+            display: none;
+        }
 
-/* When the details element is open, expand the box */
-#changeLogDetails[open] {
-    max-height: 500px; /* Adjust as needed */
-}
+        /* When the details element is open, expand the box */
+        #changeLogDetails[open] {
+            max-height: 500px;
+            /* Adjust as needed */
+        }
 
-/* Hide any border/background from the inner log container; it will share the parent */
-#changeLogContent {
-    padding-top: 10px;
-    opacity: 0;
-    transition: opacity 1.0s ease;
-    background: none;
-    border: none;
-    font-family: "Manrope", sans-serif;
-}
+        /* Hide any border/background from the inner log container; it will share the parent */
+        #changeLogContent {
+            padding-top: 10px;
+            opacity: 0;
+            transition: opacity 1.0s ease;
+            background: none;
+            border: none;
+            font-family: "Manrope", sans-serif;
+        }
 
-/* Fade in the log text on open */
-#changeLogDetails[open] #changeLogContent {
-    opacity: 1;
-}
+        /* Fade in the log text on open */
+        #changeLogDetails[open] #changeLogContent {
+            opacity: 1;
+        }
 
-/* Dark mode overrides */
-body.dark-mode #changeLogDetails {
-    background-color: #333333;
-    border-color: #555555;
-    color: #ffffff;
-}
-body.dark-mode #changeLogDetails[open] {
-    /* You can optionally adjust the expanded background for dark mode */
-    background-color: #444444;
-}
+        /* Dark mode overrides */
+        body.dark-mode #changeLogDetails {
+            background-color: #333333;
+            border-color: #555555;
+            color: #ffffff;
+        }
+
+        body.dark-mode #changeLogDetails[open] {
+            /* You can optionally adjust the expanded background for dark mode */
+            background-color: #444444;
+        }
 
         @media (max-width: 768px) {
             .notification-board {
@@ -816,7 +850,7 @@ body.dark-mode #changeLogDetails[open] {
 
             <div id="settings" class="tab-content">
                 <h1>Settings</h1>
-                <div class="card-one" id="versionInfo">
+                <div class="card-layout" id="versionInfo">
                     <img src="https://materioa.netlify.app/static/res/v4_logo.png" height="150px" width="150px"
                         style="display: block; margin: 0 auto;">
                 </div>
@@ -833,13 +867,13 @@ body.dark-mode #changeLogDetails[open] {
 
                 <div class="card-layout" id="about">
                     <p id="versionInfoText">Version: </p>
-    <p id="buildInfoText">Build: </p>
-    <details id="changeLogDetails">
-        <summary>Changelog</summary>
-        <div id="changeLogContent">
-            <!-- log will appear here -->
-        </div>
-    </details>
+                    <p id="buildInfoText">Build: </p>
+                    <details id="changeLogDetails">
+                        <summary>Changelog</summary>
+                        <div id="changeLogContent">
+                            <!-- log will appear here -->
+                        </div>
+                    </details>
                 </div>
                 <div class="card-layout" id="notices">
                     <p><i class="fas fa-circle-info"><span><a href="/about"
@@ -953,7 +987,7 @@ body.dark-mode #changeLogDetails[open] {
                 });
 
                 document.addEventListener('DOMContentLoaded', function () {
-                    fetch('data.json')
+                    fetch('https://cdn-materioa.netlify.app/databases/beta/resource.lib.json')
                         .then(response => response.json())
                         .then(data => {
                             const semesterMapping = {
@@ -1076,17 +1110,19 @@ body.dark-mode #changeLogDetails[open] {
                         document.getElementById('about')
                     ];
 
+
+
                     // Append all notification cards (they all share id "notify")
                     const notifyCards = document.querySelectorAll('#notify');
                     notifyCards.forEach(card => elements.push(card));
 
-                    // Toggle dark-mode class on all collected elements
                     elements.forEach(el => {
                         if (el) {
                             this.checked ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
                         }
                     });
                 });
+
 
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     themeToggle.checked = true;
@@ -1100,10 +1136,12 @@ body.dark-mode #changeLogDetails[open] {
                         document.getElementById('versionInfo'),
                         document.getElementById('reading'),
                         document.getElementById('notices'),
-                        document.getElementById('about')
+                        document.getElementById('about'),
+                        document.getElementById('notificationBoard')
                     ];
                     elements.forEach(el => el.classList.add('dark-mode'));
                 }
+
                 document.addEventListener("DOMContentLoaded", function () {
                     const isDark = document.body.classList.contains("dark-mode") ||
                         (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -1149,7 +1187,7 @@ body.dark-mode #changeLogDetails[open] {
                     popup.style.display = 'block';
                 });
 
-                fetch('data.json')
+                fetch('https://cdn-materioa.netlify.app/databases/beta/resource.lib.json')
                     .then(response => response.json())
                     .then(data => {
                         const semesterMapping = {
@@ -1294,51 +1332,139 @@ body.dark-mode #changeLogDetails[open] {
                 })();
             </script>
 
-<script>
-    window.addEventListener("DOMContentLoaded", function() {
-        var url = window.location.href;
-        var branch = "stable";
-        if (url.indexOf("/channels/") !== -1) {
-            branch = "channels";
-        } else if (url.indexOf("/labs") !== -1) {
-            branch = "labs";
-        }
-        fetch('releases.json')
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(releases) {
-                var releaseFound = null;
-                for (var i = 0; i < releases.length; i++) {
-                    if (releases[i].branch.toLowerCase() === branch) {
-                        releaseFound = releases[i];
-                        break;
+            <script>
+                window.addEventListener("DOMContentLoaded", function () {
+                    var url = window.location.href;
+                    var branch = "stable";
+                    if (url.indexOf("/channels/") !== -1) {
+                        branch = "channels";
+                    } else if (url.indexOf("/labs") !== -1) {
+                        branch = "labs";
                     }
-                }
-                if (releaseFound) {
-                    var versionElem = document.getElementById("versionInfoText");
-                    var buildElem = document.getElementById("buildInfoText");
-                    var logElem = document.getElementById("changeLogContent");
-                    versionElem.textContent = "Version: " + releaseFound.version;
-                    buildElem.textContent = "Build: " + releaseFound.build;
-                    if (Array.isArray(releaseFound.logs)) {
-                        var html = "";
-                        for (var j = 0; j < releaseFound.logs.length; j++) {
-                            html += "<p>" + releaseFound.logs[j] + "</p>";
-                        }
-                        logElem.innerHTML = html;
-                    } else {
-                        logElem.textContent = releaseFound.logs;
-                    }
-                } else {
-                    document.getElementById("changeLogContent").textContent = "No changelog available for this branch.";
-                }
-            })
-            .catch(function(err) {
-                console.error("Error loading releases:", err);
-            });
-    });
-    </script>
-</body>
+                    fetch('/channels/releases.json')
+                        .then(function (response) {
+                            return response.json();
+                        })
+                        .then(function (releases) {
+                            var releaseFound = null;
+                            for (var i = 0; i < releases.length; i++) {
+                                if (releases[i].branch.toLowerCase() === branch) {
+                                    releaseFound = releases[i];
+                                    break;
+                                }
+                            }
+                            if (releaseFound) {
+                                var versionElem = document.getElementById("versionInfoText");
+                                var buildElem = document.getElementById("buildInfoText");
+                                var logElem = document.getElementById("changeLogContent");
+                                versionElem.textContent = "Version: " + releaseFound.version;
+                                buildElem.textContent = "Build: " + releaseFound.build;
+                                if (Array.isArray(releaseFound.logs)) {
+                                    var html = "";
+                                    for (var j = 0; j < releaseFound.logs.length; j++) {
+                                        html += "<p>" + releaseFound.logs[j] + "</p>";
+                                    }
+                                    logElem.innerHTML = html;
+                                } else {
+                                    logElem.textContent = releaseFound.logs;
+                                }
+                            } else {
+                                document.getElementById("changeLogContent").textContent = "No changelog available for this branch.";
+                            }
+                        })
+                        .catch(function (err) {
+                            console.error("Error loading releases:", err);
+                        });
+                });
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const themeToggle = document.getElementById('themeToggle');
 
+                    function setCookie(name, value, days) {
+                        let expires = "";
+                        if (days) {
+                            const date = new Date();
+                            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                            expires = "; expires=" + date.toUTCString();
+                        }
+                        document.cookie = name + "=" + value + expires + "; path=/";
+                    }
+
+                    function getCookie(name) {
+                        const nameEQ = name + "=";
+                        const ca = document.cookie.split(";");
+                        for (let i = 0; i < ca.length; i++) {
+                            let c = ca[i].trim();
+                            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+                        }
+                        return null;
+                    }
+
+                    function applyTheme(isDark) {
+                        const elements = [
+                            document.body,
+                            document.querySelector('header'),
+                            document.querySelector('.navbar'),
+                            document.querySelector('.content'),
+                            document.getElementById('themeCard'),
+                            document.getElementById('popup'),
+                            document.getElementById('versionInfo'),
+                            document.getElementById('reading'),
+                            document.getElementById('notices'),
+                            document.getElementById('notificationBoard'),
+                            document.getElementById('about')
+                        ];
+                        const notifyCards = document.querySelectorAll('#notify');
+                        notifyCards.forEach(card => elements.push(card));
+
+                        elements.forEach(el => {
+                            if (el) {
+                                isDark ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
+                            }
+                        });
+                        const giscusFrame = document.querySelector("iframe.giscus-frame");
+                        if (giscusFrame) {
+                            giscusFrame.contentWindow.postMessage(
+                                { giscus: { setConfig: { theme: isDark ? "noborder_dark" : "noborder_light" } } },
+                                "https://giscus.app"
+                            );
+                        }
+                    }
+                    let userTheme = getCookie("theme");
+                    if (userTheme === "dark") {
+                        themeToggle.checked = true;
+                        applyTheme(true);
+                    } else if (userTheme === "light") {
+                        themeToggle.checked = false;
+                        applyTheme(false);
+                    } else {
+                        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                        themeToggle.checked = systemPrefersDark;
+                        applyTheme(systemPrefersDark);
+                    }
+                    themeToggle.addEventListener("change", function () {
+                        const isDark = this.checked;
+                        setCookie("theme", isDark ? "dark" : "light", 30);
+                        applyTheme(isDark);
+                    });
+                });
+                function updateThemeColor() {
+                    const isDarkMode = document.body.classList.contains("dark-mode");
+                    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+
+                    if (metaThemeColor) {
+                        metaThemeColor.setAttribute("content", isDarkMode ? "rgba(34, 34, 34, 0.5)" : "rgba(255, 255, 255, 0.5)");
+                    }
+                }
+                const themeChoice = document.getElementById("themeToggle");
+                if (themeChoice) {
+                    themeChoice.addEventListener("click", () => {
+                        document.body.classList.toggle("dark-mode");
+                        updateThemeColor();
+                    });
+                }
+                document.addEventListener("DOMContentLoaded", updateThemeColor);
+            </script>
+</body>
 </html>
