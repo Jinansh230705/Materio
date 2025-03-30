@@ -2,7 +2,7 @@
     {
         "branch": "stable",
         "version": "4.0.2.0",
-        "build": "29/03/2025",
+        "build": "30/03/2025",
         "logs": [
             "Visual Refresh 2.0 - enhanced UI with Glassmorphism style.",
             "New wordmark - <i>stylized as:</i> <b>materio.</b>",
@@ -10,7 +10,9 @@
             "Notification Badge - every notification counts.",
             "Addition to Settings",
             " - option to disable background images.",
-            " - option to opt out of optional cookies."
+            " - option to opt out of optional cookies.",
+            "Bug Fix - when submit was clicked without selecting options alert for selecting options were given twice.",
+            "Bug Fix - Background image wasn't adapting to viewport automatically needing to refresh."
         ]
     },
     {
@@ -24,7 +26,9 @@
             "Notification Badge - every notification counts.",
             "Addition to Settings",
             " - option to disable background images.",
-            " - option to opt out of optional cookies."
+            " - option to opt out of optional cookies.",
+            "Bug Fix - when submit was clicked without selecting options alert for selecting options were given twice.",
+            "Bug Fix - Background image wasn't adapting to viewport automatically needing to refresh."
         ]
     },
     {
