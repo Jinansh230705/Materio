@@ -180,6 +180,11 @@
             opacity: 1;
             visibility: visible;
         }
+       
+i span{
+    display: inline-block;
+    margin-left: 15px;
+}
 
         #popup {
             display: none;
@@ -388,12 +393,13 @@
 
 
         /* Update the .toggle-container to space items evenly */
-.toggle-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px; /* optional */
-}
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            /* optional */
+        }
 
 
         body.dark-mode {
@@ -896,6 +902,10 @@
                     <p><i class="fas fa-cookie"><span><a href="/cookies-policy"
                                     style="font-family:'Manrope', sans-serif; font-weight: normal;">
                                     Cookies</a></span></i></p>
+                                    <hr>
+                    <p><i class="fab fa-github"><span><a href="https://github.com/Jinansh230705"
+                                    style="font-family:'Manrope', sans-serif; font-weight: normal;">
+                                    Developer's Github</a></span></i></p>
                 </div>
 
                 <p>Advanced</p>
@@ -978,19 +988,21 @@
                     const subject = document.getElementById('subjectSelect').value;
                     const categorySelect = document.getElementById('categorySelect');
                     const topic = document.getElementById('topicSelect').value;
+
                     if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
                         alert('Please select a semester, subject, category, and topic.');
                         return;
                     }
-                    const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
 
+                    const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
                     document.getElementById('popupContent').innerHTML =
                         `<iframe id="pdf-iframe" scrolling='no' allowfullscreen webkitallowfullscreen style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
-         src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+    src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
 
                     popup.classList.remove('closing');
                     popup.style.display = 'block';
                 });
+
                 closePopup.addEventListener('click', () => {
                     popup.classList.add('closing');
                 });
@@ -1001,6 +1013,7 @@
                         popup.classList.remove('closing');
                     }
                 });
+
                 document.addEventListener('DOMContentLoaded', function () {
                     const tabLinks = document.querySelectorAll('.tab-link');
                     const tabContents = document.querySelectorAll('.tab-content');
@@ -1020,10 +1033,7 @@
                     fetch('https://cdn-materioa.netlify.app/databases/beta/resource.lib.json')
                         .then(response => response.json())
                         .then(data => {
-                            const semesterMapping = {
-                                "9": "Additional Resources"
-                            };
-
+                            const semesterMapping = { "9": "Additional Resources" };
                             const semesterSelect = document.getElementById('semesterSelect');
                             semesterSelect.innerHTML = '';
                             const placeholder = document.createElement('option');
@@ -1035,7 +1045,6 @@
                                 const option = document.createElement('option');
                                 option.value = sem;
                                 option.textContent = semesterMapping[sem] ? semesterMapping[sem] : "Semester " + sem;
-
                                 if (sem === "4") {
                                     option.selected = true;
                                 }
@@ -1123,6 +1132,7 @@
                         .catch(err => console.error('Error loading data:', err));
                 });
 
+
                 const themeToggle = document.getElementById('themeToggle');
                 themeToggle.addEventListener('change', function () {
                     // Existing elements
@@ -1205,7 +1215,7 @@
                     const topic = document.getElementById('topicSelect').value;
 
                     if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
-                        alert('Please select a semester, subject, category, and topic.');
+                        // alert('Please select a semester, subject, category, and topic.');
                         return;
                     }
 
@@ -1412,89 +1422,109 @@
                 document.addEventListener("DOMContentLoaded", updateThemeColor);
             </script>
             <script>
-               document.addEventListener('DOMContentLoaded', function () {
-  const disableBgToggle = document.getElementById("disableBgToggle");
-  const homeElem = document.getElementById("home");
+                document.addEventListener('DOMContentLoaded', function () {
+                    const disableBgToggle = document.getElementById("disableBgToggle");
+                    const homeElem = document.getElementById("home");
+                    let lastIsMobile = window.matchMedia("(max-width: 768px)").matches;
+                    let cachedEventToApply = null; // Cache the chosen event to avoid refetching on each resize.
 
-  // Cookie functions
-  function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-      const date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    console.log("Cookie set:", name, value);
-  }
+                    // Cookie functions (setCookie, getCookie) here ...
+                    function setCookie(name, value, days) {
+                        let expires = "";
+                        if (days) {
+                            const date = new Date();
+                            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                            expires = "; expires=" + date.toUTCString();
+                        }
+                        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+                    }
 
-  function getCookie(name) {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i].trim();
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
-    }
-    return null;
-  }
+                    function getCookie(name) {
+                        const nameEQ = name + "=";
+                        const ca = document.cookie.split(";");
+                        for (let i = 0; i < ca.length; i++) {
+                            let c = ca[i].trim();
+                            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+                        }
+                        return null;
+                    }
 
-  // Function to apply the event background (if background image is enabled)
-  function applyEventBackgroundForHome() {
-    // If backgrounds are disabled, ensure our CSS variable is set to "none"
-    if (disableBgToggle && disableBgToggle.checked) {
-      homeElem.style.setProperty("--bg-img", "none");
-      return;
-    }
-    // Otherwise, fetch events and apply the proper background image
-    fetch('/channels/events.json')
-      .then(response => response.json())
-      .then(events => {
-        const now = new Date();
-        // Get events that have started (ignoring those flagged as non-default)
-        let activeEvents = events.filter(ev => new Date(ev.setDate) <= now && (!ev.default || ev.default == 0));
-        let eventToApply = null;
-        if (activeEvents.length > 0) {
-          // Pick the event with the most recent setDate
-          eventToApply = activeEvents.sort((a, b) => new Date(b.setDate) - new Date(a.setDate))[0];
-        } else {
-          // Fallback to the default event if no active event is found
-          let defaultEvents = events.filter(ev => ev.default == 1);
-          if (defaultEvents.length > 0) {
-            eventToApply = defaultEvents[0];
-          }
-        }
-        if (eventToApply) {
-          // Use matchMedia for more reliable mobile detection
-          const isMobile = window.matchMedia("(max-width: 768px)").matches;
-          const bgUrl = isMobile ? eventToApply.url_mobile : eventToApply.url_pc;
-          homeElem.style.setProperty("--bg-img", `url('${bgUrl}')`);
-        }
-      })
-      .catch(err => console.error("Error loading event backgrounds:", err));
-  }
+                    // Function to apply the event background (if enabled)
+                    function applyEventBackgroundForHome() {
+                        if (disableBgToggle && disableBgToggle.checked) {
+                            homeElem.style.setProperty("--bg-img", "none");
+                            return;
+                        }
+                        // If cached event exists, use it directly
+                        if (cachedEventToApply) {
+                            updateBgFromEvent(cachedEventToApply);
+                            return;
+                        }
+                        fetch('/channels/events.json')
+                            .then(response => response.json())
+                            .then(events => {
+                                const now = new Date();
+                                let activeEvents = events.filter(ev => new Date(ev.setDate) <= now && (!ev.default || ev.default == 0));
+                                let eventToApply = null;
+                                if (activeEvents.length > 0) {
+                                    eventToApply = activeEvents.sort((a, b) => new Date(b.setDate) - new Date(a.setDate))[0];
+                                } else {
+                                    let defaultEvents = events.filter(ev => ev.default == 1);
+                                    if (defaultEvents.length > 0) {
+                                        eventToApply = defaultEvents[0];
+                                    }
+                                }
+                                if (eventToApply) {
+                                    cachedEventToApply = eventToApply; // cache it for future updates
+                                    updateBgFromEvent(eventToApply);
+                                }
+                            })
+                            .catch(err => console.error("Error loading event backgrounds:", err));
+                    }
 
-  // On page load, check if a cookie has been set to disable background images
-  const savedSetting = getCookie("disableBg");
-  if (savedSetting === "true") {
-    disableBgToggle.checked = true;
-    homeElem.style.setProperty("--bg-img", "none");
-  }
+                    // Helper: Update CSS variable based on event and viewport
+                    function updateBgFromEvent(eventToApply) {
+                        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+                        const bgUrl = isMobile ? eventToApply.url_mobile : eventToApply.url_pc;
+                        homeElem.style.setProperty("--bg-img", `url('${bgUrl}')`);
+                    }
 
-  // Attach an event listener to update background image based on toggle changes
-  if (disableBgToggle) {
-    disableBgToggle.addEventListener("change", function () {
-      if (this.checked) {
-        homeElem.style.setProperty("--bg-img", "none");
-      } else {
-        applyEventBackgroundForHome();
-      }
-      setCookie("disableBg", this.checked ? "true" : "false", 30);
-    });
-  }
+                    // On page load, apply background image or disable it if cookie was set.
+                    const savedSetting = getCookie("disableBg");
+                    if (savedSetting === "true") {
+                        disableBgToggle.checked = true;
+                        homeElem.style.setProperty("--bg-img", "none");
+                    }
+                    applyEventBackgroundForHome();
 
-  // Initial background load (will respect the disable toggle if already checked)
-  applyEventBackgroundForHome();
-});
+                    // Listener for toggle changes (and save cookie) remains unchanged.
+                    if (disableBgToggle) {
+                        disableBgToggle.addEventListener("change", function () {
+                            if (this.checked) {
+                                homeElem.style.setProperty("--bg-img", "none");
+                            } else {
+                                applyEventBackgroundForHome();
+                            }
+                            setCookie("disableBg", this.checked ? "true" : "false", 30);
+                        });
+                    }
+                    function debounce(func, wait) {
+                        let timeout;
+                        return function (...args) {
+                            clearTimeout(timeout);
+                            timeout = setTimeout(() => func.apply(this, args), wait);
+                        };
+                    }
+
+                    window.addEventListener('resize', debounce(function () {
+                        if (disableBgToggle && disableBgToggle.checked) return;
+                        const currentIsMobile = window.matchMedia("(max-width: 768px)").matches;
+                        if (currentIsMobile !== lastIsMobile) {
+                            applyEventBackgroundForHome();
+                            lastIsMobile = currentIsMobile;
+                        }
+                    }, 200));
+                });
             </script>
 </body>
 
