@@ -19,10 +19,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-    <script src="/static/assets/v4_27032025_notify.js" defer crossorigin></script>
+    <script src="../static/assets/v4_27032025_notify.js"></script>
+    <script src="../static/assets/gtag_custom_v4.js" defer></script>
     <style>
         body {
             margin: 0;
+            background-color: #fffffe;
+            ;
             font-family: "Manrope", sans-serif;
             display: flex;
             flex-direction: column;
@@ -35,43 +38,64 @@
             left: 0;
             right: 0;
             height: 40px;
-
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 245, 223, 0.5);
             backdrop-filter: blur(10px);
             color: #333;
             padding: 10px;
             text-align: left;
             border-bottom: 1px solid rgba(209, 209, 209, 0.5);
-            background-image: url('https://materioa.netlify.app/static/res/materio_black.svg');
+            background-image: url('/static/res/materio_new_bk.svg');
             background-repeat: no-repeat;
             background-size: 120px 32px;
             background-position: 20px center;
         }
 
+        /* Remove vertical margin from the container and use padding for header spacing */
         .container {
-            margin-top: 60px;
-
+            padding-top: 60px;
+            /* space for header */
             margin-left: 50px;
-
             display: flex;
             flex: 1;
         }
 
+        /* Remove scrolling from .content */
         .content {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
+            /* disable scrolling */
+        }
+
+        /* Ensure #home fills its parent and disable its overflow */
+        #home {
+            position: relative;
+            height: 100%;
+            overflow-y: hidden;
+        }
+
+        /* Use the pseudo-element to cover the full #home area */
+        #home.active::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: var(--bg-img, url('../static/res/hero.png'));
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
         }
 
         .navbar {
             position: fixed;
             top: 60px;
-
             left: 0;
             width: 50px;
             height: calc(100% - 60px);
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 245, 223, 0.5);
             backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
@@ -81,7 +105,7 @@
         }
 
         .navbar a {
-            color: rgb(203, 203, 203);
+            color: rgb(150, 150, 150);
             text-decoration: none;
             padding: 10px;
             width: 100%;
@@ -128,7 +152,8 @@
 
         .card-one {
             border-radius: 15px;
-            background-color: #f8f8f8;
+            background-color: rgba(255, 245, 223, 0.5);
+            backdrop-filter: blur(10px);
             padding: 20px;
             margin: 20px 0;
             min-height: 150px;
@@ -273,7 +298,8 @@
 
         #readingSelectionForm select {
             font-family: "Manrope", sans-serif;
-            ;
+            opacity: 60%;
+            backdrop-filter: blur(10px);
             max-width: 1000px;
             box-sizing: border-box;
             padding: 6px 8px;
@@ -361,12 +387,13 @@
         }
 
 
-        .toggle-container {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-
-        }
+        /* Update the .toggle-container to space items evenly */
+.toggle-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px; /* optional */
+}
 
 
         body.dark-mode {
@@ -375,19 +402,21 @@
         }
 
         header.dark-mode {
-            background-color: rgba(34, 34, 34, 0.5);
+            background-color: rgba(33, 33, 33, 0.5);
             /* Semi-transparent dark */
             backdrop-filter: blur(10px);
             color: #ffffff;
             border-color: rgba(68, 68, 68, 0.5);
-            background-image: url('https://materioa.netlify.app/static/res/materio_white.png');
+            background-image: url('/static/res/materio_new_wh.svg');
             background-repeat: no-repeat;
             background-size: 120px 32px;
             background-position: 20px center;
         }
 
         #popup.dark-mode {
-            background-color: #222222;
+            background-color: rgba(33, 33, 33, 0.5);
+            /* Semi-transparent dark */
+            backdrop-filter: blur(10px);
             color: white;
         }
 
@@ -412,7 +441,8 @@
         }
 
         .card-one.dark-mode {
-            background-color: #333333;
+            background-color: rgb(51, 51, 51, 0.5);
+            backdrop-filter: blur(10px);
             color: #ffffff;
         }
 
@@ -428,6 +458,11 @@
         }
 
         @media (max-width: 768px) {
+
+            #home.active::before {
+                background-image: var(--bg-img, url("../static/res/hero_mobile.png"));
+            }
+
             .container {
                 margin-left: 0;
                 margin-right: 0;
@@ -504,7 +539,8 @@
             left: 2%;
             width: 95%;
             height: 95%;
-            background-color: white;
+            background-color: rgba(255, 245, 223, 0.5);
+            backdrop-filter: blur(10px);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             z-index: 1000;
             overflow: auto;
@@ -823,7 +859,7 @@
 
             <div id="settings" class="tab-content">
                 <h1>Settings</h1>
-                <div class="card-one" id="versionInfo">
+                <div class="card-layout" id="versionInfo">
                     <img src="https://materioa.netlify.app/static/res/v4_logo.png" height="150px" width="150px"
                         style="display: block; margin: 0 auto;">
                 </div>
@@ -860,6 +896,27 @@
                     <p><i class="fas fa-cookie"><span><a href="/cookies-policy"
                                     style="font-family:'Manrope', sans-serif; font-weight: normal;">
                                     Cookies</a></span></i></p>
+                </div>
+
+                <p>Advanced</p>
+                <div class="card-layout" id="bgToggleCard">
+                    <div class="toggle-container">
+                        <span>Disable Background Image</span>
+                        <label class="switch">
+                            <input type="checkbox" id="disableBgToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="card-layout" id="cookiesToggleCard">
+                    <div class="toggle-container">
+                        <span>Accept Cookies</span>
+                        <label class="switch">
+                            <input type="checkbox" id="optOutCookiesToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -1112,7 +1169,6 @@
                         document.getElementById('about'),
                         document.getElementById('notificationBoard')
                     ];
-                    // Append all notification cards (they all share id "notify")
                     elements.forEach(el => el.classList.add('dark-mode'));
                 }
 
@@ -1216,95 +1272,7 @@
                     })
                     .catch(err => console.error('Error loading data:', err));
             </script>
-            <!-- GA4 Tracking -->
-            <script>
-                (function () {
 
-                    if (!window.gtag) {
-                        console.warn("GA4 (gtag) not loaded.");
-                        return;
-                    }
-
-                    function trackEvent(eventName, params) {
-                        window.gtag('event', eventName, params);
-                    }
-
-                    const pageLoadTime = Date.now();
-                    window.addEventListener("beforeunload", function () {
-                        const engagementTime = Date.now() - pageLoadTime;
-                        trackEvent("page_engagement", { engagement_time_ms: engagementTime });
-                    });
-
-                    document.querySelectorAll("button").forEach((btn) => {
-                        btn.addEventListener("click", function () {
-                            trackEvent("button_click", { event_label: this.id || this.innerText });
-                        });
-                    });
-
-                    document.querySelectorAll(".tab-link").forEach((tab) => {
-                        tab.addEventListener("click", function () {
-                            trackEvent("nav_tab_switch", { event_label: this.getAttribute("data-tab") });
-                        });
-                    });
-
-                    let scrollTimeout;
-                    window.addEventListener("scroll", function () {
-                        if (scrollTimeout) clearTimeout(scrollTimeout);
-                        scrollTimeout = setTimeout(() => {
-                            trackEvent("page_scroll", { scroll_y: window.scrollY });
-                        }, 1000);
-                    });
-
-                    let pdfEngagementTime = 0;
-                    let pdfTimer = null;
-
-                    function startPdfTimer() {
-                        if (!pdfTimer) {
-                            pdfTimer = setInterval(() => {
-                                pdfEngagementTime += 1000;
-                            }, 1000);
-                            trackEvent("pdf_view_start", {});
-                        }
-                    }
-
-                    function stopPdfTimer() {
-                        if (pdfTimer) {
-                            clearInterval(pdfTimer);
-                            pdfTimer = null;
-                            trackEvent("pdf_engagement", { engagement_time_ms: pdfEngagementTime });
-                            pdfEngagementTime = 0;
-                        }
-                    }
-
-                    function setupPdfTracking() {
-                        const pdfIframe = document.getElementById("pdf-iframe");
-                        if (pdfIframe) {
-                            pdfIframe.addEventListener("load", startPdfTimer);
-                        }
-                    }
-                    setupPdfTracking();
-
-                    const popup = document.getElementById("popup");
-                    if (popup) {
-                        const observer = new MutationObserver((mutations) => {
-                            mutations.forEach((mutation) => {
-                                if (mutation.target.style.display === "none") {
-                                    stopPdfTimer();
-                                }
-                            });
-                        });
-                        observer.observe(popup, { attributes: true, attributeFilter: ["style"] });
-                    }
-
-                    window.addEventListener("message", (event) => {
-
-                        if (event.origin.includes("mozilla.github.io")) {
-
-                            trackEvent("pdf_interaction", { data: event.data });
-                        }
-                    });
-                })();
-            </script>
 
             <script>
                 window.addEventListener("DOMContentLoaded", function () {
@@ -1382,15 +1350,16 @@
                             document.querySelector('.navbar'),
                             document.querySelector('.content'),
                             document.getElementById('themeCard'),
+                            document.getElementById('bgToggleCard'),
                             document.getElementById('popup'),
                             document.getElementById('versionInfo'),
                             document.getElementById('reading'),
                             document.getElementById('notices'),
                             document.getElementById('notificationBoard'),
-                            document.getElementById('about')
+                            document.getElementById('advanced'),
+                            document.getElementById('about'),
+                            document.getElementById('cookiesToggleCard')
                         ];
-
-                        // Select notification cards dynamically
                         const notifyCards = document.querySelectorAll('#notify');
                         notifyCards.forEach(card => elements.push(card));
 
@@ -1399,8 +1368,6 @@
                                 isDark ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
                             }
                         });
-
-                        // Update Giscus theme dynamically
                         const giscusFrame = document.querySelector("iframe.giscus-frame");
                         if (giscusFrame) {
                             giscusFrame.contentWindow.postMessage(
@@ -1409,8 +1376,6 @@
                             );
                         }
                     }
-
-                    // Check for saved user preference
                     let userTheme = getCookie("theme");
                     if (userTheme === "dark") {
                         themeToggle.checked = true;
@@ -1419,42 +1384,117 @@
                         themeToggle.checked = false;
                         applyTheme(false);
                     } else {
-                        // If no preference found, use system preference
                         const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
                         themeToggle.checked = systemPrefersDark;
                         applyTheme(systemPrefersDark);
                     }
-
-                    // Event listener for theme toggle
                     themeToggle.addEventListener("change", function () {
                         const isDark = this.checked;
-                        setCookie("theme", isDark ? "dark" : "light", 30); // Store user preference for 30 days
+                        setCookie("theme", isDark ? "dark" : "light", 30);
                         applyTheme(isDark);
                     });
                 });
                 function updateThemeColor() {
-    const isDarkMode = document.body.classList.contains("dark-mode");
-    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+                    const isDarkMode = document.body.classList.contains("dark-mode");
+                    const metaThemeColor = document.querySelector("meta[name=theme-color]");
 
-    if (metaThemeColor) {
-        metaThemeColor.setAttribute("content", isDarkMode ? "rgba(34, 34, 34, 0.5)" : "rgba(255, 255, 255, 0.5)");
+                    if (metaThemeColor) {
+                        metaThemeColor.setAttribute("content", isDarkMode ? "rgba(34, 34, 34, 0.5)" : "rgba(255, 255, 255, 0.5)");
+                    }
+                }
+                const themeChoice = document.getElementById("themeToggle");
+                if (themeChoice) {
+                    themeChoice.addEventListener("click", () => {
+                        document.body.classList.toggle("dark-mode");
+                        updateThemeColor();
+                    });
+                }
+                document.addEventListener("DOMContentLoaded", updateThemeColor);
+            </script>
+            <script>
+               document.addEventListener('DOMContentLoaded', function () {
+  const disableBgToggle = document.getElementById("disableBgToggle");
+  const homeElem = document.getElementById("home");
+
+  // Cookie functions
+  function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
     }
-}
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    console.log("Cookie set:", name, value);
+  }
 
-// Event Listener for Theme Toggle
-const themeChoice = document.getElementById("themeToggle");
+  function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(";");
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i].trim();
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+    }
+    return null;
+  }
 
-if (themeChoice) {
-    themeChoice.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-        updateThemeColor();
+  // Function to apply the event background (if background image is enabled)
+  function applyEventBackgroundForHome() {
+    // If backgrounds are disabled, ensure our CSS variable is set to "none"
+    if (disableBgToggle && disableBgToggle.checked) {
+      homeElem.style.setProperty("--bg-img", "none");
+      return;
+    }
+    // Otherwise, fetch events and apply the proper background image
+    fetch('/channels/events.json')
+      .then(response => response.json())
+      .then(events => {
+        const now = new Date();
+        // Get events that have started (ignoring those flagged as non-default)
+        let activeEvents = events.filter(ev => new Date(ev.setDate) <= now && (!ev.default || ev.default == 0));
+        let eventToApply = null;
+        if (activeEvents.length > 0) {
+          // Pick the event with the most recent setDate
+          eventToApply = activeEvents.sort((a, b) => new Date(b.setDate) - new Date(a.setDate))[0];
+        } else {
+          // Fallback to the default event if no active event is found
+          let defaultEvents = events.filter(ev => ev.default == 1);
+          if (defaultEvents.length > 0) {
+            eventToApply = defaultEvents[0];
+          }
+        }
+        if (eventToApply) {
+          // Use matchMedia for more reliable mobile detection
+          const isMobile = window.matchMedia("(max-width: 768px)").matches;
+          const bgUrl = isMobile ? eventToApply.url_mobile : eventToApply.url_pc;
+          homeElem.style.setProperty("--bg-img", `url('${bgUrl}')`);
+        }
+      })
+      .catch(err => console.error("Error loading event backgrounds:", err));
+  }
+
+  // On page load, check if a cookie has been set to disable background images
+  const savedSetting = getCookie("disableBg");
+  if (savedSetting === "true") {
+    disableBgToggle.checked = true;
+    homeElem.style.setProperty("--bg-img", "none");
+  }
+
+  // Attach an event listener to update background image based on toggle changes
+  if (disableBgToggle) {
+    disableBgToggle.addEventListener("change", function () {
+      if (this.checked) {
+        homeElem.style.setProperty("--bg-img", "none");
+      } else {
+        applyEventBackgroundForHome();
+      }
+      setCookie("disableBg", this.checked ? "true" : "false", 30);
     });
-}
+  }
 
-// Apply correct theme on page load
-document.addEventListener("DOMContentLoaded", updateThemeColor);
-
-
+  // Initial background load (will respect the disable toggle if already checked)
+  applyEventBackgroundForHome();
+});
             </script>
 </body>
 

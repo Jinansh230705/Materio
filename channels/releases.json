@@ -1,20 +1,73 @@
 [
     {
         "branch": "stable",
-        "version": "4.0.1",
-        "build": "28/03/2025",
-        "logs": ["Materio v4", "Visual refresh and mobile friendly UI","Added a new Category option for better navigation and organization"]
+        "version": "4.0.2.0",
+        "build": "29/03/2025",
+        "logs": [
+            "Visual Refresh 2.0 - enhanced UI with Glassmorphism style.",
+            "New wordmark - <i>stylized as:</i> <b>materio.</b>",
+            "Ghibli Aesthetic - Studio Ghibli inspired art.",
+            "Notification Badge - every notification counts.",
+            "Addition to Settings",
+            " - option to disable background images.",
+            " - option to opt out of optional cookies."
+        ]
     },
     {
         "branch": "channels",
-        "version": "4.0",
+        "version": "4.0.2_Daily | Beta",
+        "build": "29/03/2025",
+        "logs": [
+            "Visual Refresh 2.0 - enhanced UI with Glassmorphism style.",
+            "New wordmark - <i>stylized as:</i> <b>materio.</b>",
+            "Ghibli Aesthetic - Studio Ghibli inspired art.",
+            "Notification Badge - every notification counts.",
+            "Addition to Settings",
+            " - option to disable background images.",
+            " - option to opt out of optional cookies."
+        ]
+    },
+    {
+        "branch": "stable",
+        "version": "4.0.1.0",
+        "build": "28/03/2025",
+        "logs": [
+            "Visual Refresh - Materio now has a new look.",
+            "Faster - loading new pages takes less time now with tabs.",
+            "Introduction of Categories menu - for easy selection and organization of material type.",
+            "New PDF viewer and style for better view size with an option of Fullscreen mode.",
+            "Navigation to tabs has been made easier.",
+            "Notification Badges - You can see badge with counts whenever theres a new notification.",
+            "Dark mode - toggle on/off in settings."
+        ]
+    },
+    {
+        "branch": "channels",
+        "version": "4.0.1_Daily | Beta",
+        "build": "28/03/2025",
+        "logs": [
+            "Visual Refresh - Materio now has a new look.",
+            "Faster - loading new pages takes less time now with tabs.",
+            "Introduction of Categories menu - for easy selection and organization of material type.",
+            "New PDF viewer and style for better view size with an option of Fullscreen mode.",
+            "Navigation to tabs has been made easier.",
+            "Notification Badges - You can see badge with counts whenever theres a new notification.",
+            "Dark mode - toggle on/off in settings."
+        ]
+    },
+    {
+        "branch": "channels",
+        "version": "4.0_pre | Beta",
         "build": "26/03/2025",
-        "logs": ["Materio v4", "Visual overhaul"]
+        "logs": [
+            "Materio v4",
+            "Visual overhaul"
+        ]
     },
     {
         "branch": "stable",
         "build": "12.12.24",
-        "version": "Materio V3",
+        "version": "3.0",
         "logs": [
             "Introduced Jekyll templating",
             "Font Awesome V6 Icons in the Navbar instead of text enhancing visual appearance",
@@ -31,7 +84,7 @@
     {
         "branch": "stable",
         "build": "25.11.24",
-        "version": "",
+        "version": "2.5",
         "logs": [
             "Fixed Bugs",
             "Fixed Padding and Improved CSS",
@@ -42,7 +95,7 @@
     {
         "branch": "stable",
         "build": "03.11.24",
-        "version": "",
+        "version": "2.2",
         "logs": [
             "Added New Materials",
             "Removed Editor",
@@ -53,7 +106,7 @@
     {
         "branch": "stable",
         "build": "18.05.24",
-        "version": "C67_ALPHA",
+        "version": "2.0_C67 | Alpha",
         "logs": [
             "Added support for Themes",
             "Added toggle for Settings",
@@ -65,7 +118,7 @@
     {
         "branch": "stable",
         "build": "17.05.24",
-        "version": "",
+        "version": "1.1 | Weekly",
         "logs": [
             "Uploaded all Materials",
             "Added Question Banks and Important Questions"
@@ -74,7 +127,7 @@
     {
         "branch": "stable",
         "build": "29.04.24",
-        "version": "Weekly",
+        "version": "1.0.1 | Weekly",
         "logs": [
             "Added Materials"
         ]
@@ -82,7 +135,7 @@
     {
         "branch": "stable",
         "build": "29.03.24",
-        "version": "Weekly",
+        "version": "1.0.1 | Weekly",
         "logs": [
             "Added new Resources",
             "Fixed some bugs"
@@ -91,7 +144,7 @@
     {
         "branch": "stable",
         "build": "16.03.24",
-        "version": "Weekly",
+        "version": "1.0 | Weekly",
         "logs": [
             "Introduced New UI",
             "Adobe PDF Viewer API",
@@ -101,7 +154,7 @@
     {
         "branch": "stable",
         "build": "08.03.24",
-        "version": "Dev",
+        "version": "0.1 | Dev",
         "logs": [
             "Initial Launch of Materio",
             "Resources and Chat features",

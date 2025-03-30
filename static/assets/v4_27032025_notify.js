@@ -82,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
         card.id = 'notify';
         card.textContent = "No New Notifications";
 
-        // Apply dark mode if needed
         if (document.body.classList.contains('dark-mode')) {
             card.classList.add('dark-mode');
         }
@@ -121,7 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
             card.appendChild(linksContainer);
         }
 
-        // Apply dark mode if needed
         if (document.body.classList.contains('dark-mode')) {
             card.classList.add('dark-mode');
         }
@@ -195,9 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.test = function() {
     window.devMode = true;
     console.log("Dev mode enabled for notifications. Badge removal is disabled.");
-
     setCookie("lastSeenNotification", "", -1);
-
     globalNotifications = generateFakeNotifications();
     displayNotifications(globalNotifications);
     updateNotificationBadge(globalNotifications);
