@@ -13,8 +13,8 @@
                 j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
-    <title>Materio - Home | Materio</title>
-    <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/favicon.ico">
+    <title>Materio Labs - v4</title>
+    <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/labs.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,6 +86,7 @@
             background-image: var(--bg-img, url('../static/res/hero.png'));
             background-size: cover;
             background-position: center;
+            filter: blur(8px);
             z-index: -1;
         }
 
@@ -537,7 +538,9 @@ i span{
             }
         }
 
-
+        #creatorInfo p {
+  text-align: center;
+}
         #popup {
             display: none;
             position: fixed;
@@ -930,7 +933,23 @@ i span{
                 </div>
             </div>
 
+            <div class="card-layout" id="creatorInfo">
+                <p>&copy; Materio</p>
+             <p>   Made with ❤️ by Jinansh </p>
+            </div>
+
             <script>
+               document.addEventListener('DOMContentLoaded', function () {
+    var year = new Date().getFullYear();
+    var creatorInfo = document.getElementById('creatorInfo');
+    if (creatorInfo) {
+      // Update the first paragraph with the new year
+      var p = creatorInfo.querySelector('p');
+      if (p) {
+        p.innerHTML = '&copy; ' + year + ' - Materio';
+      }
+    }
+  });
                 function setCookie(name, value, days) {
                     var expires = "";
                     if (days) {
@@ -1370,7 +1389,8 @@ i span{
                             document.getElementById('notificationBoard'),
                             document.getElementById('advanced'),
                             document.getElementById('about'),
-                            document.getElementById('cookiesToggleCard')
+                            document.getElementById('cookiesToggleCard'),
+                            document.getElementById('creatorInfo')
                         ];
                         const notifyCards = document.querySelectorAll('#notify');
                         notifyCards.forEach(card => elements.push(card));
