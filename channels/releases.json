@@ -12,7 +12,8 @@
             " - option to disable background images.",
             " - option to opt out of optional cookies.",
             "Bug Fix - when submit was clicked without selecting options alert for selecting options were given twice.",
-            "Bug Fix - Background image wasn't adapting to viewport automatically needing to refresh."
+            "Bug Fix - Background image wasn't adapting to viewport automatically needing to refresh.",
+            "Optimisation - Faster PDF loading for upto last 5 recently opened PDFs."
         ]
     },
     {
@@ -28,7 +29,8 @@
             " - option to disable background images.",
             " - option to opt out of optional cookies.",
             "Bug Fix - when submit was clicked without selecting options alert for selecting options were given twice.",
-            "Bug Fix - Background image wasn't adapting to viewport automatically needing to refresh."
+            "Bug Fix - Background image wasn't adapting to viewport automatically needing to refresh.",
+            "Optimisation - Faster PDF loading for upto last 5 recently opened PDFs."
         ]
     },
     {

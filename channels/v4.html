@@ -13,8 +13,8 @@
                 j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
-    <title>Materio - Home | Materio</title>
-    <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/favicon.ico">
+    <title>Materio Labs - v4</title>
+    <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/labs.ico">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -535,10 +535,6 @@ i span{
                 white-space: normal;
                 text-overflow: clip;
             }
-
-            .notification-board {
-                max-height: 200px;
-            }
         }
 
 
@@ -762,7 +758,11 @@ i span{
             background-color: #444444;
         }
 
-      
+        @media (max-width: 768px) {
+            .notification-board {
+                max-height: 200px;
+            }
+        }
     </style>
 </head>
 
@@ -903,7 +903,7 @@ i span{
                                     style="font-family:'Manrope', sans-serif; font-weight: normal;">
                                     Cookies</a></span></i></p>
                                     <hr>
-                    <p><i class="fab fa-github"><span><a href="github.com/Jinansh230705"
+                    <p><i class="fab fa-github"><span><a href="https://github.com/Jinansh230705"
                                     style="font-family:'Manrope', sans-serif; font-weight: normal;">
                                     Developer's Github</a></span></i></p>
                 </div>
@@ -1281,6 +1281,8 @@ i span{
                         }
                     })
                     .catch(err => console.error('Error loading data:', err));
+
+                    
             </script>
 
 
@@ -1525,6 +1527,117 @@ i span{
                         }
                     }, 200));
                 });
+            </script>
+            <script>
+               document.addEventListener('DOMContentLoaded', function () {
+  const submitButton = document.getElementById('submitButton');
+  const popup = document.getElementById('popup');
+  const popupContent = document.getElementById('popupContent');
+  const cacheKey = 'recentPdfs'; // Key for localStorage
+  let pdfIframe = document.getElementById('pdf-iframe') || null; // Look for an existing iframe
+  const pdfCache = new Map(); // In-memory cache for preloaded PDFs
+
+  function getCachedPdfs() {
+    const cached = localStorage.getItem(cacheKey);
+    return cached ? JSON.parse(cached) : [];
+  }
+
+  function addToCache(pdfUrl) {
+    let cachedPdfs = getCachedPdfs().filter(url => url !== pdfUrl);
+    cachedPdfs.unshift(pdfUrl);
+    if (cachedPdfs.length > 5) cachedPdfs.pop();
+    localStorage.setItem(cacheKey, JSON.stringify(cachedPdfs));
+  }
+
+  async function preloadPdf(pdfUrl) {
+    if (pdfCache.has(pdfUrl)) {
+      console.log('PDF already preloaded:', pdfUrl);
+      return;
+    }
+    try {
+      const response = await fetch(pdfUrl);
+      if (!response.ok) throw new Error(`Failed to fetch PDF: ${response.statusText}`);
+      const pdfBlob = await response.blob();
+      const pdfBlobUrl = URL.createObjectURL(pdfBlob);
+      pdfCache.set(pdfUrl, pdfBlobUrl);
+      console.log('PDF preloaded:', pdfUrl);
+    } catch (error) {
+      console.error('Error preloading PDF:', error);
+    }
+  }
+
+  // Use a persistent iframe: create it only once and reuse it.
+  function initializeIframe() {
+    if (!pdfIframe) {
+      pdfIframe = document.createElement('iframe');
+      pdfIframe.id = 'pdf-iframe';
+      pdfIframe.style.border = 'none';
+      pdfIframe.style.width = '100%';
+      pdfIframe.style.height = 'calc(100% - 17px)';
+      pdfIframe.style.borderRadius = '10px';
+      pdfIframe.style.marginTop = '22px';
+    }
+    if (!document.getElementById('pdf-iframe')) {
+    popupContent.appendChild(pdfIframe);
+  }
+  }
+
+  submitButton.addEventListener('click', async () => {
+    const semester = document.getElementById('semesterSelect').value;
+    const subject = document.getElementById('subjectSelect').value;
+    const categorySelect = document.getElementById('categorySelect');
+    const topic = document.getElementById('topicSelect').value;
+
+    if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
+      alert('Please select a semester, subject, category, and topic.');
+      return;
+    }
+
+    const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+
+    // Preload the PDF if needed.
+    let pdfBlobUrl = pdfCache.get(pdfUrl);
+    if (!pdfBlobUrl) {
+      console.log('PDF not preloaded, fetching now...');
+      await preloadPdf(pdfUrl);
+      pdfBlobUrl = pdfCache.get(pdfUrl);
+    }
+
+    // Initialize the iframe only once and update its source.
+    initializeIframe();
+    pdfIframe.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfBlobUrl)}`;
+
+    // Show the popup.
+    popup.classList.remove('closing');
+    popup.style.display = 'block';
+
+    // Cache the URL in localStorage.
+    addToCache(pdfUrl);
+  });
+
+  document.getElementById('topicSelect').addEventListener('change', function () {
+    const semester = document.getElementById('semesterSelect').value;
+    const subject = document.getElementById('subjectSelect').value;
+    const categorySelect = document.getElementById('categorySelect');
+    const topic = this.value;
+    if (semester && subject && categorySelect.selectedIndex !== 0 && topic) {
+      const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+      preloadPdf(pdfUrl);
+    }
+  });
+
+  const closePopup = document.getElementById('closePopup');
+  closePopup.addEventListener('click', () => {
+    popup.classList.add('closing');
+  });
+
+  popup.addEventListener('animationend', (event) => {
+    if (event.animationName === 'popupFadeOut') {
+      popup.style.display = 'none';
+      popup.classList.remove('closing');
+    }
+  });
+});
             </script>
 </body>
 
