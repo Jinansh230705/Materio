@@ -27,6 +27,12 @@
         });
     });
 
+    document.querySelectorAll(".setting-toggle").forEach((setting) => {
+        setting.addEventListener("change", function () {
+            trackEvent("setting_toggle", { setting_name: this.id, status: this.checked ? "on" : "off" });
+        });
+    });
+
     let scrollTimeout;
     window.addEventListener("scroll", function () {
         if (scrollTimeout) clearTimeout(scrollTimeout);
@@ -37,7 +43,9 @@
 
     let pdfEngagementTime = 0;
     let pdfTimer = null;
-
+    let lastScrollTime = Date.now();
+    let lastZoomLevel = 1;
+    
     function startPdfTimer() {
         if (!pdfTimer) {
             pdfTimer = setInterval(() => {
@@ -46,7 +54,7 @@
             trackEvent("pdf_view_start", {});
         }
     }
-
+    
     function stopPdfTimer() {
         if (pdfTimer) {
             clearInterval(pdfTimer);
@@ -56,10 +64,31 @@
         }
     }
 
+    function trackPdfScroll(scrollY) {
+        const now = Date.now();
+        if (now - lastScrollTime > 1000) {
+            trackEvent("pdf_scroll", { scroll_y: scrollY });
+            lastScrollTime = now;
+        }
+    }
+
+    function trackPdfZoom(zoomLevel) {
+        if (zoomLevel !== lastZoomLevel) {
+            trackEvent("pdf_zoom", { zoom_level: zoomLevel });
+            lastZoomLevel = zoomLevel;
+        }
+    }
+
     function setupPdfTracking() {
         const pdfIframe = document.getElementById("pdf-iframe");
         if (pdfIframe) {
             pdfIframe.addEventListener("load", startPdfTimer);
+            pdfIframe.contentWindow.addEventListener("scroll", function () {
+                trackPdfScroll(pdfIframe.contentWindow.scrollY);
+            });
+            pdfIframe.contentWindow.addEventListener("zoom", function (event) {
+                trackPdfZoom(event.detail.zoomLevel);
+            });
         }
     }
     setupPdfTracking();
@@ -75,11 +104,9 @@
         });
         observer.observe(popup, { attributes: true, attributeFilter: ["style"] });
     }
-
+    
     window.addEventListener("message", (event) => {
-
         if (event.origin.includes("mozilla.github.io")) {
-
             trackEvent("pdf_interaction", { data: event.data });
         }
     });
@@ -109,7 +136,6 @@ return null;
 }
 
 // Set your GA measurement ID / GTM ID here for use in disabling GA
-// This example uses the GTM container ID already in use.
 const GA_OPT_OUT_ID = "GTM-M6PC6RJL";
 
 // Check saved opt-out cookie and update toggle state accordingly
@@ -118,7 +144,6 @@ if (optOutToggle) {
 const savedOptOut = getCookie("optOutCookies");
 if (savedOptOut === "true") {
 optOutToggle.checked = true;
-// Disable GA tracking by setting the global variable
 window['ga-disable-' + GA_OPT_OUT_ID] = true;
 } else {
 window['ga-disable-' + GA_OPT_OUT_ID] = false;
@@ -126,7 +151,6 @@ window['ga-disable-' + GA_OPT_OUT_ID] = false;
 
 optOutToggle.addEventListener("change", function () {
 if (this.checked) {
-// Set GA opt-out flag
 window['ga-disable-' + GA_OPT_OUT_ID] = true;
 setCookie("optOutCookies", "true", 30);
 } else {
