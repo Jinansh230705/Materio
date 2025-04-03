@@ -15,7 +15,7 @@
         })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
     <title>Materio Labs - v4</title>
     <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/labs.ico">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
@@ -180,11 +180,11 @@
             opacity: 1;
             visibility: visible;
         }
-       
-i span{
-    display: inline-block;
-    margin-left: 15px;
-}
+
+        i span {
+            display: inline-block;
+            margin-left: 15px;
+        }
 
         #popup {
             display: none;
@@ -200,7 +200,7 @@ i span{
 
             background-color: white;
 
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
 
             z-index: 1000;
 
@@ -537,6 +537,9 @@ i span{
             }
         }
 
+        #creatorInfo p {
+            text-align: center;
+        }
 
         #popup {
             display: none;
@@ -547,7 +550,7 @@ i span{
             height: 95%;
             background-color: rgba(255, 245, 223, 0.5);
             backdrop-filter: blur(10px);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
             z-index: 1000;
             overflow: auto;
             border-radius: 10px;
@@ -605,6 +608,24 @@ i span{
             height: calc(100% - 28px) !important;
             margin: 0;
             border-radius: 0;
+        }
+
+        .popup-message {
+            color: #000000;
+            font-size: 22px;
+        }
+
+        body.dark-mode .popup-message {
+            color: #ffffff;
+        }
+
+        .popup-errcode {
+            color: #000000;
+            font-size: 14px;
+        }
+
+        body.dark-mode .popup-errcode {
+            color: #ffffff;
         }
 
         .info-icon {
@@ -902,7 +923,7 @@ i span{
                     <p><i class="fas fa-cookie"><span><a href="/cookies-policy"
                                     style="font-family:'Manrope', sans-serif; font-weight: normal;">
                                     Cookies</a></span></i></p>
-                                    <hr>
+                    <hr>
                     <p><i class="fab fa-github"><span><a href="https://github.com/Jinansh230705"
                                     style="font-family:'Manrope', sans-serif; font-weight: normal;">
                                     Developer's Github</a></span></i></p>
@@ -928,9 +949,25 @@ i span{
                         </label>
                     </div>
                 </div>
+                <div class="card-layout" id="creatorInfo">
+                    <p>&copy; Materio</p>
+                    <p> Made with ❤️ by Jinansh </p>
+                </div>
             </div>
 
+
             <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var year = new Date().getFullYear();
+                    var creatorInfo = document.getElementById('creatorInfo');
+                    if (creatorInfo) {
+                        // Update the first paragraph with the new year
+                        var p = creatorInfo.querySelector('p');
+                        if (p) {
+                            p.innerHTML = '&copy; ' + year + ' - Materio';
+                        }
+                    }
+                });
                 function setCookie(name, value, days) {
                     var expires = "";
                     if (days) {
@@ -1282,7 +1319,7 @@ i span{
                     })
                     .catch(err => console.error('Error loading data:', err));
 
-                    
+
             </script>
 
 
@@ -1370,7 +1407,8 @@ i span{
                             document.getElementById('notificationBoard'),
                             document.getElementById('advanced'),
                             document.getElementById('about'),
-                            document.getElementById('cookiesToggleCard')
+                            document.getElementById('cookiesToggleCard'),
+                            document.getElementById('creatorInfo')
                         ];
                         const notifyCards = document.querySelectorAll('#notify');
                         notifyCards.forEach(card => elements.push(card));
@@ -1529,115 +1567,151 @@ i span{
                 });
             </script>
             <script>
-               document.addEventListener('DOMContentLoaded', function () {
-  const submitButton = document.getElementById('submitButton');
-  const popup = document.getElementById('popup');
-  const popupContent = document.getElementById('popupContent');
-  const cacheKey = 'recentPdfs'; // Key for localStorage
-  let pdfIframe = document.getElementById('pdf-iframe') || null; // Look for an existing iframe
-  const pdfCache = new Map(); // In-memory cache for preloaded PDFs
+                document.addEventListener('DOMContentLoaded', function () {
+                    const submitButton = document.getElementById('submitButton');
+                    const popup = document.getElementById('popup');
+                    const popupContent = document.getElementById('popupContent');
+                    const cacheKey = 'recentPdfs'; // Key for localStorage
+                    let pdfIframe = document.getElementById('pdf-iframe') || null; // Look for an existing iframe
+                    const pdfCache = new Map(); // In-memory cache for preloaded PDFs
 
-  function getCachedPdfs() {
-    const cached = localStorage.getItem(cacheKey);
-    return cached ? JSON.parse(cached) : [];
-  }
+                    function getCachedPdfs() {
+                        const cached = localStorage.getItem(cacheKey);
+                        return cached ? JSON.parse(cached) : [];
+                    }
 
-  function addToCache(pdfUrl) {
-    let cachedPdfs = getCachedPdfs().filter(url => url !== pdfUrl);
-    cachedPdfs.unshift(pdfUrl);
-    if (cachedPdfs.length > 5) cachedPdfs.pop();
-    localStorage.setItem(cacheKey, JSON.stringify(cachedPdfs));
-  }
+                    function addToCache(pdfUrl) {
+                        let cachedPdfs = getCachedPdfs().filter(url => url !== pdfUrl);
+                        cachedPdfs.unshift(pdfUrl);
+                        if (cachedPdfs.length > 5) cachedPdfs.pop();
+                        localStorage.setItem(cacheKey, JSON.stringify(cachedPdfs));
+                    }
 
-  async function preloadPdf(pdfUrl) {
-    if (pdfCache.has(pdfUrl)) {
-      console.log('PDF already preloaded:', pdfUrl);
-      return;
-    }
-    try {
-      const response = await fetch(pdfUrl);
-      if (!response.ok) throw new Error(`Failed to fetch PDF: ${response.statusText}`);
-      const pdfBlob = await response.blob();
-      const pdfBlobUrl = URL.createObjectURL(pdfBlob);
-      pdfCache.set(pdfUrl, pdfBlobUrl);
-      console.log('PDF preloaded:', pdfUrl);
-    } catch (error) {
-      console.error('Error preloading PDF:', error);
-    }
-  }
+                    async function preloadPdf(pdfUrl) {
+                        if (pdfCache.has(pdfUrl)) {
+                            console.log('PDF already preloaded:', pdfUrl);
+                            return;
+                        }
+                        try {
+                            const response = await fetch(pdfUrl);
+                            if (!response.ok) throw new Error(`Failed to fetch PDF: ${response.statusText}`);
+                            const pdfBlob = await response.blob();
+                            const pdfBlobUrl = URL.createObjectURL(pdfBlob);
+                            pdfCache.set(pdfUrl, pdfBlobUrl);
+                            console.log('PDF preloaded:', pdfUrl);
+                        } catch (error) {
+                            console.error('Error preloading PDF:', error);
+                        }
+                    }
 
-  // Use a persistent iframe: create it only once and reuse it.
-  function initializeIframe() {
-    if (!pdfIframe) {
-      pdfIframe = document.createElement('iframe');
-      pdfIframe.id = 'pdf-iframe';
-      pdfIframe.style.border = 'none';
-      pdfIframe.style.width = '100%';
-      pdfIframe.style.height = 'calc(100% - 17px)';
-      pdfIframe.style.borderRadius = '10px';
-      pdfIframe.style.marginTop = '22px';
-    }
-    if (!document.getElementById('pdf-iframe')) {
-    popupContent.appendChild(pdfIframe);
-  }
-  }
+                    // Use a persistent iframe: create it only once and reuse it.
+                    function initializeIframe() {
+                        if (!pdfIframe) {
+                            pdfIframe = document.createElement('iframe');
+                            pdfIframe.id = 'pdf-iframe';
+                            pdfIframe.style.border = 'none';
+                            pdfIframe.style.width = '100%';
+                            pdfIframe.style.height = 'calc(100% - 17px)';
+                            pdfIframe.style.borderRadius = '10px';
+                            pdfIframe.style.marginTop = '22px';
+                        }
+                        if (!document.getElementById('pdf-iframe')) {
+                            popupContent.appendChild(pdfIframe);
+                        }
+                    }
 
-  submitButton.addEventListener('click', async () => {
-    const semester = document.getElementById('semesterSelect').value;
-    const subject = document.getElementById('subjectSelect').value;
-    const categorySelect = document.getElementById('categorySelect');
-    const topic = document.getElementById('topicSelect').value;
+                    submitButton.addEventListener('click', async () => {
+                        const semester = document.getElementById('semesterSelect').value;
+                        const subject = document.getElementById('subjectSelect').value;
+                        const categorySelect = document.getElementById('categorySelect');
+                        const topic = document.getElementById('topicSelect').value;
 
-    if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
-      alert('Please select a semester, subject, category, and topic.');
-      return;
-    }
+                        if (!semester || !subject || categorySelect.selectedIndex === 0 || !topic) {
 
-    const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+                            return;
+                        }
 
-    // Preload the PDF if needed.
-    let pdfBlobUrl = pdfCache.get(pdfUrl);
-    if (!pdfBlobUrl) {
-      console.log('PDF not preloaded, fetching now...');
-      await preloadPdf(pdfUrl);
-      pdfBlobUrl = pdfCache.get(pdfUrl);
-    }
+                        const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
 
-    // Initialize the iframe only once and update its source.
-    initializeIframe();
-    pdfIframe.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfBlobUrl)}`;
+                        if (!navigator.onLine) {
+                            document.getElementById('popupContent').innerHTML =
+                                `<div style="padding:20px;text-align:center;">
+          <i class="fa-solid fa-rotate-exclamation" style="font-size: 72px; color:#ff8400; margin-top:220px;"></i>
+          <p class="popup-message">Error checking file!</p>
+          <p class="popup-errcode">Error: OFFLINE</p>
+       </div>`;
+                            popup.classList.remove('closing');
+                            popup.style.display = 'block';
+                            return;
+                        }
+                        try {
+                            const headResponse = await fetch(pdfUrl, { method: 'HEAD' });
+                            if (!headResponse.ok) {
+                                document.getElementById('popupContent').innerHTML =
+                                    `<div style="padding:20px;text-align:center;">
+                <i class="fa-solid fa-triangle-exclamation" style="font-size: 72px; color:#ff8400; margin-top:220px;"></i>
+                 <p class="popup-message">File not found !</p>
+                 <p class="popup-errcode">Error: ${headResponse.status}</p>
+               </div>`;
+                                popup.classList.remove('closing');
+                                popup.style.display = 'block';
+                                return;
+                            }
+                        } catch (error) {
+                            document.getElementById('popupContent').innerHTML =
+                                `<div style="padding:20px;text-align:center;">
+            <i class="fa-solid fa-rotate-exclamation" style="font-size: 72px; color:#ff8400; margin-top:220px;"></i>
+             <p class="popup-message">Error checking file !</p>
+             <p class="popup-errcode">Error: ${error.message || 'NETWORK_ERROR'}</p>
+          </div>`;
+                            popup.classList.remove('closing');
+                            popup.style.display = 'block';
+                            return;
+                        }
 
-    // Show the popup.
-    popup.classList.remove('closing');
-    popup.style.display = 'block';
+                        // Preload the PDF if needed.
+                        let pdfBlobUrl = pdfCache.get(pdfUrl);
+                        if (!pdfBlobUrl) {
+                            console.log('PDF not preloaded, fetching now...');
+                            await preloadPdf(pdfUrl);
+                            pdfBlobUrl = pdfCache.get(pdfUrl);
+                        }
 
-    // Cache the URL in localStorage.
-    addToCache(pdfUrl);
-  });
+                        // Initialize the iframe only once and update its source.
+                        initializeIframe();
+                        pdfIframe.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfBlobUrl)}`;
 
-  document.getElementById('topicSelect').addEventListener('change', function () {
-    const semester = document.getElementById('semesterSelect').value;
-    const subject = document.getElementById('subjectSelect').value;
-    const categorySelect = document.getElementById('categorySelect');
-    const topic = this.value;
-    if (semester && subject && categorySelect.selectedIndex !== 0 && topic) {
-      const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
-      preloadPdf(pdfUrl);
-    }
-  });
+                        // Show the popup.
+                        popup.classList.remove('closing');
+                        popup.style.display = 'block';
 
-  const closePopup = document.getElementById('closePopup');
-  closePopup.addEventListener('click', () => {
-    popup.classList.add('closing');
-  });
+                        // Cache the URL in localStorage.
+                        addToCache(pdfUrl);
+                    });
 
-  popup.addEventListener('animationend', (event) => {
-    if (event.animationName === 'popupFadeOut') {
-      popup.style.display = 'none';
-      popup.classList.remove('closing');
-    }
-  });
-});
+                    document.getElementById('topicSelect').addEventListener('change', function () {
+                        const semester = document.getElementById('semesterSelect').value;
+                        const subject = document.getElementById('subjectSelect').value;
+                        const categorySelect = document.getElementById('categorySelect');
+                        const topic = this.value;
+                        if (semester && subject && categorySelect.selectedIndex !== 0 && topic) {
+                            const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+                            preloadPdf(pdfUrl);
+                        }
+                    });
+
+                    const closePopup = document.getElementById('closePopup');
+                    closePopup.addEventListener('click', () => {
+                        popup.classList.add('closing');
+                    });
+
+                    popup.addEventListener('animationend', (event) => {
+                        if (event.animationName === 'popupFadeOut') {
+                            popup.style.display = 'none';
+                            popup.classList.remove('closing');
+                        }
+                    });
+                });
             </script>
 </body>
 
