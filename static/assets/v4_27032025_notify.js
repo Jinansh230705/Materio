@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = '';
 
     const cutoff = new Date();
-    cutoff.setDate(cutoff.getDate() - 20);
+    cutoff.setDate(cutoff.getDate() - 10);
 
     const validNotifications = notifications
         .filter(n => new Date(n.date) >= cutoff)
