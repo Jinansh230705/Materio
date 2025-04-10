@@ -12,9 +12,9 @@
     const pageLoadTime = Date.now();
     window.addEventListener("beforeunload", function () {
         const engagementTime = Date.now() - pageLoadTime;
-        trackEvent("page_engagement", { engagement_time_ms: engagementTime });
+        trackEvent("user_engagement", { engagement_time_msec: engagementTime });
     });
-
+    
     document.querySelectorAll("button").forEach((btn) => {
         btn.addEventListener("click", function () {
             trackEvent("button_click", { event_label: this.id || this.innerText });
@@ -54,15 +54,14 @@
             trackEvent("pdf_view_start", {});
         }
     }
-    
     function stopPdfTimer() {
         if (pdfTimer) {
             clearInterval(pdfTimer);
             pdfTimer = null;
-            trackEvent("pdf_engagement", { engagement_time_ms: pdfEngagementTime });
+            trackEvent("user_engagement", { engagement_time_msec: pdfEngagementTime });
             pdfEngagementTime = 0;
         }
-    }
+    }    
 
     function trackPdfScroll(scrollY) {
         const now = Date.now();
