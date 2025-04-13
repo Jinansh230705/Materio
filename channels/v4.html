@@ -25,11 +25,14 @@
         body {
             margin: 0;
             background-color: #fffffe;
-            ;
             font-family: "Manrope", sans-serif;
             display: flex;
             flex-direction: column;
             height: 100vh;
+        }
+
+        body h2 {
+            opacity: 0.7;
         }
 
         header {
@@ -784,6 +787,65 @@
                 max-height: 200px;
             }
         }
+
+        /* ...existing styles... */
+.announcement-card {
+    background-color: rgba(230, 204, 173, 0.5); /* Light blue shade */
+    backdrop-filter: blur(10px);
+    color: #333;
+    position: relative;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 15px;
+}
+
+.announcement-card h2 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.announcement-card p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #ff8400;
+    outline: none;
+    transition: color 0.3s ease;
+}
+
+.close-icon:hover {
+    color: red;
+}
+
+/* ...existing styles... */
+.site-button {
+    background-color: rgb(255, 132, 0,0.7);
+    backdrop-filter: blur(10px);
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: "Manrope", sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.site-button:hover {
+    background-color:#8dac49;
+}
     </style>
 </head>
 
@@ -842,9 +904,18 @@
                         </div>
                     </form>
 
-                    <button id="submitButton">Submit</button>
+                    <button id="submitButton">Start Reading</button>
                 </div>
-
+  <!-- ...existing code... -->
+  <div class="card-layout announcement-card" id="announcementCard">
+    <button id="closeAnnouncement" class="close-icon"><i class="fas fa-times"></i></button>
+    <h2><i class="fa-solid fa-bullhorn" style="margin-right: 10px;"></i>Get 1 Month of Perplexity Pro for free!</h2>
+    <p>You can get 1 month of Perplexity Pro for free which has access to models like ChatGPT 4o, Claude 3.7 Sonnet and DeepSeek R1. So signup with University email id using this link below to avail the offer.</p>
+    <a href="http://bit.ly/3YsdMzm" target="_blank">
+        <button id="offerButton" class="site-button"><i class="fa-solid fa-tag" style="margin-left: 5px; margin-right: 10px;"></i>Redeem Now!</button>
+    </a>
+</div>
+<!-- ...existing code... -->
 
                 <div id="popup">
                     <div class="popup-controls">
@@ -857,6 +928,7 @@
                     </div>
                 </div>
             </div>
+          
 
             <div id="chat" class="tab-content">
                 <h1>
@@ -957,6 +1029,16 @@
 
 
             <script>
+                // ...existing scripts...
+document.addEventListener('DOMContentLoaded', function () {
+    const closeAnnouncement = document.getElementById('closeAnnouncement');
+    const announcementCard = document.getElementById('announcementCard');
+
+    closeAnnouncement.addEventListener('click', function () {
+        announcementCard.style.display = 'none';
+    });
+});
+// ...existing scripts...
                 document.addEventListener('DOMContentLoaded', function () {
                     var year = new Date().getFullYear();
                     var creatorInfo = document.getElementById('creatorInfo');
@@ -1571,9 +1653,9 @@
                     const submitButton = document.getElementById('submitButton');
                     const popup = document.getElementById('popup');
                     const popupContent = document.getElementById('popupContent');
-                    const cacheKey = 'recentPdfs'; // Key for localStorage
-                    let pdfIframe = document.getElementById('pdf-iframe') || null; // Look for an existing iframe
-                    const pdfCache = new Map(); // In-memory cache for preloaded PDFs
+                    const cacheKey = 'recentPdfs';
+                    let pdfIframe = document.getElementById('pdf-iframe') || null;
+                    const pdfCache = new Map();
 
                     function getCachedPdfs() {
                         const cached = localStorage.getItem(cacheKey);
@@ -1603,8 +1685,6 @@
                             console.error('Error preloading PDF:', error);
                         }
                     }
-
-                    // Use a persistent iframe: create it only once and reuse it.
                     function initializeIframe() {
                         if (!pdfIframe) {
                             pdfIframe = document.createElement('iframe');
@@ -1638,7 +1718,7 @@
                                 `<div style="padding:20px;text-align:center;">
           <i class="fa-solid fa-rotate-exclamation" style="font-size: 72px; color:#ff8400; margin-top:220px;"></i>
           <p class="popup-message">Error checking file!</p>
-          <p class="popup-errcode">Error: OFFLINE</p>
+          <p class="popup-errcode">errcode: OFFLINE</p>
        </div>`;
                             popup.classList.remove('closing');
                             popup.style.display = 'block';
@@ -1651,7 +1731,7 @@
                                     `<div style="padding:20px;text-align:center;">
                 <i class="fa-solid fa-triangle-exclamation" style="font-size: 72px; color:#ff8400; margin-top:220px;"></i>
                  <p class="popup-message">File not found !</p>
-                 <p class="popup-errcode">Error: ${headResponse.status}</p>
+                 <p class="popup-errcode">errcode: ${headResponse.status}</p>
                </div>`;
                                 popup.classList.remove('closing');
                                 popup.style.display = 'block';
@@ -1662,30 +1742,23 @@
                                 `<div style="padding:20px;text-align:center;">
             <i class="fa-solid fa-rotate-exclamation" style="font-size: 72px; color:#ff8400; margin-top:220px;"></i>
              <p class="popup-message">Error checking file !</p>
-             <p class="popup-errcode">Error: ${error.message || 'NETWORK_ERROR'}</p>
+             <p class="popup-errcode">errcode: ${error.message || 'NETWORK_ERROR'}</p>
           </div>`;
                             popup.classList.remove('closing');
                             popup.style.display = 'block';
                             return;
                         }
 
-                        // Preload the PDF if needed.
                         let pdfBlobUrl = pdfCache.get(pdfUrl);
                         if (!pdfBlobUrl) {
                             console.log('PDF not preloaded, fetching now...');
                             await preloadPdf(pdfUrl);
                             pdfBlobUrl = pdfCache.get(pdfUrl);
                         }
-
-                        // Initialize the iframe only once and update its source.
                         initializeIframe();
                         pdfIframe.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfBlobUrl)}`;
-
-                        // Show the popup.
                         popup.classList.remove('closing');
                         popup.style.display = 'block';
-
-                        // Cache the URL in localStorage.
                         addToCache(pdfUrl);
                     });
 
