@@ -3,9 +3,8 @@ layout: page
 title: Cookie Policy
 permalink: /cookies-policy
 ---
-**Cookie Policy**
 
-**Last Updated: [15/01/24]**
+**Last Updated: [15/01/25]**
 
 This Cookie Policy explains how Materio ("we," "us," or "our") uses cookies and similar technologies on our website. By using our website, you consent to the use of cookies as described in this policy. If you do not agree with our use of cookies, you can disable them through your browser settings or our cookie management tool.
 
