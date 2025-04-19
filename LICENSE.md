@@ -1,12 +1,11 @@
 ---
-layout: page
+layout: page2
 title: License
+heading: Materio Source-Available License v1.0
 permalink: /LICENSE
 ---
 
-Materio Source-Available License v1.0
-
-Copyright (c) [2025] [Jinansh Mehta / Materio]
+Copyright (c) 2025, Jinansh Mehta, Materio
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to view
@@ -46,5 +45,7 @@ the following conditions:
      INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
      PURPOSE AND NONINFRINGEMENT.
 
-For licensing inquiries or commercial use, contact: [materio.operable341@silomails.com]
+For licensing inquiries or commercial use, contact: [materio support]
+
+[materio support]: mailto:materio.operable341@silomails.com
 

@@ -1,6 +1,7 @@
 ---
-layout: page
+layout: page2
 title: Cookie Policy
+heading: Cookies Policy
 permalink: /cookies-policy
 ---
 
@@ -68,10 +69,9 @@ We may update this Cookie Policy from time to time to reflect changes in technol
 ---
 
 ### **7. Contact Us**
-If you have any questions about this Cookie Policy, please contact us at:
+If you have any questions about this Cookie Policy, please contact us at: [materio support]
 
-Materio\
-<a href="mailto:materio.operable341@silomails.com">materio.operable341@silomails.com</a>
+[materio support]: mailto:materio.operable341@silomails.com
 
 
 

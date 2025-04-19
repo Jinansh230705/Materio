@@ -1,6 +1,7 @@
 ---
-layout: page
+layout: page2
 title: About
+heading: About Materio 
 permalink: /about
 ---
 
@@ -8,9 +9,7 @@ This Page details about what materio is, what it aims to solve, what functions a
 
 ---
 ### What is Materio?
-<img src="https://materioa.netlify.app/static/res/materio_white.png" alt="materio_wordmark" style="width:240px; height=80px;"/>
-
-  Materio is a platform for all your study needs it has all the materials you will ever need for your academics (just enough to get you good grades) at one place curated from various sources and from various contributors.
+<img src="https://materioa.netlify.app/static/res/materio_white.png" alt="materio_wordmark" style="width:60px; height=20px;"/> is a platform for all your study needs it has all the materials you will ever need for your academics (just enough to get you good grades) at one place curated from various sources and from various contributors.
 
 
 ### Problem it adresses 
@@ -35,8 +34,7 @@ Chat tab acts as discussion room - you can chat will other users to discuss topi
 - Blogs:\
 Blogs - Powered by Jekyll (A static site generator)
 In blog post there will be cheatsheets, codesnippets, quick tips etc.\
-> [!NOTE] 
- Blogs are currently development and you do need the acess code to acess the blogs.\
+>  Blogs are currently development and you do need the acess code to acess the blogs.
 
 {Easter} Witty or even somewhat smart person could acess blogs early if they know how to do it 😉.
 
@@ -48,14 +46,14 @@ Materio comes with two themes
   1. Thermal (aka Light Mode and the default theme)
   2. Expresso (aka Dark Mode)
 
-![Thermal](https://materioa.netlify.app/static/res/previews/thermal.png)
+<!-- ![Thermal](https://materioa.netlify.app/static/res/previews/thermal.png)
 
-![Expresso](https://materioa.netlify.app/static/res/previews/expresso.png)
+![Expresso](https://materioa.netlify.app/static/res/previews/expresso.png) -->
 
 ---
 
 This site is made using HTML, CSS and JavaScript and it uses  <a href="https://jekyllrb.com"><img src="https://jekyllrb.com/img/logo-2x.png" alt="Jekyll" height="30" width="60"/></a> for templating with customised Minima v3 Theme (for all the pages except Home, Chat and Changelog sections).
 
-
+> Last Updated: 12-12-24
 
   

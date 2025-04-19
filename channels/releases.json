@@ -3,7 +3,10 @@
         "branch": "channels",
         "version": "4.0.2.1_Daily | Beta",
         "build": "03/04/2025",
-        "logs": ["FontAwesome Pro Icons", "Optimisation - Added 'File Not Found !' and 'Error Checking File !' Notes instaed of loading blank iframe."]
+        "logs": [
+            "FontAwesome Pro Icons",
+            "Optimisation - Added 'File Not Found !' and 'Error Checking File !' Notes instaed of loading blank iframe."
+        ]
     },
     {
         "branch": "stable",
