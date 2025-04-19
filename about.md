@@ -2,8 +2,10 @@
 layout: page2
 title: About
 heading: About Materio 
-permalink: /about
+permalink: /whatisthis
 ---
+
+> Last Updated: 12-12-24
 
 This Page details about what materio is, what it aims to solve, what functions and tools it has.
 
@@ -53,7 +55,5 @@ Materio comes with two themes
 ---
 
 This site is made using HTML, CSS and JavaScript and it uses  <a href="https://jekyllrb.com"><img src="https://jekyllrb.com/img/logo-2x.png" alt="Jekyll" height="30" width="60"/></a> for templating with customised Minima v3 Theme (for all the pages except Home, Chat and Changelog sections).
-
-> Last Updated: 12-12-24
 
   

@@ -1,14 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+:root{
+  --primary:#fffffe;
+  --secondary: #ff8400;
+  --primary-dark: #121212;
+  --pr-header:rgba(255, 245,223, 0.5);
+  --dark-header: rgba(33, 33, 33, 0.5);
+  --pr-head-decor: rgba(209,209,209,0.5);
+  --dark-head-decor:rgba(68,68,68,0.5);
+}
 body {
   margin: 0;
-  font-family: "Manrope", sans-serif;
-  background-color: #fffffe;
-  color: #000;
+  font-family: "DM Sans", sans-serif;
+  background-color: var(--primary);
+  color: #333;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-a{
+
+a {
   color: #ff8400;
   text-decoration: none;
 }
+
 body.dark-mode {
   background-color: #121212;
   color: #ffffff;
@@ -54,22 +66,24 @@ header.dark-mode {
 main {
   padding-top: calc(var(--header-height) + 30px);
 }
+
 .content-container {
-max-width: 800px;       
-margin: 0 auto;          
-padding: 0 1rem;       
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .page-title {
-font-size: 2rem;
-font-weight: 700;
-color: #333;
-margin: 1.5rem 0 1rem 0;
-margin-left: 3rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 1.5rem 0 1rem 0;
+  margin-left: 3rem;
+  margin-top: 100px;
 }
 
 body.dark-mode .page-title {
-color: #ffffff;
+  color: #ffffff;
 }
 
 .markdown-body>*:first-child {
@@ -81,6 +95,7 @@ color: #ffffff;
   max-width: 900px;
   margin: 0 auto;
   padding: 3rem;
+  padding-top: 1rem;
 }
 
 .markdown-body pre {
@@ -147,12 +162,19 @@ body.dark-mode .markdown-body .alert {
   border-left-color: #ef9a9a;
 }
 
-@media (max-width: 768px){
-  .page-content{
+@media (max-width: 768px) {
+  .page-content {
     padding: 2px;
     margin-top: 3rem;
   }
-  .page-title{
-    padding: 2px;
+
+  .page-title {
+    padding: 1rem;
+    margin: 1px;
+    margin-top: 3rem;
+  }
+
+  .markdown-body {
+    padding: 1rem;
   }
 }

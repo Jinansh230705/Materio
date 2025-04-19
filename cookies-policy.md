@@ -2,12 +2,12 @@
 layout: page2
 title: Cookie Policy
 heading: Cookies Policy
-permalink: /cookies-policy
+permalink: /cookies
 ---
 
-**Last Updated: [15/01/25]**
+> Last Updated: 19/04/25
 
-This Cookie Policy explains how Materio ("we," "us," or "our") uses cookies and similar technologies on our website. By using our website, you consent to the use of cookies as described in this policy. If you do not agree with our use of cookies, you can disable them through your browser settings or our cookie management tool.
+This Cookie Policy explains how Materio ("i","we," "us," or "our") uses cookies and similar technologies on our website. By using our website, you consent to the use of cookies as described in this policy. If you do not agree with our use of cookies, you can disable them through your browser settings or opt out of optional cookies by toggling off "Accept Cookies" in settings.
 
 ---
 
@@ -19,19 +19,18 @@ Cookies are small text files placed on your device by a website. They allow the 
 ### **2. Types of Cookies We Use**
 
 #### **Essential Cookies**
-These cookies are necessary for the proper functioning of our website and cannot be turned off in our systems. They include:
-- Remembering your preferences (e.g., themes or layout settings).
-- Enabling secure logins.
+These cookies are necessary for the proper functioning of our website and cannot be turned off. They include:
+- Remembering your theme preferences (light/dark).
+- Rembering your page locations - so you dont have to navigate to same page again when you reload the page.
+- Enabling fast loading of last 5 recently opened PDFs.
+- Notifications read checks - so that it doesnt show counts of notification already seen.
+- Site looks (Background image enabled/disabled).
 
 #### **Performance and Analytics Cookies**
 We use these cookies to analyze how visitors use our website to improve functionality and user experience. Examples include:
 - **Google Analytics 4 (GA4):** Tracks site performance and user interactions. Data collected may include IP addresses, page views, and session duration.
-- **Adobe PDF API:** Monitors the usage of embedded PDFs and enhances performance.
-
-#### **Functional Cookies**
-These cookies enhance your experience by remembering preferences and settings, such as:
-- Previously selected themes.
-- User interface customizations.
+- **Mozilla PDF.js:** Used to load PDFs in the popup modal.
+- **FontAwesome:** Icon library used in site for clean look.
 
 #### **Advertising and Targeting Cookies**
 Currently, we do not use cookies for advertising purposes. If this changes, we will update this policy accordingly.
@@ -41,11 +40,11 @@ Currently, we do not use cookies for advertising purposes. If this changes, we w
 ### **3. Third-Party Cookies**
 We use services from third-party providers, which may set their own cookies on your device. These include:
 - **Google Tag Manager (GTM):** Helps manage and deploy tags, such as analytics and tracking tools.
-- **Adobe PDF API:** May use cookies to track document interactions.
+- **Google Fonts API:** Helps load the fonts properly on the site. 
 
 For details on third-party cookies, please review their respective privacy policies:
 - [Google’s Privacy Policy](https://policies.google.com/privacy)
-- [Adobe’s Privacy Policy](https://www.adobe.com/privacy.html)
+<!-- - [Adobe’s Privacy Policy](https://www.adobe.com/privacy.html) -->
 
 ---
 

@@ -2,7 +2,7 @@
 layout: page2
 title: License
 heading: Materio Source-Available License v1.0
-permalink: /LICENSE
+permalink: /license
 ---
 
 Copyright (c) 2025, Jinansh Mehta, Materio
