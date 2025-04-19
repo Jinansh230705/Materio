@@ -1057,7 +1057,7 @@
                     const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
                     document.getElementById('popupContent').innerHTML =
                         `<iframe id="pdf-iframe" scrolling='no' allowfullscreen webkitallowfullscreen style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
-    src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+    src="https://materioa.github.io/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
 
                     popup.classList.remove('closing');
                     popup.style.display = 'block';
@@ -1282,7 +1282,7 @@
                     const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
                     document.getElementById('popupContent').innerHTML =
                         `<iframe id="pdf-iframe" style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
-      src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+      src="https://materioa.github.io/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
                     popup.classList.remove('closing');
                     popup.style.display = 'block';
                 });
@@ -1702,7 +1702,7 @@
 
                         // Initialize the iframe only once and update its source.
                         initializeIframe();
-                        pdfIframe.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfBlobUrl)}`;
+                        pdfIframe.src = `https://materioa.github.io/web/viewer.html?file=${encodeURIComponent(pdfBlobUrl)}`;
 
                         // Show the popup.
                         popup.classList.remove('closing');
