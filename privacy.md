@@ -4,7 +4,7 @@ title: Privacy Policy
 heading: Privacy Policy
 permalink: /privacy
 ---
-> **Last updated:** 19-04-2025
+> **Last updated:** 19/04/2025
 
 At **materio** we prioritize your privacy. This Privacy Policy describes how we collect, use, and protect your information when you use our platform.
 
@@ -42,7 +42,7 @@ We do **not**:
 ### 3. Cookies
 
 Some essential and analytics cookies may be used to enhance user experience (e.g., Google Analytics). These are **optional** and can be disabled from the **Settings** tab.<br>
-For more information about how are cookies used see [cookie policy](/cookies-policy)
+For more information about how are cookies used see [cookie policy](/cookies)
 
 
 ### 4. Future Updates
