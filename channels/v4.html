@@ -1490,7 +1490,8 @@ document.addEventListener('DOMContentLoaded', function () {
                             document.getElementById('advanced'),
                             document.getElementById('about'),
                             document.getElementById('cookiesToggleCard'),
-                            document.getElementById('creatorInfo')
+                            document.getElementById('creatorInfo'),
+                            document.getElementById('logoutCard')
                         ];
                         const notifyCards = document.querySelectorAll('#notify');
                         notifyCards.forEach(card => elements.push(card));
@@ -1786,6 +1787,49 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
                 });
             </script>
+
+            <!-- Channel Auth -->
+             <script>
+                (function () {
+    const authToken = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
+
+    if (!authToken) {
+        sessionStorage.setItem("redirectAfterLogin", window.location.pathname);
+        window.location.href = "/channels/entry";
+    } else {
+        injectLogoutCard();
+    }
+
+    function injectLogoutCard() {
+        const settingsTab = document.getElementById("settings");
+
+        if (!settingsTab) return;
+
+        const logoutCard = document.createElement("div");
+        logoutCard.className = "card-layout";
+        logoutCard.style.textAlign = "center";
+        logoutCard.id = "logoutCard";
+
+        const message = document.createElement("p");
+        message.textContent = "You're in v4 channel currently.";
+
+        const logoutButton = document.createElement("button");
+        logoutButton.textContent = "Logout";
+        logoutButton.id = "submitButton";
+        logoutButton.style.marginTop = "10px";
+
+        logoutButton.addEventListener("click", function () {
+            localStorage.removeItem("authToken");
+            sessionStorage.removeItem("authToken");
+            window.location.href = "/auth";
+        });
+
+        logoutCard.appendChild(message);
+        logoutCard.appendChild(logoutButton);
+        settingsTab.appendChild(logoutCard);
+    }
+})();
+             </script>
 </body>
 
 </html>
