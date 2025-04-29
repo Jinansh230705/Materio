@@ -1,5 +1,16 @@
 [
     {
+        "branch": "stable",
+        "version": "4.0.2.1",
+        "build": "29/04/2025",
+        "logs": [
+           "Optimisations made to PDF viewer for supporting Fast WebView (works on select materials for now).",
+           "Added support of Apple webkit components for better UI experience on Apple Devices.",
+           "Updated UI of pages in settings section with new materio pg-two template.",
+           "Added Offer's section on mainpage."
+        ]
+    },
+    {
         "branch": "channels",
         "version": "4.0.2.1_Daily | Beta",
         "build": "03/04/2025",

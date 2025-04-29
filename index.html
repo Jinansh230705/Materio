@@ -58,6 +58,7 @@
             z-index: 1000;
             background-color: rgba(255, 245, 223, 0.5);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: #333;
             padding: 10px;
             text-align: left;
@@ -114,6 +115,7 @@
             height: calc(100% - 60px);
             background-color: rgba(255, 245, 223, 0.5);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -171,6 +173,7 @@
             border-radius: 15px;
             background-color: rgba(255, 245, 223, 0.5);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 20px;
             margin: 20px 0;
             min-height: 150px;
@@ -322,6 +325,7 @@
             font-family: "Manrope", sans-serif;
             opacity: 60%;
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             max-width: 1000px;
             box-sizing: border-box;
             padding: 6px 8px;
@@ -428,6 +432,7 @@
             background-color: rgba(33, 33, 33, 0.5);
             /* Semi-transparent dark */
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: #ffffff;
             border-color: rgba(68, 68, 68, 0.5);
             background-image: url('/static/res/materio_new_wh.svg');
@@ -440,12 +445,14 @@
             background-color: rgba(33, 33, 33, 0.5);
             /* Semi-transparent dark */
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: white;
         }
 
         .navbar.dark-mode {
             background-color: rgba(34, 34, 34, 0.5);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-color: rgba(68, 68, 68, 0.5);
         }
 
@@ -466,6 +473,7 @@
         .card-one.dark-mode {
             background-color: rgb(51, 51, 51, 0.5);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: #ffffff;
         }
 
@@ -568,6 +576,7 @@
             height: 95%;
             background-color: rgba(255, 245, 223, 0.5);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             z-index: 1000;
             overflow: auto;
@@ -785,6 +794,7 @@
         #changeLogDetails[open] #changeLogContent {
             opacity: 1;
         }
+        
 
         /* Dark mode overrides */
         body.dark-mode #changeLogDetails {
@@ -803,6 +813,66 @@
                 max-height: 200px;
             }
         }
+
+        /* Promotions */
+.announcement-card {
+    background-color: rgba(230, 204, 173, 0.5); 
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #333;
+    position: relative;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 15px;
+}
+
+.announcement-card h2 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.announcement-card p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.close-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #ff8400;
+    outline: none;
+    transition: color 0.3s ease;
+}
+
+.close-icon:hover {
+    color: red;
+}
+
+.site-button {
+    background-color: rgba(255, 132, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-family: "Manrope", sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.site-button:hover {
+    background-color:#8dac49;
+}
     </style>
 </head>
 
@@ -861,9 +931,19 @@
                         </div>
                     </form>
 
-                    <button id="submitButton">Submit</button>
+                    <button id="submitButton">Start Reading</button>
                 </div>
 
+  <!-- ...existing code... -->
+  <div class="card-layout announcement-card" id="announcementCard">
+    <button id="closeAnnouncement" class="close-icon"><i class="fas fa-times"></i></button>
+    <h2><i class="fa-solid fa-bullhorn" style="margin-right: 10px;"></i>Get 1 Month of Perplexity Pro for free!</h2>
+    <p>You can get 1 month of Perplexity Pro for free which has access to models like ChatGPT 4o, Claude 3.7 Sonnet and DeepSeek R1. Signup with university email id using this link below to avail the offer.</p>
+    <a href="https://plex.it/referrals/TFYGBMFL" target="_blank">
+        <button id="offerButton" class="site-button"><i class="fa-solid fa-tag" style="margin-left: 5px; margin-right: 10px;"></i>Redeem Now!</button>
+    </a>
+</div>
+<!-- ...existing code... -->
 
                 <div id="popup">
                     <div class="popup-controls">
@@ -984,7 +1064,6 @@
                     var year = new Date().getFullYear();
                     var creatorInfo = document.getElementById('creatorInfo');
                     if (creatorInfo) {
-                        // Update the first paragraph with the new year
                         var p = creatorInfo.querySelector('p');
                         if (p) {
                             p.innerHTML = '&copy; ' + year + ' - Materio';
@@ -1057,7 +1136,7 @@
                     const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
                     document.getElementById('popupContent').innerHTML =
                         `<iframe id="pdf-iframe" scrolling='no' allowfullscreen webkitallowfullscreen style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
-    src="https://materioa.github.io/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+    src="https://materioa.github.io/web/viewer.html?disableStream=false&disableRange=false&rangeChunkSize=1048576&file=${encodeURIComponent(pdfUrl)}"></iframe>`;
 
                     popup.classList.remove('closing');
                     popup.style.display = 'block';
@@ -1282,7 +1361,7 @@
                     const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
                     document.getElementById('popupContent').innerHTML =
                         `<iframe id="pdf-iframe" style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
-      src="https://materioa.github.io/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+      src="https://materioa.github.io/web/viewer.html?disableStream=false&disableRange=false&rangeChunkSize=1048576&file=${encodeURIComponent(pdfUrl)}"></iframe>`;
                     popup.classList.remove('closing');
                     popup.style.display = 'block';
                 });
@@ -1702,7 +1781,7 @@
 
                         // Initialize the iframe only once and update its source.
                         initializeIframe();
-                        pdfIframe.src = `https://materioa.github.io/web/viewer.html?file=${encodeURIComponent(pdfBlobUrl)}`;
+                        pdfIframe.src = `https://materioa.github.io/web/viewer.html?disableStream=false&disableRange=false&rangeChunkSize=1048576&file=${encodeURIComponent(pdfUrl)}`;
 
                         // Show the popup.
                         popup.classList.remove('closing');
