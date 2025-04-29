@@ -794,7 +794,7 @@
         #changeLogDetails[open] #changeLogContent {
             opacity: 1;
         }
-        
+
 
         /* Dark mode overrides */
         body.dark-mode #changeLogDetails {
@@ -815,64 +815,64 @@
         }
 
         /* Promotions */
-.announcement-card {
-    background-color: rgba(230, 204, 173, 0.5); 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #333;
-    position: relative;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 15px;
-}
+        .announcement-card {
+            background-color: rgba(230, 204, 173, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #333;
+            position: relative;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+        }
 
-.announcement-card h2 {
-    margin: 0 0 10px;
-    font-size: 18px;
-    font-weight: bold;
-}
+        .announcement-card h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
 
-.announcement-card p {
-    margin: 0;
-    font-size: 14px;
-}
+        .announcement-card p {
+            margin: 0;
+            font-size: 14px;
+        }
 
-.close-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    color: #ff8400;
-    outline: none;
-    transition: color 0.3s ease;
-}
+        .close-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #ff8400;
+            outline: none;
+            transition: color 0.3s ease;
+        }
 
-.close-icon:hover {
-    color: red;
-}
+        .close-icon:hover {
+            color: red;
+        }
 
-.site-button {
-    background-color: rgba(255, 132, 0, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-family: "Manrope", sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: inline-block;
-    margin-top: 10px;
-}
+        .site-button {
+            background-color: rgba(255, 132, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: "Manrope", sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+        }
 
-.site-button:hover {
-    background-color:#8dac49;
-}
+        .site-button:hover {
+            background-color: #8dac49;
+        }
     </style>
 </head>
 
@@ -934,16 +934,20 @@
                     <button id="submitButton">Start Reading</button>
                 </div>
 
-  <!-- ...existing code... -->
-  <div class="card-layout announcement-card" id="announcementCard">
-    <button id="closeAnnouncement" class="close-icon"><i class="fas fa-times"></i></button>
-    <h2><i class="fa-solid fa-bullhorn" style="margin-right: 10px;"></i>Get 1 Month of Perplexity Pro for free!</h2>
-    <p>You can get 1 month of Perplexity Pro for free which has access to models like ChatGPT 4o, Claude 3.7 Sonnet and DeepSeek R1. Signup with university email id using this link below to avail the offer.</p>
-    <a href="https://plex.it/referrals/TFYGBMFL" target="_blank">
-        <button id="offerButton" class="site-button"><i class="fa-solid fa-tag" style="margin-left: 5px; margin-right: 10px;"></i>Redeem Now!</button>
-    </a>
-</div>
-<!-- ...existing code... -->
+                <!-- ...existing code... -->
+                <div class="card-layout announcement-card" id="announcementCard">
+                    <button id="closeAnnouncement" class="close-icon"><i class="fas fa-times"></i></button>
+                    <h2><i class="fa-solid fa-bullhorn" style="margin-right: 10px;"></i>Get 1 Month of Perplexity Pro
+                        for free!</h2>
+                    <p>You can get 1 month of Perplexity Pro for free which has access to models like ChatGPT 4o, Claude
+                        3.7 Sonnet and DeepSeek R1. Signup with university email id using this link below to avail the
+                        offer.</p>
+                    <a href="./redirects/pplx" target="_blank">
+                        <button id="offerButton" class="site-button"><i class="fa-solid fa-tag"
+                                style="margin-left: 5px; margin-right: 10px;"></i>Redeem Now!</button>
+                    </a>
+                </div>
+                <!-- ...existing code... -->
 
                 <div id="popup">
                     <div class="popup-controls">
@@ -1060,6 +1064,15 @@
 
 
             <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const closeAnnouncement = document.getElementById('closeAnnouncement');
+                    const announcementCard = document.getElementById('announcementCard');
+
+                    closeAnnouncement.addEventListener('click', function () {
+                        announcementCard.style.display = 'none';
+                    });
+                });
+                
                 document.addEventListener('DOMContentLoaded', function () {
                     var year = new Date().getFullYear();
                     var creatorInfo = document.getElementById('creatorInfo');
