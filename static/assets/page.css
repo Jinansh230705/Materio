@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 :root{
   --primary:#fffffe;
   --secondary: #ff8400;
@@ -10,7 +10,7 @@
 }
 body {
   margin: 0;
-  font-family: "DM Sans", sans-serif;
+  font-family: "Manrope", sans-serif;
   background-color: var(--primary);
   color: #333;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -61,6 +61,18 @@ header.dark-mode {
 
 .dark-mode .header-logo {
   background-image: url('../res/materio_new_wh.svg');
+}
+
+/* default (light) */
+img.materio-wordmark {
+  width: 60px;
+  height: 20px;
+  content: url("https://materioa.netlify.app/static/res/materio_new_bk.svg");
+}
+
+/* dark mode override */
+body.dark-mode img.materio-wordmark {
+  content: url("https://materioa.netlify.app/static/res/materio_new_wh.svg");
 }
 
 main {

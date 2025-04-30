@@ -66,22 +66,13 @@
     <p>If you are not redirected automatically, <a href="https://plex.it/referrals/TFYGBMFL">click here</a>.</p>
 </body>
 <script>
-     function checkDarkMode() {
-            const cookies = document.cookie.split(';');
-            const darkModeCookie = cookies.find(c => c.trim().startsWith('darkMode='));
-            const themeCookie = cookies.find(c => c.trim().startsWith('theme='));
-            if ((darkModeCookie && darkModeCookie.split('=')[1] === 'true') || 
-                (themeCookie && themeCookie.split('=')[1] === 'dark')) {
-                document.body.classList.add('dark-mode');
-            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.body.classList.add('dark-mode');
-                document.cookie = "darkMode=true; path=/; max-age=31536000"; 
-                document.cookie = "theme=dark; path=/; max-age=31536000"; 
-            }
-        }
-        setTimeout(function() {
-            window.location.href = 'https://plex.it/referrals/TFYGBMFL';
-        }, 5000); 
-        window.addEventListener('DOMContentLoaded', checkDarkMode);
-</script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const isDark = document.cookie.includes('theme=dark');
+      document.body.classList.toggle('dark-mode', isDark);
+  
+      setTimeout(() => {
+        window.location.href = 'https://plex.it/referrals/TFYGBMFL';
+      }, 5000);
+    });
+  </script>
 </html>

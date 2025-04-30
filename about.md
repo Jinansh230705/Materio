@@ -5,13 +5,14 @@ heading: About Materio
 permalink: /whatisthis
 ---
 
-> Last Updated: 12-12-24
+> Last Updated: 30-04-25
 
-This Page details about what materio is, what it aims to solve, what functions and tools it has.
+This Page aims to state the the problems which inspired the creation of the platform, the features it provides and information about how it works.\
+<div class="note"> Materio source is released under proprietary Source-Available License, Check <a href="/license">License</a> for more information.</div>
 
 ---
 ### What is Materio?
-<img src="https://materioa.netlify.app/static/res/materio_white.png" alt="materio_wordmark" style="width:60px; height=20px;"/> is a platform for all your study needs it has all the materials you will ever need for your academics (just enough to get you good grades) at one place curated from various sources and from various contributors.
+<img class="materio-wordmark" src="https://materioa.netlify.app/static/res/materio_new_wh.svg" alt="materio_wordmark" style="width:60px; height:20px;"/> is a platform for all your study needs it has all the materials you will ever need for your academics (just enough to get you good grades) at one place curated from various sources and from various contributors.
 
 
 ### Problem it adresses 
@@ -20,40 +21,42 @@ Finding the right material to read or for last minute revision can be tough some
 
 
 ### Features:
-- Home Tab:\
-Home tab is where you can find all the materials at. Well-Organized and in an easy to acess form. Just Select 3 Options from the dropdown:
+- Home :\
+Home tab is where you can find all the materials at. Well-Organized and in an easy to acess form.\
+Starting from v4 Materio introduces a new selection menu of Categories to seprate the mixed materials.\
+Just Select 4 Options from the dropdown:
   1. Semester 
-  2. Subject and
-  3. Chapter name
+  2. Subject 
+  3. Category and 
+  4. Topic (to read)
 
-  and hit enter and your material will be loaded in a window below (which is made using the Adobe PDF Viewer API) as simple as that.
+  and hit "Start Reading" button which will load your desired material in a popup modal.\
+  v4 also introduced a new way of displaying pdf's in a popup modal which supports normal and fullscreen views moving away from old fixed size container to read from.
 
 
-- Chat Tab: \
+- Chat : \
 Chat - Powered by Giscus, Login with Github.\
 Chat tab acts as discussion room - you can chat will other users to discuss topics, help each-others out, find or share materials etc.
 
-- Blogs:\
-Blogs - Powered by Jekyll (A static site generator)
-In blog post there will be cheatsheets, codesnippets, quick tips etc.\
->  Blogs are currently development and you do need the acess code to acess the blogs.
+- Notifications :\
+Get all the updates in the Notification Center whether it be about new updates to the site or Material uploads.\
+v4 changed the way notifications look!,
+  * instead of old style window, new version has a dedicated Notification Center now. it also introduced showing notification counts whenever theres a new notification so that you are kept updated about new material uploads.
 
-{Easter} Witty or even somewhat smart person could acess blogs early if they know how to do it 😉.
-
-- Notifications\
-Get all the updates in the Notification Center whether it be about new updates to the site or Material uploads.
-
-- Themes :\
-Materio comes with two themes
-  1. Thermal (aka Light Mode and the default theme)
-  2. Expresso (aka Dark Mode)
-
-<!-- ![Thermal](https://materioa.netlify.app/static/res/previews/thermal.png)
-
-![Expresso](https://materioa.netlify.app/static/res/previews/expresso.png) -->
+- Settings :\
+Settings page contains all the basic controls of the site like :
+1. Themes - switch to light/dark themes.
+2. Background Images - turn on or off (if you prefer minimalistic ui).
+3. Opt out of Optional cookies.
+4. Find Version changelogs to know about changes that come with new rollouts.
+5. Find all the Legal documents like :
+ - License
+ - Privacy Policy
+ - Cookie Policy
+ - About (this page.)
 
 ---
 
-This site is made using HTML, CSS and JavaScript and it uses  <a href="https://jekyllrb.com"><img src="https://jekyllrb.com/img/logo-2x.png" alt="Jekyll" height="30" width="60"/></a> for templating with customised Minima v3 Theme (for all the pages except Home, Chat and Changelog sections).
+This site is made using HTML, CSS and JavaScript and it uses  <a href="https://jekyllrb.com"><img src="https://jekyllrb.com/img/logo-2x.png" alt="Jekyll" height="30" width="60"/></a> as a templating engine with Proprietary template which we call pg-two, which enabled us to provide unified experience across the site slacking behind inconsitent blend of Custom + Minima v3 Template combination.
 
   
