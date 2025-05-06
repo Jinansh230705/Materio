@@ -890,6 +890,9 @@
   .promo-close-btn:hover{
     color: red;
   }
+  .hidden {
+  display: none !important;
+}
 
   @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.9); }
@@ -926,19 +929,7 @@
                 <i class="fas fa-cog"></i>
             </a>
         </nav>
-        <div class="promo-modal-overlay" id="promoModal">
-            <div class="promo-modal">
-                <img src="./static/res/pplx.png" class="promo-cover">
-              <i class="fas fa-times promo-close-btn" onclick="closePromoModal()"></i>
-              <h2><i class="fa-solid fa-bullhorn" style="margin-right: 10px;"></i>Get 1 Month of Perplexity Pro
-                for free!</h2>
-            <p>You can get Perplexity pro for free with unlimited access to OpenAI models (4o, 4.1, o4-mini) with no limits on image generation and reasoning , DeepSeek R1, Claude 3.7 Sonnet etc upto 2 years. So, signup with your student email to claim the offer.
-            </p><p>Offer valid till 31st May only.</p>
-            <a href="./redirects/pplx" target="_blank">
-                <button id="offerButton" class="site-button"><i class="fa-solid fa-tag"
-                        style="margin-left: 5px; margin-right: 10px;"></i>Redeem Now!</button>
-            </div>
-          </div>
+      
         <div class="content">
             <div id="home" class="tab-content active">
                 <div class="card-one" id="reading">
@@ -984,7 +975,19 @@
                     </div>
                 </div>
             </div>
-
+            <div class="promo-modal-overlay" id="promoModal">
+                <div class="promo-modal">
+                    <img src="./static/res/pplx.png" class="promo-cover">
+                  <i class="fas fa-times promo-close-btn" onclick="closePromoModal()"></i>
+                  <h2><i class="fa-solid fa-bullhorn" style="margin-right: 10px;"></i>Get 1 Month of Perplexity Pro
+                    for free!</h2>
+                <p>You can get Perplexity pro for free with unlimited access to OpenAI models (4o, 4.1, o4-mini) with no limits on image generation and reasoning , DeepSeek R1, Claude 3.7 Sonnet etc upto 2 years. So, signup with your student email to claim the offer.
+                </p><p>Offer valid till 31st May only.</p>
+                <a href="./redirects/pplx" target="_blank">
+                    <button id="offerButton" class="site-button"><i class="fa-solid fa-tag"
+                            style="margin-left: 5px; margin-right: 10px;"></i>Redeem Now!</button>
+                </div>
+              </div>
             <div id="chat" class="tab-content">
                 <h1>
                     Chat
@@ -1089,9 +1092,10 @@
 
             <script>
                   function closePromoModal() {
-    document.getElementById('promoModal').style.display = 'none';
-    document.getElementById('promoModal').style.animation= 'fadeOut 0.3s ease';
-  }
+  const modal = document.getElementById('promoModal');
+  modal.style.display = 'none';
+}
+
                 
                 document.addEventListener('DOMContentLoaded', function () {
                     var year = new Date().getFullYear();
