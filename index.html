@@ -815,45 +815,6 @@
         }
 
         /* Promotions */
-        .announcement-card {
-            background-color: rgba(230, 204, 173, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            color: #333;
-            position: relative;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 15px;
-        }
-
-        .announcement-card h2 {
-            margin: 0 0 10px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .announcement-card p {
-            margin: 0;
-            font-size: 14px;
-        }
-
-        .close-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: transparent;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-            color: #ff8400;
-            outline: none;
-            transition: color 0.3s ease;
-        }
-
-        .close-icon:hover {
-            color: red;
-        }
-
         .site-button {
             background-color: rgba(255, 132, 0, 0.7);
             backdrop-filter: blur(10px);
@@ -873,6 +834,72 @@
         .site-button:hover {
             background-color: #8dac49;
         }
+        
+.promo-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  .promo-modal {
+    background-color: rgba(230, 204, 173, 0.5);
+    color:#000000;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 100%;
+    height: 85%;
+    position: relative;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+  }
+  @media (max-width: 768px) {
+    .promo-modal{
+                width: 90%;
+                max-width: 250px;
+                position: relative;
+            }
+
+            .promo-modal img.promo-cover {
+    width: 100%;
+    height: 500px;
+    display: block;
+  }
+  }
+  .promo-modal img.promo-cover {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .promo-modal .promo-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #ff8200;
+  }
+  .promo-close-btn:hover{
+    color: red;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes fadeOut {
+    from { opacity: 1; transform: scale(1); }
+    to { opacity: 0; transform: scale(0.9); }
+  }
     </style>
 </head>
 
@@ -883,6 +910,19 @@
     <!-- End Google Tag Manager (noscript) -->
     <header>
     </header>
+    <div class="promo-modal-overlay" id="promoModal">
+        <div class="promo-modal">
+            <img src="./static/res/pplx.png" class="promo-cover">
+          <i class="fas fa-times promo-close-btn" onclick="closePromoModal()"></i>
+          <h2><i class="fa-solid fa-bullhorn" style="margin-right: 10px;"></i>Get 1 Month of Perplexity Pro
+            for free!</h2>
+        <p>You can get Perplexity pro for free with unlimited access to OpenAI models (4o, 4.1, o4-mini) with no limits on image generation and reasoning , DeepSeek R1, Claude 3.7 Sonnet etc upto 2 years. So, signup with your student email to claim the offer.
+        </p><p>Offer valid till 31st May only.</p>
+        <a href="./redirects/pplx" target="_blank">
+            <button id="offerButton" class="site-button"><i class="fa-solid fa-tag"
+                    style="margin-left: 5px; margin-right: 10px;"></i>Redeem Now!</button>
+        </div>
+      </div>
 
     <div class="container">
         <nav class="navbar">
@@ -934,21 +974,6 @@
                     <button id="submitButton">Start Reading</button>
                 </div>
 
-                <!-- ...existing code... -->
-                <div class="card-layout announcement-card" id="announcementCard">
-                    <button id="closeAnnouncement" class="close-icon"><i class="fas fa-times"></i></button>
-                    <h2><i class="fa-solid fa-bullhorn" style="margin-right: 10px;"></i>Get 1 Month of Perplexity Pro
-                        for free!</h2>
-                    <p>You can get 1 month of Perplexity Pro for free which has access to models like ChatGPT 4o, Claude
-                        3.7 Sonnet and DeepSeek R1. Signup with university email id using this link below to avail the
-                        offer.</p>
-                    <a href="./redirects/pplx" target="_blank">
-                        <button id="offerButton" class="site-button"><i class="fa-solid fa-tag"
-                                style="margin-left: 5px; margin-right: 10px;"></i>Redeem Now!</button>
-                    </a>
-                </div>
-                <!-- ...existing code... -->
-
                 <div id="popup">
                     <div class="popup-controls">
                         <button id="fullscreenButton" style="margin-right: 40px; margin-top:5px;"><i
@@ -956,7 +981,7 @@
                         <button id="closePopup"><i class="fas fa-times"></i></button>
                     </div>
                     <div id="popupContent">
-                        <!-- PDF iframe will be loaded here -->
+                        <!-- PDF will be loaded here -->
                     </div>
                 </div>
             </div>
@@ -1064,14 +1089,10 @@
 
 
             <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const closeAnnouncement = document.getElementById('closeAnnouncement');
-                    const announcementCard = document.getElementById('announcementCard');
-
-                    closeAnnouncement.addEventListener('click', function () {
-                        announcementCard.style.display = 'none';
-                    });
-                });
+                  function closePromoModal() {
+    document.getElementById('promoModal').style.display = 'none';
+    document.getElementById('promoModal').style.animation= 'fadeOut 0.3s ease';
+  }
                 
                 document.addEventListener('DOMContentLoaded', function () {
                     var year = new Date().getFullYear();
