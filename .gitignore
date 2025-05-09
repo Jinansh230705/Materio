@@ -7,3 +7,4 @@ vendor
 
 # Local Netlify folder
 .netlify
+.env

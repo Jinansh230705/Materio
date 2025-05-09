@@ -154,6 +154,7 @@
         }
 
         .card-one {
+            position: relative;
             border-radius: 15px;
             background-color: rgba(255, 245, 223, 0.5);
             backdrop-filter: blur(10px);
@@ -538,6 +539,7 @@
                 white-space: normal;
                 text-overflow: clip;
             }
+
         }
 
         #creatorInfo p {
@@ -788,63 +790,120 @@
             }
         }
 
-        /* ...existing styles... */
-.announcement-card {
-    background-color: rgba(230, 204, 173, 0.5); /* Light blue shade */
-    backdrop-filter: blur(10px);
-    color: #333;
-    position: relative;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 15px;
-}
+        .site-button {
+            background-color: rgb(255, 132, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: "Manrope", sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+        }
 
-.announcement-card h2 {
-    margin: 0 0 10px;
-    font-size: 18px;
-    font-weight: bold;
-}
+        .site-button:hover {
+            background-color: #8dac49;
+        }
 
-.announcement-card p {
-    margin: 0;
-    font-size: 14px;
-}
+        .promo-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
 
-.close-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    color: #ff8400;
-    outline: none;
-    transition: color 0.3s ease;
-}
+        .promo-modal {
+            background-color: rgba(230, 204, 173, 0.5);
+            color: #000000;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
 
-.close-icon:hover {
-    color: red;
-}
+        @media (max-width: 768px) {
+            .promo-modal {
+                width: 90%;
+                max-width: 230px;
+                position: relative;
+            }
+        }
 
-/* ...existing styles... */
-.site-button {
-    background-color: rgb(255, 132, 0,0.7);
-    backdrop-filter: blur(10px);
+        .promo-modal .promo-close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #ff8200;
+        }
+
+        .promo-close-btn:hover {
+            color: red;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            to {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+        }
+
+        .users-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-items: right;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #000000;
+  font-weight: 500;
+  font-size: 14px;
+  backdrop-filter: blur(10px);
+}
+.users-card.dark-mode{
     color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-family: "Manrope", sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: inline-block;
-    margin-top: 10px;
 }
-
-.site-button:hover {
-    background-color:#8dac49;
+.users-card .emoji {
+  font-size: 16px;
+}
+#realtime-users-card {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  transition: opacity 0.3s ease;
+  opacity: 1;
 }
     </style>
 </head>
@@ -855,7 +914,21 @@
             style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <header>
+      
     </header>
+    <div class="promo-modal-overlay" id="promoModal">
+        <div class="promo-modal">
+            <i class="fas fa-times promo-close-btn" onclick="closePromoModal()"></i>
+            <h2><i class="fa-solid fa-bullhorn" style="margin-right: 10px;"></i>Get 1 Month of Perplexity Pro
+                for free!</h2>
+            <p>You can get 1 month of Perplexity Pro for free which has access to models like ChatGPT 4o, Claude
+                3.7 Sonnet and DeepSeek R1. Signup with university email id using this link below to avail the
+                offer.</p>
+            <a href="./redirects/pplx" target="_blank">
+                <button id="offerButton" class="site-button"><i class="fa-solid fa-tag"
+                        style="margin-left: 5px; margin-right: 10px;"></i>Redeem Now!</button>
+        </div>
+    </div>
 
     <div class="container">
         <nav class="navbar">
@@ -905,18 +978,13 @@
                     </form>
 
                     <button id="submitButton">Start Reading</button>
-                </div>
-  <!-- ...existing code... -->
-  <div class="card-layout announcement-card" id="announcementCard">
-    <button id="closeAnnouncement" class="close-icon"><i class="fas fa-times"></i></button>
-    <h2><i class="fa-solid fa-bullhorn" style="margin-right: 10px;"></i>Get 1 Month of Perplexity Pro for free!</h2>
-    <p>You can get 1 month of Perplexity Pro for free which has access to models like ChatGPT 4o, Claude 3.7 Sonnet and DeepSeek R1. So signup with University email id using this link below to avail the offer.</p>
-    <a href="http://bit.ly/3YsdMzm" target="_blank">
-        <button id="offerButton" class="site-button"><i class="fa-solid fa-tag" style="margin-left: 5px; margin-right: 10px;"></i>Redeem Now!</button>
-    </a>
-</div>
-<!-- ...existing code... -->
 
+                    <div id="realtime-users-card" class="users-card">
+                        <span class="emoji">👀</span>
+                        <span id="user-count"></span>
+                        <span id="user-label"> people reading with you</span>
+                      </div>                      
+                </div>
                 <div id="popup">
                     <div class="popup-controls">
                         <button id="fullscreenButton" style="margin-right: 40px; margin-top:5px;"><i
@@ -924,11 +992,11 @@
                         <button id="closePopup"><i class="fas fa-times"></i></button>
                     </div>
                     <div id="popupContent">
-                        <!-- PDF iframe will be loaded here -->
+                        <!-- PDF will be loaded here -->
                     </div>
                 </div>
             </div>
-          
+
 
             <div id="chat" class="tab-content">
                 <h1>
@@ -1029,16 +1097,40 @@
 
 
             <script>
-                // ...existing scripts...
-document.addEventListener('DOMContentLoaded', function () {
-    const closeAnnouncement = document.getElementById('closeAnnouncement');
-    const announcementCard = document.getElementById('announcementCard');
+async function fetchRealtimeUsers() {
+  try {
+    const response = await fetch('/.netlify/functions/getRealtimeUsers');
+    const data = await response.json();
 
-    closeAnnouncement.addEventListener('click', function () {
-        announcementCard.style.display = 'none';
-    });
+    const userCount = parseInt(data.users);
+    const userCountSpan = document.getElementById('user-count');
+    const card = document.getElementById('realtime-users-card');
+
+    if (!isNaN(userCount) && userCountSpan && card) {
+      userCountSpan.textContent = userCount;
+
+      const labelText = userCount === 1
+        ? ' person reading with you'
+        : ' people reading with you';
+      const labelSpan = document.getElementById('user-label');
+      labelSpan.textContent = labelText;
+      card.style.opacity = 1;
+    }
+  } catch (err) {
+    console.error('Error fetching realtime users:', err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  fetchRealtimeUsers();
+  setInterval(fetchRealtimeUsers, 30000);
 });
-// ...existing scripts...
+
+                function closePromoModal() {
+                    document.getElementById('promoModal').style.display = 'none';
+                    document.getElementById('promoModal').style.animation = 'fadeOut 0.3s ease';
+                }
+
                 document.addEventListener('DOMContentLoaded', function () {
                     var year = new Date().getFullYear();
                     var creatorInfo = document.getElementById('creatorInfo');
@@ -1116,10 +1208,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
                     document.getElementById('popupContent').innerHTML =
                         `<iframe id="pdf-iframe" scrolling='no' allowfullscreen webkitallowfullscreen style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
-    src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+    src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}#disableStream=false&disableRange=false&rangeChunkSize=65536"></iframe>`;
 
                     popup.classList.remove('closing');
                     popup.style.display = 'block';
+                    addToCache(pdfUrl);
                 });
 
                 closePopup.addEventListener('click', () => {
@@ -1341,9 +1434,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
                     document.getElementById('popupContent').innerHTML =
                         `<iframe id="pdf-iframe" style="border:none; width:100%; height:calc(100% - 17px); border-radius:10px; margin-top:22px;" 
-      src="https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}"></iframe>`;
+       src="https://materioa.github.io/web/viewer.html?disableStream=false&disableRange=false&rangeChunkSize=1048576&file=${encodeURIComponent(pdfUrl)}">`;
                     popup.classList.remove('closing');
                     popup.style.display = 'block';
+                    addToCache(pdfUrl);
                 });
 
                 fetch('https://cdn-materioa.netlify.app/databases/beta/resource.lib.json')
@@ -1491,7 +1585,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             document.getElementById('about'),
                             document.getElementById('cookiesToggleCard'),
                             document.getElementById('creatorInfo'),
-                            document.getElementById('logoutCard')
+                            document.getElementById('logoutCard'),
+                            document.getElementById('realtime-users-card'),
+                            document.getElementById('users-card')
                         ];
                         const notifyCards = document.querySelectorAll('#notify');
                         notifyCards.forEach(card => elements.push(card));
@@ -1757,7 +1853,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             pdfBlobUrl = pdfCache.get(pdfUrl);
                         }
                         initializeIframe();
-                        pdfIframe.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfBlobUrl)}`;
+                        pdfIframe.src = `https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(pdfUrl)}#disableStream=false&disableRange=false&rangeChunkSize=65536`;
                         popup.classList.remove('closing');
                         popup.style.display = 'block';
                         addToCache(pdfUrl);
@@ -1789,47 +1885,47 @@ document.addEventListener('DOMContentLoaded', function () {
             </script>
 
             <!-- Channel Auth -->
-             <script>
+            <script>
                 (function () {
-    const authToken = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
+                    const authToken = localStorage.getItem("authToken") || sessionStorage.getItem("authToken");
 
-    if (!authToken) {
-        sessionStorage.setItem("redirectAfterLogin", window.location.pathname);
-        window.location.href = "/channels/entry";
-    } else {
-        injectLogoutCard();
-    }
+                    if (!authToken) {
+                        sessionStorage.setItem("redirectAfterLogin", window.location.pathname);
+                        window.location.href = "/channels/entry";
+                    } else {
+                        injectLogoutCard();
+                    }
 
-    function injectLogoutCard() {
-        const settingsTab = document.getElementById("settings");
+                    function injectLogoutCard() {
+                        const settingsTab = document.getElementById("settings");
 
-        if (!settingsTab) return;
+                        if (!settingsTab) return;
 
-        const logoutCard = document.createElement("div");
-        logoutCard.className = "card-layout";
-        logoutCard.style.textAlign = "center";
-        logoutCard.id = "logoutCard";
+                        const logoutCard = document.createElement("div");
+                        logoutCard.className = "card-layout";
+                        logoutCard.style.textAlign = "center";
+                        logoutCard.id = "logoutCard";
 
-        const message = document.createElement("p");
-        message.textContent = "You're in v4 channel currently.";
+                        const message = document.createElement("p");
+                        message.textContent = "You're in v4 channel currently.";
 
-        const logoutButton = document.createElement("button");
-        logoutButton.textContent = "Logout";
-        logoutButton.id = "submitButton";
-        logoutButton.style.marginTop = "10px";
+                        const logoutButton = document.createElement("button");
+                        logoutButton.textContent = "Logout";
+                        logoutButton.id = "submitButton";
+                        logoutButton.style.marginTop = "10px";
 
-        logoutButton.addEventListener("click", function () {
-            localStorage.removeItem("authToken");
-            sessionStorage.removeItem("authToken");
-            window.location.href = "/auth";
-        });
+                        logoutButton.addEventListener("click", function () {
+                            localStorage.removeItem("authToken");
+                            sessionStorage.removeItem("authToken");
+                            window.location.href = "/auth";
+                        });
 
-        logoutCard.appendChild(message);
-        logoutCard.appendChild(logoutButton);
-        settingsTab.appendChild(logoutCard);
-    }
-})();
-             </script>
+                        logoutCard.appendChild(message);
+                        logoutCard.appendChild(logoutButton);
+                        settingsTab.appendChild(logoutCard);
+                    }
+                })();
+            </script>
 </body>
 
 </html>

@@ -1,6 +1,17 @@
 [
     {
         "branch": "stable",
+        "version": "4.0.2.2",
+        "build": "09/05/2025",
+        "logs": [
+           "Bug Fix - Invisible link for refferal redirect was present on chat, notifications and settings page affecting the QoS.",
+           "Offer's Section appears as a startup popup instead of a section on mainpage.",
+           "Fixed offer popup padding on mobile.",
+           "[New Feature - 'People Reading with you'] - Know how many people are reading with you."
+        ]
+    },
+    {
+        "branch": "stable",
         "version": "4.0.2.1",
         "build": "29/04/2025",
         "logs": [
