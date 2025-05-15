@@ -880,31 +880,102 @@
         }
 
         .users-card {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  align-items: right;
-  padding: 8px 14px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.08);
-  color: #000000;
-  font-weight: 500;
-  font-size: 14px;
-  backdrop-filter: blur(10px);
-}
-.users-card.dark-mode{
-    color: #ffffff;
-}
-.users-card .emoji {
-  font-size: 16px;
-}
-#realtime-users-card {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  transition: opacity 0.3s ease;
-  opacity: 1;
-}
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            align-items: right;
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #000000;
+            font-weight: 500;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .users-card.dark-mode {
+            color: #ffffff;
+        }
+
+        .users-card .emoji {
+            font-size: 16px;
+        }
+
+        #realtime-users-card {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        /* Add these CSS rules to your existing stylesheet */
+        .navbar {
+            /* ...existing code... */
+            justify-content: space-between;
+            /* This helps with spacing */
+        }
+
+        /* Grouping for top navigation items */
+        .navbar-top-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Grouping for bottom navigation items */
+        .navbar-bottom-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: auto;
+            /* Push to bottom */
+            margin-bottom: 20px;
+        }
+
+        /* Profile icon styling - fixed version */
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: fill;
+            
+        }
+
+        .profile-icon img {
+            
+          border: 2px solid #ff8200;
+          border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            object-fit: fill;
+            padding: 0%;
+        }
+
+        .profile-icon img.active {
+            border-color: #ff8400;
+            transform: translateX(5px);
+        }
+
+        /* Ensure mobile view still works properly */
+        @media (max-width: 768px) {
+
+            .navbar-top-group,
+            .navbar-bottom-group {
+                flex-direction: row;
+                margin: 0;
+            }
+
+            .profile-icon {
+                margin-bottom: 0;
+                margin-right: 0;
+            }
+
+            .profile-icon.active {
+                border-color: #ff8400;
+                transform: translateY(-5px);
+            }
+        }
     </style>
 </head>
 
@@ -914,7 +985,7 @@
             style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <header>
-      
+
     </header>
     <div class="promo-modal-overlay" id="promoModal">
         <div class="promo-modal">
@@ -932,18 +1003,25 @@
 
     <div class="container">
         <nav class="navbar">
-            <a href="#" class="tab-link active" data-tab="home">
-                <i class="fas fa-home"></i>
-            </a>
-            <a href="#" class="tab-link" data-tab="chat">
-                <i class="fas fa-comments"></i>
-            </a>
-            <a href="#" class="tab-link" data-tab="notifications">
-                <i class="fas fa-bell"></i>
-            </a>
-            <a href="#" class="tab-link" data-tab="settings">
-                <i class="fas fa-cog"></i>
-            </a>
+            <div class="navbar-top-group">
+                <a href="#" class="tab-link active" data-tab="home">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="#" class="tab-link" data-tab="chat">
+                    <i class="fas fa-comments"></i>
+                </a>
+                <a href="#" class="tab-link" data-tab="notifications">
+                    <i class="fas fa-bell"></i>
+                </a>
+            </div>
+            <div class="navbar-bottom-group">
+                <a href="#" class="tab-link profile-icon" data-tab="profile">
+                    <img id="profile-image" src="../static/res/default-avatar.svg">
+                </a>
+                <a href="#" class="tab-link" data-tab="settings">
+                    <i class="fas fa-cog"></i>
+                </a>
+            </div>
         </nav>
 
         <div class="content">
@@ -983,7 +1061,7 @@
                         <span class="emoji">👀</span>
                         <span id="user-count"></span>
                         <span id="user-label"> people reading with you</span>
-                      </div>                      
+                    </div>
                 </div>
                 <div id="popup">
                     <div class="popup-controls">
@@ -1088,43 +1166,579 @@
                             <span class="slider"></span>
                         </label>
                     </div>
-                </div>
-                <div class="card-layout" id="creatorInfo">
+                </div>                <div class="card-layout" id="creatorInfo">
                     <p>&copy; Materio</p>
                     <p> Made with ❤️ by Jinansh </p>
                 </div>
             </div>
+            
+            <div id="profile" class="tab-content">
+                <h1>Profile</h1>
+                <div id="profile-content">
+                    <!-- Content will be dynamically loaded based on authentication status -->
+                </div>
+            </div>            <script>
+                // Include profile styles
+                const profileStylesheet = document.createElement('link');
+                profileStylesheet.rel = 'stylesheet';
+                profileStylesheet.href = './profile-styles.css';
+                document.head.appendChild(profileStylesheet);
+                
+                // Authentication & Profile Management
+                class AuthManager {
+                    constructor() {
+                        this.apiBase = 'https://auth-materioa.netlify.app/.netlify/functions';
+                        this.token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+                        this.user = null;
+                        this.profileContent = document.getElementById('profile-content');
+                        this.profileImage = document.getElementById('profile-image');
+                        
+                        // Initialize profile
+                        this.initProfile();
+                    }
+                    
+                    // Initialize profile content
+                    async initProfile() {
+                        if (this.token) {
+                            // User is logged in, fetch profile
+                            try {
+                                await this.fetchUserProfile();
+                            } catch (error) {
+                                console.error('Error fetching profile:', error);
+                                this.logout(); // Token might be invalid or expired
+                            }
+                        } else {
+                            // User is not logged in, show auth form
+                            this.renderAuthForm();
+                        }
+                    }
+                    
+                    // Fetch user profile from API
+                    async fetchUserProfile() {
+                        const response = await fetch(`${this.apiBase}/profile`, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${this.token}`
+                            }
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error('Failed to fetch profile');
+                        }
+                        
+                        const data = await response.json();
+                        this.user = data.user;
+                        
+                        // Update profile image
+                        if (this.user.profilePicture) {
+                            this.profileImage.src = this.user.profilePicture;
+                        }
+                        
+                        // Render profile content
+                        this.renderProfileContent();
+                    }
+                    
+                    // Login user
+                    async login(email, password, rememberMe) {
+                        try {
+                            const response = await fetch(`${this.apiBase}/login`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    username: email,
+                                    password: password
+                                })
+                            });
+                            
+                            if (!response.ok) {
+                                const error = await response.json();
+                                throw new Error(error.message || 'Login failed');
+                            }
+                            
+                            const data = await response.json();
+                            this.token = data.token;
+                            this.user = data.user;
+                            
+                            // Save token based on remember me option
+                            if (rememberMe) {
+                                localStorage.setItem('authToken', this.token);
+                            } else {
+                                sessionStorage.setItem('authToken', this.token);
+                            }
+                            
+                            // Update profile image
+                            if (this.user.profilePicture) {
+                                this.profileImage.src = this.user.profilePicture;
+                            }
+                            
+                            // Render profile content
+                            this.renderProfileContent();
+                            
+                            return { success: true };
+                        } catch (error) {
+                            return { success: false, message: error.message };
+                        }
+                    }
+                    
+                    // Sign up new user
+                    async signup(email, username, displayName, password) {
+                        try {
+                            const response = await fetch(`${this.apiBase}/signup`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    email,
+                                    username,
+                                    displayName,
+                                    password
+                                })
+                            });
+                            
+                            if (!response.ok) {
+                                const error = await response.json();
+                                throw new Error(error.message || 'Signup failed');
+                            }
+                            
+                            const data = await response.json();
+                            this.token = data.token;
+                            this.user = data.user;
+                            
+                            // Save token in session storage by default for new signups
+                            sessionStorage.setItem('authToken', this.token);
+                            
+                            // Update profile image
+                            if (this.user.profilePicture) {
+                                this.profileImage.src = this.user.profilePicture;
+                            }
+                            
+                            // Show recovery key (important to save)
+                            alert(`Please save your recovery key: ${data.recoveryKey}\nYou'll need this to recover your account if you forget your password.`);
+                            
+                            // Render profile content
+                            this.renderProfileContent();
+                            
+                            return { success: true, recoveryKey: data.recoveryKey };
+                        } catch (error) {
+                            return { success: false, message: error.message };
+                        }
+                    }
+                    
+                    // Logout user
+                    logout() {
+                        this.token = null;
+                        this.user = null;
+                        localStorage.removeItem('authToken');
+                        sessionStorage.removeItem('authToken');
+                        
+                        // Reset profile image
+                        this.profileImage.src = '../static/res/default-avatar.svg';
+                        
+                        // Show auth form
+                        this.renderAuthForm();
+                    }
+                    
+                    // Change user password
+                    async changePassword(currentPassword, newPassword) {
+                        try {
+                            const response = await fetch(`${this.apiBase}/changePassword`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${this.token}`
+                                },
+                                body: JSON.stringify({
+                                    currentPassword,
+                                    newPassword
+                                })
+                            });
+                            
+                            if (!response.ok) {
+                                const error = await response.json();
+                                throw new Error(error.message || 'Failed to change password');
+                            }
+                            
+                            return { success: true };
+                        } catch (error) {
+                            return { success: false, message: error.message };
+                        }
+                    }
+                    
+                    // Generate new recovery key
+                    async regenerateRecoveryKey(currentPassword) {
+                        try {
+                            const response = await fetch(`${this.apiBase}/regenerateRecoveryKey`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${this.token}`
+                                },
+                                body: JSON.stringify({
+                                    currentPassword
+                                })
+                            });
+                            
+                            if (!response.ok) {
+                                const error = await response.json();
+                                throw new Error(error.message || 'Failed to regenerate recovery key');
+                            }
+                            
+                            const data = await response.json();
+                            return { success: true, recoveryKey: data.recoveryKey };
+                        } catch (error) {
+                            return { success: false, message: error.message };
+                        }
+                    }
+                    
+                    // Delete account
+                    async deleteAccount(password) {
+                        try {
+                            const response = await fetch(`${this.apiBase}/deleteAccount`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${this.token}`
+                                },
+                                body: JSON.stringify({
+                                    password
+                                })
+                            });
+                            
+                            if (!response.ok) {
+                                const error = await response.json();
+                                throw new Error(error.message || 'Failed to delete account');
+                            }
+                            
+                            this.logout();
+                            return { success: true };
+                        } catch (error) {
+                            return { success: false, message: error.message };
+                        }
+                    }
+                    
+                    // Render login/signup form
+                    renderAuthForm(isSignup = false) {
+                        let formHtml = '';
+                        
+                        if (!isSignup) {
+                            // Login form
+                            formHtml = `
+                                <div class="card-layout">
+                                    <h2>Login to your account</h2>
+                                    <form id="login-form" class="auth-form">
+                                        <div class="form-group">
+                                            <label for="login-email">Email</label>
+                                            <input type="email" id="login-email" placeholder="Enter your email" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="login-password">Password</label>
+                                            <input type="password" id="login-password" placeholder="Enter your password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label style="display: flex; align-items: center;">
+                                                <input type="checkbox" id="remember-me" style="width: auto; margin-right: 8px;">
+                                                Remember me
+                                            </label>
+                                        </div>
+                                        <button type="submit" class="auth-button">Login</button>
+                                        <div class="auth-switch">
+                                            Don't have an account? <span id="show-signup">Sign Up</span>
+                                        </div>
+                                    </form>
+                                </div>
+                            `;
+                        } else {
+                            // Signup form
+                            formHtml = `
+                                <div class="card-layout">
+                                    <h2>Create a new account</h2>
+                                    <form id="signup-form" class="auth-form">
+                                        <div class="form-group">
+                                            <label for="signup-email">Email</label>
+                                            <input type="email" id="signup-email" placeholder="Enter your email" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="signup-username">Username</label>
+                                            <input type="text" id="signup-username" placeholder="Choose a username" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="signup-displayname">Display Name</label>
+                                            <input type="text" id="signup-displayname" placeholder="Your name to display" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="signup-password">Password</label>
+                                            <input type="password" id="signup-password" placeholder="Create a password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="signup-confirm-password">Confirm Password</label>
+                                            <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
+                                        </div>
+                                        <button type="submit" class="auth-button">Sign Up</button>
+                                        <div class="auth-switch">
+                                            Already have an account? <span id="show-login">Login</span>
+                                        </div>
+                                    </form>
+                                </div>
+                            `;
+                        }
+                        
+                        this.profileContent.innerHTML = formHtml;
+                        
+                        // Add event listeners
+                        if (!isSignup) {
+                            document.getElementById('login-form').addEventListener('submit', (e) => {
+                                e.preventDefault();
+                                this.handleLogin();
+                            });
+                            document.getElementById('show-signup').addEventListener('click', () => {
+                                this.renderAuthForm(true);
+                            });
+                        } else {
+                            document.getElementById('signup-form').addEventListener('submit', (e) => {
+                                e.preventDefault();
+                                this.handleSignup();
+                            });
+                            document.getElementById('show-login').addEventListener('click', () => {
+                                this.renderAuthForm(false);
+                            });
+                        }
+                    }
+                    
+                    // Handle login form submission
+                    async handleLogin() {
+                        const email = document.getElementById('login-email').value;
+                        const password = document.getElementById('login-password').value;
+                        const rememberMe = document.getElementById('remember-me').checked;
+                        
+                        // Simple validation
+                        if (!email || !password) {
+                            alert('Please fill in all fields');
+                            return;
+                        }
+                        
+                        const result = await this.login(email, password, rememberMe);
+                        if (!result.success) {
+                            alert(result.message || 'Login failed');
+                        }
+                    }
+                    
+                    // Handle signup form submission
+                    async handleSignup() {
+                        const email = document.getElementById('signup-email').value;
+                        const username = document.getElementById('signup-username').value;
+                        const displayName = document.getElementById('signup-displayname').value;
+                        const password = document.getElementById('signup-password').value;
+                        const confirmPassword = document.getElementById('signup-confirm-password').value;
+                        
+                        // Simple validation
+                        if (!email || !username || !displayName || !password) {
+                            alert('Please fill in all fields');
+                            return;
+                        }
+                        
+                        if (password !== confirmPassword) {
+                            alert('Passwords do not match');
+                            return;
+                        }
+                        
+                        const result = await this.signup(email, username, displayName, password);
+                        if (!result.success) {
+                            alert(result.message || 'Signup failed');
+                        }
+                    }
+                    
+                    // Render profile management content
+                    renderProfileContent() {
+                        const profileHtml = `
+                            <div class="profile-tab-header">
+                                <img src="${this.user.profilePicture || '../static/res/default-avatar.svg'}" alt="${this.user.displayName}">
+                                <div class="profile-info">
+                                    <p class="display-name">${this.user.displayName}</p>
+                                    <p class="username">@${this.user.username}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="card-layout">
+                                <div class="profile-tabs">
+                                    <div class="profile-tab active" data-tab="security">Security</div>
+                                    <div class="profile-tab" data-tab="danger-zone">Danger Zone</div>
+                                </div>
+                                
+                                <div class="profile-tab-content active" id="security-tab">
+                                    <form id="password-change-form" class="auth-form">
+                                        <div class="form-group">
+                                            <label for="current-password">Current Password</label>
+                                            <input type="password" id="current-password" placeholder="Enter your current password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="new-password">New Password</label>
+                                            <input type="password" id="new-password" placeholder="Enter your new password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="confirm-new-password">Confirm New Password</label>
+                                            <input type="password" id="confirm-new-password" placeholder="Confirm your new password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Recovery Key</label>
+                                            <div class="recovery-key-display" id="recovery-key">••••••••••••••••</div>
+                                        </div>
+                                        <button type="button" id="regenerate-key" class="auth-button secondary-button">Regenerate Recovery Key</button>
+                                        <button type="submit" class="auth-button">Update Information</button>
+                                    </form>
+                                </div>
+                                
+                                <div class="profile-tab-content" id="danger-zone-tab">
+                                    <form id="delete-account-form" class="auth-form">
+                                        <div class="form-group">
+                                            <label for="delete-password">Enter Password to Confirm</label>
+                                            <input type="password" id="delete-password" placeholder="Enter your password" required>
+                                        </div>
+                                        <button type="submit" class="auth-button danger-button">Delete My Account</button>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <div class="card-layout" style="text-align: right;">
+                                <button id="logout-button" class="auth-button secondary-button">Logout</button>
+                            </div>
+                        `;
+                        
+                        this.profileContent.innerHTML = profileHtml;
+                        
+                        // Add event listeners
+                        document.querySelectorAll('.profile-tab').forEach(tab => {
+                            tab.addEventListener('click', () => {
+                                // Remove active class from all tabs and contents
+                                document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+                                document.querySelectorAll('.profile-tab-content').forEach(c => c.classList.remove('active'));
+                                
+                                // Add active class to clicked tab and corresponding content
+                                tab.classList.add('active');
+                                const tabName = tab.getAttribute('data-tab');
+                                document.getElementById(`${tabName}-tab`).classList.add('active');
+                            });
+                        });
+                        
+                        document.getElementById('password-change-form').addEventListener('submit', (e) => {
+                            e.preventDefault();
+                            this.handlePasswordChange();
+                        });
+                        
+                        document.getElementById('regenerate-key').addEventListener('click', () => {
+                            this.handleRegenerateKey();
+                        });
+                        
+                        document.getElementById('delete-account-form').addEventListener('submit', (e) => {
+                            e.preventDefault();
+                            this.handleDeleteAccount();
+                        });
+                        
+                        document.getElementById('logout-button').addEventListener('click', () => {
+                            this.logout();
+                        });
+                    }
+                    
+                    // Handle password change
+                    async handlePasswordChange() {
+                        const currentPassword = document.getElementById('current-password').value;
+                        const newPassword = document.getElementById('new-password').value;
+                        const confirmNewPassword = document.getElementById('confirm-new-password').value;
+                        
+                        if (newPassword && newPassword !== confirmNewPassword) {
+                            alert('New passwords do not match');
+                            return;
+                        }
+                        
+                        if (newPassword) {
+                            const result = await this.changePassword(currentPassword, newPassword);
+                            if (result.success) {
+                                alert('Password changed successfully');
+                                document.getElementById('current-password').value = '';
+                                document.getElementById('new-password').value = '';
+                                document.getElementById('confirm-new-password').value = '';
+                            } else {
+                                alert(result.message || 'Failed to change password');
+                            }
+                        } else {
+                            alert('No changes made');
+                        }
+                    }
+                    
+                    // Handle regenerating recovery key
+                    async handleRegenerateKey() {
+                        const currentPassword = document.getElementById('current-password').value;
+                        
+                        if (!currentPassword) {
+                            alert('Please enter your current password');
+                            return;
+                        }
+                        
+                        const result = await this.regenerateRecoveryKey(currentPassword);
+                        if (result.success) {
+                            document.getElementById('recovery-key').textContent = result.recoveryKey;
+                            alert('Recovery key regenerated. Please save it in a safe place.');
+                        } else {
+                            alert(result.message || 'Failed to regenerate recovery key');
+                        }
+                    }
+                    
+                    // Handle account deletion
+                    async handleDeleteAccount() {
+                        if (!confirm('Are you sure you want to delete your account? This cannot be undone!')) {
+                            return;
+                        }
+                        
+                        const password = document.getElementById('delete-password').value;
+                        
+                        if (!password) {
+                            alert('Please enter your password to confirm');
+                            return;
+                        }
+                        
+                        const result = await this.deleteAccount(password);
+                        if (result.success) {
+                            alert('Your account has been deleted.');
+                        } else {
+                            alert(result.message || 'Failed to delete account');
+                        }
+                    }
+                }
+                
+                // Initialize authentication manager when DOM is loaded
+                document.addEventListener('DOMContentLoaded', () => {
+                    window.authManager = new AuthManager();
+                });
+                async function fetchRealtimeUsers() {
+                    try {
+                        const response = await fetch('/.netlify/functions/getRealtimeUsers');
+                        const data = await response.json();
 
+                        const userCount = parseInt(data.users);
+                        const userCountSpan = document.getElementById('user-count');
+                        const card = document.getElementById('realtime-users-card');
 
-            <script>
-async function fetchRealtimeUsers() {
-  try {
-    const response = await fetch('/.netlify/functions/getRealtimeUsers');
-    const data = await response.json();
+                        if (!isNaN(userCount) && userCountSpan && card) {
+                            userCountSpan.textContent = userCount;
 
-    const userCount = parseInt(data.users);
-    const userCountSpan = document.getElementById('user-count');
-    const card = document.getElementById('realtime-users-card');
+                            const labelText = userCount === 1
+                                ? ' person reading with you'
+                                : ' people reading with you';
+                            const labelSpan = document.getElementById('user-label');
+                            labelSpan.textContent = labelText;
+                            card.style.opacity = 1;
+                        }
+                    } catch (err) {
+                        console.error('Error fetching realtime users:', err);
+                    }
+                }
 
-    if (!isNaN(userCount) && userCountSpan && card) {
-      userCountSpan.textContent = userCount;
-
-      const labelText = userCount === 1
-        ? ' person reading with you'
-        : ' people reading with you';
-      const labelSpan = document.getElementById('user-label');
-      labelSpan.textContent = labelText;
-      card.style.opacity = 1;
-    }
-  } catch (err) {
-    console.error('Error fetching realtime users:', err);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  fetchRealtimeUsers();
-  setInterval(fetchRealtimeUsers, 30000);
-});
+                document.addEventListener('DOMContentLoaded', () => {
+                    fetchRealtimeUsers();
+                    setInterval(fetchRealtimeUsers, 30000);
+                });
 
                 function closePromoModal() {
                     document.getElementById('promoModal').style.display = 'none';
@@ -1566,9 +2180,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
                         }
                         return null;
-                    }
-
-                    function applyTheme(isDark) {
+                    }                    function applyTheme(isDark) {
                         const elements = [
                             document.body,
                             document.querySelector('header'),
@@ -1587,7 +2199,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             document.getElementById('creatorInfo'),
                             document.getElementById('logoutCard'),
                             document.getElementById('realtime-users-card'),
-                            document.getElementById('users-card')
+                            document.getElementById('users-card'),
+                            document.getElementById('profile'),
+                            document.getElementById('profile-content')
                         ];
                         const notifyCards = document.querySelectorAll('#notify');
                         notifyCards.forEach(card => elements.push(card));
