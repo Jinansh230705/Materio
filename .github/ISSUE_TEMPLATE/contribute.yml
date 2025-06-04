@@ -1,0 +1,69 @@
+name: Contribute Materials
+description: Use this form to contribute materials to Materio's Library
+title: "New Contribution !"
+labels: ["material upload", "contribution"]
+body:
+  - type: input
+    id: semester
+    attributes:
+      label: 🗓 Semester
+      placeholder: e.g., 4th Semester
+    validations:
+      required: true
+
+  - type: input
+    id: subject
+    attributes:
+      label: 📘 Subject
+      placeholder: e.g., Operating Systems
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: 📂 Category
+      options:
+        - Syllabus
+        - Chapters
+        - Question Banks
+        - Assignments
+        - Tutorials
+        - Reference Book
+        - Refrence Tables
+        - Miscelleneous
+        - Cheatsheet
+        - Material Update
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: topic
+    attributes:
+      label: 📑 Topic Name (Filename)
+      placeholder: e.g., Paging_Algorithms.pdf
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional_info
+    attributes:
+      label: 📝 Additional Information
+      placeholder: Any other context you'd like to share
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        **📎 Upload File:**  
+        Please attach your file (drag & drop or click the attachment icon).
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: ✅ Checklist
+      options:
+        - label: The file name is clear and follows proper naming conventions.
+        - label: The material is relevant and accurate to the best of my knowledge.

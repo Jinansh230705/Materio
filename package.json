@@ -1,0 +1,30 @@
+{
+  "name": "materio-auth",
+  "version": "1.0.0",
+  "description": "Authentication system for Materio static site",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "bundle exec jekyll build && netlify build",
+    "functions": "netlify functions:serve --functions=api/v1",
+    "minify-js": "uglifyjs assets/scripts/auth.js assets/scripts/login.js assets/scripts/signup.js assets/scripts/forgot-password.js assets/scripts/profile-management.js -o _site/assets/scripts/auth.min.js --source-map --compress --mangle",
+    "optimize": "npm run minify-js && npm run copy-min",
+    "copy-min": "shx cp _site/assets/scripts/auth.min.js _site/assets/scripts/auth.min.js.map public/js/"
+  },
+  "dependencies": {
+    "@octokit/rest": "^22.0.0",
+    "@supabase/supabase-js": "^2.49.4",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.5.0",
+    "formidable": "^3.5.4",
+    "googleapis": "^134.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "netlify-cli": "^16.5.1",
+    "shx": "^0.3.4",
+    "uglify-js": "^3.17.4"
+  }
+}

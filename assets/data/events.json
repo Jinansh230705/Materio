@@ -1,0 +1,16 @@
+[
+    {
+        "event": " ",
+        "url_pc": "/static/res/e1pc.jpg",
+        "url_mobile": "/static/res/e1mobile.jpg",
+        "setDate": "2025-11-30T24:00:00Z",
+        "default": 0
+    },
+    {
+        "event": "Default",
+        "url_pc": "/assets/img/events/hero.png",
+        "url_mobile": "/assets/img/events/hero_mobile.png",
+        "setDate": "2000-01-01T00:00:00Z",
+        "default": 1
+    }
+]

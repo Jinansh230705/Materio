@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>Profile - Materio Auth</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">  <link rel="stylesheet" href="css/redesigned-styles.css">      <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+    /* Google Drive transitions */
+    #linkDriveBtn, #unlinkDriveBtn {
+      transition: all 0.3s ease;
+    }
+    .google-drive-buttons {
+      margin-top: 10px;
+    }
+    
+    /* Admin toggle buttons */
+    .btn-icon.admin-toggle {
+      background: none;
+      border: none;
+      padding: 5px 8px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      color: var(--text-secondary);
+    }
+    
+    .btn-icon.admin-toggle.active {
+      color: #4caf50;
+    }
+    
+    .btn-icon.admin-toggle:not(.active):hover {
+      color: #ff8200;
+    }
+    
+    .btn-icon.admin-toggle.active:hover {
+      color: #f44336;
+    }
+      /* Action buttons container */
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-start;
+      min-width: 80px; /* Ensure enough space for buttons */
+    }/* Delete invite button */
+    .btn-icon.delete-invite {
+      color: var(--text-secondary);
+      transition: all 0.2s ease;
+      min-width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      background: transparent;
+      border: none;
+    }
+    
+    .btn-icon.delete-invite:hover {
+      color: #f44336;
+      background-color: rgba(244, 67, 54, 0.1);
+    }
+
+    .btn-icon.delete-invite:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    
+    .btn-icon.delete-invite .fa-spinner {
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Google Drive card hover effects */
+    .google-drive-card {
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .google-drive-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Status indicator styles */
+    .status-indicator.connected {
+      color: #28a745;
+    }
+      .status-indicator.disconnected {
+      color: #dc3545;
+    }
+    
+    /* Admin Invite Card Styles */
+    .admin-invite-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .admin-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: rgba(255, 107, 53, 0.1);
+      border-radius: 12px;
+    }
+    
+    .admin-content h3 {
+      margin: 0 0 5px 0;
+      color: var(--text-primary);
+      font-size: 1.2rem;
+    }
+    
+    .admin-content p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .invite-actions {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .invite-display {
+      background: var(--background-secondary);
+      border-radius: 8px;
+      padding: 15px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .invite-code-container label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    
+    .invite-code-input {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    
+    .invite-code-input input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--background-primary);
+      color: var(--text-primary);
+      font-family: "Space Mono", monospace;
+      font-size: 0.9rem;
+    }
+    
+    .invite-help {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+    
+    /* Invite Management Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: none; /* Hide modals by default */
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(3px);
+    }
+      /* Show modals only when 'show' class is added */
+    .modal.show {
+      display: flex;
+    }
+    
+    /* General modal content styling */
+    .modal-content {
+      background: var(--card-color);
+      border-radius: 12px;
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      padding: 24px;
+    }
+    
+    .modal-content h3 {
+      margin: 0 0 16px 0;
+      color: var(--text-primary);
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    
+    .modal-content p {
+      margin: 0 0 16px 0;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+    
+    .modal-cancel {
+      background: var(--background-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+    
+    .modal-cancel:hover {
+      background: var(--background-primary);
+    }
+      .invite-modal {
+      background: var(--card-color);
+      border-radius: 12px;
+      width: 90%;
+      max-width: 900px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      max-height: 90vh; /* Max height for very large content */
+    }
+    
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--background-color);
+    }
+    
+    .modal-header h2 {
+      margin: 0;
+      color: var(--text-color);
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    
+    .modal-header .close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: var(--text-light-color);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+      line-height: 1;
+    }
+    
+    .modal-header .close:hover {
+      background: rgba(255, 130, 0, 0.1);
+      color: #ff8200;
+    }    .modal-body {
+      padding: 24px;
+      flex: 1;
+      overflow-y: auto;
+      max-height: 80vh; /* Allow scrolling of modal content only if it exceeds viewport height */
+    }
+    
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border-color);
+      background: var(--background-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    /* Invite Stats */
+    .invite-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    
+    .stat-card {
+      background: var(--background-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .stat-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ff8200;
+    }
+    
+    .stat-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-light-color);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;    }    /* Invite Table */    .invite-table-container {
+      overflow-x: auto; /* Keep horizontal scrolling for table width responsiveness */
+      overflow-y: auto; /* Show scrollbar only when content exceeds max-height */
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 16px;
+      transition: all 0.3s ease; /* Smooth transition when table height changes */
+      max-height: 600px; /* Set maximum height before scrollbar appears */
+      min-height: 150px; /* Optimized minimum height to show at least 2-3 rows */
+      display: flex; /* Use flexbox for better control */
+      flex-direction: column; /* Stack children vertically */
+    }.invite-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      table-layout: fixed; /* Improve table rendering performance */
+    }
+    
+    .invite-table tbody {
+      display: table-row-group; /* Ensures table body displays properly */
+    }
+    
+    /* Ensure the "invite-loading" state doesn't cause layout shifts */
+    .invite-loading {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-light-color);
+      min-height: 100px; /* Provide some minimum height to avoid layout shift */
+    }
+    
+    .invite-table th,
+    .invite-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }    .invite-table th {
+      background: var(--background-color);
+      font-weight: 600;
+      color: var(--text-color);
+      position: sticky; /* Make headers sticky when scrolling */
+      top: 0; /* Stick to the top of the container */
+      z-index: 10; /* Keep z-index to ensure headers stay above content */
+      white-space: nowrap; /* Prevent wrapping of header text */
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .invite-table td {
+      color: var(--text-light-color);
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .invite-table tbody tr:hover {
+      background: rgba(255, 130, 0, 0.05);
+    }
+    
+    .invite-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    
+    /* Invite code display */
+    .invite-code {
+      font-family: "Space Mono", monospace;
+      background: var(--background-color);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      font-size: 0.8rem;
+    }
+    
+    /* Status badges */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .status-badge.pending {
+      background: rgba(255, 180, 0, 0.1);
+      color: #ffb400;
+      border: 1px solid rgba(255, 180, 0, 0.3);
+    }
+    
+    .status-badge.used {
+      background: rgba(86, 202, 0, 0.1);
+      color: #56ca00;
+      border: 1px solid rgba(86, 202, 0, 0.3);
+    }
+    
+    .status-badge.expired {
+      background: rgba(255, 76, 81, 0.1);
+      color: #ff4c51;
+      border: 1px solid rgba(255, 76, 81, 0.3);
+    }
+      /* Action buttons in table */
+    .action-btn {
+      background: none;
+      border: none;
+      color: var(--text-light-color);
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      transition: all 0.2s ease;
+    }
+    
+    .action-btn:hover {
+      background: var(--background-color);
+      color: var(--text-color);
+    }
+    
+    .action-btn.copy:hover {
+      color: #007bff;
+    }
+    
+    .action-btn.delete:hover {
+      color: #dc3545;
+    }
+    
+    /* Action buttons container - improved alignment */
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-start;
+      min-width: 80px; /* Ensure enough space for buttons */
+    }    /* Loading and empty states */
+    .invite-loading, .invite-empty {
+      text-align: center;
+      padding: 30px 20px;
+      color: var(--text-light-color);
+      min-height: 150px; /* Slightly reduced minimum height to look better in scrollable container */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%; /* Ensure it spans the full width of the table */
+    }
+    
+    .loading-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .invite-loading i {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      color: #ff8200;
+    }
+    
+    .invite-empty i {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      color: var(--text-light-color);
+    }
+    
+    .invite-empty p {
+      margin: 0 0 16px 0;
+      font-size: 1.1rem;
+    }
+    
+    /* Responsive design */    @media (max-width: 768px) {
+      .invite-modal {
+        width: 95%;
+        max-height: 95vh;
+      }
+      
+      .modal-header {
+        padding: 16px 20px;
+      }
+      
+      .modal-body {
+        padding: 20px;
+      }
+        .invite-table-container {
+        max-height: 400px; /* Smaller max-height for mobile devices */
+        min-height: 120px; /* Smaller minimum height for mobile to save space */
+        border-radius: 6px; /* Slightly smaller border radius for mobile */
+      }
+      
+      .invite-table th,
+      .invite-table td {
+        padding: 10px 12px; /* Reduce padding for mobile */
+        font-size: 0.85rem; /* Slightly smaller font for mobile */
+      }
+      
+      /* Adjust column widths for better mobile display */
+      .invite-table th:nth-child(3), /* Created column */
+      .invite-table td:nth-child(3) {
+        display: none; /* Hide less important columns on mobile */
+      }
+        .invite-table th:nth-child(5), /* Expires column */
+      .invite-table td:nth-child(5) {
+        display: none; /* Hide less important columns on mobile */
+      }
+      
+      .modal-footer {
+        padding: 12px 20px;
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .invite-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .invite-table {
+        font-size: 0.8rem;
+      }
+      
+      .invite-table th,
+      .invite-table td {
+        padding: 8px 12px;
+      }
+    }
+
+    /* Files Tab Styles */
+    .files-header {
+      margin-bottom: 24px;
+    }
+
+    .files-header h3 {
+      margin: 0 0 8px 0;
+      color: var(--text-primary);
+    }
+
+    .files-header p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* File Upload Section */
+    .file-upload-section {
+      margin-bottom: 32px;
+    }
+
+    .upload-area {
+      border: 2px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 40px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--background-secondary);
+    }
+
+    .upload-area:hover {
+      border-color: #ff8200;
+      background: rgba(255, 130, 0, 0.05);
+    }
+
+    .upload-area.dragover {
+      border-color: #ff8200;
+      background: rgba(255, 130, 0, 0.1);
+      transform: scale(1.02);
+    }
+
+    .upload-icon {
+      margin-bottom: 16px;
+    }
+
+    .upload-icon i {
+      font-size: 3rem;
+      color: var(--text-secondary);
+    }
+
+    .upload-text h4 {
+      margin: 0 0 8px 0;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+    }
+
+    .upload-text p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Upload Progress */
+    .upload-progress {
+      margin-top: 16px;
+      background: var(--background-secondary);
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--border-color);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #ff8200, #ff6b35);
+      border-radius: 4px;
+      width: var(--progress, 0%);
+      transition: width 0.3s ease;
+    }
+
+    .progress-text {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* File Browser */
+    .file-browser {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .browser-header {
+      background: var(--background-secondary);
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--background-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      transition: all 0.2s ease;
+    }
+
+    .breadcrumb-item:hover {
+      background: rgba(255, 130, 0, 0.1);
+      border-color: #ff8200;
+    }
+
+    .breadcrumb-item.active {
+      background: #ff8200;
+      color: white;
+      border-color: #ff8200;
+    }
+
+    .browser-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* File List */
+    .file-list {
+      min-height: 300px;
+      background: var(--background-primary);
+    }
+
+    .file-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+
+    .file-loading i {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      color: #ff8200;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .file-item:hover {
+      background: rgba(255, 130, 0, 0.05);
+    }
+
+    .file-item:last-child {
+      border-bottom: none;
+    }
+
+    .file-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+    }
+
+    .file-icon.folder,.file-icon.image,.file-icon.code,.file-icon.document {
+      color: #ff8200;
+    }
+
+    .file-details {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .file-name {
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-meta {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .file-item:hover .file-actions {
+      opacity: 1;
+    }
+
+    .file-action-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+    }
+
+    .file-action-btn:hover {
+      background: var(--background-secondary);
+      color: var(--text-primary);
+    }
+
+    .file-action-btn.rename:hover {
+      color: #2196f3;
+    }
+
+    .file-action-btn.delete:hover {
+      color: #f44336;
+    }
+
+    .file-action-btn.download:hover {
+      color: #4caf50;
+    }
+
+    /* Empty State */
+    .file-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      color: var(--text-secondary);
+    }
+
+    .file-empty i {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      color: var(--text-secondary);
+    }
+
+    .file-empty p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .browser-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .breadcrumb {
+        justify-content: center;
+      }
+
+      .browser-actions {
+        justify-content: center;
+      }
+
+      .file-item {
+        padding: 16px 12px;
+      }
+
+      .file-actions {
+        opacity: 1;
+      }
+    }    /* Custom scrollbar for invite table */
+    .invite-table-container::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    .invite-table-container::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+    }
+    
+    .invite-table-container::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+    
+    .invite-table-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    /* For Firefox */
+    .invite-table-container {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.05);
+    }
+  </style>
+  <script>
+    // Check for dark mode cookie
+    document.addEventListener('DOMContentLoaded', function () {
+      const darkModeCookie = document.cookie.split('; ').find(row => row.startsWith('darkMode='));
+      if (darkModeCookie && darkModeCookie.split('=')[1] === 'true') {
+        document.body.classList.add('dark-mode');
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <div class="profile-container"> <!-- Sidebar -->
+    <div class="sidebar">
+      <button class="sidebar-close-btn" aria-label="Close menu">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="sidebar-header">
+        <img src="images/materio_new_bk.svg" alt="Materio Logo" class="logo" id="logo-light">
+        <img src="images/materio_new_wh.svg" alt="Materio Logo" class="logo" id="logo-dark" style="display: none;">
+      </div>      <div class="sidebar-nav">
+        <button class="sidebar-nav-item active" data-tab="dashboard">
+          <i class="fas fa-tachometer-alt"></i> Dashboard
+        </button>
+        <button class="sidebar-nav-item" data-tab="security">
+          <i class="fas fa-shield-alt"></i> Security
+        </button>
+        <button id="filesTab" class="sidebar-nav-item" data-tab="files" style="display: none;">
+          <i class="fas fa-folder-open"></i> Files
+        </button>
+        <button class="sidebar-nav-item" data-tab="danger">
+          <i class="fas fa-exclamation-triangle"></i> Danger Zone
+        </button>
+      </div>
+      <div class="sidebar-footer">
+        <button id="logoutButton" class="btn btn-outline btn-sm">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+        <a href="/#" class="back-link">
+          <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <!-- Theme Switcher -->
+        <div class="theme-switcher-card">
+          <div class="theme-options">
+            <button class="theme-option" data-theme="light">
+              <i class="fas fa-sun"></i>
+            </button>
+            <button class="theme-option" data-theme="dark">
+              <i class="fas fa-moon"></i>
+            </button>
+            <button class="theme-option" data-theme="system">
+              <i class="fas fa-laptop"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="content-header">
+        <h2>Account Settings</h2>
+        <p>Manage your account details and preferences</p>
+      </div> <!-- Dashboard Tab -->
+      <div id="dashboard" class="tab-pane active">
+        <!-- Profile Card -->
+        <div class="card-one profile-card">
+          <div class="profile-info">
+            <div class="profile-image-container">
+              <img id="dashboard-profile-image" src="/assets/img/default-avatar.svg" alt="Profile">
+            </div>
+            <div class="profile-details">
+              <h3 id="dashboard-display-name">User</h3>
+              <p id="dashboard-username">@username</p>
+            </div>
+          </div>
+        </div>        <!-- Google Drive Integration - Temporarily Disabled -->
+        <div class="card-one google-drive-card" id="googleDriveCard" style="opacity: 0.6; cursor: not-allowed; transition: none; pointer-events: none;">
+          <div class="drive-header">
+            <div class="drive-icon" style="opacity: 0.5;">
+              <svg width="40" height="40" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg">
+                <path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z"
+                  fill="#0066da" />
+                <path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z"
+                  fill="#00ac47" />
+                <path
+                  d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z"
+                  fill="#ea4335" />
+                <path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d" />
+                <path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z"
+                  fill="#2684fc" />
+                <path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z"
+                  fill="#ffba00" />
+              </svg>
+            </div>
+            <div class="drive-content">
+              <h3>Google Drive <span style="font-size: 0.8em; color: #ff8200;">(Not Available Currently)</span></h3>
+              <p id="drive-status">Google Drive integration is temporarily unavailable</p>
+            </div>
+            <div class="drive-actions">
+              <button id="linkDriveBtn" class="btn btn-primary" style="display: none;">Link Drive</button>
+              <button id="unlinkDriveBtn" class="btn btn-outline btn-danger" style="display: none;">Unlink</button>
+              <span id="driveStatusIndicator" class="status-indicator"></span>
+              <i class="fas fa-ban" style="color: #dc3545; font-size: 18px;"></i>
+            </div>
+          </div>        </div>        <!-- Admin Invite Management (Only shown for admin users) -->
+        <div id="adminInviteCard" class="card-one" style="display: none;">
+          <div class="admin-invite-header">
+            <div class="admin-icon">
+              <i class="fas fa-user-shield" style="color: #ff6b35; font-size: 24px;"></i>
+            </div>
+            <div class="admin-content">
+              <h3>Admin Privileges</h3>
+              <p>Generate and manage invite codes for new users</p>
+            </div>
+          </div>
+          
+          <div class="invite-actions">
+            <button id="generateInviteBtn" class="btn btn-primary">
+              <i class="fas fa-plus"></i> Generate Invite Code
+            </button>
+            <button id="viewInvitesBtn" class="btn btn-outline">
+              <i class="fas fa-list"></i> View All Invites
+            </button>
+          </div>
+          
+          <!-- Generated Invite Display -->
+          <div id="generatedInviteSection" class="invite-display" style="display: none;">
+            <div class="invite-code-container">
+              <label for="generatedInviteCode">Generated Invite Code:</label>
+              <div class="invite-code-input">
+                <input type="text" id="generatedInviteCode" readonly>
+                <button type="button" id="copyInviteBtn" class="btn-icon" title="Copy to clipboard">
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+              <p class="invite-help">Share this code with users you want to invite. The code expires in 30 days.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Drive Tools -->
+        <div id="driveToolsSection" class="drive-tools" style="display: none;">
+          <h3>Drive Tools</h3>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-icon">
+                <i class="fas fa-file-alt"></i>
+              </div>
+              <div class="tool-content">
+                <h4>Files</h4>
+                <p>Upload, view, and manage your files</p>
+              </div>
+              <button class="tool-btn" onclick="openFilesModal()">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <div class="tool-card coming-soon">
+              <div class="tool-icon">
+                <i class="fas fa-sync-alt"></i>
+              </div>
+              <div class="tool-content">
+                <h4>Sync</h4>
+                <p>Auto-sync your files</p>
+                <span class="coming-soon-badge">Coming Soon</span>
+              </div>
+              <button class="tool-btn" disabled>
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <div class="tool-card coming-soon">
+              <div class="tool-icon">
+                <i class="fas fa-share-alt"></i>
+              </div>
+              <div class="tool-content">
+                <h4>Share</h4>
+                <p>Share files with others</p>
+                <span class="coming-soon-badge">Coming Soon</span>
+              </div>
+              <button class="tool-btn" disabled>
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div> <!-- Security Tab -->
+      <div id="security" class="tab-pane">
+        <div class="card-one">
+          <h3>Profile Information</h3>
+          <form id="profileForm">
+            <div class="form-section">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username">
+              </div>
+
+              <div class="form-group">
+                <label for="displayName">Display Name</label>
+                <input type="text" id="displayName" name="displayName" placeholder="Enter your display name">
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" readonly>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-section">
+              <h4 class="form-section-title">Profile Picture</h4>
+              <div class="form-group">
+                <div class="profile-picture-input horizontal">
+                  <div class="profile-picture-preview">
+                    <img id="picturePreview" src="/assets/img/default-avatar.svg" alt="Profile Preview">
+                  </div>
+                  <div class="picture-actions">
+                    <input type="file" id="profilePicture" name="profilePicture" accept="image/*"
+                      style="display: none;">
+                    <button type="button" id="uploadButton" class="btn btn-outline">Change Picture</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn">SAVE CHANGES</button>
+          </form>
+        </div>
+        <div class="card-one">
+          <h3>Security Settings</h3>
+          <form id="securityForm">
+            <div class="form-section">
+              <h4 class="form-section-title">Change Password</h4>
+              <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <div class="password-input">
+                  <input type="password" id="currentPassword" name="currentPassword"
+                    placeholder="Enter current password">
+                  <i class="fas fa-eye toggle-password" data-target="currentPassword"></i>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <div class="password-input">
+                  <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password">
+                  <i class="fas fa-eye toggle-password" data-target="newPassword"></i>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="confirmPassword">Confirm New Password</label>
+                <div class="password-input">
+                  <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
+                  <i class="fas fa-eye toggle-password" data-target="confirmPassword"></i>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn">UPDATE PASSWORD</button>
+          </form>
+        </div>
+        <div class="card-one">
+          <h3>Recovery Key</h3>
+          <div class="form-section">
+            <p class="form-help">Your recovery key is used to regain access to your account if you forget your password.
+              Keep it in a safe place.</p>
+            <div class="recovery-key-display">
+              <input type="text" id="recoveryKey" readonly>
+              <button type="button" id="copyKey" class="btn-icon">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+            <p class="form-help">This key should be stored securely, such as in a password manager.</p>
+            <button type="button" id="generateNewKey" class="btn btn-outline">Generate New Recovery Key</button>
+          </div>        </div>
+      </div>      <!-- Files Tab -->
+      <div id="files" class="tab-pane">
+        <div class="card-one">
+          <div class="files-header">
+            <h3>File Management System</h3>
+            <p>Upload course materials and manage CDN files and directories.</p>
+          </div>
+          
+          <!-- Sub-tabs for Files -->
+          <div class="files-sub-tabs">
+            <div class="sub-tab-nav">
+              <button class="sub-tab-btn active" data-subtab="uploads">
+                <i class="fas fa-upload"></i> Uploads
+              </button>
+              <button class="sub-tab-btn" data-subtab="management">
+                <i class="fas fa-folder"></i> File Management
+              </button>
+            </div>
+            
+            <!-- Uploads Sub-tab -->
+            <div id="uploads" class="sub-tab-pane active">
+              <div class="upload-form-section">
+                <form id="courseUploadForm">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="semester">Semester</label>
+                      <select id="semester" name="semester" required>
+                        <option value="">Select Semester</option>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
+                      </select>
+                    </div>
+                      <div class="form-group">
+                      <label for="subject">Subject</label>
+                      <select id="subject" name="subject" required disabled>
+                        <option value="">Select Semester First</option>
+                      </select>
+                      <input type="text" id="customSubject" placeholder="Enter new subject name" style="display: none; margin-top: 8px;" class="form-control">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                      <option value="">Select Category</option>
+                      <option value="NPTEL Weekly Materials">NPTEL Weekly Materials</option>
+                      <option value="NPTEL Book">NPTEL Book</option>
+                      <option value="NPTEL Assignment with Solutions">NPTEL Assignment with Solutions</option>
+                      <option value="Lecture Notes">Lecture Notes</option>
+                      <option value="Previous Year Papers">Previous Year Papers</option>
+                      <option value="Lab Materials">Lab Materials</option>
+                      <option value="Reference Books">Reference Books</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  
+                  <!-- File Upload Area -->
+                  <div class="upload-area" id="courseUploadArea">
+                    <div class="upload-icon">
+                      <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <div class="upload-text">
+                      <h4>Drop files here or click to upload</h4>
+                      <p>Supported formats: PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, ZIP, etc.</p>
+                    </div>
+                    <input type="file" id="courseFileInput" multiple accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.zip,.rar,.txt">
+                  </div>
+                  
+                  <!-- File Preview Cards -->
+                  <div class="file-preview-container" id="filePreviewContainer" style="display: none;">
+                    <h4>Selected Files</h4>
+                    <div class="file-preview-grid" id="filePreviewGrid">
+                      <!-- File preview cards will be inserted here -->
+                    </div>
+                  </div>
+                  
+                  <!-- Upload Options -->
+                  <div class="upload-options" id="uploadOptions" style="display: none;">
+                    <div class="form-group">
+                      <label class="checkbox-label">
+                        <input type="checkbox" id="autoPushNotify" checked>
+                        <span class="checkmark"></span>
+                        Auto Push Notification
+                      </label>
+                      <small>Automatically create a notification when materials are uploaded</small>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" id="uploadCourseFiles">
+                      <i class="fas fa-upload"></i> Upload Materials
+                    </button>
+                  </div>
+                </form>
+                
+                <!-- Upload Progress -->
+                <div class="upload-progress" id="courseUploadProgress" style="display: none;">
+                  <div class="progress-bar" id="courseProgressBar"></div>
+                  <span class="progress-text" id="courseProgressText">0%</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- File Management Sub-tab -->
+            <div id="management" class="sub-tab-pane">
+             
+              <!-- File Browser Section -->
+              <div class="file-browser">
+                <div class="browser-header">
+                  <div class="breadcrumb">
+                    <span class="breadcrumb-item" data-path="">
+                      <i class="fas fa-home"></i> Root
+                    </span>
+                  </div>
+                  <div class="browser-actions">
+                    <button class="btn btn-outline btn-sm" id="refreshBtn">
+                      <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <button class="btn btn-outline btn-sm" id="newFolderBtn">
+                      <i class="fas fa-folder-plus"></i> New Folder
+                    </button>
+                  </div>
+                </div>
+
+                <div class="file-list" id="fileList">
+                  <div class="file-loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading files...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      <!-- Danger Zone Tab -->
+      <div id="danger" class="tab-pane">
+        <div class="card-one danger-section">
+          <h3>Delete Account</h3>
+          <div class="form-section">
+            <p class="danger-warning">Warning: This action is irreversible</p>
+            <p>Once you delete your account, all of your data will be permanently removed. This includes your:</p>
+            <ul class="danger-list">
+              <li>Profile information</li>
+              <li>Account settings</li>
+              <li>Saved preferences</li>
+            </ul>
+
+            <button type="button" id="deleteAccountButton" class="btn btn-danger">DELETE MY ACCOUNT</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification component -->
+  <div id="notification" class="notification">
+    <div class="notification-content">
+      <i class="notification-icon"></i>
+      <div class="notification-message"></div>
+    </div>
+    <button class="notification-close">&times;</button>
+  </div>  <!-- Delete confirmation modal -->
+  <div id="deleteAccountModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <h3>Are you sure?</h3>
+      <p>This action cannot be undone. All your data, including your profile, settings, and content will be permanently
+        deleted.</p>
+      
+      <div class="form-group">
+        <label for="deleteConfirmPassword">Enter Password to Confirm</label>
+        <div class="password-input">
+          <input type="password" id="deleteConfirmPassword" name="deleteConfirmPassword"
+            placeholder="Enter your password" required>
+          <i class="fas fa-eye toggle-password" data-target="deleteConfirmPassword"></i>
+        </div>
+      </div>
+      
+      <div class="modal-actions">
+        <button class="btn btn-outline modal-cancel">Cancel</button>
+        <button id="confirmDeleteButton" class="btn btn-danger">Yes, Delete My Account</button>
+      </div>
+    </div>
+  </div>
+  <!-- Files Modal -->
+  <div id="filesModal" class="modal large-modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>My Files</h3>
+        <button class="modal-close" onclick="closeFilesModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="files-toolbar">
+          <button id="uploadFileBtn" class="btn btn-primary">
+            <i class="fas fa-upload"></i> Upload File
+          </button>
+          <button id="refreshFilesBtn" class="btn btn-outline">
+            <i class="fas fa-sync-alt"></i> Refresh
+          </button>
+        </div>
+
+        <div id="filesContainer" class="files-container">
+          <div id="filesLoading" class="loading-state">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading files...</p>
+          </div>
+
+          <div id="filesEmpty" class="empty-state" style="display: none;">
+            <i class="fas fa-folder-open"></i>
+            <p>No files found</p>
+            <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+              Upload Your First File
+            </button>
+          </div>
+
+          <div id="filesList" class="files-list" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- File upload input (hidden) -->
+  <input type="file" id="fileInput" style="display: none;" multiple>
+
+  <!-- File viewer modal -->
+  <div id="fileViewerModal" class="modal large-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="viewerFileName">File Preview</h3>
+        <div class="viewer-actions">
+          <a id="downloadFileBtn" class="btn btn-outline" target="_blank">
+            <i class="fas fa-download"></i> Download
+          </a>
+          <button class="modal-close" onclick="closeFileViewer()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div id="fileViewerContent" class="file-viewer-content"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Mobile Hamburger Menu -->
+  <div class="mobile-menu-toggle">
+    <button id="hamburgerButton" aria-label="Toggle menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+  <!-- Content overlay for when sidebar is open on mobile -->
+  <div class="content-overlay"></div>
+  <script>
+    // Toggle logo based on dark mode
+    function toggleLogo() {
+      const lightLogo = document.getElementById('logo-light');
+      const darkLogo = document.getElementById('logo-dark');
+      if (document.body.classList.contains('dark-mode')) {
+        lightLogo.style.display = 'none';
+        darkLogo.style.display = 'inline-block';
+      } else {
+        lightLogo.style.display = 'inline-block';
+        darkLogo.style.display = 'none';
+      }
+    }
+
+    // Ensure close button is hidden on desktop
+    function checkCloseButtonVisibility() {
+      const closeButton = document.querySelector('.sidebar-close-btn');
+      const isMobile = window.innerWidth <= 768;
+
+      if (closeButton) {
+        if (!isMobile) {
+          closeButton.style.display = 'none';
+        } else if (document.body.classList.contains('sidebar-open')) {
+          closeButton.style.display = 'flex';
+        } else {
+          closeButton.style.display = 'none';
+        }
+      }
+    }
+
+    // Theme Switching Function
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.body.classList.remove('light-mode');
+        document.cookie = "darkMode=true; path=/; max-age=31536000"; // 1 year
+        document.cookie = "theme=dark; path=/; max-age=31536000";
+      } else if (theme === 'light') {
+        document.body.classList.remove('dark-mode');
+        document.body.classList.add('light-mode');
+        document.cookie = "darkMode=false; path=/; max-age=31536000";
+        document.cookie = "theme=light; path=/; max-age=31536000";
+      } else if (theme === 'system') {
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (prefersDarkMode) {
+          document.body.classList.add('dark-mode');
+          document.body.classList.remove('light-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+          document.body.classList.add('light-mode');
+        }
+        document.cookie = "theme=system; path=/; max-age=31536000";
+        // Remove the darkMode cookie when in system mode
+        document.cookie = "darkMode=; path=/; max-age=0";
+      }
+
+      // Update the active state of theme buttons
+      const themeButtons = document.querySelectorAll('.theme-option');
+      themeButtons.forEach(button => {
+        button.classList.remove('active');
+        if (button.getAttribute('data-theme') === theme) {
+          button.classList.add('active');
+        }
+      });
+
+      toggleLogo();
+    }
+
+    // Detect and apply system theme changes
+    function setupSystemThemeListener() {
+      const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+
+      // Initial check for system theme
+      if (systemThemeMedia.matches) {
+        document.body.classList.add('dark-mode');
+      } else {
+        document.body.classList.remove('dark-mode');
+      }
+
+      // Listen for system theme changes
+      systemThemeMedia.addEventListener('change', (e) => {
+        const currentTheme = getCookieValue('theme');
+        if (currentTheme === 'system') {
+          if (e.matches) {
+            document.body.classList.add('dark-mode');
+            document.body.classList.remove('light-mode');
+          } else {
+            document.body.classList.remove('dark-mode');
+            document.body.classList.add('light-mode');
+          }
+          toggleLogo();
+        }
+      });
+    }
+
+    // Helper function to get cookie value
+    function getCookieValue(name) {
+      const cookieMatch = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return cookieMatch ? cookieMatch[2] : null;
+    }
+
+    // Check for dark mode cookie
+    document.addEventListener('DOMContentLoaded', function () {
+      // Get theme cookie
+      const themeCookie = getCookieValue('theme');
+      const darkModeCookie = getCookieValue('darkMode');
+
+      // Set up theme buttons
+      const themeButtons = document.querySelectorAll('.theme-option');
+      themeButtons.forEach(button => {
+        button.addEventListener('click', function () {
+          const theme = this.getAttribute('data-theme');
+          setTheme(theme);
+        });
+      });
+
+      // Apply saved theme or use system default
+      if (themeCookie) {
+        setTheme(themeCookie);
+      } else if (darkModeCookie === 'true') {
+        // For backward compatibility
+        setTheme('dark');
+      } else if (darkModeCookie === 'false') {
+        // For backward compatibility
+        setTheme('light');
+      } else {
+        // Default to system
+        setTheme('system');
+      }
+
+      // Set up system theme listener
+      setupSystemThemeListener();
+
+      // Toggle logo
+      toggleLogo();
+    });      // Hamburger menu functionality
+    function setupMobileMenu() {
+      const hamburgerButton = document.getElementById('hamburgerButton');
+      const sidebar = document.querySelector('.sidebar');
+      const contentOverlay = document.querySelector('.content-overlay');
+      const closeButton = document.querySelector('.sidebar-close-btn');
+      const isMobile = () => window.innerWidth <= 768;
+
+      if (hamburgerButton && sidebar && contentOverlay) {
+        // Toggle sidebar on hamburger click
+        hamburgerButton.addEventListener('click', function () {
+          sidebar.classList.toggle('open');
+          contentOverlay.classList.toggle('active');
+          document.body.classList.toggle('sidebar-open');
+        });
+
+        // Close sidebar when clicking on close button
+        if (closeButton) {
+          closeButton.addEventListener('click', function () {
+            sidebar.classList.remove('open');
+            contentOverlay.classList.remove('active');
+            document.body.classList.remove('sidebar-open');
+          });
+        }
+
+        // Close sidebar when clicking on overlay
+        contentOverlay.addEventListener('click', function () {
+          sidebar.classList.remove('open');
+          contentOverlay.classList.remove('active');
+          document.body.classList.remove('sidebar-open');
+        });
+
+        // Close sidebar when a menu item is clicked
+        const sidebarNavItems = document.querySelectorAll('.sidebar-nav-item');
+        sidebarNavItems.forEach(item => {
+          item.addEventListener('click', function () {
+            if (isMobile()) {
+              sidebar.classList.remove('open');
+              contentOverlay.classList.remove('active');
+              document.body.classList.remove('sidebar-open');
+            }
+          });
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function () {
+          if (!isMobile()) {
+            sidebar.classList.remove('open');
+            contentOverlay.classList.remove('active');
+            document.body.classList.remove('sidebar-open');
+          }
+        });
+      }
+    }
+    // Set up mobile menu
+    setupMobileMenu();
+
+    // Check close button visibility on page load
+    checkCloseButtonVisibility();
+
+    // Add resize event listener to check close button visibility
+    window.addEventListener('resize', checkCloseButtonVisibility);
+  </script>  <script src="js/auth.js"></script>
+  <script src="js/profile.js"></script>
+  <!-- <script src="js/google-drive.js"></script> -->
+  <!-- <script>    // Initialize Google Drive Manager when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Initializing Google Drive Manager...');
+      try {
+        // Initialize development mode if needed
+        if (typeof initializeDevelopmentMode === 'function') {
+          initializeDevelopmentMode();
+        }
+        
+        window.googleDriveManager = new GoogleDriveManager();
+        console.log('Google Drive Manager initialized successfully');
+      } catch (error) {
+        console.error('Failed to initialize Google Drive Manager:', error);
+      }
+    });
+  </script> -->
+
+  <!-- View All Invites Modal -->
+  <div id="viewInvitesModal" class="modal" style="display: none;">
+    <div class="modal-content invite-modal">
+      <div class="modal-header">
+        <h2>Invite Management</h2>
+        <button class="close" onclick="closeInvitesModal()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- Invite Statistics -->
+        <div class="invite-stats">
+          <div class="stat-card">
+            <h3 id="totalInvites">0</h3>
+            <p>Total Invites</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="usedInvites">0</h3>
+            <p>Used</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="pendingInvites">0</h3>
+            <p>Pending</p>
+          </div>
+          <div class="stat-card">
+            <h3 id="expiredInvites">0</h3>
+            <p>Expired</p>
+          </div>
+        </div>        <!-- Invite Table -->
+        <div class="invite-table-container">
+          <table class="invite-table">
+            <thead>              <tr>
+                <th style="width: 20%;">Invite Code</th>
+                <th style="width: 10%;">Status</th>
+                <th style="width: 18%;">Created</th>
+                <th style="width: 22%;">Used By</th>
+                <th style="width: 18%;">Expires</th>
+                <th style="width: 12%; min-width: 100px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inviteTableBody">
+              <!-- Loading state -->
+              <tr class="invite-loading">
+                <td colspan="6">
+                  <div class="loading-content">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading invites...</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty state -->
+        <div id="inviteEmpty" class="invite-empty" style="display: none;">
+          <i class="fas fa-inbox"></i>
+          <p>No invites found</p>
+          <button class="btn btn-primary" onclick="closeInvitesModal(); document.getElementById('generateInviteBtn').click();">
+            Generate Your First Invite
+          </button>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="btn btn-primary" onclick="generateNewInviteFromModal()">
+          <i class="fas fa-plus"></i> Generate New Invite
+        </button>
+        <button class="btn btn-outline" onclick="refreshInvites()">
+          <i class="fas fa-sync-alt"></i> Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

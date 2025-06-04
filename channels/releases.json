@@ -1,0 +1,180 @@
+[
+    {
+        "branch": "channels",
+        "version": "4.0.2.1_Daily | Beta",
+        "build": "03/04/2025",
+        "logs": [
+            "FontAwesome Pro Icons",
+            "Optimisation - Added 'File Not Found !' and 'Error Checking File !' Notes instaed of loading blank iframe."
+        ]
+    },
+    {
+        "branch": "stable",
+        "version": "4.0.2.0",
+        "build": "31/03/2025",
+        "logs": [
+            "Visual Refresh 2.0 - enhanced UI with Glassmorphism style.",
+            "New wordmark - <i>stylized as:</i> <b>materio.</b>",
+            "Ghibli Aesthetic - Studio Ghibli inspired art.",
+            "Notification Badge - every notification counts.",
+            "Addition to Settings",
+            " - option to disable background images.",
+            " - option to opt out of optional cookies.",
+            "Bug Fix - when submit was clicked without selecting options alert for selecting options were given twice.",
+            "Bug Fix - Background image wasn't adapting to viewport automatically needing to refresh.",
+            "Optimisation - Faster PDF loading for upto last 5 recently opened PDFs."
+        ]
+    },
+    {
+        "branch": "channels",
+        "version": "4.0.2_Daily | Beta",
+        "build": "29/03/2025",
+        "logs": [
+            "Visual Refresh 2.0 - enhanced UI with Glassmorphism style.",
+            "New wordmark - <i>stylized as:</i> <b>materio.</b>",
+            "Ghibli Aesthetic - Studio Ghibli inspired art.",
+            "Notification Badge - every notification counts.",
+            "Addition to Settings",
+            " - option to disable background images.",
+            " - option to opt out of optional cookies.",
+            "Bug Fix - when submit was clicked without selecting options alert for selecting options were given twice.",
+            "Bug Fix - Background image wasn't adapting to viewport automatically needing to refresh.",
+            "Optimisation - Faster PDF loading for upto last 5 recently opened PDFs."
+        ]
+    },
+    {
+        "branch": "stable",
+        "version": "4.0.1.0",
+        "build": "28/03/2025",
+        "logs": [
+            "Visual Refresh - Materio now has a new look.",
+            "Faster - loading new pages takes less time now with tabs.",
+            "Introduction of Categories menu - for easy selection and organization of material type.",
+            "New PDF viewer and style for better view size with an option of Fullscreen mode.",
+            "Navigation to tabs has been made easier.",
+            "Notification Badges - You can see badge with counts whenever theres a new notification.",
+            "Dark mode - toggle on/off in settings."
+        ]
+    },
+    {
+        "branch": "channels",
+        "version": "4.0.1_Daily | Beta",
+        "build": "28/03/2025",
+        "logs": [
+            "Visual Refresh - Materio now has a new look.",
+            "Faster - loading new pages takes less time now with tabs.",
+            "Introduction of Categories menu - for easy selection and organization of material type.",
+            "New PDF viewer and style for better view size with an option of Fullscreen mode.",
+            "Navigation to tabs has been made easier.",
+            "Notification Badges - You can see badge with counts whenever theres a new notification.",
+            "Dark mode - toggle on/off in settings."
+        ]
+    },
+    {
+        "branch": "channels",
+        "version": "4.0_pre | Beta",
+        "build": "26/03/2025",
+        "logs": [
+            "Materio v4",
+            "Visual overhaul"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "12.12.24",
+        "version": "3.0",
+        "logs": [
+            "Introduced Jekyll templating",
+            "Font Awesome V6 Icons in the Navbar instead of text enhancing visual appearance",
+            "Introduced Blogs with Markdown formatting (Limited Access only for now)",
+            "Consistent UI across all Materio Pages",
+            "Bug Fixes and optimisations",
+            "Secure: The passwords are hashed before storing.",
+            "*Consistent UI includes only Home, Chat and Changelog sections of the site.",
+            "*Blogs uses Customised flavor of Minima V3 Jekyll template.",
+            "*Blogs access is currently limited to only authorised credentials, if you want access you can signup for the waitlist by sending mail to support.",
+            "Support : materio.operable341@silomails.com"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "25.11.24",
+        "version": "2.5",
+        "logs": [
+            "Fixed Bugs",
+            "Fixed Padding and Improved CSS",
+            "Mobile Responsive UI",
+            "Added Notification Center"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "03.11.24",
+        "version": "2.2",
+        "logs": [
+            "Added New Materials",
+            "Removed Editor",
+            "Fixed 404 page",
+            "Fixed Changelog and About Pages"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "18.05.24",
+        "version": "2.0_C67 | Alpha",
+        "logs": [
+            "Added support for Themes",
+            "Added toggle for Settings",
+            "Legacy Mode (Pages)",
+            "Fixed Fonts",
+            "Fixed Bugs"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "17.05.24",
+        "version": "1.1 | Weekly",
+        "logs": [
+            "Uploaded all Materials",
+            "Added Question Banks and Important Questions"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "29.04.24",
+        "version": "1.0.1 | Weekly",
+        "logs": [
+            "Added Materials"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "29.03.24",
+        "version": "1.0.1 | Weekly",
+        "logs": [
+            "Added new Resources",
+            "Fixed some bugs"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "16.03.24",
+        "version": "1.0 | Weekly",
+        "logs": [
+            "Introduced New UI",
+            "Adobe PDF Viewer API",
+            "Shifted from Github Pages to Netlify"
+        ]
+    },
+    {
+        "branch": "stable",
+        "build": "08.03.24",
+        "version": "0.1 | Dev",
+        "logs": [
+            "Initial Launch of Materio",
+            "Resources and Chat features",
+            "Chat based on Giscus API",
+            "Chrome PDF viewer"
+        ]
+    }
+]

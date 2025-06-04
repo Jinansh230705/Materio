@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ site.title }}</title>
+  <link rel="stylesheet" href="/assets/style/style.css" />
+</head>
+
+<body>
+  {% include header.html %}
+  <main class="home-container">
+    {% assign posts = site.posts | where_exp: 'post', 'post.draft != true' %}
+    {% if posts.size > 0 %}
+    {% assign first_post = posts[0] %}
+    <a class="hero-post" href="{{ first_post.url }}">
+      {% if first_post.image %}
+      <img src="{{ first_post.image }}" class="hero-image" alt="{{ first_post.title }} thumbnail">
+      {% endif %}
+      <div class="hero-meta">
+        <p class="post-date">{{ first_post.date | date: "%B %d, %Y" }}</p>
+        <h2 class="post-title">{{ first_post.title }}</h2>
+      </div>
+    </a>
+    {% endif %}
+    <div class="post-grid">
+      {% for post in posts offset:1 %}
+      <a class="post-card no-border" href="{{ post.url }}">
+        {% if post.image %}
+        <img src="{{ post.image }}" class="post-image rounded" alt="{{ post.title }} thumbnail">
+        {% endif %}
+        <div class="post-meta">
+          <h2 class="post-title">{{ post.title }}</h2>
+          {% if post.category %}
+          <p class="post-category">{{ post.category }}</p>
+          {% endif %}
+          <p class="post-date">{{ post.date | date: "%B %d, %Y" }}</p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </main>
+  <main class="post-container">
+    <article class="post">
+      <p class="post-date">{{ page.date | date: "%B %d, %Y" }}</p>
+      <h1 class="post-title">{{ page.title }}</h1>
+      {% if page.description %}
+      <p class="post-description">{{ page.description }}</p>
+      {% endif %}
+      {% if page.image %}
+      <img src="{{ page.image }}" alt="Cover image" class="post-cover" />
+      {% endif %}
+      <div class="post-body">{{ content }}</div>
+    </article>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+[build]
+  command = "bundle exec jekyll build"
+  functions = "api/v1"
+  publish = "_site"
+
+[dev]
+  command = "bundle exec jekyll serve --watch"
+  framework = "jekyll"
+  targetPort = 4000
+  port = 8888
+  autoLaunch = true
+  
+[[redirects]]
+  from = "/api/v1/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = true
+  
+[functions]
+  directory = "api/v1"
+  included_files = ["config/**"]
+  
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    Access-Control-Max-Age = "86400"
+
+# Specific rule for the OPTIONS preflight requests
+[[redirects]]
+  from = "/api/v1/_preflight/*"
+  to = "/.netlify/functions/cors"
+  status = 200
+  method = "OPTIONS"
+  force = true
+

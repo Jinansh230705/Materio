@@ -1,0 +1,7 @@
+{
+  "site_id": "auth-materioa",
+  "path": "_site",
+  "functions": {
+    "directory": "api/v1"
+  }
+}

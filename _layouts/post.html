@@ -1,0 +1,29 @@
+---
+layout: base
+---
+<main class="post-container" style="font-family: 'Manrope', sans-serif;">
+  <article class="post" style="max-width: 700px; margin: 0 auto;">
+    <div style="text-align: center;">
+      <p class="post-date" style="font-size: 14px; color: var(--gray);">
+        {{ page.date | date: "%B %d, %Y" }}
+        {% if page.categories %}
+          • {{ page.categories | join: ', ' }}
+        {% endif %}
+      </p>
+
+      <p class="post-title" style="font-size: 32px;font-weight: bold;">{{ page.title }}</p>
+
+      {% if page.excerpt %}
+      <p class="post-description" style="font-size: 14px; margin-top: 0.5rem; color: var(--gray);">
+        {{ page.excerpt }}
+      </p>
+      {% endif %}
+
+      {% if page.image %}
+      <img src="{{ page.image }}" alt="Cover image" class="post-cover" style="border-radius: 12px; margin: 1.5rem auto; display: block; max-height: 420px; object-fit: cover;" />
+      {% endif %}
+    </div>
+
+    <div class="post-body">{{ content }}</div>
+  </article>
+</main>

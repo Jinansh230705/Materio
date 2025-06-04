@@ -1,0 +1,395 @@
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+  --link: #007aff;
+  --card-bg: #f9f9f9;
+  --border: #ddd;
+}
+
+.dark body {
+  --bg: #121212;
+  --text: #eeeeee;
+  --link: #3ea6ff;
+  --card-bg: #1e1e1e;
+  --border: #333;
+}
+
+body {
+  margin: 0;
+  padding: 60px 0 0;
+  font-family: 'Manrope', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+}
+.container,
+.home-container,
+.post-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    z-index: 1000;
+    background-color: rgba(255, 245, 223, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #333;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid rgba(209, 209, 209, 0.5);
+    background-image: url('/assets/img/materio_new_bk.svg');
+    background-repeat: no-repeat;
+    background-size: 120px 32px;
+    background-position: 20px center;
+}
+
+
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav .nav-link {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.nav .nav-link:hover {
+  color: var(--link);
+}
+
+.dark-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.main-title {
+  font-size: 2rem;
+  padding: 2rem 0 1rem;
+}/* Hero post styles */
+.hero-post {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 16px;
+  margin-bottom: 3rem;
+  overflow: hidden;
+}
+
+.hero-image {
+  width: 700px;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.hero-meta {
+  padding: 1.5rem;
+}
+
+.hero-meta .post-title {
+  font-size: 2rem;
+  margin: 0.75rem 0;
+}
+
+/* Adjusted grid to 3 columns on desktop */
+.post-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin: 0 auto;
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  background: none;
+  border: none;
+}
+
+.post-card.no-border {
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+
+.post-image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.rounded {
+  border-radius: 12px;
+}
+
+.post-meta {
+  padding: 0.5rem 0;
+}
+
+.post-title {
+  font-size: 1.25rem;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.post-category {
+  font-size: 0.875rem;
+  color: var(--muted-text);
+  margin-bottom: 0.25rem;
+}
+
+
+/* Post content formatting */
+.post-body {
+  line-height: 1.75;
+  font-size: 1.125rem;
+  padding-top: 1.5rem;
+}
+
+.post-body h2,
+.post-body h3,
+.post-body h4 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.post-body p,
+.post-body ul,
+.post-body ol {
+  margin-bottom: 1rem;
+}
+
+.post-body a {
+  color: #ff8200;
+  text-decoration: underline;
+}
+
+/* In-post embedded images styled same as post-cover */
+.post-body img {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 1rem 0;
+}
+
+/* Blockquote styling */
+.post-body blockquote {
+  border-left: 4px solid var(--border);
+  background: var(--card-bg);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+}
+
+/* Cover image sizing fix */
+.post-cover {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 1rem 0;
+}
+
+.post-meta .post-title {
+  font-size: 1.25rem;
+  margin: 0.5rem 0;
+}
+
+
+.post-date {
+  font-size: 0.85rem;
+  color: gray;
+}
+
+.post-description {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.site-footer {
+  text-align: center;
+  padding: 2rem 0;
+  color: var(--text);
+  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+}
+
+.post-container {
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.post-header {
+  text-align: center;
+}
+
+.post-meta-top {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: gray;
+  margin-bottom: 0.5rem;
+  justify-content: center;
+}
+
+.post-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.post-description {
+  font-size: 1rem;
+  color: #555;
+  margin: 0.5rem 0 1.25rem 0;
+}
+
+.post-date {
+  font-size: 0.875rem;
+  color: gray;
+}
+
+.post-cover {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 1.5rem auto;
+  display: block;
+}
+
+/* Code block styling */
+pre code {
+  display: block;
+  padding: 1rem;
+  background: #1e1e1e;
+  border-radius: 12px;
+  color: #f8f8f2;
+  position: relative;
+  overflow-x: auto;
+  font-size: 0.9rem;
+}
+
+/* Language label */
+pre code::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  font-size: 0.75rem;
+  background: #333;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 8px;
+}
+
+/* Copy button */
+pre code::after {
+  content: "Copy";
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 0.75rem;
+  background: #333;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .hero-image {
+    height: 300px;
+    object-position: center center;
+  }
+  
+  .post-image{
+    height: 360px;
+  }
+
+  .hero-meta .post-title {
+    font-size: 1.5rem;
+  }
+
+  .post-grid {
+    grid-template-columns: 1fr;
+    padding: 0 0.5rem;
+  }
+
+  /* Blog post responsive fixes */
+  .post-container {
+    padding: 1rem 0.75rem;
+    width: calc(100% - 1.5rem);
+    max-width: 100%;
+  }
+
+  .post-cover {
+    max-height: 260px;
+    object-position: center center;
+  }
+  
+  .post-title {
+    font-size: 1.5rem;
+  }
+  
+  .post-body {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .post-body img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .post-body h2 {
+    font-size: 1.4rem;
+  }
+  
+  .post-body h3 {
+    font-size: 1.2rem;
+  }
+  
+  .post-body pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+

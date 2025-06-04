@@ -1,0 +1,15 @@
+.env
+.netlify
+api/
+.netlifycfg
+.npmrc
+.pages.yml
+Gemfile
+Gemfile.lock
+netlify.dev.toml
+config/
+node_modules
+.history 
+saved_changes
+.babelrc
+netlify/
