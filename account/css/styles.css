@@ -10,7 +10,7 @@
   --warning-color: #ffb400;
   --info-color: #16b1ff;
   --background-color: #f4f5fa;
-  --card-color: #fff;
+  --card-color: #f3f3ee;
   --text-color: #4b465c;
   --invite-text-color: #fffaef;
   --text-light-color: #6e6b7b;
@@ -57,7 +57,6 @@ a:hover {
 .auth-card, .profile-card {
   background-color: var(--card-color);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
   overflow: hidden;
 }
 
@@ -369,9 +368,6 @@ input[type="file"] {
 }
 
 /* Profile page styles */
-.profile-card {
-  max-width: 600px;
-}
 
 .tabs {
   display: flex;
@@ -541,6 +537,7 @@ input[type="file"] {
   padding: 0.75rem 1.5rem;
   cursor: pointer;
   color: var(--text-light-color);
+  font-family: var(--font-family);
   border-bottom: 2px solid transparent;
   transition: all 0.3s ease;
   font-weight: 500;
@@ -572,7 +569,6 @@ input[type="file"] {
   background: var(--card-color);
   padding: 1.5rem;
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
 }
 
 .form-row {
@@ -592,7 +588,7 @@ input[type="file"] {
 .file-preview-container {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--border-color);
+  /* border-top: 1px solid var(--border-color); */
 }
 
 .file-preview-grid {
@@ -830,7 +826,6 @@ body.dark-mode .card-layout,
 body.dark-mode .auth-card,
 body.dark-mode .profile-card {
   background-color: var(--card-color);
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Dark mode link styles */

@@ -1,7 +1,6 @@
 body {
     margin: 0;
-    background-color: #fffffe;
-    ;
+    background-color: #fcfcf9;
     font-family: "Manrope", sans-serif;
     display: flex;
     flex-direction: column;
@@ -15,13 +14,12 @@ header {
     right: 0;
     height: 40px;
     z-index: 1000;
-    background-color: rgba(255, 245, 223, 0.5);
+    background-color: rgba(231, 231, 221, 0.5);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     color: #333;
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid rgba(209, 209, 209, 0.5);
     background-image: url('/assets/img/materio_new_bk.svg');
     background-repeat: no-repeat;
     background-size: 120px 32px;
@@ -61,13 +59,100 @@ header {
     z-index: -1;
 }
 
+/* Add grain effect overlay specifically for home tab */
+#home.active::after {
+    content: "";
+    position: fixed;
+    top: -10rem;
+    left: -10rem;
+    width: calc(100% + 20rem);
+    height: calc(100% + 20rem);
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/5c/Image_gaussian_noise_example.png);
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 1;
+    animation: noise 1s steps(2) infinite;
+    filter: brightness(120%) sepia(40%);
+}
+
+.grain[data-tab-home] {
+  filter: brightness(120%) sepia(40%);
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  pointer-events: none
+}
+
+.grain[data-tab-home]:before {
+  animation: noise 1s steps(2) infinite;
+  background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/5c/Image_gaussian_noise_example.png);
+  content: "";
+  height: calc(100% + 20rem);
+  left: -10rem;
+  opacity: .1;
+  pointer-events: none;
+  position: fixed;
+  top: -10rem;
+  width: calc(100% + 20rem)
+}
+
+
+    @keyframes noise {
+      0% {
+        transform: translate3d(0, 2rem, 0)
+      }
+
+      10% {
+        transform: translate3d(-1rem, -2rem, 0)
+      }
+
+      20% {
+        transform: translate3d(-4rem, 1rem, 0)
+      }
+
+      30% {
+        transform: translate3d(4.5rem, -4.5rem, 0)
+      }
+
+      40% {
+        transform: translate3d(-1rem, 3.5rem, 0)
+      }
+
+      50% {
+        transform: translate3d(-4.5rem, -2rem, 0)
+      }
+
+      60% {
+        transform: translate3d(1rem, 3rem, 0)
+      }
+
+      70% {
+        transform: translate3d(3.5rem, -4rem, 0)
+      }
+
+      80% {
+        transform: translate3d(-4.5rem, .5rem, 0)
+      }
+
+      90% {
+        transform: translate3d(3rem, -2.5rem, 0)
+      }
+
+      to {
+        transform: translate3d(-3.5rem, 0, 0)
+      }
+    }
+
 .navbar {
     position: fixed;
     top: 60px;
     left: 0;
     width: 50px;
     height: calc(100% - 60px);
-    background-color: rgba(255, 245, 223, 0.5);
+    background-color:rgba(231, 231, 221, 0.5);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     display: flex;
@@ -109,6 +194,8 @@ p {
     text-decoration: none;
 }
 
+
+
 @keyframes slideIn {
     from {
         width: 0;
@@ -126,7 +213,7 @@ p {
 
 .card-one {
     border-radius: 15px;
-    background-color: rgba(255, 245, 223, 0.5);
+    background-color: rgba(231, 231, 221, 0.5);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     padding: 20px;
@@ -136,7 +223,7 @@ p {
 
 .card-layout {
     border-radius: 15px;
-    background-color: #f8f8f8;
+    background-color: #f3f3ee;
     padding: 20px;
     margin: 20px 0;
     min-height: 30px;
@@ -426,7 +513,7 @@ header.dark-mode {
 }
 
 .card-layout.dark-mode {
-    background-color: #333333;
+    background-color: #282828;
     color: #ffffff;
 }
 
@@ -732,7 +819,7 @@ body.dark-mode .notification-date {
 #changeLogDetails {
     border: 1px solid #d1d1d1;
     border-radius: 10px;
-    background-color: #fafafa;
+    background-color: #f3f3ee;
     padding: 8px 10px;
     max-height: 40px;
     overflow: hidden;
@@ -927,4 +1014,290 @@ body.dark-mode .account-username {
 
 body.dark-mode .account-link {
     color: #b0b0b0;
+}
+
+/* Popup grain overlay - static grain effect for paper mode */
+#popup.paper-mode::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(/assets/textures/black-paper.png);
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 10;
+    filter: brightness(110%) sepia(30%);
+    background-size: var(--grain-size, 800px) var(--grain-size, 800px);
+    background-repeat: repeat;
+}
+
+.paper-mode-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.paper-mode-title {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.paper-mode-description {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+/* Grain details dropdown styling */
+.grain-details {
+    margin-top: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.grain-details[open] {
+    border-color: #ff8200;
+    box-shadow: 0 2px 8px rgba(255, 130, 0, 0.1);
+}
+
+.grain-summary {
+    padding: 12px 15px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    color: #ff8200;
+    background: linear-gradient(135deg, rgba(255, 130, 0, 0.05), rgba(255, 130, 0, 0.1));
+    border: none;
+    outline: none;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
+}
+
+.grain-summary:hover {
+    background: linear-gradient(135deg, rgba(255, 130, 0, 0.1), rgba(255, 130, 0, 0.15));
+}
+
+.grain-summary::-webkit-details-marker {
+    display: none;
+}
+
+.grain-summary::after {
+    font-size: 12px;
+    color: #ff8200;
+    transition: transform 0.2s ease;
+}
+
+.grain-details[open] .grain-summary::after {
+    transform: rotate(180deg);
+}
+
+/* Dark mode styles for paper mode */
+body.dark-mode .paper-mode-title {
+    color: #e0e0e0;
+}
+
+body.dark-mode .paper-mode-description {
+    color: #b0b0b0;
+}
+
+body.dark-mode .grain-details {
+    border-color: #555;
+    background-color: #2a2a2a;
+}
+
+body.dark-mode .grain-details[open] {
+    border-color: #ff8200;
+    box-shadow: 0 2px 8px rgba(255, 130, 0, 0.2);
+}
+
+body.dark-mode .grain-summary {
+    color: #ff8200;
+    background: linear-gradient(135deg, rgba(255, 130, 0, 0.1), rgba(255, 130, 0, 0.15));
+}
+
+body.dark-mode .grain-summary:hover {
+    background: linear-gradient(135deg, rgba(255, 130, 0, 0.15), rgba(255, 130, 0, 0.2));
+}
+
+body.dark-mode #popup.paper-mode::after {
+    filter: brightness(90%) sepia(20%);
+    opacity: 0.08;
+}
+
+/* Grain size control styles */
+.grain-size-control {
+    margin: 15px;
+    padding: 15px;
+}
+
+.grain-size-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.grain-size-value {
+    font-weight: 600;
+    color: #ff8200;
+}
+
+.grain-slider {
+    width: 100%;
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.grain-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #ff8200;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(255, 130, 0, 0.3);
+}
+
+.grain-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #ff8200;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(255, 130, 0, 0.3);
+}
+
+/* Dark mode styles for grain size control */
+body.dark-mode .grain-size-label {
+    color: #e0e0e0;
+}
+
+body.dark-mode .grain-size-value {
+    color: #ff8200;
+}
+
+body.dark-mode .grain-slider {
+    background: #555;
+}
+
+body.dark-mode .grain-slider::-webkit-slider-thumb {
+    background: #ff8200;
+}
+
+body.dark-mode .grain-slider::-moz-range-thumb {
+    background: #ff8200;
+}
+
+/* Night Reading Mode Overlay */
+#popup.night-reading::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 165, 0, 0.12));
+    pointer-events: none;
+    z-index: 15;
+    border-radius: inherit;
+    mix-blend-mode: multiply;
+}
+
+/* Night schedule controls styling */
+.night-schedule-container {
+    padding: 15px 0;
+}
+
+.time-input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.time-input-group label {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.time-input {
+    padding: 8px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.time-input:focus {
+    border-color: #ff8200;
+    box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.1);
+}
+
+.schedule-toggle-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.schedule-toggle-group span {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.small-switch {
+    transform: scale(0.8);
+}
+
+/* Dark mode styles for night reading controls */
+body.dark-mode .time-input-group label {
+    color: #e0e0e0;
+}
+
+body.dark-mode .time-input {
+    background: #2a2a2a;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+body.dark-mode .time-input:focus {
+    border-color: #ff8200;
+    box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.2);
+}
+
+body.dark-mode .schedule-toggle-group {
+    border-top-color: #555;
+}
+
+body.dark-mode .schedule-toggle-group span {
+    color: #e0e0e0;
+}
+
+body.dark-mode #popup.night-reading::before {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 165, 0, 0.15));
+    mix-blend-mode: overlay;
 }

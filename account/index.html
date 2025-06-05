@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Materio Account</title>
+  <title>Login - Materio</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/redesigned-styles.css">
   <script>
     // Check for dark mode cookie
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const darkModeCookie = document.cookie.split('; ').find(row => row.startsWith('darkMode='));
       if (darkModeCookie && darkModeCookie.split('=')[1] === 'true') {
         document.body.classList.add('dark-mode');
@@ -17,6 +18,7 @@
     });
   </script>
 </head>
+
 <body>
   <div class="container">
     <div class="card-one">
@@ -44,9 +46,9 @@
           </div>
 
           <button type="submit" class="btn">SIGN IN</button>
-          
+
           <div class="form-footer">
-            <p>Don't have an account? <a href="signup.html">Create an account</a></p>
+            <p>Have an Invite ? <a href="/account/signup">Create an account</a> to try out newest features first!</p>
           </div>
         </form>
       </div>
@@ -54,7 +56,7 @@
 
     <div class="card-layout">
       <div style="text-align: center;">
-        <p><i class="fas fa-arrow-left"></i> <a href="https://materioa.netlify.app/">Back to Materio</a></p>
+        <p><i class="fas fa-arrow-left"></i> <a href="/#">Back to Materio</a></p>
       </div>
     </div>
   </div>
@@ -68,26 +70,60 @@
     <button class="notification-close">&times;</button>
   </div>
 
-  <script>
-    // Toggle logo based on dark mode
-    function toggleLogo() {
-      const lightLogo = document.getElementById('logo-light');
-      const darkLogo = document.getElementById('logo-dark');
-      if (document.body.classList.contains('dark-mode')) {
-        lightLogo.style.display = 'none';
-        darkLogo.style.display = 'inline-block';
+<script>
+  // Check for dark mode when page loads
+  function checkAndApplyDarkMode() {
+    // Check for dark mode preference in localStorage
+    const darkModePreference = localStorage.getItem('darkMode');
+
+    // Check for theme cookie as fallback
+    const themeCookie = document.cookie.split('; ').find(row => row.startsWith('theme='));
+    const cookieValue = themeCookie ? themeCookie.split('=')[1] : null;
+    const cookieIsDark = cookieValue === 'dark';
+
+    // Check system preference
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Determine if dark mode should be enabled
+    let shouldUseDarkMode = false;
+
+    if (darkModePreference !== null) {
+      // Use stored preference
+      shouldUseDarkMode = darkModePreference === 'true';
+    } else if (cookieValue) {
+      // Use cookie value
+      shouldUseDarkMode = cookieIsDark;
+    } else {
+      // Use system preference
+      shouldUseDarkMode = systemPrefersDark;
+    }
+
+    // Apply dark mode class
+    if (shouldUseDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }
+
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
+    // Only auto-switch if no manual preference is set
+    if (localStorage.getItem('darkMode') === null) {
+      if (e.matches) {
+        document.body.classList.add('dark-mode');
       } else {
-        lightLogo.style.display = 'inline-block';
-        darkLogo.style.display = 'none';
+        document.body.classList.remove('dark-mode');
       }
     }
-    
-    // Check for dark mode when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      toggleLogo();
-    });
-  </script>
+  });
+
+  // Run on page load
+  checkAndApplyDarkMode();
+</script>
+
   <script src="js/auth.js"></script>
   <script src="js/login.js"></script>
 </body>
+
 </html>

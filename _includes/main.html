@@ -123,17 +123,17 @@
                     </label>
                 </div>
             </div>
-             
+
             <div class="card-layout" id="gh">
-    <div class="toggle-container">
-        <a href="https://github.com/Materioa/materio/issues/new?template=contribute.yml"
-            class="contribute-button">
-            <i class="fas fa-circle-plus" style="margin-right: 15px;"></i>
-            <span>Contribute Materials</span>
-            <i class="fas fa-chevron-right" style="position: absolute; right: 30px; margin-right: 0;"></i>
-        </a>
-    </div>
-</div>
+                <div class="toggle-container">
+                    <a href="https://github.com/Materioa/materio/issues/new?template=contribute.yml"
+                        class="contribute-button">
+                        <i class="fas fa-circle-plus" style="margin-right: 15px;"></i>
+                        <span>Contribute Materials</span>
+                        <i class="fas fa-chevron-right" style="position: absolute; right: 30px; margin-right: 0;"></i>
+                    </a>
+                </div>
+            </div>
             <p>Version Details</p>
             <div class="card-layout" id="about">
                 <p id="versionInfoText">Version: </p>
@@ -184,25 +184,88 @@
             <p>Advanced</p>
             <div class="card-layout" id="bgToggleCard">
                 <div class="toggle-container">
-                    <span>Disable Background Image</span>
+                     <div class="paper-mode-info">
+                        <div class="paper-mode-title">Background Image</div>
+                        <div class="paper-mode-description">Disable home background image</div>
+                    </div>
                     <label class="switch">
                         <input type="checkbox" id="disableBgToggle">
                         <span class="slider"></span>
                     </label>
                 </div>
             </div>
-
+            <div class="card-layout" id="paperModeCard">
+                <div class="toggle-container">
+                    <div class="paper-mode-info">
+                        <div class="paper-mode-title">Paper Mode</div>
+                        <div class="paper-mode-description">Paper-like reading experience</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="paperModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <details class="grain-details" id="grainDetails" style="display: none;">
+                    <summary class="grain-summary">Grain Settings</summary>
+                    <div class="grain-size-control" id="grainSizeControl">
+                        <div class="grain-size-label">
+                            <span>Grain Size</span>
+                            <span class="grain-size-value" id="grainSizeValue">100%</span>
+                        </div>
+                        <input type="range" id="grainSizeSlider" min="0" max="200" value="100" step="10"
+                            class="grain-slider">
+                    </div>
+                </details>
+            </div>
+            <div class="card-layout" id="nightReadingCard">
+                <div class="toggle-container">
+                    <div class="paper-mode-info">
+                        <div class="paper-mode-title">Night Mode</div>
+                        <div class="paper-mode-description">Reduces eye strain</div>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="nightReadingToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <details class="grain-details" id="nightReadingDetails" style="display: none;">
+                    <summary class="grain-summary">Schedule Settings</summary>
+                    <div class="grain-size-control" id="nightReadingControl">
+                        <div class="night-schedule-container">
+                            <div class="time-input-group">
+                                <label for="nightStartTime">Start Time:</label>
+                                <input type="time" id="nightStartTime" value="20:00" class="time-input">
+                            </div>
+                            <div class="time-input-group">
+                                <label for="nightEndTime">End Time:</label>
+                                <input type="time" id="nightEndTime" value="06:00" class="time-input">
+                            </div>
+                            <div class="schedule-toggle-group">
+                                <span>Auto Schedule</span>
+                                <label class="switch small-switch">
+                                    <input type="checkbox" id="nightScheduleToggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+            </div>
             <div class="card-layout" id="cookiesToggleCard">
                 <div class="toggle-container">
-                    <span>Accept Cookies</span>
+                    <div class="paper-mode-info">
+                        <div class="paper-mode-title">Accept Cookies</div>
+                        <div class="paper-mode-description">Opt in for analytics cookies</div>
+                    </div>
                     <label class="switch">
                         <input type="checkbox" id="optOutCookiesToggle">
                         <span class="slider"></span>
                     </label>
                 </div>
             </div>
+            
 
-          
+
             <div class="card-layout" id="creatorInfo">
                 <p>&copy; Materio</p>
                 <p> Made with ❤️ by Jinansh </p>

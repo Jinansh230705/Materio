@@ -33,9 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             console.error('Error preloading PDF:', error);
         }
-    }
-
-    function initializeIframe() {
+    }    function initializeIframe() {
         if (!pdfIframe) {
             pdfIframe = document.createElement('iframe');
             pdfIframe.id = 'pdf-iframe';
@@ -44,6 +42,32 @@ document.addEventListener('DOMContentLoaded', function () {
             pdfIframe.style.height = 'calc(100% - 17px)';
             pdfIframe.style.borderRadius = '10px';
             pdfIframe.style.marginTop = '22px';
+            
+            // Add load event listener to request overlay mode application
+            pdfIframe.addEventListener('load', function() {
+                // Give PDF.js a moment to initialize, then request overlay modes
+                setTimeout(() => {
+                    const mainPopup = document.getElementById('popup');
+                    if (mainPopup && pdfIframe.contentWindow) {
+                        // Send current overlay states to iframe
+                        if (mainPopup.classList.contains('paper-mode')) {
+                            pdfIframe.contentWindow.postMessage({
+                                type: 'overlayMode',
+                                mode: 'paper-mode',
+                                enable: true
+                            }, '*');
+                        }
+                        
+                        if (mainPopup.classList.contains('night-reading')) {
+                            pdfIframe.contentWindow.postMessage({
+                                type: 'overlayMode',
+                                mode: 'night-reading',
+                                enable: true
+                            }, '*');
+                        }
+                    }
+                }, 500);
+            });
         }
         if (!document.getElementById('pdf-iframe')) {
             popupContent.appendChild(pdfIframe);
@@ -107,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         initializeIframe();
-        pdfIframe.src = `https://materioa.github.io/web/viewer.html?disableStream=false&disableRange=false&rangeChunkSize=1048576&file=${encodeURIComponent(pdfUrl)}`;
+        pdfIframe.src = `/oread/web/viewer.html?disableStream=false&disableRange=false&rangeChunkSize=1048576&file=${encodeURIComponent(pdfUrl)}`;
         popup.classList.remove('closing');
         popup.style.display = 'block';
         addToCache(pdfUrl);

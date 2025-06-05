@@ -37,10 +37,13 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('advanced'),
             document.getElementById('about'),
             document.getElementById('cookiesToggleCard'),
+            document.getElementById('paperModeCard'),
+            document.getElementById('grainSizeControl'),
             document.getElementById('creatorInfo'),
             document.getElementById('account'),
             document.getElementById('oiaa'),
-            document.getElementById('gh')
+            document.getElementById('gh'),
+            document.getElementById('nightReadingCard')
         ];
         const notifyCards = document.querySelectorAll('#notify');
         notifyCards.forEach(card => elements.push(card));
