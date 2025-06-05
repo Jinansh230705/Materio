@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title }}</title>
+
+    <!-- {%- seo -%} -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-dark.css" media="(prefers-color-scheme: dark)">
+
+
+<!-- Prism JS -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js" defer></script>
+
+<!-- Optional: load language components -->
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-java.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-javascript.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-css.min.js" defer></script>
+
+    <link rel="stylesheet" href="/assets/style/page.css">
+
+    {%- feed_meta -%}
+    {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+    {%- endif -%}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Dark mode class from cookie
+            const isDark = document.cookie.includes('theme=dark');
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                document.querySelector('header').classList.add('dark-mode');
+                document.querySelector('header').classList.remove('light-mode');
+            } else {
+                document.querySelector('header').classList.add('light-mode');
+            }
+
+            // Make header logo clickable
+            const logo = document.querySelector('.header-logo');
+            if (logo) {
+                logo.addEventListener('click', () => {
+                    window.location.href = '/';
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="header-logo" role="link" tabindex="0" aria-label="Go to homepage"></div>
+    </header>
+
+    <main class="page-content">
+        <h1 class="page-title">{{ page.heading }}</h1>
+        <article class="markdown-body">
+            {{ content }}
+        </article>
+    </main>
+</body>
+
+</html>
