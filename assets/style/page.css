@@ -21,9 +21,9 @@ header {
   right: 0;
   height: 60px;
   z-index: 1000;
-  background-color: rgba(255, 245, 223, 0.5);
+  background-color: rgba(231,231,221, 0.5);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(209, 209, 209, 0.5);
+  -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   padding: 0 20px;
@@ -31,7 +31,6 @@ header {
 
 header.dark-mode {
   background-color: rgba(33, 33, 33, 0.5);
-  border-color: rgba(68, 68, 68, 0.5);
 }
 
 .header-logo {

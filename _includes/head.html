@@ -1,6 +1,59 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#ffffff">
+<title>Materio - Home | Materio</title>
+<meta name="description"
+    content="Materio is the one goto place you need for satisfying all your study needs, Find all the computer science and engineering study materials for all semester of Parul University here well organised, You can also chat with other students to help or ask doubts and share or request study materials.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://materioa.netlify.app">
+<meta name="keywords"
+    content="Materio, Materio PU, Materio - Home, Materioa, materio, materioa, Parul University, PU, PU Materials, CSE Materials PU, Vadodara, Jinansh Mehta, Materio Github, Materio Study Materials, Study materials, CSE Materials PU">
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content="Materio">
+<meta property="og:description" content="Materio is goto place for all CSE Materials for Parul University">
+<meta property="og:image" itemprop="image" content="https://materioa.netlify.app/static/res/og.jpeg">
+<meta property="og:image:secure_url" itemprop="image" content="https://materioa.netlify.app/static/res/og.jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://materioa.netlify.app">
+<meta property="og:type" content="website">
+
+<!-- PWA Configuration -->
+<meta name="theme-color" content="#333333">
+<link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Materio">
+<link rel="apple-touch-icon" href="/assets/img/materio_new_bk.svg">
+
+<!-- Favicon and Icons -->
+<link rel="icon" type="image/x-icon" href="/assets/img/icon.svg" sizes="256x256">
+<link rel="icon" href="/assets/img/icon-x.svg" sizes="16x16" type="image/svg">
+
+<!-- External Stylesheets -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
+<!-- Service Worker Registration -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function (registration) {
+                    // console.log('SW registered: ', registration);
+                })
+                .catch(function (registrationError) {
+                    console.log('SW registration failed: ', registrationError);
+                });
+        });
+    }
+</script>
+
+<!-- Google Tag Manager -->
 <script>(function (w, d, s, l, i) {
         w[l] = w[l] || []; w[l].push({
             'gtm.start':
@@ -9,43 +62,7 @@
             j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
-<title>Materio - Home | Materio</title>
-<link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/favicon.ico">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet"><meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Materio - Home | Materio</title>
-    <meta name="description"
-        content="Materio is the one goto place you need for satisfying all your study needs, Find all the computer science and engineering study materials for all semester of Parul University here well organised, You can also chat with other students to help or ask doubts and share or request study materials.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://materioa.netlify.app">
-    <meta name="keywords"
-        content="Materio, Materio PU, Materio - Home, Materioa, materio, materioa, Parul University, PU, PU Materials, CSE Materials PU, Vadodara, Jinansh Mehta, Materio Github, Materio Study Materials, Study materials, CSE Materials PU">
-    <meta property="og:title" content="Materio">
-    <meta property="og:description" content="Materio is goto place for all CSE Materials for Parul University">
-    <meta property="og:image" itemprop="image" content="https://materioa.netlify.app/static/res/og.jpeg">
-    <meta property="og:image:secure_url" itemprop="image" content="https://materioa.netlify.app/static/res/og.jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:url" content="https://materioa.netlify.app">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#ffffff">
-    <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7539227284131407"
-        crossorigin="anonymous"></script>
-    <link rel="icon" type="image/x-icon" href="https://materioa.netlify.app/static/res/favicon.ico">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
-  
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7539227284131407"
+    crossorigin="anonymous"></script>

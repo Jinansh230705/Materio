@@ -1,9 +1,81 @@
-[
+[   
     {
         "branch":"stable",
-        "version":"4.5.0.1",
-        "build":"27/05/2025",
+        "version":"4.5.7.0",
+        "build":"15/07/2025",
         "logs":[
+           "Security Patch - 1 to for CVE-2025-6442 and other vulnerabilities.",
+           "The InsightRoom Overhaul and Moved to Public via sharable links.",
+           "The InsightRoom posts can be shared or downloaded to printable ebook."
+        ]
+    },
+    {
+        "branch":"stable",
+        "version":"4.5.6.2",
+        "build":"09/07/2025",
+        "logs":[
+            "Bug Fixes to Admin CMS - uploading binary files like pdf were overwritten or getting corrupted.",
+            "UX - navigation to profile and settings can be done from any page now",
+            "Other minor improvements"
+        ]
+    },
+    {
+        "branch":"stable",
+        "version":"4.5.6.1",
+        "build":"04/07/2025",
+        "logs":[
+            "Changed Default set Semester",
+            "Maintainance check updates",
+            "Deprecation of AI Chat from open beta due to rate limit issues and unsatisfatory outputs."
+        ]
+    },
+     {
+        "branch": "stable",
+        "version": "4.5.6.0",
+        "build": "23/06/2025",
+        "logs": [
+            "Improved Performance and UX interactions.",
+            "Promotional modals can now be dismissed by clicking on remind me later or don't show again.",
+            "InsightRoom rolling out for invited users with public posts generally available via link, however InsightRoom is still in beta and may contain bugs."
+        ]
+    },
+    {
+        "branch": "stable",
+        "version": "4.5.5.3",
+        "build": "10/06/2025",
+        "logs": [
+            "Fixed aggressive PWA caching issue completely.",
+            "Improved update detection and notification system.",
+            "Performance and Stability Improvements."
+        ]
+    },
+    {
+        "branch": "stable",
+        "version": "4.5.5.2",
+        "build": "10/06/2025",
+        "logs": [
+            "Performance and Stability Improvements.",
+            "UX Enhancements.",
+            "Materio Account - Get access to latest feature's first (Limited invite based signup's for now).",
+            "Texture's and Overlays.",
+            "3 New Reading Modes.",
+            " - 1. Paper Mode - paper-like texture overlay with option to adjust grain size.",
+            " - 2. Night Mode - reduces eye stress with option to control warmth, and auto schedule.",
+            " - 3. E-ink Mode - grayscale filter to relax eyes for kindle like experience (best when combined with paper mode).",
+            "Contribute Materials.",
+            "New ui in settings for easy navigation.",
+            "Swipe - a new way to navigate through pages on mobile with haptic feedback.",
+            "Re-introduced blogs",
+            "Updated terms in license.",
+            "Bug Fix - text color and remove blue highlight on tap.",
+            "Introduced - Materio Webapp (PWA)."
+        ]
+    },
+    {
+        "branch": "stable",
+        "version": "4.5.0.1",
+        "build": "27/05/2025",
+        "logs": [
             "Serverless Functions Integrations",
             "Materio REST APIs introduced for Auth",
             "Introduced Blogs - The InsightRoom",

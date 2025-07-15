@@ -1,5 +1,5 @@
 [build]
-  command = "bundle exec jekyll build"
+  command = "node scripts/generate-build-id.js && bundle exec jekyll build"
   functions = "api/v1"
   publish = "_site"
 

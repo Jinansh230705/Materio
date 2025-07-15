@@ -1,0 +1,107 @@
+/* CSS styles for dark/light mode in PDF viewer iframe */
+
+/* Light mode specific variables (default) */
+:root {
+  --page-bg-color: rgb(255, 255, 255);
+  --viewer-bg-color: rgb(237, 237, 237);
+  --sidebar-bg-color: rgb(242, 242, 242);
+  --toolbar-bg-color: rgb(249, 249, 250);
+  --text-primary-color: rgb(33, 33, 33);
+  --border-color: rgb(204, 204, 204);
+  --button-hover-color: rgba(0, 0, 0, 0.1);
+  --input-border-color: rgb(204, 204, 204);
+  --toolbar-icon-color: rgb(61, 61, 61);
+}
+
+/* Dark mode specific variables */
+body.dark-mode {
+  --page-bg-color: rgb(40, 40, 40);
+  --viewer-bg-color: rgb(30, 30, 30);
+  --sidebar-bg-color: rgb(25, 25, 25);
+  --toolbar-bg-color: rgb(35, 35, 35);
+  --text-primary-color: rgb(224, 224, 224);
+  --border-color: rgb(80, 80, 80);
+  --button-hover-color: rgba(255, 255, 255, 0.1);
+  --input-border-color: rgb(80, 80, 80);
+  --toolbar-icon-color: rgb(200, 200, 200);
+}
+
+/* Apply system preference for dark mode when no explicit class is set */
+@media (prefers-color-scheme: dark) {
+  /* Apply dark mode by default when system prefers dark */
+  body:not(.light-mode) {
+    --page-bg-color: rgb(40, 40, 40);
+    --viewer-bg-color: rgb(30, 30, 30);
+    --sidebar-bg-color: rgb(25, 25, 25);
+    --toolbar-bg-color: rgb(35, 35, 35);
+    --text-primary-color: rgb(224, 224, 224);
+    --border-color: rgb(80, 80, 80);
+    --button-hover-color: rgba(255, 255, 255, 0.1);
+    --input-border-color: rgb(80, 80, 80);
+    --toolbar-icon-color: rgb(200, 200, 200);
+  }
+}
+
+/* Apply theme variables to elements */
+#viewerContainer {
+  background-color: var(--viewer-bg-color);
+}
+
+#outerContainer {
+  background-color: var(--viewer-bg-color);
+}
+
+#sidebarContainer {
+  background-color: var(--sidebar-bg-color);
+  border-right-color: var(--border-color);
+}
+
+#toolbarContainer {
+  background-color: var(--toolbar-bg-color);
+  border-bottom-color: var(--border-color);
+}
+
+.toolbarLabel,
+#numPages,
+#pageNumber,
+#scaleSelect {
+  color: var(--text-primary-color);
+}
+
+.toolbarButton,
+.secondaryToolbarButton,
+.dropdownToolbarButton {
+  color: var(--toolbar-icon-color);
+}
+
+.toolbarButton:hover,
+.secondaryToolbarButton:hover,
+.dropdownToolbarButton:hover {
+  background-color: var(--button-hover-color);
+}
+
+input[type="text"],
+input[type="number"] {
+  border-color: var(--input-border-color);
+  color: var(--text-primary-color);
+  background-color: var(--page-bg-color);
+}
+
+/* Override PDF.js viewer's default dark mode styles to ensure consistency */
+:where(html.is-dark) {
+  --page-bg-color: var(--page-bg-color);
+  --viewer-bg-color: var(--viewer-bg-color);
+}
+
+/* Force light mode when explicitly set */
+body.light-mode {
+  --page-bg-color: rgb(255, 255, 255);
+  --viewer-bg-color: rgb(237, 237, 237);
+  --sidebar-bg-color: rgb(242, 242, 242);
+  --toolbar-bg-color: rgb(249, 249, 250);
+  --text-primary-color: rgb(33, 33, 33);
+  --border-color: rgb(204, 204, 204);
+  --button-hover-color: rgba(0, 0, 0, 0.1);
+  --input-border-color: rgb(204, 204, 204);
+  --toolbar-icon-color: rgb(61, 61, 61);
+}

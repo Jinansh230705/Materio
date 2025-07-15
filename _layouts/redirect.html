@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  
+  <!-- Google Tag Manager -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-M6PC6RJL"></script>
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M6PC6RJL');
+  </script>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/manrope/4.5.0/manrope.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Manrope', sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      background-color: #ffffff;
+      color: #333333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .loader {
+      border: 5px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 5px solid #ff8200;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    a {
+      color: #ff8200;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+    }
+    body.dark-mode .loader {
+      border-color: #333333;
+      border-top-color: #ff8200;
+    }
+    body.dark-mode a {
+      color: #ff9c40;
+    }
+  </style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6PC6RJL" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <h2>Redirecting you...</h2>
+  <div class="loader"></div>
+  <p>If you are not redirected automatically, <a href="{{ page.redirect }}">click here</a>.</p>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const isDark = document.cookie.includes('theme=dark');
+      document.body.classList.toggle('dark-mode', isDark);
+
+      setTimeout(() => {
+        window.location.href = '{{ page.redirect }}';
+      }, 5000);
+    });
+  </script>
+</body>
+</html>

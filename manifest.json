@@ -1,0 +1,68 @@
+{
+  "name": "Materio",
+  "short_name": "Materio",
+  "description": "All in one place for all your study needs, read, discuss, contribute.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fcfcf9",
+  "theme_color": "#333333",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/assets/img/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/img/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Materio",
+      "short_name": "Home",
+      "description": "Access your study materials",
+      "url": "/#home",
+      "icons": [
+        {
+          "src": "/assets/img/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Chat",
+      "short_name": "Chat",
+      "description": "Chat with other students",
+      "url": "/#chat",
+      "icons": [
+        {
+          "src": "/assets/img/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "short_name": "Notifications",
+      "description": "Check your notifications",
+      "url": "/#notifications",
+      "icons": [
+        {
+          "src": "/assets/img/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}

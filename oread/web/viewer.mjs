@@ -16099,7 +16099,7 @@ initCom(PDFViewerApplication);
   PDFPrintServiceFactory.initGlobals(PDFViewerApplication);
 }
 {
-  const HOSTED_VIEWER_ORIGINS = new Set(["null", "http://mozilla.github.io", "https://mozilla.github.io", "https://materioa.github.io", "http://materioa.github.io", "https://materioa.netlify.app","https://materio.in", "http://localhost:8888", "http://localhost:4000"]);
+  const HOSTED_VIEWER_ORIGINS = new Set(["null", "http://mozilla.github.io", "https://mozilla.github.io", "https://materioa.github.io", "https://materio-a.netlify.app", "https://materioa.netlify.app","https://materio.in", "http://localhost:8888", "http://localhost:4000"]);
   var validateFileURL = function (file) {
     if (!file) {
       return;

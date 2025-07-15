@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "title": "GET THE GIFT OF KNOWLEDGE",
+  "description": "Perplexity Pro is the most powerful way to search the internet with unlimited Pro Search, upgraded AI models, unlimited file upload, image generation, custom knowledge hubs, and collaborative spaces. Empower someone to learn, create, and achieve more than ever before.",
+  "link": "https://materioa.netlify.app/redirects/pplx",
+  "images": [
+    "/assets/img/pplx.png"
+  ],
+  "imageRotationInterval": 5000,
+  "isLimitedOffer": true,
+  "startDate": "2025-05-01T09:00",
+  "endDate": "2025-07-11T12:00",
+  "lastUpdated": "2025-07-11T03:14:32.106Z"
+}

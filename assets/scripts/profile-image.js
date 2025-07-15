@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const user = JSON.parse(userData);
           if (user.profilePicture) {
             imgElement.src = user.profilePicture;
-            console.log('Profile image updated');
+            // console.log('Profile image updated');
           }
         } catch (error) {
           console.error('Error parsing user data:', error);

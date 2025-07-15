@@ -1,0 +1,52 @@
+# Cache Control Headers for Netlify
+# Prevent aggressive caching of version-critical files
+
+/assets/data/releases.json
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/assets/data/events.json
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/channels/releases.json
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/channels/events.json
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/channels/data.json
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+/databases/semester-subjects.json
+  Cache-Control: max-age=300, must-revalidate
+  Pragma: no-cache
+
+/manifest.json
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+# Static assets can be cached longer
+/assets/style/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/scripts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/img/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Prevent caching of CSS files to ensure style updates are applied immediately
+/account/css/*.css
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0

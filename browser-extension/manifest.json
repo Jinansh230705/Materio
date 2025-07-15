@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Materio Downloader",
+  "version": "1.0",
+  "description": "Download files for offline reading in Materio",
+  "permissions": [
+    "downloads",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://your-domain.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+    "matches": ["*://your-domain.com/*"],
+    "js": ["content.js"]
+  }],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Materio Downloads"
+  }
+}

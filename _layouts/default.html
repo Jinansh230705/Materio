@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    {% include head.html %}
+
+<head> {% include head.html %}
     <link rel="stylesheet" href="{{ '/assets/style/main.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/style/notification.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/style/gestures.css' | relative_url }}">
 </head>
+
 <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M6PC6RJL" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <header>
+        <a href="/" class="header-logo" role="button" aria-label="Go to homepage"></a>
     </header>
     <main>
         {% include main.html %}
     </main>
+    <!-- core -->
     <script src="{{ '/assets/scripts/main.js' | relative_url }}"></script>
     <script src="{{ '/assets/scripts/caching.js' | relative_url }}"></script>
     <script src="{{ '/assets/scripts/notify.js' | relative_url }}"></script>
@@ -23,6 +27,9 @@
     <script src="{{ '/assets/scripts/advanced.js' | relative_url }}"></script>
     <script src="{{ '/assets/scripts/profile-image.js' | relative_url }}"></script>
     <script src="{{ '/assets/scripts/ga.js' | relative_url }}"></script>
+    <script src="{{ '/assets/scripts/gestures.js' | relative_url }}"></script>
+    <!-- Webapp -->
+    <script src="{{ '/assets/scripts/webapp/pwa.js' | relative_url }}"></script>
 </body>
 
 </html>

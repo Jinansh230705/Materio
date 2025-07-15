@@ -21,8 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return null;
     }
 
-    function applyTheme(isDark) {
-        const elements = [
+    function applyTheme(isDark) {        const elements = [
             document.body,
             document.querySelector('header'),
             document.querySelector('.navbar'),
@@ -36,14 +35,17 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('notificationBoard'),
             document.getElementById('advanced'),
             document.getElementById('about'),
-            document.getElementById('cookiesToggleCard'),
-            document.getElementById('paperModeCard'),
+            document.getElementById('cookiesToggleCard'),            document.getElementById('paperModeCard'),
             document.getElementById('grainSizeControl'),
             document.getElementById('creatorInfo'),
+            document.getElementById('licensesCard'),
+            document.getElementById('miscCard'),
             document.getElementById('account'),
             document.getElementById('oiaa'),
             document.getElementById('gh'),
-            document.getElementById('nightReadingCard')
+            document.getElementById('nightReadingCard'),
+            document.getElementById('einkModeCard'),
+            document.getElementById('tabSwitcherCard')
         ];
         const notifyCards = document.querySelectorAll('#notify');
         notifyCards.forEach(card => elements.push(card));
@@ -52,13 +54,25 @@ document.addEventListener("DOMContentLoaded", function () {
             if (el) {
                 isDark ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
             }
-        });
-        const giscusFrame = document.querySelector("iframe.giscus-frame");
+        });        const giscusFrame = document.querySelector("iframe.giscus-frame");
         if (giscusFrame) {
             giscusFrame.contentWindow.postMessage(
-                { giscus: { setConfig: { theme: isDark ? "noborder_dark" : "noborder_light" } } },
+                { giscus: { setConfig: { theme: isDark ? "http://localhost:8888/assets/style/giscus.css" : "noborder_light" } } },
                 "https://giscus.app"
             );
+        }
+          // Sync theme with PDF iframe if it exists
+        const pdfIframe = document.getElementById('pdf-iframe');
+        if (pdfIframe && pdfIframe.contentWindow) {
+            try {
+                pdfIframe.contentWindow.postMessage({
+                    type: 'themeMode',
+                    isDark: isDark
+                }, '*');
+                // console.log('Theme sync sent to PDF iframe: ' + (isDark ? 'dark' : 'light'));
+            } catch (e) {
+                // console.log('Could not sync theme with PDF iframe: ' + e.message);
+            }
         }
     }
     let userTheme = getCookie("theme");
@@ -84,7 +98,7 @@ function updateThemeColor() {
     const metaThemeColor = document.querySelector("meta[name=theme-color]");
 
     if (metaThemeColor) {
-        metaThemeColor.setAttribute("content", isDarkMode ? "rgba(34, 34, 34, 0.5)" : "rgba(255, 255, 255, 0.5)");
+        metaThemeColor.setAttribute("content", isDarkMode ? "#1a1a1a" : "#f3f3ee");
     }
 }
 const themeChoice = document.getElementById("themeToggle");
@@ -95,3 +109,27 @@ if (themeChoice) {
     });
 }
 document.addEventListener("DOMContentLoaded", updateThemeColor);
+
+// Listen for system theme changes and update PDF iframe if using system theme
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+    const userTheme = getCookie("theme");
+    
+    // Only auto-switch if using system theme (no explicit theme cookie)
+    if (!userTheme) {
+        const isDark = e.matches;
+        
+        // Update PDF iframe with new system theme
+        const pdfIframe = document.getElementById('pdf-iframe');
+        if (pdfIframe && pdfIframe.contentWindow) {
+            try {
+                pdfIframe.contentWindow.postMessage({
+                    type: 'themeMode',
+                    isDark: isDark
+                }, '*');
+                // console.log('System theme change detected, updated PDF iframe: ' + (isDark ? 'dark' : 'light'));
+            } catch (err) {
+                // console.log('Could not sync system theme change with PDF iframe: ' + err.message);
+            }
+        }
+    }
+});

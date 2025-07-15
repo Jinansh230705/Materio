@@ -1,0 +1,5 @@
+# Redirect old profile URL to account root to handle redirection logic
+/account/profile  /account/profile.html  200
+
+# Keep the existing API and other redirects below
+/api/v1/*  /.netlify/functions/:splat  200

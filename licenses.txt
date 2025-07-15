@@ -1,0 +1,114 @@
+================================================================================
+MATERIO LICENSE OVERVIEW
+================================================================================
+
+This file contains license information for Materio and its dependencies.
+
+================================================================================
+1. MATERIO SOURCE-AVAILABLE LICENSE v1.0
+================================================================================
+
+Copyright (c) 2025, Jinansh Mehta, Materio
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to view
+and use the Software for personal, educational, or internal use, subject to
+the following conditions:
+
+1. Permitted Use
+   - You may view, download, and locally host or deploy the Software for
+     personal, educational, or internal purposes only.
+
+2. Prohibited Use
+   - You may NOT host or deploy the Software in a publicly accessible domain
+     without prior written permission from the Licensor.
+   - You may NOT use the Software or any derivative works for commercial purposes.
+   - You may NOT modify, adapt, translate, or create derivative works.
+   - You may NOT redistribute the Software without explicit written permission.
+
+3. Licensed Exceptions
+   - If granted written permission for public hosting or redistribution,
+     attribution is required: "Fork of [Materio Logo]".
+
+4. Ownership and Rights
+   - The Software remains the intellectual property of the Licensor.
+
+5. Source Code Availability
+   - Not all source code components may be publicly released.
+   - Certain proprietary components may remain private.
+
+6. Termination
+   - License is automatically terminated if you breach any terms.
+
+7. No Warranty
+   - THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+
+For licensing inquiries: materio.operable341@silomails.com
+
+================================================================================
+2. THIRD-PARTY DEPENDENCIES
+================================================================================
+
+Node.js Dependencies (via npm):
+--------------------------------
+
+@octokit/rest@^22.0.0        - MIT License
+@supabase/supabase-js@^2.49.4 - MIT License  
+bcryptjs@^2.4.3              - MIT License
+dotenv@^16.5.0               - BSD-2-Clause License
+formidable@^3.5.4            - MIT License
+googleapis@^134.0.0          - Apache-2.0 License
+jsonwebtoken@^9.0.2          - MIT License
+uuid@^9.0.1                  - MIT License
+
+Development Dependencies:
+-------------------------
+jest@^29.5.0                 - MIT License
+netlify-cli@^16.5.1          - MIT License
+shx@^0.3.4                   - MIT License
+uglify-js@^3.17.4            - BSD-2-Clause License
+
+================================================================================
+3. PDF.JS COMPONENT LICENSES
+================================================================================
+
+PDF.js Reader Component:
+------------------------
+- PDF.js: Apache License 2.0
+- OpenJPEG: BSD-2-Clause License
+- QCMS: MIT License
+- Liberation Fonts: SIL Open Font License 1.1
+- Foxit Fonts: Proprietary License
+
+================================================================================
+4. FONT AND ICON LICENSES
+================================================================================
+
+Font Awesome Icons:
+-------------------
+- Font Awesome Free: SIL OFL 1.1 and MIT License
+- Used under free license for icons
+
+Google Fonts:
+-------------
+- Manrope Font: SIL Open Font License 1.1
+
+================================================================================
+5. CDN AND EXTERNAL SERVICES
+================================================================================
+
+External Services:
+------------------
+- GitHub (Giscus): MIT License
+- Supabase: MIT License
+- Netlify: Proprietary Service
+- Font Awesome CDN: SIL OFL 1.1 and MIT License
+- Google Fonts CDN: SIL Open Font License 1.1
+
+================================================================================
+
+For complete license texts of dependencies, please refer to:
+- node_modules/[package-name]/LICENSE files
+- Individual package repositories on npm/GitHub
+
+Last Updated: June 2025

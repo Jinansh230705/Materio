@@ -1,0 +1,16 @@
+{
+  "name": "materio-server",
+  "version": "1.0.0",
+  "description": "Materio API server with chat functionality",
+  "main": "promo-server.js",
+  "scripts": {
+    "start": "node promo-server.js",
+    "dev": "node promo-server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "node-fetch": "^2.7.0"
+  }
+}

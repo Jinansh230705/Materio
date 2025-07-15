@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
             expires = "; expires=" + date.toUTCString();
         }
         document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        console.log("Cookie set:", name, value);
+        // console.log("Cookie set:", name, value);
     }
 
     function getCookie(name) {

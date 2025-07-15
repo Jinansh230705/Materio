@@ -143,21 +143,19 @@ document.addEventListener('DOMContentLoaded', function () {
                     enable: enable
                 }, '*');
             } catch (e) {
-                console.log('Could not communicate with PDF iframe');
+                // console.log('Could not communicate with PDF iframe');
             }
         }
-    }
-
-    // Listen for messages from iframe to handle overlay mode requests
+    }    // Listen for messages from iframe to handle overlay mode requests
     window.addEventListener('message', function(event) {
         if (event.data && event.data.type === 'applyOverlayModes') {
             const pdfIframe = document.getElementById('pdf-iframe');
             if (pdfIframe && event.source === pdfIframe.contentWindow) {
                 const mainPopup = document.getElementById('popup');
-                if (mainPopup) {
-                    // Send current overlay states to iframe
+                if (mainPopup) {                    // Send current overlay states to iframe
                     const paperMode = mainPopup.classList.contains('paper-mode');
                     const nightReading = mainPopup.classList.contains('night-reading');
+                    const einkMode = mainPopup.classList.contains('eink-mode');
                     
                     if (paperMode) {
                         pdfIframe.contentWindow.postMessage({
@@ -174,6 +172,21 @@ document.addEventListener('DOMContentLoaded', function () {
                             enable: true
                         }, '*');
                     }
+                    
+                    if (einkMode) {
+                        pdfIframe.contentWindow.postMessage({
+                            type: 'overlayMode',
+                            mode: 'eink-mode',
+                            enable: true
+                        }, '*');
+                    }
+                    
+                    // Send current theme state to iframe
+                    const isDarkMode = document.body.classList.contains('dark-mode');
+                    pdfIframe.contentWindow.postMessage({
+                        type: 'themeMode',
+                        isDark: isDarkMode
+                    }, '*');
                 }
             }
         }
@@ -262,6 +275,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const nightStartTime = document.getElementById("nightStartTime");
     const nightEndTime = document.getElementById("nightEndTime");
     const nightScheduleToggle = document.getElementById("nightScheduleToggle");
+    const warmthSlider = document.getElementById("warmthSlider");
+    const warmthValue = document.getElementById("warmthValue");
     let nightModeInterval = null;
 
     function initializeNightReading() {
@@ -269,6 +284,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const savedStartTime = getCookie("nightStartTime") || "20:00";
         const savedEndTime = getCookie("nightEndTime") || "06:00";
         const savedSchedule = getCookie("nightSchedule");
+        const savedWarmth = getCookie("nightWarmth") || "50";
         
         if (savedNightReading === "true") {
             nightReadingToggle.checked = true;
@@ -283,12 +299,28 @@ document.addEventListener('DOMContentLoaded', function () {
             nightScheduleToggle.checked = true;
             startNightSchedule();
         }
-    }    function enableNightReading() {
+          if (warmthSlider) {
+            warmthSlider.value = savedWarmth;
+            updateWarmth(savedWarmth);
+        }
+    }    
+
+    function enableNightReading() {
         if (popup) {
             popup.classList.add('night-reading');
-        }
-        applyOverlayToPDFIframe('night-reading', true);
+            // Apply warmth level from slider
+            if (warmthSlider) {
+                updateWarmth(warmthSlider.value);
+            }
+        }        applyOverlayToPDFIframe('night-reading', true);
         showNightReadingControl();
+        
+        // Apply warmth setting to PDF iframe after a short delay to ensure overlay is applied
+        setTimeout(() => {
+            if (warmthSlider) {
+                updateWarmth(warmthSlider.value);
+            }
+        }, 300); // Increased delay for better reliability
     }
 
     function disableNightReading() {
@@ -434,6 +466,130 @@ document.addEventListener('DOMContentLoaded', function () {
         nightObserver.observe(popup, { 
             attributes: true, 
             attributeFilter: ['style', 'class'] 
+        });
+    }
+
+    // E-Ink Mode functionality
+    const einkModeToggle = document.getElementById("einkModeToggle");
+
+    function initializeEinkMode() {
+        const savedEinkMode = getCookie("einkMode");
+        
+        if (savedEinkMode === "true") {
+            einkModeToggle.checked = true;
+            enableEinkMode();
+        }
+    }
+
+    function enableEinkMode() {
+        if (popup) {
+            popup.classList.add('eink-mode');
+        }
+        applyOverlayToPDFIframe('eink-mode', true);
+    }
+
+    function disableEinkMode() {
+        if (popup) {
+            popup.classList.remove('eink-mode');
+        }
+        applyOverlayToPDFIframe('eink-mode', false);
+    }
+
+    // Initialize e-ink mode on page load
+    initializeEinkMode();
+
+    if (einkModeToggle) {
+        einkModeToggle.addEventListener("change", function () {
+            if (this.checked) {
+                enableEinkMode();
+                setCookie("einkMode", "true", 30);
+            } else {
+                disableEinkMode();
+                setCookie("einkMode", "false", 30);
+            }
+        });
+    }
+
+    // Listen for popup show/hide events to apply e-ink mode
+    if (popup) {
+        const einkObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+                    const isVisible = popup.style.display !== 'none' && popup.style.display !== '';
+                    if (isVisible && einkModeToggle && einkModeToggle.checked) {
+                        enableEinkMode();
+                    }
+                }
+            });
+        });
+        
+        einkObserver.observe(popup, { 
+            attributes: true, 
+            attributeFilter: ['style', 'class'] 
+        });    }
+
+    // Save time settings when changed
+    function updateWarmth(value) {
+        const warmthOpacity = value / 100 * 0.3; // Scale from 0-100% to 0-0.3 opacity
+        if (popup) {
+            popup.style.setProperty('--warmth-opacity', warmthOpacity);
+        }
+        if (warmthValue) {
+            warmthValue.textContent = `${value}%`;
+        }
+        
+        // Send warmth level to PDF iframe
+        applyWarmthToPDFIframe(warmthOpacity);
+        
+        // Log the warmth update for debugging
+        // console.log(`Warmth updated: ${value}% (opacity: ${warmthOpacity.toFixed(3)})`);
+    }
+      // Helper function to apply warmth to PDF iframe
+    function applyWarmthToPDFIframe(opacity) {
+        const pdfIframe = document.getElementById('pdf-iframe');
+        if (pdfIframe && popup.classList.contains('night-reading')) {
+            // Try direct access first (same-origin)
+            try {
+                const iframeDoc = pdfIframe.contentDocument;
+                if (iframeDoc) {
+                    iframeDoc.documentElement.style.setProperty('--warmth-opacity', opacity);
+                    
+                    // Force repaint to ensure changes are applied
+                    if (iframeDoc.body.classList.contains('night-reading')) {
+                        const viewer = iframeDoc.getElementById('viewer');
+                        if (viewer) {
+                            viewer.style.transform = 'translateZ(0)';
+                            setTimeout(() => {
+                                viewer.style.transform = '';
+                            }, 10);
+                        }
+                    }
+                    
+                    return; // Success with direct access
+                }
+            } catch (e) {
+                // Cross-origin, use postMessage
+                // console.log('Direct access failed, using postMessage:', e.message);
+            }
+            
+            // Use postMessage for cross-origin communication
+            try {
+                pdfIframe.contentWindow.postMessage({
+                    type: 'nightWarmth',
+                    opacity: opacity
+                }, '*');
+            } catch (e) {
+                // console.log('Could not send warmth level to PDF iframe');
+            }
+        }
+    }
+    
+    // Warmth slider event listener
+    if (warmthSlider) {
+        warmthSlider.addEventListener("input", function () {
+            const value = this.value;
+            updateWarmth(value);
+            setCookie("nightWarmth", value, 30);
         });
     }
 });
