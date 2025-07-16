@@ -6,7 +6,7 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 #
 layout: home
-permalink: /blog/
+permalink: /v3/blog/
 ---
 <script>
     (function () {
@@ -14,7 +14,7 @@ permalink: /blog/
 
     if (!authToken) {
         sessionStorage.setItem("redirectAfterLogin", window.location.pathname);
-        window.location.href = "/auth";
+        window.location.href = "/channels/entry";
     } else {
         injectLogoutButton();
     }
@@ -41,7 +41,7 @@ permalink: /blog/
         logoutButton.addEventListener("click", function () {
             localStorage.removeItem("authToken");
             sessionStorage.removeItem("authToken");
-            window.location.href = "/auth";
+            window.location.href = "/channels/entry";
         });
 
         footer.appendChild(logoutButton);

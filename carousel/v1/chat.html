@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <style>
+        body {
+            font-family: 'Apex New';
+    src: url('fonts/ApexNew-Medium.woff2');
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1em;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 10px;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+        section {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 1em;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #555;
+        }
+        
+        .navbar, .footer {
+            background-color: #333;
+            color: #ffffff;
+            padding: 10px;
+        }
+        .navbar a, .footer a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+        }
+        .footer {
+            margin-top: 200px;
+            text-align: center;
+        }
+        .footer img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Materio</h1>
+        <nav>
+            <a href="index.html">Resources</a>
+            <a href="chat.html">Chat</a>
+        </nav>
+    </header>
+
+    <section>
+        <h1>Chat</h1>
+        <p> Share your knowledge and learn from others in the chat or Request Materials and solve doubts in the chat.</p>
+           <p> Just Make sure to Login with your GitHub account to chat. </p>
+
+        <h2>About Using Markdown In the Chat</h2>
+        <p> You can use Markdown to format your messages in the chat. For example, you can make text bold by wrapping it in two asterisks like this: <code>**bold text**</code>. You can also create lists, links, and more. <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank">Here's a cheat sheet</a> to help you get started with Markdown.</p>
+    </section>
+
+    <div id="giscus" data-repo="your-github-username/your-github-repo">
+        <!-- The Giscus comment section will be loaded here -->
+    </div>
+
+    <script src="https://giscus.app/client.js"
+        data-repo="Jinansh230705/jinansh230705.github.io"
+        data-repo-id="R_kgDOK_VkLg"
+        data-category="General"
+        data-category-id="DIC_kwDOK_VkLs4Cdl9E"
+        data-mapping="url"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+<div class="footer">
+    Project hosted on <a href="https://github.com/Jinansh230705"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub logo"></a>
+</div>
+</body>
+</html>

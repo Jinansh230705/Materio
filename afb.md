@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About
-permalink: /blog/about
+permalink: /v3/blog/about
 ---
 
 Materio Blogs are about Notes, Materials and Place to get Notified about the latest things happening at Materio.

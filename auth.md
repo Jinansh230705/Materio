@@ -46,7 +46,7 @@ permalink: /auth
 
         if (user || (username === 'easteregg' && password === '')) {
           // Redirect to /blog without saving authentication status
-          window.location.href = '{{ site.baseurl }}/blog/';
+          window.location.href = '{{ site.baseurl }}/v3/blog/';
         } else {
           document.getElementById('error').style.display = 'block';
         }

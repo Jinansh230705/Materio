@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Changelog
-permalink: /changelog
+permalink: /v3/changelog
 ---
 <body>
 <!-- <section> -->

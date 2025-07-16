@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Chat
-permalink: /chat/
+permalink: /v3/chat/
 ---
 <body>
  <section>
@@ -27,9 +27,9 @@ permalink: /chat/
 <script src="https://giscus.app/client.js"
         data-repo="Materioa/Materio"
         data-repo-id="R_kgDOK_VkLg"
-        data-category="Chat"
+        data-category="Materio"
         data-category-id="DIC_kwDOK_VkLs4CmdaW"
-        data-mapping="og:title"
+        data-mapping="url"
         data-strict="1"
         data-reactions-enabled="1"
         data-emit-metadata="0"

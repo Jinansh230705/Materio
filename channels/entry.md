@@ -1,5 +1,5 @@
 ---
-layout: page2
+layout: auth
 title: Access Beta Channel
 permalink: /channels/entry
 ---
