@@ -47,23 +47,27 @@ body:
       required: true
 
   - type: textarea
-    id: additional_info
+    id: file_attachment
     attributes:
-      label: 📝 Additional Information
-      placeholder: Any other context you'd like to share
+      label: Upload File here
+      placeholder: Upload Your File here by clicking on the button that says "📎Paste, drop, or click to add files" right below the textarea or **drag & drop** the file in the textarea. Only **1 file per submission** is recommended for clarity.
     validations:
-      required: false
+      required: true
 
   - type: markdown
     attributes:
       value: |
-        **📎 Upload File:**  
-        Please attach your file (drag & drop or click the attachment icon).
+        ---
+        If you're having trouble uploading:  
+        🔄 Refresh the page and try again OR  
+        📩 Mail the resources directly at `materio.operable341@silomails.com` with all the necessary details.
 
   - type: checkboxes
     id: checklist
     attributes:
-      label: ✅ Checklist
+      label: "✅ Checklist (**Important**)"
       options:
-        - label: The file name is clear and follows proper naming conventions.
-        - label: The material is relevant and accurate to the best of my knowledge.
+        - label: "The file name is clear and follows proper naming conventions."
+        - label: "The material is relevant and accurate to the best of my knowledge."
+    validations: 
+      required: true
