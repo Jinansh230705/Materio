@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="{{ '/assets/style/main.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/style/notification.css' | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/style/gestures.css' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/style/ota-update.css' | relative_url }}">
+    <!-- {% include fa-icons.html %} -->
 </head>
 
 <body>
@@ -14,22 +16,44 @@
     <!-- End Google Tag Manager (noscript) -->
     <header>
         <a href="/" class="header-logo" role="button" aria-label="Go to homepage"></a>
+        <div class="health-status-indicator" id="healthIndicator" title="System Health"></div>
     </header>
     <main>
         {% include main.html %}
-    </main>
-    <!-- core -->
-    <script src="{{ '/assets/scripts/main.js' | relative_url }}"></script>
-    <script src="{{ '/assets/scripts/caching.js' | relative_url }}"></script>
-    <script src="{{ '/assets/scripts/notify.js' | relative_url }}"></script>
-    <script src="{{ '/assets/scripts/releases.js' | relative_url }}"></script>
-    <script src="{{ '/assets/scripts/theme.js' | relative_url }}"></script>
-    <script src="{{ '/assets/scripts/advanced.js' | relative_url }}"></script>
-    <script src="{{ '/assets/scripts/profile-image.js' | relative_url }}"></script>
-    <script src="{{ '/assets/scripts/ga.js' | relative_url }}"></script>
-    <script src="{{ '/assets/scripts/gestures.js' | relative_url }}"></script>
-    <!-- Webapp -->
-    <script src="{{ '/assets/scripts/webapp/pwa.js' | relative_url }}"></script>
+    </main> 
+    
+    <!-- PERFORMANCE OPTIMIZED SCRIPT LOADING -->
+    <!-- Critical scripts loaded immediately -->
+    <script src="{{ '/assets/scripts/main.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/scripts/theme.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/scripts/notify.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/scripts/advanced.js' | relative_url }}" defer></script>
+    
+    <!-- PDF-related scripts - load after main -->
+    <script src="{{ '/assets/scripts/pdf-downloads.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/scripts/caching.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/scripts/downloads-ui.js' | relative_url }}" defer></script>
+    
+    <!-- Profile & user-specific -->
+    <script src="{{ '/assets/scripts/profile-image.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/scripts/releases.js' | relative_url }}" defer></script>
+    <script src="{{ '/assets/scripts/health-check.js' | relative_url }}" defer></script>
+    
+    <!-- Lazy loader for non-critical scripts -->
+    <script src="{{ '/assets/scripts/lazy-loader.js' | relative_url }}" defer></script>
+    
+    <!-- Non-critical scripts now loaded lazily via lazy-loader.js:
+         - ga.js (analytics)
+         - gestures.js (mobile only)
+         - promotions.js (delayed)
+         - ux-enhancers.js (delayed)
+         - ota-hugeicons.js (delayed)
+         - local-cdn.js (super users only)
+    -->
+
+    <!-- Webapp - essential for PWA -->
+    <script src="{{ '/assets/scripts/webapp/pwa.js' | relative_url }}" defer></script>
+
 </body>
 
 </html>

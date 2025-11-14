@@ -2,23 +2,47 @@
     <nav class="navbar">
         <div class="navbar-top-group">
             <a href="#" class="tab-link active" data-tab="home">
-                <i class="fas fa-home"></i>
+                <i class="far fa-house-chimney"></i>
+            </a>
+            <a href="#local" class="tab-link" data-tab="local" id="localTabLink" style="display: none;">
+                <i class="far fa-hard-drive"></i>
             </a>
             <a href="#2" class="tab-link" data-tab="chat">
-                <i class="fas fa-comments"></i>
-            </a>
+                <i class="far fa-comments"></i>
+            </a> 
             <a href="#3" class="tab-link" data-tab="notifications">
-                <i class="fas fa-bell"></i>
+                <i class="far fa-bell"></i>
             </a>
-            <!-- <a href="#5" class="tab-link" data-tab="downloads">
-                <i class="fas fa-download"></i>
+            <!-- <a href="#4" class="tab-link" data-tab="ai-chat">
+                <i class="far fa-robot"></i>
             </a> -->
+           
+            <a href="/room" target="_blank">
+               <i class="far fa-lightbulb-on"></i>
+            </a>
         </div>
         <div class="navbar-bottom-group">
-            <a href="#4" class="tab-link profile-icon" data-tab="settings">
-                <i id="settings-icon" class="fas fa-cog"></i>
-                <img id="profile-image" src="/assets/img/default-avatar.svg" style="display: none;">
+            <div class="profile-icon-container">
+                <a href="#" class="tab-link profile-icon" data-tab="settings" role="button" aria-label="Profile and Settings">
+                    <i id="settings-icon" class="far fa-cog"></i>
+                    <img id="profile-image" src="/assets/img/default-avatar.svg" style="display: none;" alt="Profile Picture">
+                </a>
+                <!-- Profile dropdown menu -->
+                <div id="profile-dropdown" class="profile-dropdown" role="menu" aria-hidden="true">
+                    <a href="/account/profile" class="dropdown-item" data-action="profile" role="menuitem" tabindex="0">
+                        <i class="fas fa-user"></i>
+                        <span style="font-size: 15px;">Profile</span>
+                    </a>
+                     <a href="#5" class="dropdown-item" data-action="downloads" role="menuitem" tabindex="0">
+                <i class="fa-solid fa-folder-arrow-down"></i>
+                <span style="font-size: 15px;">Downloads</span>
             </a>
+                    <a href="#4" class="dropdown-item" data-action="settings" role="menuitem" tabindex="0">
+                        <i class="fas fa-cog"></i>
+                        <span style="font-size: 15px;">Settings</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -53,17 +77,263 @@
                     </div>
                 </form>
 
-                <button id="submitButton">Submit</button>
-            </div>            <div id="popup">
+                <div class="reading-controls-wrapper" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+                    <!-- Quick Resource Search Box - First on Desktop, Second Row on Mobile -->
+                    <div id="quickSearchContainer">
+                        <div style="position: relative;">
+                            <i class="far fa-search quick-search-icon-left"></i>
+                            <input 
+                                type="text" 
+                                id="quickSearchInput" 
+                                placeholder="Finder" 
+                            />
+                            <button id="aiSearchToggle" class="ai-search-toggle" title="Toggle AI Search" aria-label="Toggle AI Search">
+                                <i class="far fa-sparkles"></i> AI Mode
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="icon-buttons-container" style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: auto;">
+                        <a href="https://github.com/Materioa/web-frontend/issues/new?template=contribute.yml" target="_blank" class="icon-button" style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; min-width: 45px; background: rgba(255, 130, 0, 0.1); border: 1px solid rgba(255, 130, 0, 0.3); border-radius: 25px; corner-shape:squircle; color: #ff8200; text-decoration: none; transition: all 0.3s ease; backdrop-filter: blur(4px);" onmouseover="this.style.background='rgba(255, 130, 0, 0.2)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255, 130, 0, 0.1)'; this.style.transform='translateY(0)'">
+                            <i class="far fa-circle-plus" style="font-size: 18px;"></i>
+                            <span class="tooltip-text" style="position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9); color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;">Contribute</span>
+                        </a>
+                    </div>
+                    
+                    <button id="submitButton" class="shimmer-button"><span class="shimmer-text"><b>Start Reading</b></span></button>
+                </div>
+            </div>
+            
+            <!-- Blog Posts Card -->
+            <div class="card-one" id="blogs">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 id="blogCardHeading">Latest from the Insightroom</h2>
+                    <a href="/room" style="text-decoration: none; color: #ff8200; font-weight: 600; background: rgba(255, 130, 0, 0.1); padding: 8px 16px; border-radius: 25px; backdrop-filter: blur(4px); border: 1px solid rgba(255, 130, 0, 0.3); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 6px;">
+                        View More 
+                        <i class="fas fa-arrow-up" style="transform: rotate(45deg); font-size: 12px;"></i>
+                    </a>
+                </div>
+                
+                <div class="blog-posts-container" id="blogPostsContent">
+                    <!-- Default: Latest 5 posts -->
+                    <div id="defaultPosts">
+                        {% assign recent_posts = site.posts | where_exp: 'post', 'post.hidden != true' | slice: 0, 5 %}
+                        {% for post in recent_posts %}
+                        <a href="{{ post.url }}" style="text-decoration: none; color: inherit; display: block;" {% if post.visibility == 'private' %}data-visibility="private"{% endif %}>
+                            <div class="card-layout blog-post-item" id="blogPost{{ forloop.index }}" style="backdrop-filter: blur(2px); cursor: pointer; transition: transform 0.2s ease;">
+                                <h3 class="blog-post-title">
+                                    <span class="blog-post-link" style="color: #ff8200;">{{ post.title }}</span>
+                                </h3>
+                                <p class="blog-post-excerpt">
+                                    {% if post.excerpt_home %}
+                                        {{ post.excerpt_home }}
+                                    {% else %}
+                                        {{ post.excerpt | strip_html | truncatewords: 20 }}
+                                    {% endif %}
+                                </p>
+                                <div class="blog-post-meta">
+                                    <span class="blog-post-date">{{ post.date | date: "%B %d, %Y" }}</span>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Smart Recommendations (hidden by default) -->
+                    <div id="recommendedPosts" style="display: none;">
+                        <!-- Recommended posts will be populated by JavaScript -->
+                    </div>
+                    
+                    <!-- No posts found message -->
+                    <div id="noPostsMessage" style="display: none; text-align: center; padding: 20px; color: #666;">
+                        <p>No posts found for the selected semester and subject.</p>
+                        <p style="font-size: 14px;">Try selecting different options or check back later for new content.</p>
+                    </div>
+                </div>
+                
+                <!-- Hidden data for all posts (for JavaScript filtering) -->
+                <script type="application/json" id="allPostsData">
+                [
+                    {% assign all_posts = site.posts | where_exp: 'post', 'post.hidden != true' %}
+                    {% for post in all_posts %}
+                    {
+                        "title": {{ post.title | jsonify }},
+                        "url": "{{ post.url }}",
+                        "date": "{{ post.date | date: '%B %d, %Y' }}",
+                        "excerpt_home": {{ post.excerpt_home | default: '' | jsonify }},
+                        "excerpt": {{ post.excerpt | strip_html | truncatewords: 20 | jsonify }},
+                        "semester": {{ post.semester | default: '' | jsonify }},
+                        "subject": {{ post.subject | default: '' | jsonify }},
+                        "visibility": {{ post.visibility | default: 'public' | jsonify }}
+                    }{% unless forloop.last %},{% endunless %}
+                    {% endfor %}
+                ]
+                </script>
+            </div>
+            
+            <div id="popup">
                 <div class="popup-controls">
+                    <button id="downloadButton" style="margin-top: 5px; transition: all 0.3s ease; cursor: pointer;" title="Download for offline reading" aria-label="Download for offline reading">
+                        <i class="fa-regular fa-bookmark-plus"></i>
                     </button>
-                    <!-- <button id="downloadButton" style="margin-right:100;margin-top:5px;transition:all 0.3s ease;cursor:pointer;" title="Download for offline reading"><i class="fa-regular fa-bookmark"></i></button> -->
-                    <button id="fullscreenButton" style="margin-right: 40px; margin-top:5px;"><i
+                    <button id="fullscreenButton" style="margin-right: 40px; margin-top:5px;" aria-label="Enter fullscreen"><i
                             class="fas fa-expand"></i></button>
-                    <button id="closePopup"><i class="fas fa-times"></i></button>
+                    <button id="closePopup" aria-label="Close PDF viewer"><i class="fas fa-times"></i></button>
                 </div>
                 <div id="popupContent">
                     <!-- PDF iframe will be loaded here -->
+                </div>
+            </div>
+        </div> <!-- Promotional Modal (Content Dynamically Loaded) -->
+        <div class="promo-modal-overlay" id="promoModal" style="display: none;">
+            <div class="promo-modal">
+                <!-- Close Button -->
+                <i class="fas fa-times promo-close-btn" onclick="closePromoModal()"></i>
+                
+                <!-- Left Section: Media Panel -->
+                <div class="promo-image">
+                    <img src="" class="promo-cover" alt="Promotion Image" style="display: none;">
+                    <video class="promo-video" muted autoplay loop playsinline style="display: none;">
+                        <source src="" type="video/mp4">
+                        <source src="" type="video/webm">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-controls" style="display: none;">
+                      <button class="video-control-btn play-pause-btn" title="Play/Pause">
+                        <i class="fa-solid fa-pause"></i>
+                      </button>
+                      <button class="video-control-btn mute-unmute-btn" title="Mute/Unmute">
+                        <i class="fa-solid fa-volume-high"></i>
+                      </button>
+                    </div>
+                </div>
+                
+                <!-- Right Section: Content Panel -->
+                <div class="promo-content">
+                    <h2><span class="promo-title">Loading...</span></h2>
+                    <p class="promo-description">Loading promotion content...</p>
+
+                    <!-- Action Buttons -->
+                    <div class="promo-actions">
+                        <a href="#" target="_blank" class="promo-link" style="display: none;">
+                            <button id="offerButton" class="site-button promo-primary-btn">
+                                <i class="promo-primary-icon fa-solid fa-tag" style="margin-left: 5px; margin-right: 10px;"></i>
+                                <span class="promo-button-text">View Offer</span>
+                            </button>
+                        </a>
+                        <button id="remindLaterBtn" class="site-button promo-secondary-btn" onclick="remindMeLater()" style="display: none;">
+                            <i class="promo-secondary-icon fa-solid fa-clock" style="margin-right: 8px;"></i>
+                            <span class="promo-secondary-text">Remind me later</span>
+                        </button>
+                    </div>
+
+                    <!-- Disclaimer / Link Row -->
+                    <small class="promo-disclaimer" style="display: none;">
+                        <span class="promo-disclaimer-text">*Terms and conditions apply.</span> 
+                        <a href="#" target="_blank" class="promo-disclaimer-link">Read more</a>.
+                    </small>
+
+                    <!-- Don't show again option -->
+                    <div class="promo-options" style="display: none;">
+                        <label class="promo-checkbox-label">
+                            <input type="checkbox" id="dontShowAgainCheckbox" class="promo-checkbox">
+                            <span class="promo-checkbox-text">Don't show this again</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="local" class="tab-content">
+            <h1>
+                Local Resources
+                <i class="fas fa-circle-info info-icon">
+                    <span class="tooltip" style="font-weight: normal;">Load CDN resources from your local server or directory for faster access and offline use.</span>
+                </i>
+            </h1>
+
+            <!-- Local CDN Card -->
+            <div class="card-layout" id="localCdnCard">
+                <div class="local-cdn-container">
+                    <div class="local-cdn-header">
+                        <div class="paper-mode-info">
+                            <div class="paper-mode-title">
+                                Local Resources
+                            </div>
+                            <div class="paper-mode-description">Use local copy of CDN resources</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="localCdnToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="local-cdn-settings" id="localCdnSettings" style="display: none; margin-top: 15px;">
+                        <div class="local-cdn-warning" style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 12px; color: #856404;">
+                            <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i>
+                            <strong>Note:</strong> This feature requires a CORS-enabled local server.
+                            <details style="margin-top: 10px; cursor: pointer;">
+                                <summary style="font-weight: 700; outline: none; user-select: none;">
+                                     Quick Setup Guide
+                                </summary>
+                                <div style="margin-top: 8px; padding-left: 20px; border-left: 3px solid #ffc107; padding-left: 12px;">
+                                    <strong>Step 1:</strong> In your CDN directory, run:<br>
+                                    <code style="display: block; background: #f8f9fa; padding: 6px; margin: 4px 0; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 11px;">
+                                        python scripts/cors-server.py 8080
+                                    </code>
+                                    <strong>Step 2:</strong> Enter URL below and click Save Path<br>
+                                    <code style="background: #f8f9fa; padding: 2px 6px; border-radius: 3px;">http://localhost:8080</code>
+                                </div>
+                            </details>
+                        </div>
+                        <div class="local-cdn-input-group">
+                            <label for="localCdnPath" style="font-size: 13px; color: #666; margin-bottom: 8px; display: block;">
+                                <i class="fas fa-folder-open" style="margin-right: 5px;"></i>
+                                Server URL or Directory Path
+                            </label>
+                            <input 
+                                type="text" 
+                                id="localCdnPath" 
+                                placeholder="http://localhost:8080 or E:\GitHub\cdn-materio"
+                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 13px; box-sizing: border-box; max-width: 100%;"
+                            >
+                            <div id="serverStatus" style="margin-top: 8px; font-size: 12px; color: #666; display: none;">
+                                <i class="fas fa-circle" id="serverStatusIcon"></i>
+                                <span id="serverStatusText"></span>
+                            </div>
+                            <button id="saveLocalCdnPath" style="font-family: Manrope;margin-top: 12px; padding: 10px 20px; background: #ff8400; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; transition: transform 0.2s; box-sizing: border-box;">
+                                <i class="fas fa-save" style="margin-right: 5px;"></i>
+                                Save Path
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal Window for Server Logs -->
+            <div class="card-layout" id="serverTerminal" style="margin-top: 20px; display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-terminal" style="color: #ff8200;"></i>
+                        <h3 style="margin: 0; font-size: 14px; font-weight: 600;">Server Logs</h3>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="clearTerminal" class="terminal-btn" title="Clear logs">
+                            <i class="fas fa-eraser"></i>
+                        </button>
+                        <button id="toggleTerminal" class="terminal-btn" title="Collapse/Expand">
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="terminalContent" class="terminal-window">
+                    <div id="terminalOutput" class="terminal-output">
+                        <div class="terminal-line" style="color: #858585; font-style: italic;">
+                            Waiting for local server connection...
+                        </div>
+                        <div class="terminal-line" style="color: #858585; font-style: italic;">
+                            Enable Local Resources above to start monitoring server logs
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -71,7 +341,7 @@
         <div id="chat" class="tab-content">
             <h1>
                 Chat
-                <i class="fas fa-info info-icon">
+                <i class="fas fa-circle-info info-icon">
                     <span class="tooltip" style="font-weight: normal;">You can chat here by signing with github and
                         ask doubts or discuss topics, Formatting with Markdown is supported.</span>
                 </i>
@@ -79,45 +349,82 @@
             <div id="giscus" data-repo="Materioa/Materio">
                 <!-- The Giscus comment section will be loaded here -->
             </div>
-            <script src="https://giscus.app/client.js" data-repo="Materioa/Materio" data-repo-id="R_kgDOK_VkLg"
+            <script src="https://giscus.app/client.js" data-repo="Materioa/web-frontend" data-repo-id="R_kgDOK_VkLg"
                 data-category="Chat" data-category-id="DIC_kwDOK_VkLs4CmdaW" data-mapping="title" data-strict="0"
                 data-reactions-enabled="0" data-emit-metadata="0" data-input-position="top" data-theme="noborder_dark"
-                data-lang="en" crossorigin="anonymous" async>
+                data-lang="en" data-order="desc" crossorigin="anonymous" async>
                 </script>
 
         </div>
-
         <div id="notifications" class="tab-content">
             <h1>Notifications</h1>
             <div id="notificationBoard" style="color:#000000;">
                 <!-- Notification cards will be dynamically added here -->
             </div>
         </div>
-        
-        <!-- <div id="downloads" class="tab-content">
+
+        <div id="ai-chat" class="tab-content" disabled>
+            <h1>AI Chat</h1>
+            {% include ai-chat.html %}
+        </div>
+
+        <div id="downloads" class="tab-content">
             <h1>
                 Downloads
                 <i class="fas fa-info info-icon">
-                    <span class="tooltip" style="font-weight: normal;">Your downloaded files are stored locally for offline reading.</span>
+                    <span class="tooltip" style="font-weight: normal;">Your downloaded PDFs are stored locally for offline reading.</span>
                 </i>
             </h1>
-            <div id="downloadsBoard" style="color:#000000;">
+            
+            <!-- Storage Info Card -->
+            <div class="card-layout" id="storageInfoCard" style="margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <div>
+                        <h3 style="margin: 0; font-size: 16px;">Storage Usage</h3>
+                        <p id="storageStats" style="margin: 5px 0; color: #666; font-size: 14px;">Loading...</p>
+                    </div>
+                    <button id="clearAllDownloadsBtn" class="btn" style="background: #dc3545; color: white; padding: 8px 16px; border-radius: 25px; corner-shape:squircle; border: none; cursor: pointer; font-size: 14px;">
+                        <i class="fas fa-trash"></i> Clear All
+                    </button>
+                </div>
+                <div style="background: #f0f0f0; border-radius: 8px; height: 8px; overflow: hidden;">
+                    <div id="storageBar" style="background: linear-gradient(to right, #ffd54f, #ffc540, #ffb530, #ffa520, #ff9510, #ff6f00); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+            
+            <div id="downloadsBoard">
                 <div id="downloadsLoading" class="loading-state">
                     <i class="fas fa-spinner fa-spin"></i> Loading downloads...
                 </div>
-                <div id="downloadsEmpty" class="empty-state" style="display: none;">
+                <div id="downloadsEmpty" class="empty-state" style="display: none; text-align: center; padding: 60px 20px;">
                     <i class="fas fa-download" style="font-size: 48px; color: #ccc; margin-bottom: 16px;"></i>
-                    <p>No downloads yet</p>
-                    <p style="color: #666; font-size: 14px;">Downloaded files will appear here</p>
+                    <p style="font-size: 18px; font-weight: 600; margin: 10px 0;">No downloads yet</p>
+                    <p style="color: #666; font-size: 14px;">Downloaded PDFs will appear here for offline access</p>
                 </div>
-                <div id="downloadsList"></div>
+                <div id="downloadsTableWrapper" style="display: none;">
+                    <div id="downloadsTableHeader" style="display: grid; grid-template-columns: 1fr 150px 120px 100px 100px; gap: 15px; padding: 12px 16px; background: rgba(255, 130, 0, 0.1); border-radius: 8px; margin-bottom: 10px; font-weight: 600; font-size: 14px;">
+                        <div style="text-align: left;">Name</div>
+                        <div style="text-align: left;">Subject</div>
+                        <div style="text-align: left;">Semester</div>
+                        <div style="text-align: left;">Size</div>
+                        <div style="text-align: center;">Actions</div>
+                    </div>
+                    <div id="downloadsList"></div>
+                </div>
             </div>
-        </div> -->
+        </div>
 
         <div id="settings" class="tab-content">
             <h1>Settings</h1>
             <!-- Version -->
             <div class="card-layout" id="versionInfo" style></div>
+            
+            <!-- OTA Update Button (Plus/Super Users Only) -->
+            <button id="otaUpdateButton" style="display: none;">
+                <!-- <i class="fa-solid fa-up-from-line"></i> -->
+                <span>Download Update</span>
+            </button>
+            
             <!-- Account -->
             <div class="card-layout" id="account">
                 <div class="account-card">
@@ -259,6 +566,69 @@
                         </label>
                     </div>
                 </div>
+
+                <!-- Background Wallpaper Selection -->
+                <div class="card-layout" id="wallpaperSelectionCard">
+                    <div class="wallpaper-section">
+                        <div class="paper-mode-info">
+                            <div class="paper-mode-title">Choose Background Wallpaper</div>
+                            <div class="paper-mode-description">Select from available wallpaper options</div>
+                        </div>
+                        <div class="wallpaper-grid">
+                            <div class="wallpaper-preview-card" data-wallpaper="default" data-bg-image="">
+                                <div class="wallpaper-preview" style="background-image: url('/assets/img/events/hero.webp'); background-size: cover; background-position: center;">
+                                    <div class="wallpaper-overlay">
+                                        <span class="wallpaper-name">Default</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wallpaper-preview-card" data-wallpaper="dynamic" data-bg-image="dynamic">
+                                <div class="wallpaper-preview dynamic-preview" id="dynamicPreview">
+                                    <div class="wallpaper-overlay">
+                                        <span class="wallpaper-name">Dynamic Landscape</span>
+                                        <span class="dynamic-time" id="dynamicTime"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wallpaper-preview-card" data-wallpaper="h2" data-bg-image="url('/assets/img/events/h2.webp')">
+                                <div class="wallpaper-preview" style="background-image: url('/assets/img/events/h2.webp'); background-size: cover; background-position: center;">
+                                    <div class="wallpaper-overlay">
+                                        <span class="wallpaper-name">Zen</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wallpaper-preview-card" data-wallpaper="h5" data-bg-image="url('/assets/img/events/h5.webp')">
+                                <div class="wallpaper-preview" style="background-image: url('/assets/img/events/h5.webp'); background-size: cover; background-position: center;">
+                                    <div class="wallpaper-overlay">
+                                        <span class="wallpaper-name">Dusk</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wallpaper-preview-card" data-wallpaper="h3" data-bg-image="url('/assets/img/events/h3.webp')">
+                                <div class="wallpaper-preview" style="background-image: url('/assets/img/events/h3.webp'); background-size: cover; background-position: center;">
+                                    <div class="wallpaper-overlay">
+                                        <span class="wallpaper-name">A Blissful Night</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insightroom Section Toggle -->
+                <div class="card-layout" id="getinsights">
+                    <div class="toggle-container">
+                        <div class="paper-mode-info">
+                            <div class="paper-mode-title">Show Insightroom Feed</div>
+                            <div class="paper-mode-description">Display smart posts from insighroom</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="insightroomToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="card-layout" id="cookiesToggleCard">
                     <div class="toggle-container">
                         <div class="paper-mode-info">
@@ -291,36 +661,41 @@
                 <p style="margin-left: 5px;"><b>Legal</b></p>
                 <div class="card-layout" id="notices">
                     <p>
-                        <i class="fas fa-circle-info"><span><a href="/whatisthis"
-                                    style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333; text-decoration: none;">About</a></span></i>
-                        <i class="fas fa-chevron-right" style="float: right;margin-right: 20px;"></i>
+                        <i class="fas fa-circle-info"></i>
+                        <span><a href="/whatisthis"
+                                    style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333; text-decoration: none;">About</a></span>
+                        <i class="fas fa-chevron-right"></i>
                     </p>
                     <hr>
                     <p>
-                        <i class="fas fa-scroll"><span><a href="/license"
-                                    style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333;text-decoration: none;">License</a></span></i>
-                        <i class="fas fa-chevron-right" style="float: right;margin-right: 20px;"></i>
+                        <i class="fas fa-scroll"></i>
+                        <span><a href="/license"
+                                    style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333;text-decoration: none;">License</a></span>
+                        <i class="fas fa-chevron-right"></i>
                     </p>
                     <hr>
                     <p>
-                        <i class="fas fa-file-contract"><span><a href="/privacy"
+                        <i class="fas fa-file-contract"></i>
+                        <span><a href="/privacy"
                                     style="font-family:'Manrope', sans-serif; font-weight:600; color: #333;text-decoration: none;">Privacy
-                                    Policy</a></span></i>
-                        <i class="fas fa-chevron-right" style="float: right;margin-right: 20px;"></i>
+                                    Policy</a></span>
+                        <i class="fas fa-chevron-right"></i>
                     </p>
                     <hr>
                     <p>
-                        <i class="fas fa-cookie"><span><a href="/cookies"
+                        <i class="fas fa-cookie"></i>
+                        <span><a href="/cookies"
                                     style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333;text-decoration: none;">Cookie
-                                    Policy</a></span></i>
-                        <i class="fas fa-chevron-right" style="float: right;margin-right: 20px;"></i>
+                                    Policy</a></span>
+                        <i class="fas fa-chevron-right"></i>
                     </p>
                     <hr>
                     <p>
-                        <i class="fab fa-github"><span><a href="https://github.com/Jinansh230705"
+                        <i class="fab fa-github"></i>
+                        <span><a href="https://github.com/Jinansh230705"
                                     style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333;text-decoration: none;">Developer's
-                                    Github</a></span></i>
-                        <i class="fas fa-chevron-right" style="float: right;margin-right: 20px;"></i>
+                                    Github</a></span>
+                        <i class="fas fa-chevron-right"></i>
                     </p>
                 </div>
             </div>
@@ -358,3 +733,8 @@
                         id="buildId">{{ site.data.build_id.build_id | default: "dev-local"}}</span></span>
             </details>
         </div>
+
+<!-- Quick Search Results Dropdown (positioned absolutely at body level) -->
+<div id="quickSearchResults">
+    <!-- Results will be populated here -->
+</div>

@@ -1,5 +1,5 @@
 ---
-layout: page2
+layout: page
 title: License
 heading: Materio Source-Available License v1.0
 permalink: /license

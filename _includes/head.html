@@ -1,8 +1,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Materio - Home | Materio</title>
-<meta name="description"
-    content="Materio is the one goto place you need for satisfying all your study needs, Find all the computer science and engineering study materials for all semester of Parul University here well organised, You can also chat with other students to help or ask doubts and share or request study materials.">
+<meta name="description" content="Official materials you trust, in a way you love — Because e-learning shouldn't feel like suffering. Find organized, official study materials, notes, and peer help — all in one clean place." />
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://materioa.netlify.app">
 <meta name="keywords"
@@ -10,9 +9,9 @@
 
 <!-- Open Graph Meta Tags -->
 <meta property="og:title" content="Materio">
-<meta property="og:description" content="Materio is goto place for all CSE Materials for Parul University">
-<meta property="og:image" itemprop="image" content="https://materioa.netlify.app/static/res/og.jpeg">
-<meta property="og:image:secure_url" itemprop="image" content="https://materioa.netlify.app/static/res/og.jpeg">
+<meta property="og:description" content="Official materials you trust, in a way you love — Because e-learning shouldn't feel like suffering. Find organized, official study materials, notes, and peer help — all in one clean place." />
+<meta property="og:image" itemprop="image" content="https://materioa.netlify.app/assets/img/og.jpeg">
+<meta property="og:image:secure_url" itemprop="image" content="https://materioa.netlify.app/assets/img/og.jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://materioa.netlify.app">
@@ -25,15 +24,17 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Materio">
-<link rel="apple-touch-icon" href="/assets/img/materio_new_bk.svg">
+<link rel="apple-touch-icon" href="/assets/img/icon.svg">
 
 <!-- Favicon and Icons -->
 <link rel="icon" type="image/x-icon" href="/assets/img/icon.svg" sizes="256x256">
 <link rel="icon" href="/assets/img/icon-x.svg" sizes="16x16" type="image/svg">
 
 <!-- External Stylesheets -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.css"> -->
+<script src="https://materioa.github.io/kit/6a787c7335.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/assets/style/icon-fallback.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
@@ -63,6 +64,28 @@
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
     })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
 
-<!-- Google AdSense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7539227284131407"
-    crossorigin="anonymous"></script>
+<!-- Google AdSense - Load conditionally based on user subscription -->
+<script>
+    function hasAdFreePrivileges() {
+        try {  
+            const userDataStr = localStorage.getItem('materio_user');
+            if (!userDataStr) {
+                return false;
+            }
+            const userData = JSON.parse(userDataStr);
+            return userData.isPlusUser === true || userData.hasAdminPrivileges === true;
+        } catch (error) {
+            console.log('Error checking user privileges for ads:', error);
+            return false;
+        }
+    }
+    if (!hasAdFreePrivileges()) {
+        const adsenseScript = document.createElement('script');
+        adsenseScript.async = true;
+        adsenseScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7539227284131407';
+        adsenseScript.crossOrigin = 'anonymous';
+        document.head.appendChild(adsenseScript);
+    } else {
+        console.log('Enjoy un-interrupted reading.');
+    }
+</script>

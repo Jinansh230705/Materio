@@ -15,3 +15,5 @@ saved_changes
 netlify/
 .github/instructions
 _data
+.github/instructions
+scripts/*

@@ -1,79 +1,68 @@
 // Enhanced PDF.js blob cache integration script
 // This script optimizes PDF loading by intercepting requests and using cached blobs
+// PERFORMANCE OPTIMIZED: Reduced logging, faster matching
 
 (function() {
     'use strict';
     
     let blobCache = new Map();
     let pendingRequests = new Map();
+    const DEBUG = false; // Set to true only for debugging
     
-    console.log('🚀 PDF.js blob cache optimizer initializing...');
+    if (DEBUG) console.log('🚀 PDF.js blob cache optimizer initializing...');
     
-    // Enhanced URL matching function
+    // OPTIMIZED: Faster URL matching with early returns
     function findCachedDataForUrl(targetUrl) {
-        console.log('🔍 Searching cache for URL:', targetUrl);
-        console.log('📋 Available cache keys:', Array.from(blobCache.keys()));
+        if (DEBUG) {
+            console.log('🔍 Searching cache for URL:', targetUrl);
+            console.log('📋 Available cache keys:', Array.from(blobCache.keys()));
+        }
         
-        // Direct match first
+        // Direct match first (fastest)
         if (blobCache.has(targetUrl)) {
             return blobCache.get(targetUrl);
         }
         
+        // Pre-compute target URL parts once
+        const targetParts = targetUrl.split('/');
+        const targetFilename = targetParts[targetParts.length - 1];
+        const targetPath3 = targetParts.length >= 3 ? targetParts.slice(-3).join('/') : null;
+        
         // Try different URL variations
         for (let [originalUrl, cachedData] of blobCache) {
-            // console.log('🔗 Comparing with cached URL:', originalUrl);
-            
-            // Extract key components for comparison
-            const targetParts = targetUrl.split('/');
             const originalParts = originalUrl.split('/');
-            
-            // Compare filename (most reliable)
-            const targetFilename = targetParts[targetParts.length - 1];
             const originalFilename = originalParts[originalParts.length - 1];
             
+            // Compare filename (most reliable and fastest)
             if (targetFilename && originalFilename && 
                 targetFilename === originalFilename && 
                 targetFilename.includes('.pdf')) {
-                // console.log('✅ Filename match found:', targetFilename);
+                if (DEBUG) console.log('✅ Filename match found:', targetFilename);
                 return cachedData;
             }
             
             // Compare last 3 path segments (semester/subject/topic.pdf)
-            if (targetParts.length >= 3 && originalParts.length >= 3) {
-                const targetPath = targetParts.slice(-3).join('/');
-                const originalPath = originalParts.slice(-3).join('/');
-                
-                if (targetPath === originalPath) {
-                    // console.log('✅ Path match found:', targetPath);
+            if (targetPath3 && originalParts.length >= 3) {
+                const originalPath3 = originalParts.slice(-3).join('/');
+                if (targetPath3 === originalPath3) {
+                    if (DEBUG) console.log('✅ Path match found:', targetPath3);
                     return cachedData;
                 }
-            }
-            
-            // Try URL decoding
-            try {
-                const decodedTarget = decodeURIComponent(targetUrl);
-                const decodedOriginal = decodeURIComponent(originalUrl);
-                
-                if (decodedTarget === decodedOriginal) {
-                    // console.log('✅ Decoded URL match found');
-                    return cachedData;
-                }
-                
-                // Check decoded filenames
-                const decodedTargetFilename = decodedTarget.split('/').pop();
-                const decodedOriginalFilename = decodedOriginal.split('/').pop();
-                
-                if (decodedTargetFilename === decodedOriginalFilename && 
-                    decodedTargetFilename.includes('.pdf')) {
-                    // console.log('✅ Decoded filename match found:', decodedTargetFilename);
-                    return cachedData;
-                }
-            } catch (e) {
-                // URL decode failed, continue
             }
         }
         
-        // console.log('❌ No cache match found for:', targetUrl);
+        // Only try URL decoding as last resort (expensive operation)
+        try {
+            const decodedTarget = decodeURIComponent(targetUrl);
+            if (decodedTarget !== targetUrl && blobCache.has(decodedTarget)) {
+                if (DEBUG) console.log('✅ Decoded URL match found');
+                return blobCache.get(decodedTarget);
+            }
+        } catch (e) {
+            // URL decode failed, skip
+        }
+        
+        if (DEBUG) console.log('❌ No cache match found for:', targetUrl);
         return null;
     }
     

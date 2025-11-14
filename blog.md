@@ -1,4 +1,4 @@
 ---
 layout: home
-permalink: /blog
+permalink: /room
 ---

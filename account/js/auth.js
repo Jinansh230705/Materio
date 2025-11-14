@@ -57,7 +57,7 @@ async function makeApiRequest(endpoint, method = 'GET', data = null, requiresAut
       options.body = JSON.stringify(data);
     }
       // Make fetch request
-    console.log(`Making ${method} request to ${endpoint}`, data ? 'with data' : 'without data');
+    console.log(`Making ${method} request to ${API_URL}/${endpoint}`, options);
     const response = await fetch(`${API_URL}/${endpoint}`, options);    // Parse response
     let result;
     try {
@@ -112,7 +112,16 @@ function clearAuthToken() {
 }
 
 function redirectToProfile() {
-  window.location.href = 'profile';
+  // In development mode (localhost), always use profile.html
+  const isLocalhost = window.location.hostname === 'localhost' || 
+                      window.location.hostname === '127.0.0.1';
+                      
+  if (isLocalhost) {    window.location.href = '/account/profile.html';
+    return;
+  }
+  
+  // Always redirect to profile.html
+  window.location.href = '/account/profile.html';
 }
 
 function redirectToLogin() {
@@ -143,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-
   // Protect authenticated pages
   const currentPage = window.location.pathname.split('/').pop();
   
@@ -152,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Pages that are for non-authenticated users
   const nonAuthPages = ['index', 'signup', 'forgot-password', ''];
-  
+
   if (authRequiredPages.includes(currentPage) && !isAuthenticated()) {
     // Redirect to login if trying to access protected page without auth
     redirectToLogin();

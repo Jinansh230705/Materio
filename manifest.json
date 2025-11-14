@@ -1,6 +1,7 @@
 {
   "name": "Materio",
   "short_name": "Materio",
+  "version": "2.0.4",
   "description": "All in one place for all your study needs, read, discuss, contribute.",
   "start_url": "/",
   "display": "standalone",
@@ -9,30 +10,63 @@
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en",
-  "categories": ["education", "productivity"],
+  "categories": [
+    "education",
+    "productivity"
+  ],
   "icons": [
     {
-      "src": "/assets/img/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "/assets/img/pwa/app-48x48.webp",
+      "sizes": "48x48",
+      "type": "image/webp",
+      "purpose": "any"
     },
     {
-      "src": "/assets/img/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "/assets/img/pwa/app-1.5x.webp",
+      "sizes": "72x72",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/img/pwa/app-2x.webp",
+      "sizes": "96x96",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/img/pwa/app-3x.webp",
+      "sizes": "144x144",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/img/pwa/app-4x.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/img/pwa/app-256x256.webp",
+      "sizes": "256x256",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/img/pwa/app-512w.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
     }
   ],
   "shortcuts": [
     {
-      "name": "Materio",
+      "name": "Home",
       "short_name": "Home",
-      "description": "Access your study materials",
-      "url": "/#home",
+      "description": "Read, Learn",
+      "url": "/#",
       "icons": [
         {
-          "src": "/assets/img/icon.svg",
+          "src": "/assets/img/pwa/home.svg",
           "sizes": "any",
           "type": "image/svg+xml"
         }
@@ -41,11 +75,11 @@
     {
       "name": "Chat",
       "short_name": "Chat",
-      "description": "Chat with other students",
-      "url": "/#chat",
+      "description": "Help, Discuss",
+      "url": "/#2",
       "icons": [
         {
-          "src": "/assets/img/icon.svg",
+          "src": "/assets/img/pwa/chat.svg",
           "sizes": "any",
           "type": "image/svg+xml"
         }
@@ -54,11 +88,50 @@
     {
       "name": "Notifications",
       "short_name": "Notifications",
-      "description": "Check your notifications",
-      "url": "/#notifications",
+      "description": "Get notified about latest uploads",
+      "url": "/#3",
       "icons": [
         {
-          "src": "/assets/img/icon.svg",
+          "src": "/assets/img/pwa/notifications.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "short_name": "Settings",
+      "description": "Configure or Customize",
+      "url": "/#4",
+      "icons": [
+        {
+          "src": "/assets/img/pwa/settings.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "short_name": "Profile",
+      "description": "Manage account, access beta privilages",
+      "url": "/profile",
+      "icons": [
+        {
+          "src": "/assets/img/pwa/profile.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "The InsightRoom",
+      "short_name": "InsightRoom",
+      "description": "Find insightfull reads",
+      "url": "/room",
+      "icons": [
+        {
+          "src": "/assets/img/pwa/room.svg",
           "sizes": "any",
           "type": "image/svg+xml"
         }
@@ -66,3 +139,4 @@
     }
   ]
 }
+

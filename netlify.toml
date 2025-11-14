@@ -1,5 +1,5 @@
 [build]
-  command = "node scripts/generate-build-id.js && bundle exec jekyll build"
+  command = "node scripts/generate-build-id.js && bundle exec jekyll build && node scripts/minify-assets.js"
   functions = "api/v1"
   publish = "_site"
 
@@ -8,17 +8,50 @@
   framework = "jekyll"
   targetPort = 4000
   port = 8888
-  autoLaunch = true
+  autoLaunch = true  # Dev mode redirects
+  [[dev.redirects]]
+    from = "/account/profile"
+    to = "/account/profile.html"
+    status = 200
   
 [[redirects]]
   from = "/api/v1/*"
   to = "/.netlify/functions/:splat"
   status = 200
   force = true
-  
+
+[[redirects]]
+  from = "/sharelink-info"
+  to = "/.netlify/functions/sharelink-info"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/debug-sharelink"
+  to = "/.netlify/functions/debug-sharelink"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sharelink-test"
+  to = "/sharelink-test.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/invites/:inviteCode"
+  to = "/.netlify/functions/invites-dynamic"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog"
+  to = "/room"
+  status = 301
+
 [functions]
   directory = "api/v1"
-  included_files = ["config/**"]
+  included_files = ["config/**", "_data/**", "assets/data/**"]
   
 [[headers]]
   for = "/*"
@@ -36,3 +69,51 @@
   method = "OPTIONS"
   force = true
 
+# Direct endpoint for sharelink functionality
+[[redirects]]
+  from = "/sharelink"
+  to = "/.netlify/functions/sharelink"
+  status = 200
+  force = true
+  
+# Additional redirect for handling the sharelink action directly
+[[redirects]]
+  from = "/invites/sharelink"
+  to = "/.netlify/functions/sharelink"
+  status = 200
+  force = true
+  
+# Debug endpoint for sharelink functionality
+[[redirects]]
+  from = "/debug-sharelink"
+  to = "/.netlify/functions/debug-sharelink"
+  status = 200
+  force = true
+  
+# Migration runner
+[[redirects]]
+  from = "/run-migrations"
+  to = "/.netlify/functions/run-migrations"
+  status = 200
+  force = true
+
+# RLS updater endpoints
+[[redirects]]
+  from = "/update-sharelinks-rls"
+  to = "/.netlify/functions/update-sharelinks-rls"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/disable-sharelinks-rls"
+  to = "/.netlify/functions/disable-sharelinks-rls"
+  status = 200
+  force = true
+
+# Legacy URL support for old invite links
+[[redirects]]
+  from = "/invites/index.html"
+  to = "/invites/:code"
+  status = 301
+  force = true
+  query = {code = ":code"}

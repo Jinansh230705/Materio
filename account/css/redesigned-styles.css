@@ -386,6 +386,114 @@ input[type="password"]:focus {
     width: auto;
 }
 
+/* Plus invite button styling */
+.plus-invite-btn {
+    background: transparent;
+    color: #D4AF37;
+    border: 2px solid #D4AF37;
+    border-radius: 25px;
+    padding: 10px 20px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.plus-invite-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+}
+
+.plus-invite-btn i {
+    color: #D4AF37;
+    transition: transform 0.3s ease;
+}
+
+.plus-invite-btn:hover i {
+    transform: scale(1.1);
+}
+
+/* Regular invite button styling */
+.btn-primary:not(.plus-invite-btn) {
+    background: transparent;
+    color: #6c757d;
+    border: 2px solid #6c757d;
+    border-radius: 25px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:not(.plus-invite-btn):hover {
+    background: rgba(108, 117, 125, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.2);
+}
+
+.btn-primary:not(.plus-invite-btn) i {
+    color: #6c757d;
+    transition: transform 0.3s ease;
+}
+
+.btn-primary:not(.plus-invite-btn):hover i {
+    transform: scale(1.1);
+}
+
+/* Invite generation section */
+.invite-generation-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.invite-generation-section .btn {
+    margin-top: 0;
+    flex: 1;
+}
+
+/* Invite type styling */
+.invite-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    background: transparent;
+    border: 1.5px solid;
+    transition: all 0.2s ease;
+}
+
+.invite-type.plus-invite {
+    border-color: #D4AF37;
+    color: #D4AF37;
+}
+
+.invite-type.plus-invite i {
+    color: #D4AF37;
+}
+
+.invite-type.regular-invite {
+    border-color: #6c757d;
+    color: #6c757d;
+}
+
+.invite-type.regular-invite i {
+    color: #6c757d;
+}
+
+/* Modal generation buttons */
+.modal-generation-buttons {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.modal-generation-buttons .btn {
+    flex: 1;
+    margin: 0;
+}
+
 /* Form actions */
 .form-actions {
     display: flex;
@@ -1101,17 +1209,24 @@ body.dark-mode #hamburgerButton:hover {
     }
 }
 
-/* Danger zone styling */
+/* Legacy Danger zone styling - preserved for backward compatibility */
 .danger-section {
     background-color: rgba(255, 235, 235, 0.9);
     border-left: 4px solid #ff4c51;
 }
 
+/* Updated Danger Zone styling */
+
 .danger-warning {
+    display: inline-block;
+    background-color: rgba(255, 76, 81, 0.1);
+    border-left: 4px solid #ff4c51;
+    padding: 10px 15px;
+    margin: 15px 0;
     color: #d63031;
     font-weight: 600;
-    font-size: 16px;
-    margin-bottom: 15px;
+    font-size: 14px;
+    border-radius: 0 4px 4px 0;
 }
 
 .danger-list {
@@ -1120,29 +1235,71 @@ body.dark-mode #hamburgerButton:hover {
 }
 
 .danger-list li {
-    margin-bottom: 5px;
-    color: #444;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+    position: relative;
+    padding-left: 5px;
+}
+
+.danger-list li::before {
+    content: "•";
+    color: #ff4c51;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 8px;
 }
 
 .btn-danger {
     background-color: #ff4c51;
     color: white;
     margin-top: 20px;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
 }
 
 .btn-danger:hover {
     background-color: #d63031;
 }
 
-body.dark-mode .danger-section {
-    background-color: rgba(40, 10, 10, 0.9);
-    border-left-color: #ff4c51;
+/* Dark mode adjustments */
+body.dark-mode .danger-warning {
+    background-color: rgba(255, 76, 81, 0.15);
+    color: #ff6b6e;
 }
 
 body.dark-mode .danger-list li {
-    color: #ccc;
+    color: var(--text-primary);
 }
 
+body.dark-mode .btn-danger {
+    background-color: #ff4c51;
+}
+
+body.dark-mode .btn-danger:hover {
+    background-color: #c42c2c;
+    box-shadow: 0 2px 8px rgba(255, 76, 81, 0.3);
+}
+
+/* Updated Danger Zone styling */
+.card-layout .card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card-layout .card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+}
 /* Theme Switcher Card */
 .theme-switcher-card {
     background-color: rgba(255, 255, 255, 0.5);
@@ -1239,636 +1396,44 @@ body.dark-mode .theme-option.active span {
     color: #ff8200;
 }
 
-/* Media query adjustments for theme switcher */
-@media (max-width: 768px) {
-    .theme-switcher-card {
-        margin: 10px 0;
-    }
-    
-    .sidebar-footer {
-        flex-direction: column;
-    }    /* Add a close button inside the sidebar for better UX - mobile only */
-    .sidebar-close-btn {
-        display: none; /* Start with display none */
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: none;
-        border: none;
-        color: #666;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    
-    /* Only display when sidebar is open AND on mobile */
-    body.sidebar-open .sidebar-close-btn {
-        display: flex;
-    }
-    
-    body.dark-mode .sidebar-close-btn {
-        color: #ccc;
-    }
-}
 
-/* Show close button only on mobile when sidebar is open - never on desktop */
-@media (max-width: 768px) {
-    body.sidebar-open .sidebar-close-btn {
-        display: block;
-    }
-}
-@media (min-width: 769px) {
-    .sidebar-close-btn {
-        display: none !important; /* Force hide on desktop */
-    }
-}
-
-/* Enhanced mobile close button - only for mobile devices */
-@media (max-width: 768px) {
-    .sidebar-close-btn {
-        position: absolute;
-        top: 20px;
-        right: 15px;
-        width: 30px;
-        height: 30px;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        background-color: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        z-index: 10;
-        transition: background-color 0.2s ease;
-    }
-    
-    body.sidebar-open .sidebar-close-btn {
-        display: flex;
-    }
-    
-    .sidebar-close-btn:hover {
+@media (prefers-color-scheme: dark) {
+    body:not(.light-mode):not(.dark-mode) .theme-option[data-theme="system"] {
         background-color: rgba(255, 130, 0, 0.2);
+        color: #ff8200;
+        font-weight: bold;
     }
-    
-    .sidebar-close-btn i {
-        font-size: 16px;
-    }
-    
-    body.dark-mode .sidebar-close-btn {
-        background-color: rgba(0, 0, 0, 0.2);
-    }
-    
-    body.dark-mode .sidebar-close-btn:hover {
+}
+
+@media (prefers-color-scheme: light) {
+    body:not(.light-mode):not(.dark-mode) .theme-option[data-theme="system"] {
         background-color: rgba(255, 130, 0, 0.2);
+        color: #ff8200;
+        font-weight: bold;
     }
 }
 
-/* Additional mobile adjustments */
+/* Sub-tabs horizontal scrolling for mobile */
 @media (max-width: 768px) {
-    /* Smoother transitions */
-    .sidebar, .main-content, .content-overlay {
-        transition: all 0.3s ease;
-    }
-    
-    /* Give some spacing for the hamburger menu */
-    .mobile-menu-toggle {
-        top: 10px;
-        left: 10px;
-    }
-    
-    .content-header {
-        padding-top: 15px;
-    }
-    
-    /* Add some spacing for the mobile top bar */
-    .main-content {
-        padding-top: 60px;
-    }
-    
-    /* Ensure the sidebar has proper scrolling on mobile */
-    .sidebar {
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-    
-    /* Animate the hamburger icon */
-    .mobile-menu-toggle button i {
-        transition: transform 0.3s ease;
-    }
-    
-    body.sidebar-open .mobile-menu-toggle button i {
-        transform: rotate(90deg);
-    }
-}
-
-/* Ensure close button is NEVER visible on desktop */
-@media (min-width: 769px) {
-    .sidebar-close-btn {
-        display: none !important;
-    }
-}
-
-/* Google Drive Integration Styles */
-.google-drive-card {
-  margin-bottom: 24px;
-}
-
-.drive-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.drive-icon {
-  flex-shrink: 0;
-}
-
-.drive-icon svg {
-  width: 40px;
-  height: 40px;
-}
-
-.drive-content {
-  flex: 1;
-}
-
-.drive-content h3 {
-  margin: 0 0 8px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-color);
-}
-
-.drive-content p {
-  margin: 0;
-  color: var(--text-light-color);
-  font-size: 14px;
-}
-
-.drive-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.status-indicator {
-  display: flex;
-  align-items: center;
-  font-size: 20px;
-}
-
-.status-indicator.connected {
-  color: var(--success-color);
-}
-
-.status-indicator.disconnected {
-  color: var(--error-color);
-}
-
-/* Drive Tools Section */
-.drive-tools {
-  margin-top: 24px;
-}
-
-.drive-tools h3 {
-  margin: 0 0 16px 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-color);
-}
-
-.tools-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-
-.tool-card {
-  background: var(--card-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  position: relative;
-}
-
-.tool-card:hover:not(.coming-soon) {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow);
-  border-color: var(--primary-color);
-}
-
-.tool-card.coming-soon {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.tool-icon {
-  width: 48px;
-  height: 48px;
-  background: var(--primary-light);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary-color);
-  font-size: 20px;
-  flex-shrink: 0;
-}
-
-.tool-content {
-  flex: 1;
-}
-
-.tool-content h4 {
-  margin: 0 0 4px 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-color);
-}
-
-.tool-content p {
-  margin: 0;
-  font-size: 14px;
-  color: var(--text-light-color);
-}
-
-.coming-soon-badge {
-  display: inline-block;
-  background: var(--warning-color);
-  color: white;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  margin-top: 4px;
-}
-
-.tool-btn {
-  background: none;
-  border: none;
-  color: var(--text-light-color);
-  font-size: 18px;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.tool-btn:hover:not(:disabled) {
-  background: var(--primary-light);
-  color: var(--primary-color);
-}
-
-.tool-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Modal Styles for Files */
-.large-modal .modal-content {
-  width: 90vw;
-  max-width: 1000px;
-  height: 80vh;
-  max-height: 800px;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.modal-header h3 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: var(--text-light-color);
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.modal-close:hover {
-  background: var(--border-color);
-  color: var(--text-color);
-}
-
-.viewer-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.modal-body {
-  padding: 24px;
-  flex: 1;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Files Toolbar */
-.files-toolbar {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-/* Files Container */
-.files-container {
-  flex: 1;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.loading-state,
-.empty-state {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: var(--text-light-color);
-}
-
-.loading-state i {
-  font-size: 32px;
-  margin-bottom: 16px;
-  color: var(--primary-color);
-}
-
-.empty-state i {
-  font-size: 48px;
-  margin-bottom: 16px;
-  color: var(--text-light-color);
-}
-
-.empty-state p {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-
-/* Files List */
-.files-list {
-  flex: 1;
-  overflow-y: auto;
-  padding-right: 8px;
-}
-
-.file-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px;
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.file-icon {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* background: var(--primary-light); */
-  border-radius: var(--border-radius);
-  /* color: var(--primary-color); */
-  font-size: 18px;
-  flex-shrink: 0;
-}
-
-.file-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.file-name {
-  font-weight: 500;
-  color: var(--text-color);
-  margin-bottom: 4px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.file-details {
-  font-size: 13px;
-  color: var(--text-light-color);
-}
-
-.file-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.btn-icon {
-  background: none;
-  border: none;
-  color: var(--text-light-color);
-  font-size: 16px;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.btn-icon:hover {
-  background: var(--primary-light);
-  color: var(--primary-color);
-}
-
-/* File Viewer */
-.file-viewer-content {
-  flex: 1;
-  overflow: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.file-preview-placeholder {
-  text-align: center;
-  color: var(--text-light-color);
-}
-
-.file-icon-large {
-  font-size: 64px;
-  margin-bottom: 16px;
-  color: var(--primary-color);
-}
-
-.file-preview-placeholder p {
-  margin-bottom: 20px;
-  font-size: 16px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .tools-grid {
-    grid-template-columns: 1fr;
+  .sub-tab-nav {
+    overflow-x: auto;
+    white-space: nowrap;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    display: flex;
+    flex-wrap: nowrap;
+    padding-bottom: 5px;
   }
   
-  .drive-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+  .sub-tab-nav::-webkit-scrollbar {
+    display: none;
   }
   
-  .drive-actions {
-    width: 100%;
-    justify-content: flex-end;
+  .sub-tab-btn {
+    flex: 0 0 auto;
   }
   
-  .large-modal .modal-content {
-    width: 95vw;
-    height: 90vh;
+  .files-sub-tabs {
+    overflow: hidden;
   }
-  
-  .modal-header {
-    padding: 16px;
-  }
-  
-  .modal-body {
-    padding: 16px;
-  }
-  
-  .files-toolbar {
-    flex-direction: column;
-  }
-  
-  .file-item {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-  }
-  
-  .file-actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
-}
-
-@media (max-width: 480px) {
-  .tool-card {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .viewer-actions {
-    flex-direction: column;
-    gap: 8px;
-  }
-}
-
-/* Dark Mode Support for Google Drive */
-body.dark-mode .google-drive-card,
-body.dark-mode .tool-card {
-  background: #1c1c1c;
-  
-}
-
-body.dark-mode .drive-content h3,
-body.dark-mode .tool-content h4 {
-  color: var(--text-color-dark);
-}
-
-body.dark-mode .drive-content p,
-body.dark-mode .tool-content p,
-body.dark-mode .file-details {
-  color: var(--text-light-color-dark);
-}
-
-body.dark-mode .file-item:hover {
-  background: var(--background-color-dark);
-}
-
-body.dark-mode .file-name {
-  color: var(--text-color-dark);
-}
-
-body.dark-mode .modal-header {
-  border-color: var(--border-color-dark);
-}
-
-/* Dark mode upload area styles */
-body.dark-mode .upload-area {
-    background-color: rgba(255, 130, 0, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #e0e0e0;
-}
-
-body.dark-mode .upload-area:hover {
-    border-color: #ff8200;
-    background-color: rgba(255, 130, 0, 0.15);
-}
-
-body.dark-mode .upload-area.dragover {
-    background-color: rgba(255, 130, 0, 0.2);
-    border-color: #ff8200;
-}
-
-/* Dark mode file grid styles */
-body.dark-mode .file-grid {
-    background-color: transparent;
-}
-
-body.dark-mode .file-empty-state {
-    color: #b0b0b0;
-}
-
-body.dark-mode .file-empty-state i {
-    color: #666;
-}
-
-/* Dark mode toggle password icon */
-body.dark-mode .toggle-password {
-    color: #b0b0b0;
-}
-
-body.dark-mode .toggle-password:hover {
-    color: #e0e0e0;
-}
-
-/* Dark mode remember me and forgot password links */
-body.dark-mode .remember-me label {
-    color: #b0b0b0;
-}
-
-body.dark-mode .forgot-link {
-    color: var(--primary-color);
-}
-
-body.dark-mode .forgot-link:hover {
-    color: var(--primary-light);
-}
-
-/* Dark mode form actions */
-body.dark-mode .form-actions {
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Dark mode invite step specific styles */
-body.dark-mode .invite-heading {
-    color: #e0e0e0;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-body.dark-mode .invite-description {
-    color: #b0b0b0;
 }

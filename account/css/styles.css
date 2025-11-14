@@ -895,3 +895,45 @@ body.dark-mode .invite-heading {
 body.dark-mode .invite-description {
   color: #b0b0b0;
 }
+
+        .users-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            align-items: right;
+            padding: 8px 14px;
+            border-radius: 10px;
+            background-color: rgba(255, 245, 223, 0.5);
+            color: #000000;
+            font-weight: 500;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .users-card.dark-mode {
+            color: #ffffff;
+            background-color: rgb(51, 51, 51, 0.5);
+        }
+        .user-count, .user-label {
+           font-weight: bold;
+        }
+
+        .users-card .emoji {
+            font-size: 16px;
+        }
+
+        #realtime-users-card {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            transition: opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            #realtime-users-card {
+                display: block;
+                margin-top: 10px;
+            }
+        }

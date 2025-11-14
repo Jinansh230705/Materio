@@ -1,17 +1,561 @@
 ---
 layout: base
 ---
-<main class="post-container" style="font-family: 'Manrope', sans-serif;">
-  <article class="post" style="max-width: 700px; margin: 0 auto;">
-    <div style="text-align: center;">
-      <p class="post-date" style="font-size: 14px; color: var(--gray);">
-        {{ page.date | date: "%B %d, %Y" }}
-        {% if page.categories %}
-          • {{ page.categories | join: ', ' }}
-        {% endif %}
-      </p>
 
-      <p class="post-title" style="font-size: 32px;font-weight: bold;">{{ page.title }}</p>
+<style>
+/* Post navigation pills and buttons dark mode */
+.post-date-pill {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  color: #333;
+}
+
+.post-nav-button {
+  background: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  color: #333;
+}
+
+.post-image-frame {
+  background: #e7e3df;
+}
+
+.ai-summary-section {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  color: #333;
+}
+
+body.dark-mode .post-date-pill {
+  background: #444444;
+  border: 1px solid #555555;
+  color: #ffffff;
+}
+
+body.dark-mode .post-nav-button {
+  background: #444444;
+  border: 1px solid #555555;
+  color: #ffffff;
+}
+
+body.dark-mode .post-image-frame {
+  background: #1a1a1a;
+}
+
+body.dark-mode .ai-summary-section {
+  background: #282828;
+  border: 1px solid #555555;
+  color: #ffffff;
+}
+
+body.dark-mode #followup-input {
+  background: transparent !important;
+  color: #ffffff !important;
+}
+
+body.dark-mode #followup-input::placeholder {
+  color: #aaaaaa !important;
+}
+
+body.dark-mode .followup-pill {
+  background: rgba(255,255,255,0.1) !important;
+  border: 1px solid #555555 !important;
+}
+
+body.dark-mode #followup-response {
+  background: rgba(255,255,255,0.05) !important;
+}
+
+/* Attachment Card Styles */
+.attachment-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  background: #f8f9f8;
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin: 1rem 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.attachment-card:hover {
+  border-color: #ff8200;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.attachment-details {
+  flex: 1;
+  z-index: 1;
+  min-width: 0;
+  padding-right: 120px;
+}
+
+.attachment-title {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #333;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.attachment-meta {
+  font-size: 14px;
+  color: #777;
+}
+
+.attachment-preview {
+  position: absolute;
+  bottom: -70px;
+  right: 20px;
+  transform: rotate(8deg);
+  border: 1px solid #ccc;
+  background: #fffbea;
+  width: 100px;
+  height: 130px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Video embed styles */
+.video-embed {
+  position: relative;
+  margin: 1.5rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  background: #f8f9fa;
+}
+
+.video-embed video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+.video-controls {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.video-embed:hover .video-controls {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.video-controls:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+.video-controls i {
+  color: white;
+  font-size: 16px;
+  margin-left: 2px; /* Slight offset for play icon visual balance */
+}
+
+.video-controls.paused i {
+  margin-left: 2px;
+}
+
+.video-controls.playing i {
+  margin-left: 0;
+}
+
+/* Video cover styles */
+.video-cover {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.video-cover video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-cover .video-controls {
+  width: 60px;
+  height: 60px;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.video-cover .video-controls i {
+  font-size: 18px;
+}
+
+/* Dark mode video styles */
+.dark-mode .video-embed {
+  background: #2a2a2a;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.dark-mode .video-controls {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .video-controls:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .attachment-card {
+    padding: 12px;
+    margin: 0.75rem 0;
+  }
+  
+  .attachment-details {
+    padding-right: 90px;
+  }
+  
+  .attachment-title {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  
+  .attachment-meta {
+    font-size: 12px;
+  }
+  
+  .attachment-preview {
+    width: 80px;
+    height: 100px;
+    right: 10px;
+    bottom: -50px;
+  }
+  
+  /* Video responsive adjustments */
+  .video-cover {
+    height: 200px;
+    margin-bottom: 1.5rem;
+  }
+  
+  .video-controls {
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+  }
+  
+  .video-controls i {
+    font-size: 14px;
+  }
+  
+  .video-cover .video-controls {
+    width: 50px;
+    height: 50px;
+    top: 15px;
+    right: 15px;
+  }
+  
+  .video-cover .video-controls i {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .attachment-card {
+    padding: 10px;
+  }
+  
+  .attachment-details {
+    padding-right: 70px;
+  }
+  
+  .attachment-title {
+    font-size: 13px;
+  }
+  
+  .attachment-meta {
+    font-size: 11px;
+  }
+  
+  .attachment-preview {
+    width: 60px;
+    height: 80px;
+    right: 8px;
+    bottom: -40px;
+  }
+}
+
+/* Seek controls styling */
+.seek-btn:hover {
+  background: rgba(0,0,0,0.1) !important;
+  transform: scale(1.1);
+}
+
+.seek-btn:active {
+  transform: scale(0.95);
+}
+
+/* Dark mode seek controls */
+.dark-mode .seek-btn {
+  color: #bbb !important;
+}
+
+.dark-mode .seek-btn:hover {
+  background: rgba(255,255,255,0.1) !important;
+}
+
+.dark-mode .seek-btn.stop-btn {
+  color: #f44336 !important;
+}
+
+/* Mobile responsive for seek controls */
+@media (max-width: 768px) {
+  .seek-controls {
+    gap: 0.2rem !important;
+  }
+  
+  .seek-btn {
+    padding: 0.15rem !important;
+  }
+  
+  .seek-btn i {
+    font-size: 9px !important;
+  }
+}
+
+.attachment-preview canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.attachment-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dark mode styles for attachments */
+body.dark-mode .attachment-card {
+  background: #333333;
+  border-color: transparent;
+}
+
+/* Author Profile Styles */
+.author-avatar {
+  transition: transform 0.2s ease;
+}
+
+.author-avatar:hover {
+  transform: scale(1.05);
+}
+
+.author-info .author-name {
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.author-info .author-name:hover {
+  color: #ff8200 !important;
+}
+
+/* Dark mode author styles */
+body.dark-mode .author-avatar {
+  border-color: rgba(255,255,255,0.2) !important;
+}
+
+body.dark-mode .author-info .author-name {
+  color: var(--text-dark, #ffffff) !important;
+}
+
+/* Responsive author layout */
+@media (max-width: 768px) {
+  .author-avatar {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  
+  .author-info .author-name {
+    font-size: 13px !important;
+  }
+}
+
+body.dark-mode .attachment-card:hover {
+  border-color: #ff8200;
+}
+
+body.dark-mode .attachment-title {
+  color: #ffffff;
+}
+
+body.dark-mode .attachment-meta {
+  color: #aaaaaa;
+}
+
+body.dark-mode .attachment-preview {
+  background: #444444;
+  border-color: #555555;
+}
+
+/* Listen Component Styles */
+.listen-pill {
+  transition: all 0.2s ease;
+}
+
+.listen-pill:hover {
+  background: rgba(255, 130, 0, 0.1) !important;
+  transform: translateY(-1px);
+}
+
+.listen-pill.playing {
+  background: rgba(255, 130, 0, 0.15) !important;
+}
+
+.listen-pill.playing .wave-bar {
+  animation: none; /* Remove static animation, we'll use JavaScript */
+}
+
+.wave-bar {
+  transition: height 0.2s ease, opacity 0.2s ease;
+}
+
+/* Remove static animation delays - we'll use dynamic JavaScript animation */
+
+/* Dark mode styles for listen component */
+body.dark-mode .listen-pill {
+  background: rgba(255,255,255,0.1) !important;
+}
+
+body.dark-mode .listen-pill:hover {
+  background: rgba(255, 130, 0, 0.2) !important;
+}
+
+body.dark-mode .listen-pill #listen-icon,
+body.dark-mode .listen-pill #listen-duration {
+  color: #ffffff !important;
+}
+
+body.dark-mode .listen-pill .wave-bar {
+  background: #aaaaaa !important;
+}
+
+/* Code styling with JetBrains Mono */
+code {
+  font-family: 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace !important;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-weight: 400;
+}
+
+/* Dark mode code styling */
+body.dark-mode code {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+}
+
+/* Print styles for code */
+@media print {
+  code {
+    font-family: 'JetBrains Mono', 'Consolas', 'Monaco', 'Courier New', monospace !important;
+    background: #f5f5f5 !important;
+    color: #333 !important;
+    padding: 2px 4px !important;
+    border-radius: 3px !important;
+    font-size: 0.85em !important;
+    page-break-inside: avoid;
+  }
+}
+
+</style>
+
+<main class="post-container" style="font-family: 'Manrope', sans-serif;" {% if page.visibility == 'private' %}data-visibility="private"{% endif %}>
+  <article class="post" style="max-width: 700px; margin: 0 auto;">
+    {% if page.visibility == 'private' %}
+    <!-- <div id="private-post-notice" style="background: rgb(255 139 51 / 15%); border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; text-align: center;"> -->
+      <!-- <p style="margin: 0; color: #ff9467; font-weight: 600;"><i class="fa-solid fa-lock"></i> This is a private post</p> -->
+      <!-- <p style="margin: 0.5rem 0 0; font-size: 0.9rem; color: var(--text);">Only admin users can view this content</p> -->
+    <!-- </div> -->
+    {% endif %}
+    
+    <div style="text-align: center;">
+      <!-- Date, Category, and Navigation Pills -->
+      <div style="display: flex; justify-content: center; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap;">
+        <!-- Date and Category Pill -->
+        <div class="post-date-pill" style="border-radius: 20px; padding: 0.4rem 0.8rem; font-size: 12px;">
+          {{ page.date | date: "%B %d, %Y" }}
+          {% if page.categories %}
+            • {{ page.categories | join: ', ' }}
+          {% endif %}
+          {% assign words = content | number_of_words %}
+          {% assign reading_time = words | divided_by: 200 %}
+          {% if reading_time == 0 %}
+            {% assign reading_time = 1 %}
+          {% endif %}
+          • {{ reading_time }} min read
+        </div>
+        
+        <!-- Print-only clean meta information -->
+        <div class="print-meta" style="display: none;">
+          {{ page.date | date: "%B %d, %Y" }}
+          {% if page.categories %}
+            • {{ page.categories | join: ', ' }}
+          {% endif %}
+          {% assign words = content | number_of_words %}
+          {% assign reading_time = words | divided_by: 200 %}
+          {% if reading_time == 0 %}
+            {% assign reading_time = 1 %}
+          {% endif %}
+          • {{ reading_time }} minute read
+        </div>
+        
+        <!-- Previous Post Button -->
+        {% if page.previous_post %}
+        <a href="{{ page.previous_post }}" class="post-nav-button" style="border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.2s ease;" title="Previous Post">
+          <i class="fa-solid fa-chevron-left" style="font-size: 12px;"></i>
+        </a>
+        {% endif %}
+        
+        <!-- Next Post Button -->
+        {% if page.next_post %}
+        <a href="{{ page.next_post }}" class="post-nav-button" style="border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.2s ease;" title="Next Post">
+          <i class="fa-solid fa-chevron-right" style="font-size: 12px;"></i>
+        </a>
+        {% endif %}
+      </div>
+
+      <p class="post-title" style="font-size: 32px;font-weight: bold;">
+        {{ page.title }}
+        {% if page.visibility == 'private' %} <span class="private-badge"><i class="fa-solid fa-lock"></i> Private</span>{% endif %}
+      </p>
 
       {% if page.excerpt %}
       <p class="post-description" style="font-size: 14px; margin-top: 0.5rem; color: var(--gray);">
@@ -20,10 +564,1902 @@ layout: base
       {% endif %}
 
       {% if page.image %}
-      <img src="{{ page.image }}" alt="Cover image" class="post-cover" style="border-radius: 12px; margin: 1.5rem auto; display: block; max-height: 420px; object-fit: cover;" />
+      <div style="display: block; position: relative; margin: 1.5rem auto; max-width: 700px;">
+        <div class="post-image-frame" style="padding: 5px; border-radius: 17px;">
+          {% if page.image contains '.mp4' or page.image contains '.webm' or page.image contains '.mov' %}
+            <!-- Video cover -->
+            <div class="video-cover" style="margin: 0;">
+              <video id="cover-video" muted loop style="border-radius: 12px;">
+                {% assign file_ext = page.image | split: '.' | last %}
+                {% if file_ext == 'webm' %}
+                  <source src="{{ page.image }}" type="video/webm">
+                {% elsif file_ext == 'mov' %}
+                  <source src="{{ page.image }}" type="video/quicktime">
+                {% else %}
+                  <source src="{{ page.image }}" type="video/mp4">
+                {% endif %}
+                Your browser does not support the video tag.
+              </video>
+              <div class="video-controls paused" onclick="toggleVideo('cover-video')">
+                <i class="fa-solid fa-play"></i>
+              </div>
+            </div>
+          {% else %}
+            <!-- Image cover -->
+            <img src="{{ page.image }}" alt="Cover image" class="post-cover" style="border-radius: 12px; display: block; width: 100%; height: auto; object-fit: cover;" />
+          {% endif %}
+        </div>
+      </div>
+      
+      <!-- Author and Share Row -->
+      <div class="author-share-row" style="display: flex; justify-content: space-between; align-items: center; margin: 0.5rem auto; max-width: 700px; padding: 0 1rem;">
+        <!-- Author Profile Section -->
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          {% if page.author %}
+            {% assign author_data = site.data.authors[page.author] %}
+          {% else %}
+            {% assign author_data = site.data.authors.default %}
+          {% endif %}
+          
+          <div class="author-avatar" style="width: 35px; height: 35px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(0,0,0,0.1);">
+            <img src="{{ author_data.image | default: '/assets/img/default-avatar.svg' }}" alt="{{ author_data.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div class="author-info">
+            <div class="author-name" style="font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.2;">{{ author_data.name | default: 'Default Author' }}</div>
+          </div>
+        </div>
+
+        <!-- Share, Print, and Listen icons -->
+        <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+          
+          <!-- Listen to Post Component -->
+          <div id="listen-component" class="listen-pill" style="display: flex; align-items: center; background: rgba(0,0,0,0.05); border-radius: 20px; padding: 0.3rem 0.6rem; cursor: pointer; transition: all 0.2s ease;" onclick="console.log('Listen clicked'); toggleListen();">
+            <i id="listen-icon" class="fa-solid fa-play" style="font-size: 12px; margin-right: 0.4rem; color: #333;"></i>
+            <div class="waveform-container" style="display: flex; align-items: center; gap: 1px; margin-right: 0.4rem;">
+              <div class="wave-bar" style="width: 2px; height: 8px; background: #666; border-radius: 1px;"></div>
+              <div class="wave-bar" style="width: 2px; height: 12px; background: #666; border-radius: 1px;"></div>
+              <div class="wave-bar" style="width: 2px; height: 6px; background: #666; border-radius: 1px;"></div>
+              <div class="wave-bar" style="width: 2px; height: 10px; background: #666; border-radius: 1px;"></div>
+              <div class="wave-bar" style="width: 2px; height: 8px; background: #666; border-radius: 1px;"></div>
+              <div class="wave-bar" style="width: 2px; height: 14px; background: #666; border-radius: 1px;"></div>
+              <div class="wave-bar" style="width: 2px; height: 9px; background: #666; border-radius: 1px;"></div>
+              <div class="wave-bar" style="width: 2px; height: 11px; background: #666; border-radius: 1px;"></div>
+            </div>
+            <span id="listen-duration" style="font-size: 11px; color: #666; font-weight: 500;">Listen</span>
+          </div>
+          
+          <!-- Seek controls (only visible when playing/paused) -->
+          <div id="seek-controls" class="seek-controls" style="display: none; align-items: center; gap: 0.3rem; margin-left: 0.5rem;">
+            <button onclick="seekBackward()" class="seek-btn" title="Go back 5 seconds" style="background: none; border: none; color: #666; cursor: pointer; padding: 0.2rem; border-radius: 50%; transition: all 0.2s ease;">
+              <i class="fa-solid fa-backward" style="font-size: 10px;"></i>
+            </button>
+            <button onclick="seekForward()" class="seek-btn" title="Skip forward 5 seconds" style="background: none; border: none; color: #666; cursor: pointer; padding: 0.2rem; border-radius: 50%; transition: all 0.2s ease;">
+              <i class="fa-solid fa-forward" style="font-size: 10px;"></i>
+            </button>
+            <button onclick="stopAudio()" class="seek-btn stop-btn" title="Stop" style="background: none; border: none; color: #d32f2f; cursor: pointer; padding: 0.2rem; border-radius: 50%; transition: all 0.2s ease;">
+              <i class="fa-solid fa-stop" style="font-size: 10px;"></i>
+            </button>
+          </div>
+
+          <i class="fa-regular fa-link-simple" onclick="sharePost()" style="transform: rotate(-45deg); font-size: 14px; cursor: pointer; color: var(--text);" title="Share"></i>
+          <i class="fa-regular fa-print" onclick="printPost()" style="font-size: 14px; cursor: pointer; color: var(--text);" title="Print"></i>
+          
+        </div>
+      </div>
       {% endif %}
     </div>
+
+    {% if page.summarize %}
+    <!-- AI Summary Section -->
+    <div id="ai-summary-section" class="ai-summary-section" style="border-radius: 12px; padding: 1.5rem; margin: 2rem auto; display: none;">
+      <div id="summary-header" style="display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;" onclick="toggleSummary()">
+        <div style="display: flex; align-items: center;">
+          <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 0.5rem; font-size: 18px;"></i>
+          <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Summary</h3>
+        </div>
+        <i id="summary-chevron" class="fa-solid fa-chevron-down" style="transition: transform 0.3s ease;"></i>
+      </div>
+      <div id="ai-summary-content" style="line-height: 1.6; margin-top: 1rem; display: none;">
+        <p id="summary-placeholder" style="margin: 0; font-style: italic; opacity: 0.7;">
+          Click to generate AI summary...
+        </p>
+        <div id="summary-text" style="display: none;"></div>
+        
+        <!-- Follow-up Question Box -->
+        <div id="followup-section" style="margin-top: 1.5rem; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 1rem; display: none;">
+          <div style="display: flex; align-items: center; margin-bottom: 0.75rem;">
+            <i class="fa-solid fa-question-circle" style="margin-right: 0.5rem; font-size: 14px; opacity: 0.7;"></i>
+            <span style="font-size: 14px; font-weight: 600; opacity: 0.8;">Ask a Follow up:</span>
+          </div>
+          
+          <div style="display: flex; gap: 0.5rem; align-items: flex-start;">
+            <div class="followup-pill" style="position: relative; flex: 1; display: flex; align-items: center; background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.2); border-radius: 25px; padding: 0.5rem 3rem 0.5rem 1rem;">
+              <input type="text" id="followup-input" placeholder="e.g., What are the main benefits discussed?" 
+                     style="flex: 1; border: none; background: transparent; font-size: 14px; outline: none;" 
+                     onkeypress="handleFollowupKeypress(event)">
+              <button onclick="askFollowupQuestion()" id="followup-btn" 
+                      style="position: absolute; right: 4px; width: 32px; height: 32px; background: #ff8200; color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;">
+                <i class="fa-solid fa-arrow-up" style="font-size: 12px;"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div id="followup-response" style="margin-top: 0.75rem; padding: 0.75rem; background: rgba(0,0,0,0.03); border-radius: 6px; display: none; font-size: 14px; line-height: 1.5;">
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
 
     <div class="post-body">{{ content }}</div>
   </article>
 </main>
+
+<!-- PDF.js Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+
+<!-- Google AdSense Script -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7539227284131407"
+     crossorigin="anonymous"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Inject in-article ads
+  injectInArticleAds();
+  
+  // Check if this is a private post
+  const postContainer = document.querySelector('main[data-visibility="private"]');
+  if (postContainer) {
+    checkPrivatePostAccess();
+  }
+  
+  // Check if user is logged in and show summary section if needed
+  checkSummaryAccess();
+  
+  // Initialize listen component
+  initializeListenComponent();
+  
+  // Clear any previous TTS state from other pages
+  clearTTSState();
+  
+  // Pre-load voices for better TTS performance
+  if (window.speechSynthesis) {
+    // Trigger voice loading
+    speechSynthesis.getVoices();
+    speechSynthesis.addEventListener('voiceschanged', function() {
+      console.log('Voices loaded:', speechSynthesis.getVoices().length);
+    });
+    
+    // Add test TTS button for debugging (temporary)
+    console.log('TTS is available. You can test it by running testTTS() in console.');
+  } else {
+    console.error('Speech synthesis not supported in this browser');
+  }
+  
+  // Process attachment tags
+  processAttachmentTags();
+  
+  // Process video tags
+  processVideoTags();
+  
+  // Initialize video controls for cover video
+  setTimeout(() => {
+    initializeVideoControls();
+  }, 200);
+  
+  // Add hover effects to navigation buttons
+  const navButtons = document.querySelectorAll('a[title="Previous Post"], a[title="Next Post"]');
+  navButtons.forEach(button => {
+    button.addEventListener('mouseenter', function() {
+      this.style.background = 'var(--primary, #ff8200)';
+      this.querySelector('i').style.color = 'white';
+    });
+    
+    button.addEventListener('mouseleave', function() {
+      // Reset to original styles based on dark mode
+      if (document.body.classList.contains('dark-mode')) {
+        this.style.background = '#444444';
+        this.querySelector('i').style.color = '#ffffff';
+      } else {
+        this.style.background = '#f5f5f5';
+        this.querySelector('i').style.color = '#333';
+      }
+    });
+  });
+});
+
+function checkSummaryAccess() {
+  const token = localStorage.getItem('materio_auth_token');
+  const summarySection = document.getElementById('ai-summary-section');
+  
+  if (token && summarySection) {
+    // Verify user has admin or plus privileges
+    fetch('/api/v1/profile', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Failed to verify user privileges');
+    })
+    .then(userData => {
+      // Show summary section for admin users or plus users
+      if (userData.user?.hasAdminPrivileges || userData.user?.isPlusUser) {
+        summarySection.style.display = 'block';
+      } else {
+        summarySection.style.display = 'none';
+      }
+    })
+    .catch(error => {
+      console.error('Error checking summary access:', error);
+      summarySection.style.display = 'none';
+    });
+  }
+}
+
+function toggleSummary() {
+  const content = document.getElementById('ai-summary-content');
+  const chevron = document.getElementById('summary-chevron');
+  const placeholder = document.getElementById('summary-placeholder');
+  const summaryText = document.getElementById('summary-text');
+  
+  if (content.style.display === 'none') {
+    // Expand and generate summary if not already generated
+    content.style.display = 'block';
+    chevron.style.transform = 'rotate(180deg)';
+    
+    if (summaryText.innerHTML === '') {
+      generateSummary();
+    }
+  } else {
+    // Collapse
+    content.style.display = 'none';
+    chevron.style.transform = 'rotate(0deg)';
+  }
+}
+
+async function generateSummary() {
+  const placeholder = document.getElementById('summary-placeholder');
+  const summaryText = document.getElementById('summary-text');
+  const token = localStorage.getItem('materio_auth_token');
+  
+  // Show loading state
+  placeholder.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right: 0.5rem;"></i>Generating summary...';
+  placeholder.style.display = 'block';
+  summaryText.style.display = 'none';
+  
+  try {
+    // Get the blog content
+    const postBody = document.querySelector('.post-body');
+    const blogContent = postBody ? postBody.innerText : '';
+    const postTitle = document.querySelector('.post-title') ? document.querySelector('.post-title').innerText : '';
+    
+    if (!blogContent) {
+      throw new Error('No content found to summarize');
+    }
+    
+    // Calculate target summary length (keep it very short)
+    const wordCount = blogContent.split(/\s+/).length;
+    const targetWords = Math.max(30, Math.min(80, Math.floor(wordCount / 6))); // Even shorter: 1/6 instead of 1/4
+    
+    // Prepare the optimized summary request
+    const summaryPrompt = `Summarize this blog post titled "${postTitle}" in EXACTLY ${targetWords} words or less.
+
+STRICT REQUIREMENTS:
+- Maximum ${targetWords} words total
+- Focus ONLY on the main point and 2-3 key takeaways
+- Use simple, clear language - no fluff
+- For tables: briefly explain what the table shows, don't recreate it
+- For math: use LaTeX ($inline$ or $$display$$) 
+- Use bullet points for multiple points
+- NO unnecessary line breaks or spacing
+- Be extremely concise but informative
+
+Content to summarize:
+${blogContent}
+
+Provide a ultra-concise summary:`;
+
+    const response = await fetch('/api/v1/chat', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: summaryPrompt,
+        messages: [],
+        mode: 'general',
+        model: 'openai/gpt-oss-20b:free'
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to generate summary: ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    if (!data.success) {
+      throw new Error(data.error || 'Failed to generate summary');
+    }
+
+    // Hide placeholder and show summary with typing animation
+    placeholder.style.display = 'none';
+    summaryText.style.display = 'block';
+    
+    // Type out the summary with animation and render formatting
+    await typeWriterEffectWithFormatting(summaryText, data.response);
+    
+    // Show follow-up section after summary is complete
+    document.getElementById('followup-section').style.display = 'block';
+    
+  } catch (error) {
+    console.error('Error generating summary:', error);
+    placeholder.innerHTML = `<i class="fa-solid fa-exclamation-triangle" style="margin-right: 0.5rem; color: #ff6b6b;"></i>Failed to generate summary. Please try again.`;
+  }
+}
+
+async function typeWriterEffectWithFormatting(element, text) {
+  element.innerHTML = '';
+  
+  // Parse markdown and prepare for rendering
+  const formattedText = parseBasicMarkdown(text);
+  
+  // Create a temporary element to parse the HTML properly
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = formattedText;
+  
+  // Extract text content and tags separately for proper typing
+  await typeHTMLContent(element, tempDiv);
+  
+  // Final LaTeX rendering
+  if (window.renderMathInElement) {
+    try {
+      window.renderMathInElement(element, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        throwOnError: false
+      });
+    } catch (e) {
+      console.log('Final LaTeX rendering failed:', e);
+    }
+  }
+}
+
+async function typeHTMLContent(targetElement, sourceElement) {
+  const childNodes = sourceElement.childNodes;
+  
+  for (let i = 0; i < childNodes.length; i++) {
+    const node = childNodes[i];
+    
+    if (node.nodeType === Node.TEXT_NODE) {
+      // Handle text nodes - type character by character
+      const text = node.textContent;
+      await typeText(targetElement, text);
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      // Handle element nodes - create the element and type its content
+      const newElement = document.createElement(node.tagName.toLowerCase());
+      
+      // Copy attributes
+      for (let attr of node.attributes || []) {
+        newElement.setAttribute(attr.name, attr.value);
+      }
+      
+      targetElement.appendChild(newElement);
+      
+      // Recursively type the content of this element
+      await typeHTMLContent(newElement, node);
+    }
+  }
+}
+
+async function typeText(element, text) {
+  const words = text.split(/(\s+)/);
+  
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    
+    // Type each character of the word
+    for (let j = 0; j < word.length; j++) {
+      const currentText = element.textContent || '';
+      element.textContent = currentText + word[j];
+      
+      // Small delay between characters for smooth typing
+      if (j < word.length - 1 || i < words.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, Math.random() * 25 + 10));
+      }
+    }
+    
+    // Re-render LaTeX occasionally during typing
+    if (i % 5 === 0 && window.renderMathInElement) {
+      try {
+        window.renderMathInElement(element.closest('#ai-summary-content'), {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      } catch (e) {
+        // Silently continue if LaTeX rendering fails
+      }
+    }
+    
+    // Scroll to keep the typing text in view occasionally
+    if (i % 3 === 0) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+}
+
+function parseBasicMarkdown(text) {
+  // Clean up the text first - remove excessive newlines and spaces
+  let parsed = text
+    .trim()
+    // Remove multiple consecutive newlines
+    .replace(/\n{3,}/g, '\n\n')
+    // Remove trailing spaces
+    .replace(/[ \t]+$/gm, '')
+    // Clean up spacing around punctuation
+    .replace(/\s+([.,:;!?])/g, '$1');
+  
+  // Preserve LaTeX expressions first with unique markers
+  const latexExpressions = [];
+  parsed = parsed
+    .replace(/\$\$([^$]+)\$\$/g, (match, content) => {
+      const id = `__LATEX_DISPLAY_${latexExpressions.length}__`;
+      latexExpressions.push({id, content: `$$${content}$$`, type: 'display'});
+      return id;
+    })
+    .replace(/\$([^$]+)\$/g, (match, content) => {
+      const id = `__LATEX_INLINE_${latexExpressions.length}__`;
+      latexExpressions.push({id, content: `$${content}$`, type: 'inline'});
+      return id;
+    });
+  
+  // Convert markdown formatting (be more careful with spacing)
+  parsed = parsed
+    // Bold and italic
+    .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*\n]+)\*/g, '<em>$1</em>')
+    .replace(/`([^`\n]+)`/g, '<code>$1</code>')
+    
+    // Headers (only if at start of line)
+    .replace(/^### ([^\n]+)$/gm, '<h3>$1</h3>')
+    .replace(/^## ([^\n]+)$/gm, '<h2>$1</h2>')
+    .replace(/^# ([^\n]+)$/gm, '<h1>$1</h1>')
+    
+    // Lists (handle properly)
+    .replace(/^[\s]*[\*\-\+] (.+)$/gm, '<li>$1</li>')
+    .replace(/^[\s]*(\d+)\. (.+)$/gm, '<li>$2</li>')
+    
+    // Table detection and explanation
+    .replace(/\|.*\|.*\n[\|\-\s]+\n(\|.*\|.*\n)*/g, '<div class="table-summary"><em>📊 Table showing data relationships and values</em></div>')
+    
+    // Convert double newlines to paragraph breaks, single newlines to spaces
+    .replace(/\n\n+/g, '</p><p>')
+    .replace(/\n/g, ' ')
+    
+    // Clean up extra spaces
+    .replace(/\s+/g, ' ');
+  
+  // Wrap content in paragraphs if needed
+  if (!parsed.startsWith('<')) {
+    parsed = '<p>' + parsed + '</p>';
+  }
+  
+  // Clean up list formatting
+  parsed = parsed
+    .replace(/(<li>.*?<\/li>)/gs, (match) => '<ul>' + match + '</ul>')
+    .replace(/<\/ul>\s*<ul>/g, '')
+    .replace(/<p>\s*<ul>/g, '<ul>')
+    .replace(/<\/ul>\s*<\/p>/g, '</ul>');
+  
+  // Clean up paragraph formatting
+  parsed = parsed
+    .replace(/<p>\s*<\/p>/g, '')
+    .replace(/<p>\s*<h/g, '<h')
+    .replace(/<\/h[1-6]>\s*<\/p>/g, (match) => match.replace('</p>', ''))
+    .replace(/\s+/g, ' ')
+    .replace(/> </g, '><');
+  
+  // Restore LaTeX expressions
+  latexExpressions.forEach(({id, content}) => {
+    parsed = parsed.replace(id, content);
+  });
+  
+  return parsed.trim();
+}
+
+function handleFollowupKeypress(event) {
+  if (event.key === 'Enter') {
+    askFollowupQuestion();
+  }
+}
+
+async function askFollowupQuestion() {
+  const input = document.getElementById('followup-input');
+  const responseDiv = document.getElementById('followup-response');
+  const button = document.getElementById('followup-btn');
+  const token = localStorage.getItem('materio_auth_token');
+  
+  const question = input.value.trim();
+  if (!question) return;
+  
+  // Show loading state
+  button.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="font-size: 12px;"></i>';
+  button.disabled = true;
+  input.disabled = true;
+  
+  responseDiv.style.display = 'block';
+  responseDiv.innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="margin-right: 0.5rem;"></i>Thinking...';
+  
+  try {
+    // Get the blog content for context
+    const postBody = document.querySelector('.post-body');
+    const blogContent = postBody ? postBody.innerText : '';
+    const postTitle = document.querySelector('.post-title') ? document.querySelector('.post-title').innerText : '';
+    
+    if (!blogContent) {
+      throw new Error('No content found to reference');
+    }
+    
+    // Prepare the followup question prompt
+    const followupPrompt = `Based on the blog post titled "${postTitle}", please answer this question briefly and clearly:
+
+Question: ${question}
+
+Post content for reference:
+${blogContent}
+
+REQUIREMENTS:
+- Answer in 30-50 words maximum
+- Base your answer ONLY on the content provided
+- If the question cannot be answered from the post, say so
+- Be direct and helpful
+- Use simple, clear language
+
+Answer:`;
+
+    const response = await fetch('/api/v1/chat', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: followupPrompt,
+        messages: [],
+        mode: 'general',
+        model: 'openai/gpt-oss-20b:free'
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to get answer: ${response.status}`);
+    }
+
+    const data = await response.json();
+    
+    if (!data.success) {
+      throw new Error(data.error || 'Failed to get answer');
+    }
+
+    // Clear input and show response with typing effect
+    input.value = '';
+    await typeFollowupResponse(responseDiv, data.response);
+    
+  } catch (error) {
+    console.error('Error getting followup answer:', error);
+    responseDiv.innerHTML = `<i class="fa-solid fa-exclamation-triangle" style="margin-right: 0.5rem; color: #ff6b6b;"></i>Could not get an answer. Please try again.`;
+  } finally {
+    // Reset button state
+    button.innerHTML = '<i class="fa-solid fa-arrow-up" style="font-size: 12px; transform: rotate(45deg);"></i>';
+    button.disabled = false;
+    input.disabled = false;
+    input.focus();
+  }
+}
+
+async function typeFollowupResponse(element, text) {
+  element.innerHTML = '';
+  
+  // Clean and format the response
+  const cleanText = text.trim().replace(/\s+/g, ' ');
+  
+  // Type character by character for smooth effect
+  for (let i = 0; i < cleanText.length; i++) {
+    element.textContent += cleanText[i];
+    
+    // Small delay between characters
+    await new Promise(resolve => setTimeout(resolve, Math.random() * 20 + 10));
+  }
+  
+  // Render LaTeX if present
+  if (window.renderMathInElement) {
+    try {
+      window.renderMathInElement(element, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        throwOnError: false
+      });
+    } catch (e) {
+      // Silently continue if LaTeX rendering fails
+    }
+  }
+}
+
+async function checkPrivatePostAccess() {
+  const token = localStorage.getItem('materio_auth_token');
+  // console.log('Post access check - Token found:', !!token);
+  
+  if (!token) {
+    // console.log('No token found, showing access denied');
+    showAccessDenied();
+    return;
+  }
+
+  try {
+    // console.log('Making request to profile endpoint for post access...');
+    const response = await fetch('/api/v1/profile', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      credentials: 'same-origin'
+    });
+
+    // console.log('Post access - Profile response status:', response.status);
+
+    if (response.ok) {
+      const userData = await response.json();
+      // console.log('Post access - User data:', userData);
+      // console.log('Post access - Has admin privileges:', userData.user?.hasAdminPrivileges);
+      
+      if (!userData.user?.hasAdminPrivileges && !userData.user?.isPlusUser) {
+        // console.log('User does not have admin privileges or plus access, showing access denied');
+        showAccessDenied();
+      } else {
+        // console.log('User has admin privileges or plus access, allowing access');
+      }
+    } else {
+      const errorData = await response.text();
+      // console.log('Post access - Profile request failed:', response.status, errorData);
+      showAccessDenied();
+    }
+  } catch (error) {
+    console.error('Error checking post access:', error);
+    showAccessDenied();
+  }
+}
+
+function showAccessDenied() {
+  const postContainer = document.querySelector('.post-container');
+  postContainer.innerHTML = `
+   <div style="text-align: center; padding: 2rem; max-width: 500px; margin: 0 auto;">
+  <h1 style="color: #ff8759; margin-bottom: 1rem;">
+    <i class="fa-solid fa-lock"></i> Uh-oh! This Page is Off-limits 
+  </h1>
+  <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+    This blog post is private and only available to admin users and plus members.
+  </p>
+  <p style="color: var(--gray); margin-bottom: 2rem;">
+     Please log in with an account having admin privileges or plus membership to view this content.
+  </p>
+  <a href="/account" style="background: #ff8200; color: white; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-weight: 600;">
+    Log In
+  </a>
+</div>
+
+  `;
+}
+
+// Share post function
+function sharePost() {
+ gtag('event', 'share', {
+      method: 'button',
+      event_category: 'engagement',
+      event_label: 'Share Post'
+    });
+
+  // Get post title with fallback options
+  const h1Element = document.querySelector('h1');
+  const postTitle = h1Element ? h1Element.textContent : (document.title || 'Blog Post');
+  const postUrl = window.location.href;
+  
+  console.log('Share function called with title:', postTitle, 'and URL:', postUrl);
+  
+  // Check if Web Share API is supported
+  if (navigator.share) {
+    console.log('Using Web Share API');
+    navigator.share({
+      title: postTitle,
+      url: postUrl,
+      text: 'Check out this blog post:'
+    }).catch((error) => {
+      console.log('Web Share API error:', error);
+      fallbackShare(postUrl, postTitle);
+    });
+  } else {
+    console.log('Web Share API not supported, using fallback');
+    fallbackShare(postUrl, postTitle);
+  }
+}
+
+// Fallback share function for browsers without Web Share API
+function fallbackShare(url, title) {
+  console.log('Using fallback share method');
+  
+  // Copy URL to clipboard
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => {
+      console.log('URL copied to clipboard successfully');
+      showShareSuccess();
+    }).catch((error) => {
+      console.log('Clipboard API failed:', error);
+      showSharePrompt(url);
+    });
+  } else {
+    console.log('Clipboard API not supported');
+    showSharePrompt(url);
+  }
+}
+
+// Show success feedback
+function showShareSuccess() {
+  const shareIcon = document.querySelector('.fa-share');
+  if (shareIcon) {
+    const originalClass = shareIcon.className;
+    shareIcon.className = 'fa-solid fa-check';
+    shareIcon.style.color = '#28a745';
+    
+    setTimeout(() => {
+      shareIcon.className = originalClass;
+      shareIcon.style.color = 'var(--text)';
+    }, 2000);
+  }
+}
+
+// Show prompt as final fallback
+function showSharePrompt(url) {
+  try {
+    prompt('Copy this link to share:', url);
+  } catch (error) {
+    console.log('Prompt failed:', error);
+  }
+}
+
+// Print post function
+function printPost() {
+ gtag('event', 'printables_made', {
+      method: 'button',
+      event_category: 'engagement',
+      event_label: 'Print Post'
+    });
+
+  console.log('Printable Created!');
+  
+  // Force generate print elements before printing
+  if (window.generatePrintElements) {
+    console.log('Manually calling generatePrintElements');
+    window.generatePrintElements();
+    
+    // Force style recalculation
+    const printHeader = document.querySelector('.print-page-header');
+    if (printHeader) {
+      console.log('Forcing style recalculation');
+      printHeader.offsetHeight; // Force reflow
+    }
+  }
+  
+  // Increase delay to ensure CSS is fully processed
+  setTimeout(() => {
+    console.log('Opening print dialog');
+    window.print();
+  }, 150);
+}
+
+function processAttachmentTags() {
+  // Find all attachment tags in the post content
+  const postBody = document.querySelector('.post-body');
+  if (!postBody) {
+    console.log('No post body found');
+    return;
+  }
+  
+  console.log('Processing attachments in:', postBody.innerHTML.substring(0, 200));
+  
+  // Look for custom attachment tags like: [attachment:/path/to/file.pdf:Display Name]
+  const attachmentPattern = /\[attachment:([^:]+):([^\]]+)\]/g;
+  let content = postBody.innerHTML;
+  let match;
+  let replacements = 0;
+  
+  while ((match = attachmentPattern.exec(content)) !== null) {
+    const [fullMatch, filePath, displayName] = match;
+    console.log('Found attachment:', filePath, displayName);
+    const attachmentHTML = createAttachmentCard(filePath, displayName);
+    content = content.replace(fullMatch, attachmentHTML);
+    replacements++;
+  }
+  
+  console.log('Made', replacements, 'attachment replacements');
+  
+  if (replacements > 0) {
+    postBody.innerHTML = content;
+    
+    // Initialize all attachment cards after rendering
+    setTimeout(() => {
+      initializeAttachmentCards();
+    }, 100);
+  }
+}
+
+// Process video tags in post content
+function processVideoTags() {
+  const postBody = document.querySelector('.post-body');
+  if (!postBody) return;
+  
+  console.log('Processing video tags in:', postBody.innerHTML.substring(0, 100));
+  
+  let videoReplacements = 0;
+  
+  // Process video tags: [video:path] or [video:path:cover]
+  postBody.innerHTML = postBody.innerHTML.replace(/\[video:([^\]]+)\]/g, function(match, params) {
+    const parts = params.split(':');
+    const videoPath = parts[0].trim();
+    const isCover = parts[1] && parts[1].trim() === 'cover';
+    
+    console.log('Processing video:', videoPath, 'isCover:', isCover);
+    
+    const videoId = 'video-' + Math.random().toString(36).substr(2, 9);
+    const coverClass = isCover ? 'video-cover' : 'video-embed';
+    
+    // Determine video type from file extension
+    const fileExtension = videoPath.split('.').pop().toLowerCase();
+    let videoType = 'video/mp4'; // default
+    
+    if (fileExtension === 'webm') {
+      videoType = 'video/webm';
+    } else if (fileExtension === 'mov') {
+      videoType = 'video/quicktime';
+    } else if (fileExtension === 'avi') {
+      videoType = 'video/x-msvideo';
+    } else if (fileExtension === 'mkv') {
+      videoType = 'video/x-matroska';
+    }
+    
+    videoReplacements++;
+    
+    return `
+      <div class="${coverClass}">
+        <video id="${videoId}" muted loop>
+          <source src="${videoPath}" type="${videoType}">
+          Your browser does not support the video tag.
+        </video>
+        <div class="video-controls paused" onclick="toggleVideo('${videoId}')">
+          <i class="fa-solid fa-play"></i>
+        </div>
+      </div>
+    `;
+  });
+  
+  console.log('Made', videoReplacements, 'video replacements');
+  
+  // Initialize video controls after processing
+  if (videoReplacements > 0) {
+    setTimeout(() => {
+      initializeVideoControls();
+    }, 100);
+  }
+}
+
+// Toggle video play/pause
+function toggleVideo(videoId) {
+  const video = document.getElementById(videoId);
+  const controls = video.parentElement.querySelector('.video-controls');
+  const icon = controls.querySelector('i');
+  
+  if (video.paused) {
+    video.play().catch(e => console.log('Video play failed:', e));
+    icon.className = 'fa-solid fa-pause';
+    controls.classList.remove('paused');
+    controls.classList.add('playing');
+  } else {
+    video.pause();
+    icon.className = 'fa-solid fa-play';
+    controls.classList.remove('playing');
+    controls.classList.add('paused');
+  }
+}
+
+// Initialize video controls and event listeners
+function initializeVideoControls() {
+  document.querySelectorAll('.video-embed video, .video-cover video').forEach(video => {
+    // Remove existing listeners to prevent duplicates
+    video.replaceWith(video.cloneNode(true));
+    const newVideo = document.getElementById(video.id);
+    
+    newVideo.addEventListener('ended', function() {
+      const controls = this.parentElement.querySelector('.video-controls');
+      const icon = controls.querySelector('i');
+      
+      icon.className = 'fa-solid fa-play';
+      controls.classList.remove('playing');
+      controls.classList.add('paused');
+    });
+    
+    newVideo.addEventListener('click', function() {
+      const videoId = this.id;
+      toggleVideo(videoId);
+    });
+    
+    // Pause other videos when this one starts playing
+    newVideo.addEventListener('play', function() {
+      document.querySelectorAll('.video-embed video, .video-cover video').forEach(otherVideo => {
+        if (otherVideo !== this && !otherVideo.paused) {
+          toggleVideo(otherVideo.id);
+        }
+      });
+    });
+  });
+}
+
+function createAttachmentCard(filePath, displayName) {
+  const fileExtension = filePath.split('.').pop().toLowerCase();
+  const fileName = filePath.split('/').pop();
+  const attachmentId = 'attachment-' + Math.random().toString(36).substr(2, 9);
+  
+  return `
+    <div class="attachment-card" data-file-path="${filePath}" data-attachment-id="${attachmentId}">
+      <div class="attachment-details">
+        <div class="attachment-title">${displayName}</div>
+        <div class="attachment-meta">
+          <span class="file-type">${fileExtension.toUpperCase()}</span> • 
+          <span class="file-size">Click to view</span>
+        </div>
+      </div>
+      <div class="attachment-preview">
+        <canvas id="canvas-${attachmentId}" width="100" height="130"></canvas>
+        <img id="img-${attachmentId}" style="display: none;" />
+      </div>
+    </div>
+  `;
+}
+
+function initializeAttachmentCards() {
+  const attachmentCards = document.querySelectorAll('.attachment-card');
+  
+  attachmentCards.forEach(async (card) => {
+    const filePath = card.getAttribute('data-file-path');
+    const attachmentId = card.getAttribute('data-attachment-id');
+    
+    // Add click handler to open file
+    card.addEventListener('click', () => {
+      openAttachment(filePath);
+    });
+    
+    // Generate preview
+    await generateAttachmentPreview(filePath, attachmentId);
+  });
+}
+
+async function generateAttachmentPreview(filePath, attachmentId) {
+  const canvas = document.getElementById(`canvas-${attachmentId}`);
+  const img = document.getElementById(`img-${attachmentId}`);
+  const ctx = canvas.getContext('2d');
+  const fileExtension = filePath.split('.').pop().toLowerCase();
+  
+  try {
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExtension)) {
+      // Handle image files
+      generateImagePreview(filePath, canvas, img);
+    } else if (fileExtension === 'pdf') {
+      // Handle PDF files
+      await generatePDFPreview(filePath, canvas);
+    } else if (['doc', 'docx', 'txt', 'rtf'].includes(fileExtension)) {
+      // Handle document files
+      generateDocumentPreview(fileExtension, canvas, ctx);
+    } else {
+      // Handle other file types
+      generateGenericPreview(fileExtension, canvas, ctx);
+    }
+  } catch (error) {
+    console.error('Error generating preview:', error);
+    generateGenericPreview(fileExtension, canvas, ctx);
+  }
+}
+
+function generateImagePreview(filePath, canvas, img) {
+  img.src = filePath;
+  img.onload = function() {
+    const ctx = canvas.getContext('2d');
+    canvas.width = 100;
+    canvas.height = 130;
+    
+    // Calculate aspect ratio and draw image
+    const aspectRatio = img.width / img.height;
+    let drawWidth = 100;
+    let drawHeight = 100 / aspectRatio;
+    
+    if (drawHeight > 130) {
+      drawHeight = 130;
+      drawWidth = 130 * aspectRatio;
+    }
+    
+    const x = (100 - drawWidth) / 2;
+    const y = (130 - drawHeight) / 2;
+    
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, 100, 130);
+    ctx.drawImage(img, x, y, drawWidth, drawHeight);
+  };
+  
+  img.onerror = function() {
+    generateGenericPreview('IMG', canvas, canvas.getContext('2d'));
+  };
+}
+
+async function generatePDFPreview(filePath, canvas) {
+  try {
+    const pdf = await pdfjsLib.getDocument(filePath).promise;
+    const page = await pdf.getPage(1);
+    const viewport = page.getViewport({ scale: 0.4 });
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = 100;
+    canvas.height = 130;
+    
+    // Scale viewport to fit canvas
+    const scale = Math.min(100 / viewport.width, 130 / viewport.height);
+    const scaledViewport = page.getViewport({ scale: scale });
+    
+    await page.render({
+      canvasContext: ctx,
+      viewport: scaledViewport
+    }).promise;
+  } catch (error) {
+    console.error('PDF preview error:', error);
+    generateGenericPreview('PDF', canvas, canvas.getContext('2d'));
+  }
+}
+
+function generateDocumentPreview(fileExtension, canvas, ctx) {
+  canvas.width = 100;
+  canvas.height = 130;
+  
+  // Document-like background
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, 100, 130);
+  
+  // Add lines to simulate document content
+  ctx.strokeStyle = "#e0e0e0";
+  ctx.lineWidth = 1;
+  for (let i = 20; i < 120; i += 8) {
+    ctx.beginPath();
+    ctx.moveTo(10, i);
+    ctx.lineTo(90, i);
+    ctx.stroke();
+  }
+  
+  // Add file type icon
+  ctx.fillStyle = "#4285f4";
+  ctx.font = "bold 12px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText(fileExtension.toUpperCase(), 50, 110);
+  
+  // Add document icon
+  ctx.fillStyle = "#666";
+  ctx.font = "16px Arial";
+  ctx.fillText("📄", 50, 25);
+}
+
+function generateGenericPreview(fileExtension, canvas, ctx) {
+  canvas.width = 100;
+  canvas.height = 130;
+  
+  // Generic file background
+  ctx.fillStyle = "#f5f5f5";
+  ctx.fillRect(0, 0, 100, 130);
+  
+  // Border
+  ctx.strokeStyle = "#ddd";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(0, 0, 100, 130);
+  
+  // File icon
+  ctx.fillStyle = "#666";
+  ctx.font = "24px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText("📎", 50, 45);
+  
+  // File extension
+  ctx.fillStyle = "#333";
+  ctx.font = "bold 14px Arial";
+  ctx.fillText(fileExtension.toUpperCase(), 50, 70);
+  
+  // Generic text
+  ctx.fillStyle = "#888";
+  ctx.font = "10px Arial";
+  ctx.fillText("File", 50, 90);
+}
+
+function openAttachment(filePath) {
+  // Add analytics tracking
+  if (window.gtag) {
+    gtag('event', 'attachment_opened', {
+      event_category: 'engagement',
+      event_label: filePath
+    });
+  }
+  
+  // Open in new tab
+  window.open(filePath, '_blank');
+}
+
+// Function to inject in-article ads
+function injectInArticleAds() {
+  const postBody = document.querySelector('.post-body');
+  if (!postBody) return;
+  
+  // Get all paragraphs in the post
+  const paragraphs = postBody.querySelectorAll('p, h2, h3');
+  if (paragraphs.length < 4) return; // Need at least 4 elements to insert ads
+  
+  // Calculate positions to insert ads (every 4-5 paragraphs)
+  const adPositions = [];
+  for (let i = 4; i < paragraphs.length; i += 5) {
+    adPositions.push(i);
+  }
+  
+  // Create and insert ad units at calculated positions
+  adPositions.forEach((position, index) => {
+    const adContainer = document.createElement('div');
+    adContainer.className = 'inarticle-ad-container';
+    adContainer.style.margin = '2rem 0';
+    
+    // Create the ad ins element
+    const adIns = document.createElement('ins');
+    adIns.className = 'adsbygoogle';
+    adIns.style.display = 'block';
+    adIns.style.textAlign = 'center';
+    adIns.setAttribute('data-ad-layout', 'in-article');
+    adIns.setAttribute('data-ad-format', 'fluid');
+    adIns.setAttribute('data-ad-client', 'ca-pub-7539227284131407');
+    adIns.setAttribute('data-ad-slot', '7061358716');
+    
+    adContainer.appendChild(adIns);
+    
+    // Insert after the target paragraph
+    const targetParagraph = paragraphs[position];
+    if (targetParagraph && targetParagraph.parentNode) {
+      targetParagraph.parentNode.insertBefore(adContainer, targetParagraph.nextSibling);
+    }
+  });
+  
+  // Initialize AdSense after injecting ads
+  setTimeout(() => {
+    const adsToLoad = document.querySelectorAll('.inarticle-ad-container .adsbygoogle');
+    adsToLoad.forEach(ad => {
+      try {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        console.error('Error loading ad:', e);
+      }
+    });
+  }, 100);
+}
+
+// Simple TTS test function
+function testTTS() {
+  console.log('Testing TTS...');
+  if (!window.speechSynthesis) {
+    console.error('Speech synthesis not supported');
+    return;
+  }
+  
+  const testUtterance = new SpeechSynthesisUtterance('Hello, this is a test of text to speech functionality.');
+  testUtterance.onstart = () => console.log('Test TTS started');
+  testUtterance.onend = () => console.log('Test TTS ended');
+  testUtterance.onerror = (e) => console.error('Test TTS error:', e);
+  
+  speechSynthesis.speak(testUtterance);
+}
+
+// Text-to-Speech functionality
+let speechSynthesis = window.speechSynthesis;
+let currentUtterance = null;
+let isPlaying = false;
+let isPaused = false;
+let currentText = '';
+let startTime = 0;
+let pausedTime = 0;
+let totalDuration = 0;
+let waveformInterval = null;
+let currentPostUrl = window.location.href; // Track current post
+
+function initializeListenComponent() {
+  // Check if we're on a different post and clear any previous state
+  if (currentPostUrl !== window.location.href) {
+    console.log('Different post detected, clearing TTS state');
+    clearTTSState();
+    currentPostUrl = window.location.href;
+  }
+  
+  // Calculate estimated duration based on word count
+  const postBody = document.querySelector('.post-body');
+  if (postBody) {
+    const wordCount = postBody.innerText.split(/\s+/).length;
+    const estimatedMinutes = Math.ceil(wordCount / 120); // Average speaking rate: 120 words per minute for TTS
+    totalDuration = estimatedMinutes * 60; // Convert to seconds
+    document.getElementById('listen-duration').textContent = `${estimatedMinutes}m audio`;
+  }
+  
+  // Initialize realistic waveform
+  initializeWaveform();
+}
+
+function clearTTSState() {
+  // Stop any ongoing speech
+  if (speechSynthesis.speaking) {
+    speechSynthesis.cancel();
+  }
+  
+  // Reset all state variables
+  currentUtterance = null;
+  isPlaying = false;
+  isPaused = false;
+  currentText = '';
+  startTime = 0;
+  pausedTime = 0;
+  
+  // Reset chunked playback state
+  isChunkedPlayback = false;
+  currentChunks = [];
+  currentChunkIndex = 0;
+  
+  // Stop waveform animation
+  stopWaveform();
+  
+  // Reset UI
+  const listenComponent = document.getElementById('listen-component');
+  const listenIcon = document.getElementById('listen-icon');
+  const listenDuration = document.getElementById('listen-duration');
+  const seekControls = document.getElementById('seek-controls');
+  
+  if (listenComponent) listenComponent.classList.remove('playing');
+  if (listenIcon) listenIcon.className = 'fa-solid fa-play';
+  if (seekControls) seekControls.style.display = 'none';
+  
+  console.log('TTS state cleared');
+}
+
+function initializeWaveform() {
+  const waveBars = document.querySelectorAll('.wave-bar');
+  
+  // Create more realistic waveform pattern
+  const waveformPattern = [8, 12, 6, 14, 10, 16, 9, 11, 7, 13, 5, 15, 8, 12, 6];
+  
+  waveBars.forEach((bar, index) => {
+    const height = waveformPattern[index % waveformPattern.length];
+    bar.style.height = `${height}px`;
+    bar.style.animationDelay = `${index * 0.1}s`;
+  });
+}
+
+function animateWaveform() {
+  const waveBars = document.querySelectorAll('.wave-bar');
+  
+  waveformInterval = setInterval(() => {
+    waveBars.forEach((bar) => {
+      const randomHeight = Math.floor(Math.random() * 10) + 6; // 6-15px
+      bar.style.height = `${randomHeight}px`;
+    });
+  }, 200);
+}
+
+function stopWaveform() {
+  if (waveformInterval) {
+    clearInterval(waveformInterval);
+    waveformInterval = null;
+    console.log('Waveform animation stopped');
+  }
+  
+  // Reset to initial pattern
+  const waveBars = document.querySelectorAll('.wave-bar');
+  if (waveBars.length > 0) {
+    initializeWaveform();
+  }
+}
+
+function toggleListen() {
+  console.log('toggleListen called, isPlaying:', isPlaying, 'isPaused:', isPaused);
+  
+  // Clear any previous TTS state if on different post
+  if (currentPostUrl !== window.location.href) {
+    clearTTSState();
+    currentPostUrl = window.location.href;
+  }
+  
+  const listenComponent = document.getElementById('listen-component');
+  const listenIcon = document.getElementById('listen-icon');
+  const listenDuration = document.getElementById('listen-duration');
+  const seekControls = document.getElementById('seek-controls');
+  
+  if (window.gtag) {
+    gtag('event', 'listen_post', {
+      event_category: 'engagement',
+      event_label: isPlaying ? 'pause' : 'play'
+    });
+  }
+  
+  if (isPlaying) {
+    console.log('Pausing audio...');
+    // Pause
+    if (isChunkedPlayback) {
+      // For chunked playback, we stop the current chunk and remember position
+      speechSynthesis.cancel();
+    } else {
+      speechSynthesis.pause();
+    }
+    isPlaying = false;
+    isPaused = true;
+    pausedTime = Date.now() - startTime;
+    listenComponent.classList.remove('playing');
+    listenIcon.className = 'fa-solid fa-play';
+    stopWaveform();
+  } else if (isPaused) {
+    console.log('Resuming audio...');
+    // Resume
+    if (isChunkedPlayback) {
+      // For chunked playback, continue from current chunk
+      isPlaying = true;
+      isPaused = false;
+      startTime = Date.now() - pausedTime;
+      listenComponent.classList.add('playing');
+      listenIcon.className = 'fa-solid fa-pause';
+      animateWaveform();
+      speakNextChunk();
+    } else {
+      speechSynthesis.resume();
+      isPlaying = true;
+      isPaused = false;
+      startTime = Date.now() - pausedTime;
+      listenComponent.classList.add('playing');
+      listenIcon.className = 'fa-solid fa-pause';
+      animateWaveform();
+    }
+  } else {
+    console.log('Starting new audio...');
+    // Start from beginning - clear any previous state first
+    clearTTSState();
+    startTextToSpeech();
+  }
+}
+
+function startTextToSpeech() {
+  const postBody = document.querySelector('.post-body');
+  const postTitle = document.querySelector('.post-title');
+  const listenComponent = document.getElementById('listen-component');
+  const listenIcon = document.getElementById('listen-icon');
+  const listenDuration = document.getElementById('listen-duration');
+  const seekControls = document.getElementById('seek-controls');
+  
+  if (!postBody) {
+    alert('No content found to read');
+    return;
+  }
+  
+  // Get clean text content
+  let textToRead = '';
+  if (postTitle) {
+    textToRead += postTitle.innerText + '. ';
+  }
+  
+  // Extract text more simply and reliably
+  const bodyText = postBody.innerText || postBody.textContent || '';
+  textToRead += bodyText
+    .replace(/\s+/g, ' ')
+    .replace(/[^\w\s.,!?;:()\-'"]/g, '')
+    .trim();
+  
+  console.log('Text to read length:', textToRead.length);
+  console.log('First 100 chars:', textToRead.substring(0, 100));
+  
+  if (textToRead.length < 5) {
+    alert('No readable content found. Text length: ' + textToRead.length);
+    return;
+  }
+  
+  // Limit text length to avoid browser limits
+  if (textToRead.length > 32000) {
+    textToRead = textToRead.substring(0, 32000) + '...';
+    console.log('Text truncated to 32000 characters');
+  }
+  
+  currentText = textToRead;
+  startTime = Date.now();
+  pausedTime = 0;
+  
+  speakText(textToRead);
+}
+
+function speakText(text) {
+  const listenComponent = document.getElementById('listen-component');
+  const listenIcon = document.getElementById('listen-icon');
+  const listenDuration = document.getElementById('listen-duration');
+  const seekControls = document.getElementById('seek-controls');
+  
+  // Check if speech synthesis is available
+  if (!window.speechSynthesis) {
+    alert('Text-to-speech not supported in this browser');
+    return;
+  }
+  
+  // Detect Android and implement chunking for long text
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const maxChunkSize = isAndroid ? 4000 : 32000; // Smaller chunks for Android
+  
+  console.log('Platform:', isAndroid ? 'Android' : 'Other', 'Max chunk size:', maxChunkSize);
+  
+  // If text is too long, use chunking approach
+  if (text.length > maxChunkSize) {
+    console.log('Text too long, using chunking approach');
+    speakTextInChunks(text, maxChunkSize);
+    return;
+  }
+  
+  // Create speech utterance for shorter text
+  currentUtterance = new SpeechSynthesisUtterance(text);
+  currentUtterance.rate = 0.9;
+  currentUtterance.pitch = 1;
+  currentUtterance.volume = 0.8;
+  
+  // Function to set voice and speak
+  function setVoiceAndSpeak() {
+    const voices = speechSynthesis.getVoices();
+    console.log('Available voices:', voices.length);
+    
+    if (voices.length > 0) {
+      // Try to find a good English voice
+      const preferredVoice = voices.find(voice => 
+        voice.lang.startsWith('en') && 
+        (voice.name.includes('Natural') || voice.name.includes('Enhanced') || voice.name.includes('Premium'))
+      ) || voices.find(voice => voice.lang.startsWith('en')) || voices[0];
+      
+      if (preferredVoice) {
+        currentUtterance.voice = preferredVoice;
+        console.log('Using voice:', preferredVoice.name);
+      }
+    }
+    
+    // Event handlers
+    currentUtterance.onstart = function() {
+      console.log('Speech onstart event fired');
+      isPlaying = true;
+      isPaused = false;
+      listenComponent.classList.add('playing');
+      listenIcon.className = 'fa-solid fa-pause';
+      seekControls.style.display = 'flex';
+      animateWaveform();
+      updateProgress();
+    };
+    
+    currentUtterance.onend = function() {
+      console.log('Speech onend event fired');
+      stopAudio();
+    };
+    
+    currentUtterance.onerror = function(event) {
+      console.error('Speech synthesis error:', event);
+      console.error('Error details:', event.error, event.type);
+      
+      // Handle "interrupted" error more gracefully - it's normal when stopping
+      if (event.error === 'interrupted') {
+        console.log('Speech was interrupted (normal when stopping)');
+        // Don't show alert for interrupted error, just clean up
+        stopAudioCleanly();
+      } else if (event.error === 'synthesis-failed' && isAndroid) {
+        console.log('Android synthesis failed, trying chunked approach');
+        // Try chunking on Android if synthesis fails
+        setTimeout(() => {
+          speakTextInChunks(text, 2000); // Even smaller chunks
+        }, 100);
+      } else {
+        alert('Error playing audio: ' + event.error);
+        stopAudio();
+      }
+    };
+    
+    currentUtterance.onpause = function() {
+      console.log('Speech onpause event fired');
+    };
+    
+    currentUtterance.onresume = function() {
+      console.log('Speech onresume event fired');
+    };
+    
+    // Start speaking with platform-specific delay
+    try {
+      console.log('Starting speech synthesis...');
+      
+      // Longer delay for Android to initialize properly
+      const delay = isAndroid ? 300 : 100;
+      setTimeout(() => {
+        speechSynthesis.speak(currentUtterance);
+        
+        // Immediately update UI to show loading state
+        listenComponent.classList.add('playing');
+        listenIcon.className = 'fa-solid fa-pause';
+        seekControls.style.display = 'flex';
+        animateWaveform();
+        isPlaying = true;
+      }, delay);
+      
+      // Additional check after a delay - Android needs more time
+      setTimeout(() => {
+        console.log('Speech synthesis speaking state:', speechSynthesis.speaking);
+        console.log('Speech synthesis pending state:', speechSynthesis.pending);
+        console.log('Speech synthesis paused state:', speechSynthesis.paused);
+        
+        if (!speechSynthesis.speaking && !speechSynthesis.pending) {
+          console.warn('Speech synthesis not speaking after timeout - trying chunked approach');
+          if (isAndroid) {
+            // For Android, immediately try chunking
+            speechSynthesis.cancel();
+            setTimeout(() => {
+              speakTextInChunks(text, 2000);
+            }, 200);
+          } else {
+            // For other platforms, try shorter text
+            speechSynthesis.cancel();
+            const shortText = text.substring(0, 500) + '...';
+            const simpleUtterance = new SpeechSynthesisUtterance(shortText);
+            simpleUtterance.onstart = () => console.log('Short text started speaking');
+            simpleUtterance.onerror = (e) => console.error('Short text error:', e);
+            speechSynthesis.speak(simpleUtterance);
+          }
+        }
+      }, isAndroid ? 2000 : 1000);
+      
+    } catch (error) {
+      console.error('Error starting speech:', error);
+      alert('Failed to start audio playback');
+      stopAudio();
+    }
+  }
+  
+  // Wait for voices to load if needed
+  if (speechSynthesis.getVoices().length === 0) {
+    console.log('Waiting for voices to load...');
+    speechSynthesis.addEventListener('voiceschanged', setVoiceAndSpeak, { once: true });
+    // Longer fallback timeout for Android
+    setTimeout(setVoiceAndSpeak, isAndroid ? 2000 : 1000);
+  } else {
+    setVoiceAndSpeak();
+  }
+}
+
+// New chunking function for Android TTS limitations
+let currentChunks = [];
+let currentChunkIndex = 0;
+let isChunkedPlayback = false;
+
+function speakTextInChunks(text, maxChunkSize) {
+  console.log('Starting chunked playback for Android');
+  
+  const listenComponent = document.getElementById('listen-component');
+  const listenIcon = document.getElementById('listen-icon');
+  const seekControls = document.getElementById('seek-controls');
+  
+  // Split text into sentences and then group into chunks
+  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+  currentChunks = [];
+  let currentChunk = '';
+  
+  for (let sentence of sentences) {
+    sentence = sentence.trim() + '.';
+    
+    if ((currentChunk + sentence).length <= maxChunkSize) {
+      currentChunk += ' ' + sentence;
+    } else {
+      if (currentChunk.trim()) {
+        currentChunks.push(currentChunk.trim());
+      }
+      currentChunk = sentence;
+    }
+  }
+  
+  // Add the last chunk
+  if (currentChunk.trim()) {
+    currentChunks.push(currentChunk.trim());
+  }
+  
+  console.log(`Split into ${currentChunks.length} chunks`);
+  
+  currentChunkIndex = 0;
+  isChunkedPlayback = true;
+  
+  // Update UI
+  isPlaying = true;
+  isPaused = false;
+  listenComponent.classList.add('playing');
+  listenIcon.className = 'fa-solid fa-pause';
+  seekControls.style.display = 'flex';
+  animateWaveform();
+  updateProgress();
+  
+  speakNextChunk();
+}
+
+function speakNextChunk() {
+  if (!isChunkedPlayback || currentChunkIndex >= currentChunks.length) {
+    console.log('Chunked playback finished');
+    stopAudio();
+    return;
+  }
+  
+  const chunk = currentChunks[currentChunkIndex];
+  console.log(`Speaking chunk ${currentChunkIndex + 1}/${currentChunks.length}`);
+  
+  currentUtterance = new SpeechSynthesisUtterance(chunk);
+  currentUtterance.rate = 0.9;
+  currentUtterance.pitch = 1;
+  currentUtterance.volume = 0.8;
+  
+  // Set voice if available
+  const voices = speechSynthesis.getVoices();
+  if (voices.length > 0) {
+    const preferredVoice = voices.find(voice => 
+      voice.lang.startsWith('en') && 
+      (voice.name.includes('Natural') || voice.name.includes('Enhanced') || voice.name.includes('Premium'))
+    ) || voices.find(voice => voice.lang.startsWith('en')) || voices[0];
+    
+    if (preferredVoice) {
+      currentUtterance.voice = preferredVoice;
+    }
+  }
+  
+  currentUtterance.onend = function() {
+    console.log(`Chunk ${currentChunkIndex + 1} finished`);
+    currentChunkIndex++;
+    
+    // Small delay between chunks to prevent Android issues
+    setTimeout(() => {
+      if (isChunkedPlayback && isPlaying && !isPaused) {
+        speakNextChunk();
+      }
+    }, 100);
+  };
+  
+  currentUtterance.onerror = function(event) {
+    console.error('Chunk speech error:', event);
+    if (event.error === 'interrupted') {
+      return; // Normal when stopping
+    }
+    
+    console.log('Error in chunk, trying to continue...');
+    currentChunkIndex++;
+    setTimeout(() => {
+      if (isChunkedPlayback && isPlaying && !isPaused) {
+        speakNextChunk();
+      }
+    }, 500);
+  };
+  
+  try {
+    speechSynthesis.speak(currentUtterance);
+  } catch (error) {
+    console.error('Error speaking chunk:', error);
+    currentChunkIndex++;
+    setTimeout(() => {
+      if (isChunkedPlayback && isPlaying && !isPaused) {
+        speakNextChunk();
+      }
+    }, 500);
+  }
+}
+    console.log('Waiting for voices to load...');
+function updateProgress() {
+  if (!isPlaying && !isPaused) return;
+  
+  const listenDuration = document.getElementById('listen-duration');
+  
+  const progressInterval = setInterval(() => {
+    if (!isPlaying && !isPaused) {
+      clearInterval(progressInterval);
+      return;
+    }
+    
+    if (isPlaying) {
+      const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+      const minutes = Math.floor(elapsedSeconds / 60);
+      const seconds = elapsedSeconds % 60;
+      listenDuration.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+  }, 1000);
+}
+
+function seekBackward() {
+  if (!currentText) return;
+  
+  // Stop current speech
+  speechSynthesis.cancel();
+  
+  // Calculate approximate position in text (rough estimation)
+  const elapsedTime = isPaused ? pausedTime : (Date.now() - startTime);
+  const textProgress = Math.max(0, (elapsedTime / 1000 - 5) / totalDuration); // Go back 5 seconds
+  
+  // Find approximate text position
+  const targetPosition = Math.floor(currentText.length * textProgress);
+  const sentences = currentText.split(/[.!?]+/);
+  
+  let charCount = 0;
+  let targetSentenceIndex = 0;
+  
+  for (let i = 0; i < sentences.length; i++) {
+    charCount += sentences[i].length + 1; // +1 for punctuation
+    if (charCount >= targetPosition) {
+      targetSentenceIndex = Math.max(0, i);
+      break;
+    }
+  }
+  
+  // Create new text from target position
+  const newText = sentences.slice(targetSentenceIndex).join('. ');
+  
+  if (newText.trim()) {
+    // Update timing
+    const seekTime = Math.max(0, elapsedTime - 5000); // Go back 5 seconds
+    startTime = Date.now() - seekTime;
+    if (isPaused) {
+      pausedTime = seekTime;
+    }
+    
+    setTimeout(() => {
+      speakText(newText);
+      if (isPaused) {
+        setTimeout(() => {
+          speechSynthesis.pause();
+        }, 100);
+      }
+    }, 100);
+  }
+}
+
+function seekForward() {
+  if (!currentText) return;
+  
+  // Stop current speech
+  speechSynthesis.cancel();
+  
+  // Calculate approximate position in text
+  const elapsedTime = isPaused ? pausedTime : (Date.now() - startTime);
+  const textProgress = Math.min(1, (elapsedTime / 1000 + 5) / totalDuration); // Go forward 5 seconds
+  
+  // Find approximate text position
+  const targetPosition = Math.floor(currentText.length * textProgress);
+  const sentences = currentText.split(/[.!?]+/);
+  
+  let charCount = 0;
+  let targetSentenceIndex = 0;
+  
+  for (let i = 0; i < sentences.length; i++) {
+    charCount += sentences[i].length + 1;
+    if (charCount >= targetPosition) {
+      targetSentenceIndex = Math.min(sentences.length - 1, i);
+      break;
+    }
+  }
+  
+  // Create new text from target position
+  const newText = sentences.slice(targetSentenceIndex).join('. ');
+  
+  if (newText.trim()) {
+    // Update timing
+    const seekTime = elapsedTime + 5000; // Go forward 5 seconds
+    startTime = Date.now() - seekTime;
+    if (isPaused) {
+      pausedTime = seekTime;
+    }
+    
+    setTimeout(() => {
+      speakText(newText);
+      if (isPaused) {
+        setTimeout(() => {
+          speechSynthesis.pause();
+        }, 100);
+      }
+    }, 100);
+  } else {
+    // End of content
+    stopAudio();
+  }
+}
+
+function stopAudio() {
+  console.log('stopAudio called');
+  speechSynthesis.cancel();
+  
+  // Reset chunked playback state
+  isChunkedPlayback = false;
+  currentChunks = [];
+  currentChunkIndex = 0;
+  
+  stopAudioCleanly();
+}
+
+function stopAudioCleanly() {
+  console.log('stopAudioCleanly called');
+  isPlaying = false;
+  isPaused = false;
+  startTime = 0;
+  pausedTime = 0;
+  
+  const listenComponent = document.getElementById('listen-component');
+  const listenIcon = document.getElementById('listen-icon');
+  const listenDuration = document.getElementById('listen-duration');
+  const seekControls = document.getElementById('seek-controls');
+  
+  if (listenComponent) listenComponent.classList.remove('playing');
+  if (listenIcon) listenIcon.className = 'fa-solid fa-play';
+  if (listenDuration) listenDuration.textContent = calculateDuration();
+  if (seekControls) seekControls.style.display = 'none';
+  
+  stopWaveform();
+  console.log('Audio stopped cleanly');
+}
+
+function calculateDuration() {
+  const postBody = document.querySelector('.post-body');
+  if (postBody) {
+    const wordCount = postBody.innerText.split(/\s+/).length;
+    const estimatedMinutes = Math.ceil(wordCount / 120); // 120 words per minute for TTS
+    return `${estimatedMinutes}m audio`;
+  }
+  return 'Listen';
+}
+
+// Handle visibility change to pause when tab is not active
+document.addEventListener('visibilitychange', function() {
+  if (document.hidden && isPlaying) {
+    speechSynthesis.pause();
+  } else if (!document.hidden && isPlaying) {
+    speechSynthesis.resume();
+  }
+});
+
+// Handle page navigation to clear TTS state
+window.addEventListener('beforeunload', function() {
+  console.log('Page unloading, clearing TTS state');
+  clearTTSState();
+});
+
+// Handle back/forward navigation
+window.addEventListener('popstate', function() {
+  console.log('Navigation detected, clearing TTS state');
+  clearTTSState();
+});
+
+document.addEventListener('keydown', function (e) {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+      gtag('event', 'printables_made', {
+        method: 'keypress',
+        event_category: 'engagement',
+        event_label: 'Keyboard Print'
+      });
+    }
+  });
+</script>

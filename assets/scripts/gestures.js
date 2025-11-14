@@ -1,5 +1,4 @@
-
-                // Mobile swipe navigation functionality
+// Mobile swipe navigation functionality
                 // Check if device is mobile
                 function isMobileDevice() {
                     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
@@ -8,7 +7,7 @@
                 if (isMobileDevice()) {
                     // Use document.body for full-screen swipe detection
                     const swipeArea = document.body;
-                    const tabOrder = ['home', 'chat', 'notifications', 'settings'];
+                    const tabOrder = ['home', 'local', 'chat', 'notifications', 'settings'];
                     
                     let startX = 0;
                     let startY = 0;
@@ -147,6 +146,37 @@
                             return tabOrder.indexOf(activeTab.id);
                         }
                         return 0;
+                    }
+                    
+                    // Check if a tab is visible/accessible
+                    function isTabVisible(tabName) {
+                        const tabLink = document.querySelector(`.tab-link[data-tab="${tabName}"]`);
+                        if (!tabLink) return false;
+                        const style = window.getComputedStyle(tabLink);
+                        return style.display !== 'none';
+                    }
+                    
+                    // Get next visible tab index
+                    function getNextVisibleTabIndex(currentIndex, direction) {
+                        let newIndex = currentIndex;
+                        
+                        if (direction === 'next') {
+                            for (let i = currentIndex + 1; i < tabOrder.length; i++) {
+                                if (isTabVisible(tabOrder[i])) {
+                                    newIndex = i;
+                                    break;
+                                }
+                            }
+                        } else if (direction === 'prev') {
+                            for (let i = currentIndex - 1; i >= 0; i--) {
+                                if (isTabVisible(tabOrder[i])) {
+                                    newIndex = i;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        return newIndex;
                     }                      // Enhanced switch to specific tab with smooth transitions
                     function switchToTab(tabName, direction = null) {
                         const tabLinks = document.querySelectorAll(".tab-link");
@@ -169,13 +199,25 @@
                             // After a short delay, switch tabs and add enter animation
                             setTimeout(() => {
                                 // Remove all active classes and animations
-                                tabLinks.forEach(link => link.classList.remove("active"));
+                                tabLinks.forEach(link => {
+                                    link.classList.remove("active");
+                                    const icon = link.querySelector('i');
+                                    if (icon && !link.querySelector('img')) {
+                                        icon.classList.remove('fas');
+                                        icon.classList.add('far');
+                                    }
+                                });
                                 tabContents.forEach(content => {
                                     content.classList.remove("active", "slide-in-right", "slide-in-left", "slide-out-right", "slide-out-left");
                                 });
                                 
                                 // Activate new tab
                                 targetLink.classList.add("active");
+                                const icon = targetLink.querySelector('i');
+                                if (icon && !targetLink.querySelector('img')) {
+                                    icon.classList.remove('far');
+                                    icon.classList.add('fas');
+                                }
                                 targetContent.classList.add("active", enterClass);
                                   // Clean up animation classes after animation completes
                                 setTimeout(() => {
@@ -186,18 +228,36 @@
                             }, 150); // Slightly longer delay for smoother overlap
                         } else {
                             // Standard tab switching without animations (desktop or direct navigation)
-                            tabLinks.forEach(link => link.classList.remove("active"));
+                            tabLinks.forEach(link => {
+                                link.classList.remove("active");
+                                const icon = link.querySelector('i');
+                                if (icon && !link.querySelector('img')) {
+                                    icon.classList.remove('fas');
+                                    icon.classList.add('far');
+                                }
+                            });
                             tabContents.forEach(content => {
                                 content.classList.remove("active", "slide-in-right", "slide-in-left", "slide-out-right", "slide-out-left");
                             });
                             
                             targetLink.classList.add("active");
+                            const icon = targetLink.querySelector('i');
+                            if (icon && !targetLink.querySelector('img')) {
+                                icon.classList.remove('far');
+                                icon.classList.add('fas');
+                            }
                             targetContent.classList.add("active");
                             setCookie("activeTab", tabName, 7);
                         }
                     }
                       // Touch start event - bind to swipeArea (document.body)
                     swipeArea.addEventListener('touchstart', function(e) {
+                        // Disable swipe on downloads tab
+                        const activeTab = document.querySelector('.tab-content.active');
+                        if (activeTab && activeTab.id === 'downloads') {
+                            return;
+                        }
+                        
                         startX = e.touches[0].clientX;
                         startY = e.touches[0].clientY;
                         startTime = Date.now();
@@ -208,6 +268,12 @@
                     }, { passive: true });
                       // Touch move event - improved swipe detection with progress feedback
                     swipeArea.addEventListener('touchmove', function(e) {
+                        // Disable swipe on downloads tab
+                        const activeTab = document.querySelector('.tab-content.active');
+                        if (activeTab && activeTab.id === 'downloads') {
+                            return;
+                        }
+                        
                         if (!isSwipeActive || !startX || !startY) return;
                         
                         endX = e.touches[0].clientX;
@@ -240,6 +306,13 @@
                     
                     // Touch end event - improved with hard 50px limit
                     swipeArea.addEventListener('touchend', function(e) {
+                        // Disable swipe on downloads tab
+                        const activeTab = document.querySelector('.tab-content.active');
+                        if (activeTab && activeTab.id === 'downloads') {
+                            resetSwipeState();
+                            return;
+                        }
+                        
                         // Always hide indicators on touch end
                         hideSwipeIndicators();
                         
@@ -266,13 +339,13 @@
                             const currentIndex = getCurrentTabIndex();
                             let newIndex = currentIndex;
                             
-                            // Swipe right (previous tab)
+                            // Swipe right (previous tab) - skip hidden tabs
                             if (diffX > 0 && currentIndex > 0) {
-                                newIndex = currentIndex - 1;
+                                newIndex = getNextVisibleTabIndex(currentIndex, 'prev');
                             }
-                            // Swipe left (next tab)
+                            // Swipe left (next tab) - skip hidden tabs
                             else if (diffX < 0 && currentIndex < tabOrder.length - 1) {
-                                newIndex = currentIndex + 1;
+                                newIndex = getNextVisibleTabIndex(currentIndex, 'next');
                             }
                               // Switch to new tab if index changed
                             if (newIndex !== currentIndex) {
@@ -300,4 +373,199 @@
                         isSwipeActive = false;
                         startTime = 0;
                     }
+                    
+                    // Create transparent swipe overlay for iframe areas (like Giscus)
+                function createSwipeOverlay() {
+                    const chatTab = document.getElementById('chat');
+                    if (!chatTab) return;
+                    
+                    const giscusContainer = document.getElementById('giscus');
+                    if (!giscusContainer) return;
+                    
+                    // Create overlay div
+                    const overlay = document.createElement('div');
+                    overlay.className = 'swipe-overlay';
+                    overlay.style.cssText = `
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        z-index: 999;
+                        background: transparent;
+                        pointer-events: auto;
+                    `;
+                    
+                    // Position the giscus container relatively so overlay can be positioned absolutely
+                    giscusContainer.style.position = 'relative';
+                    giscusContainer.appendChild(overlay);
+                    
+                    // Add click-through functionality - clicks should pass through to iframe
+                    overlay.addEventListener('click', function(e) {
+                        // Remove the overlay temporarily to allow click to pass through
+                        overlay.style.pointerEvents = 'none';
+                        
+                        // Get the element underneath
+                        const elementBelow = document.elementFromPoint(e.clientX, e.clientY);
+                        
+                        // If it's an iframe or its content, simulate the click
+                        if (elementBelow && (elementBelow.tagName === 'IFRAME' || elementBelow.closest('iframe'))) {
+                            // Re-enable pointer events after a short delay
+                            setTimeout(() => {
+                                overlay.style.pointerEvents = 'auto';
+                            }, 100);
+                        } else {
+                            // Re-enable immediately for non-iframe clicks
+                            overlay.style.pointerEvents = 'auto';
+                        }
+                    });
+                    
+                    // Add enhanced touch event handling for the overlay
+                    let overlayStartX = 0, overlayStartY = 0, overlayEndX = 0, overlayEndY = 0;
+                    let overlayIsScrolling = null;
+                    
+                    overlay.addEventListener('touchstart', function(e) {
+                        overlayStartX = e.touches[0].clientX;
+                        overlayStartY = e.touches[0].clientY;
+                        overlayIsScrolling = null;
+                        e.stopPropagation(); // Prevent event from bubbling to document.body
+                    }, { passive: true });
+                    
+                    overlay.addEventListener('touchmove', function(e) {
+                        if (!overlayStartX || !overlayStartY) return;
+                        
+                        overlayEndX = e.touches[0].clientX;
+                        overlayEndY = e.touches[0].clientY;
+                        
+                        const diffX = overlayEndX - overlayStartX;
+                        const diffY = overlayEndY - overlayStartY;
+                        
+                        // Determine if this is a horizontal swipe
+                        if (overlayIsScrolling === null && (Math.abs(diffX) > 10 || Math.abs(diffY) > 10)) {
+                            overlayIsScrolling = Math.abs(diffY) > Math.abs(diffX);
+                        }
+                        
+                        // If it's a horizontal swipe, show indicators and prevent scrolling
+                        if (!overlayIsScrolling && Math.abs(diffX) > 20) {
+                            e.preventDefault(); // Prevent scrolling in iframe
+                            
+                            const currentIndex = getCurrentTabIndex();
+                            const swipeDistance = Math.abs(diffX);
+                            const minSwipeDistance = 50;
+                            const progress = Math.min(swipeDistance / minSwipeDistance, 1);
+                            
+                            if (diffX > 0 && currentIndex > 0) {
+                                showSwipeIndicator('right');
+                                showSwipeProgress('left', progress);
+                            } else if (diffX < 0 && currentIndex < tabOrder.length - 1) {
+                                showSwipeIndicator('left');
+                                showSwipeProgress('right', progress);
+                            }
+                        }
+                        
+                        e.stopPropagation(); // Prevent event from bubbling to document.body
+                    }, { passive: false }); // passive: false to allow preventDefault
+                    
+                    overlay.addEventListener('touchend', function(e) {
+                        hideSwipeIndicators();
+                        
+                        if (overlayIsScrolling || !overlayStartX || !overlayEndX) {
+                            overlayStartX = overlayStartY = overlayEndX = overlayEndY = 0;
+                            overlayIsScrolling = null;
+                            return;
+                        }
+                        
+                        const diffX = overlayEndX - overlayStartX;
+                        const absDiffX = Math.abs(diffX);
+                        
+                        // Trigger navigation if swipe distance is sufficient
+                        if (absDiffX >= 50) {
+                            const currentIndex = getCurrentTabIndex();
+                            let newIndex = currentIndex;
+                            
+                            // Add haptic feedback if available
+                            if (navigator.vibrate) {
+                                navigator.vibrate(50);
+                            }
+                            
+                            if (diffX > 0 && currentIndex > 0) {
+                                // Swipe right - go to previous tab (skip hidden tabs)
+                                newIndex = getNextVisibleTabIndex(currentIndex, 'prev');
+                            } else if (diffX < 0 && currentIndex < tabOrder.length - 1) {
+                                // Swipe left - go to next tab (skip hidden tabs)
+                                newIndex = getNextVisibleTabIndex(currentIndex, 'next');
+                            }
+                            
+                            // Switch if we found a different visible tab
+                            if (newIndex !== currentIndex) {
+                                switchToTab(tabOrder[newIndex], diffX > 0 ? 'prev' : 'next');
+                            }
+                        }
+                        
+                        // Reset state
+                        overlayStartX = overlayStartY = overlayEndX = overlayEndY = 0;
+                        overlayIsScrolling = null;
+                        e.stopPropagation(); // Prevent event from bubbling to document.body
+                    }, { passive: true });
+                    
+                    return overlay;
+                }
+
+                // Initialize swipe overlay
+                function initializeSwipeOverlay() {
+                    function tryCreateOverlay() {
+                        const giscusContainer = document.getElementById('giscus');
+                        if (giscusContainer && !document.querySelector('.swipe-overlay')) {
+                            // Check if Giscus iframe exists or wait for it
+                            const checkForIframe = () => {
+                                const iframe = giscusContainer.querySelector('iframe');
+                                if (iframe || giscusContainer.children.length > 0) {
+                                    createSwipeOverlay();
+                                } else {
+                                    // Try again after a short delay
+                                    setTimeout(checkForIframe, 500);
+                                }
+                            };
+                            checkForIframe();
+                        }
+                    }
+
+                    // Wait for the page to load
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', () => {
+                            setTimeout(tryCreateOverlay, 1000);
+                        });
+                    } else {
+                        setTimeout(tryCreateOverlay, 1000);
+                    }
+                    
+                    // Also listen for tab changes to chat
+                    document.addEventListener('click', (e) => {
+                        const tabLink = e.target.closest('.tab-link');
+                        if (tabLink && tabLink.getAttribute('data-tab') === 'chat') {
+                            setTimeout(tryCreateOverlay, 1000);
+                        }
+                    });
+                }
+
+                // Initialize the overlay
+                initializeSwipeOverlay();
+
+                // Also reinitialize when switching to chat tab
+                const originalSwitchToTab = switchToTab;
+                function enhancedSwitchToTab(tabName, direction = null) {
+                    originalSwitchToTab(tabName, direction);
+                    
+                    // If switching to chat tab, ensure overlay exists
+                    if (tabName === 'chat') {
+                        setTimeout(() => {
+                            if (!document.querySelector('.swipe-overlay')) {
+                                createSwipeOverlay();
+                            }
+                        }, 500);
+                    }
+                }
+                
+                // Replace the original function
+                switchToTab = enhancedSwitchToTab;
                 }

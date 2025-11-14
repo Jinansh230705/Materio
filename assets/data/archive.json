@@ -1,0 +1,96 @@
+{
+  "archive": [
+    {
+      "enabled": true,
+      "title": "What was shipped - 08-11-25",
+      "description": "Introducing Search! The faster way to access the materials you want to read. Just type few keywords and open from the results quickly. Didn't find what you were looking for? Try AI Search for better results.",
+      "link": "#quickSearchBox",
+      "images": [
+        "assets/img/covers/80992778-3605-4a15-af7e-73da26f882ff.webp"
+      ],
+      "imageRotationInterval": 5000,
+      "imageAnimation": {
+        "type": "cascade",
+        "duration": 600,
+        "direction": "left"
+      },
+      "isLimitedOffer": true,
+      "startDate": "2025-11-08T00:00",
+      "endDate": "2025-11-10T00:00",
+      "showDateInfo": false,
+      "lastUpdated": "2025-11-08T14:30:00.000Z",
+      "buttons": {
+        "primary": {
+          "show": true,
+          "text": "Try Now",
+          "icon": "&#8206;"
+        },
+        "secondary": {
+          "show": true,
+          "text": "Later",
+          "icon": "&#8206;"
+        }
+      },
+      "disclaimer": {
+        "show": false,
+        "text": "Terms and conditions.",
+        "linkText": "Read more",
+        "linkUrl": ""
+      }
+    },
+    {
+      "enabled": true,
+      "title": "Comet is the browser you need with latest agentic capabilities combined with same adblocker from Brave!",
+      "description": "Comet is an AI-powered browser that does things for you, Use it for quickly finding answers to MCQs, writing code and other tasks. And it uses the adblocker from brave, and as a Bonus get Perplexity Pro for free. So, its perfect time to switch to Comet - Get it today!",
+      "link": "/redirects/p/perplexity-comet",
+      "images": [
+        "/assets/media/f10f0ebe-583a-4024-93d4-884cfdf2f68b.webm"
+      ],
+      "imageRotationInterval": 5000,
+      "imageAnimation": {
+        "type": "cascade",
+        "duration": 600,
+        "direction": "left"
+      },
+      "isLimitedOffer": true,
+      "startDate": "2025-09-01T12:30",
+      "endDate": "2025-11-03T00:00",
+      "lastUpdated": "2025-10-31T15:30:00.000Z",
+      "buttons": {
+        "primary": {
+          "show": true,
+          "text": "Get Comet",
+          "icon": "&#8206;"
+        },
+        "secondary": {
+          "show": true,
+          "text": "Later",
+          "icon": "&#8206;"
+        }
+      },
+      "disclaimer": {
+        "show": true,
+        "text": "Terms and conditions.",
+        "linkText": "Read more",
+        "linkUrl": "https://www.perplexity.ai/hub/legal/terms-of-service"
+      },
+      "options": {
+        "showDontShowAgain": false,
+        "dontShowAgainText": "I am not interested"
+      },
+      "closure": {
+        "endedUnexpectedly": true,
+        "restart": "Uncertain",
+        "reason": "Large amount of fraud detected by perplexity",
+        "officialMessage": "📢 UPDATE: CAMPUS PARTNER PROGRAM IN INDIA ** Hey @everyone, I wanted to share an important update specifically for our Campus Partners in India. Starting next week, we'll be **PAUSING the Campus Partner Program in India **. This was not my decision, but I want to personally thank each and every one of you for the **creativity, consistency, and hard work** you've shown up to this point. You've helped Perplexity and Comet reach** thousands of students across India** - through campus events, classroom demos, and social media outreach. Your efforts have truly made a difference. 💙 **WHAT THIS MEANS** - Campus Partner links in India will be** paused and stop working by Monday.** - Any **leads submitted before Monday will still be counted, **reviewed, and paid out. - Pending **bounties and payouts will still be processed in full **under the normal 30-business-day review window. - **After Monday, no new leads or referrals will be tracked **or paid since links will be inactive for now. - You'll still have temporary access to your Dub dashboard to view your data — feel free to screenshot or export anything you'd like to save. **WHAT'S NOT CHANGING** - Partners in the U.S., Canada, Europe and other select regions will continue as usual. This change is part of a company-wide restructuring to mitigate the **large amounts of fraud detected in this region. **I know it's disappointing, but your impact has been absolutely incredible, and you've played a huge role in helping Perplexity grow its global student community. I know this isn't easy news to share or receive, but I'm really grateful for everything you've done to help build this community. You've been a huge part of Perplexity's growth, and I can't thank you enough. **We'll share more details about future plans for the program in India as they come.** — Ashna 💙",
+        "messageSource": "discord",
+        "messageLink": "https://discord.com/channels/1402357722430570498/1402597178656161894/1433609004957044797"
+      },
+      "archived": {
+        "bool": true,
+        "contextAdded": true,
+        "point": "closure"
+      }
+    }
+  ]
+}

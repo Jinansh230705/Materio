@@ -22,4 +22,47 @@ echo build_id: "%BUILD_ID%"
 echo build_timestamp: "%BUILD_DATE% %BUILD_TIME% UTC"
 ) > _data\build_id.yml
 
+REM Maintain build history in JSON format
+set HISTORY_FILE=_data\build_history.json
+
+REM Check if history file exists
+if exist "%HISTORY_FILE%" (
+    REM File exists, we'll append to it
+    echo Updating existing build history...
+) else (
+    REM Create new history file
+    echo [] > "%HISTORY_FILE%"
+    echo Created new build history file...
+)
+
+REM Create build entry using Node.js for proper JSON handling
+node -e "
+const fs = require('fs');
+const historyPath = '_data/build_history.json';
+let history = [];
+
+try {
+    if (fs.existsSync(historyPath)) {
+        history = JSON.parse(fs.readFileSync(historyPath, 'utf8'));
+    }
+} catch (e) {
+    history = [];
+}
+
+const buildEntry = {
+    build_id: '%BUILD_ID%',
+    timestamp: new Date().toISOString(),
+    date: '%BUILD_DATE%',
+    time: '%BUILD_TIME%',
+    build_number: history.length + 1
+};
+
+history.unshift(buildEntry);
+if (history.length > 100) history.splice(100);
+
+fs.writeFileSync(historyPath, JSON.stringify(history, null, 2), 'utf8');
+console.log('Build history updated: ' + historyPath + ' (' + history.length + ' builds recorded)');
+"
+
 echo Build ID file updated successfully!
+echo Build history maintained in %HISTORY_FILE%

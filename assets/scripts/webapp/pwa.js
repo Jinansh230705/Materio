@@ -7,10 +7,10 @@ class MateriosPWA {
     this.deferredPrompt = null;
     this.isOnline = navigator.onLine;
     this.updateAvailable = false;
+    this.currentVersion = null;
     
     this.init();
   }
-
   async init() {
     // console.log('[PWA] Initializing...');
     
@@ -31,29 +31,56 @@ class MateriosPWA {
     // Setup push notifications
     this.setupPushNotifications();
     
+    // Refresh version data on startup if online
+    if (navigator.onLine) {
+      setTimeout(() => {
+        this.refreshVersionData();
+        this.checkVersionUpdate(); // Check for version updates
+      }, 2000); // Wait 2 seconds for SW to be ready
+    }
+    
     // console.log('[PWA] Initialized');
   }
 
   async registerServiceWorker() {
     try {
+      console.log('[PWA] Registering service worker...');
+      
       this.swRegistration = await navigator.serviceWorker.register('/sw.js', {
-        scope: '/'
+        scope: '/',
+        updateViaCache: 'none' // Ensure fresh SW checks
       });
       
-      // console.log('[PWA] Service Worker registered:', this.swRegistration);
+      console.log('[PWA] Service Worker registered successfully:', this.swRegistration);
       
       // Listen for updates
       this.swRegistration.addEventListener('updatefound', () => {
+        console.log('[PWA] Update found for service worker');
         this.handleUpdateFound();
       });
       
       // Listen for controlling changes
       navigator.serviceWorker.addEventListener('controllerchange', () => {
+        console.log('[PWA] Service worker controller changed, reloading...');
         window.location.reload();
       });
       
+      // Check if there's already a waiting worker
+      if (this.swRegistration.waiting) {
+        console.log('[PWA] Service worker is waiting');
+        this.handleUpdateFound();
+      }
+      
     } catch (error) {
       console.error('[PWA] Service Worker registration failed:', error);
+      console.error('[PWA] Error details:', error.message);
+      
+      // Try to get more details about the error
+      if (error.name === 'SecurityError') {
+        console.error('[PWA] Security error - check HTTPS and domain configuration');
+      } else if (error.name === 'TypeError') {
+        console.error('[PWA] Type error - service worker script may have syntax errors');
+      }
     }
   }
   setupInstallPrompt() {
@@ -361,25 +388,61 @@ class MateriosPWA {
 
     window.addEventListener('online', updateOnlineStatus);
     window.addEventListener('offline', updateOnlineStatus);
-  }
-
-  handleNetworkChange() {
+  }  handleNetworkChange() {
     if (this.isOnline) {
       // console.log('[PWA] Back online');
-      this.showOfflineIndicator('Back online!', 'success');
+      this.showOfflineIndicator('Back Online', 'success');
       
-      // Trigger background sync if available
-      if (this.swRegistration && this.swRegistration.sync) {
-        this.swRegistration.sync.register('background-sync');
-      }
-      
-      // Update cache for essential resources
-      this.updateEssentialCache();
+      // DO NOT auto-reload when going online
+      // Let user continue their session without interruption
+      // Fresh content will be fetched automatically on next request
       
     } else {
       // console.log('[PWA] Gone offline');
-      this.showOfflineIndicator('You\'re offline. Connect to Internet to access Reading resources.', 'warning');
+      this.showOfflineIndicator('You\'re offline. Functionality maybe limited.', 'warning');
+      
+      // Don't interfere with the site - just show the indicator
+      // The service worker will handle serving cached content
+      this.enableOfflineMode();
     }
+  }
+
+  enableOfflineMode() {
+    // Add subtle visual indicators for offline mode without breaking functionality
+    document.body.classList.add('offline-mode');
+    
+    // Add offline styling if not already present
+    if (!document.getElementById('offline-mode-styles')) {
+      const style = document.createElement('style');
+      style.id = 'offline-mode-styles';
+      style.textContent = `
+        .offline-mode {
+          /* Subtle indication that we're in offline mode */
+        }
+        
+        .offline-mode .online-only {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+        
+        .offline-mode .online-only::after {
+          content: " (Offline)";
+          font-size: 0.8em;
+          color: #666;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    
+    // Disable online-only features but keep the site functional
+    const onlineOnlyElements = document.querySelectorAll('.online-only, [data-requires-online]');
+    onlineOnlyElements.forEach(element => {
+      element.style.opacity = '0.5';
+      element.title = 'This feature requires an internet connection';
+      if (element.tagName === 'BUTTON' || element.tagName === 'A') {
+        element.disabled = true;
+      }
+    });
   }
 
   showOfflineIndicator(message = 'Offline Mode', type = 'warning') {
@@ -477,44 +540,50 @@ class MateriosPWA {
           position: fixed;
           top: 20px;
           right: 20px;
-          background: rgba(255, 130, 0,0.8);
+          background: rgba(255, 130, 0,0.9);
           backdrop-filter: blur(10px);
           color: white;
           padding: 16px 20px;
           border-radius: 8px;
           z-index: 10000;
           max-width: 300px;
-           font-family: 'Manrope',sans-serif;
+          font-family: 'Manrope',sans-serif;
           font-size: 14px;
           line-height: 1.4;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          border: 2px solid rgba(255,255,255,0.2);
         ">
           <div style="margin-bottom: 12px;">
-            <strong>Update Available!</strong><br>
-            A new version of Materio WebApp is ready.
+            <strong>🔄 Update Available!</strong><br>
+            A new version is ready. Please update to get the latest features and fixes.
           </div>
           <div style="display: flex; gap: 8px;">
             <button id="update-btn" style="
               background: white;
               color: #ff8200;
               border: none;
-              padding: 6px 12px;
+              padding: 8px 16px;
               border-radius: 4px;
               cursor: pointer;
               font-family: 'Manrope',sans-serif;
               font-size: 12px;
               font-weight: 600;
-            ">Update</button>
+              flex: 1;
+            ">Update Now</button>
             <button id="dismiss-update-btn" style="
               background: transparent;
               color: white;
-              border: 1px solid white;
-              padding: 6px 12px;
+              border: 1px solid rgba(255,255,255,0.5);
+              padding: 8px 16px;
               border-radius: 4px;
               cursor: pointer;
-               font-family: 'Manrope',sans-serif;
+              font-family: 'Manrope',sans-serif;
               font-size: 12px;
               font-weight: 400;
             ">Later</button>
+          </div>
+          <div style="margin-top: 8px; font-size: 11px; opacity: 0.8;">
+            💡 Tip: If update doesn't work, try refreshing the page
           </div>
         </div>
       `;
@@ -541,16 +610,55 @@ class MateriosPWA {
 
   applyUpdate() {
     if (this.swRegistration && this.swRegistration.waiting) {
+      // Tell the waiting service worker to skip waiting
       this.swRegistration.waiting.postMessage({ type: 'SKIP_WAITING' });
+      
+      // Show loading message
+      this.showNotification('Updating app...', 'info');
+      
+      // Force reload after a short delay to ensure SW takes control
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+    } else {
+      // Fallback: force reload anyway
+      this.showNotification('Refreshing app...', 'info');
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
     this.hideUpdateNotification();
-  }
-
-  setupUpdateDetection() {
-    // Check for updates every 30 minutes
+  }  setupUpdateDetection() {
+    // Check for updates every 2 minutes for faster detection
     setInterval(() => {
       if (this.swRegistration) {
         this.swRegistration.update();
+      }
+    }, 2 * 60 * 1000);
+    
+    // Also check for updates when page gains focus (user returns to tab)
+    window.addEventListener('focus', () => {
+      if (this.swRegistration && navigator.onLine) {
+        this.swRegistration.update();
+        // Also check version file
+        this.checkVersionUpdate();
+      }
+    });
+    
+    // Check for updates when coming back online
+    window.addEventListener('online', () => {
+      if (this.swRegistration) {
+        setTimeout(() => {
+          this.swRegistration.update();
+          this.checkVersionUpdate();
+        }, 1000);
+      }
+    });
+    
+    // Force cache clear every 30 minutes to ensure fresh content
+    setInterval(() => {
+      if (this.swRegistration && navigator.onLine) {
+        this.refreshVersionData();
       }
     }, 30 * 60 * 1000);
   }
@@ -569,6 +677,28 @@ class MateriosPWA {
       }
     } catch (error) {
       console.error('[PWA] Push notification setup failed:', error);
+    }
+  }
+  async refreshVersionData() {
+    if (this.swRegistration && this.swRegistration.active) {
+      this.swRegistration.active.postMessage({
+        type: 'REFRESH_VERSION_DATA'
+      });
+    }
+  }
+
+  // Force refresh all content (clears cache for online-first approach)
+  async forceRefreshAllContent() {
+    if (this.swRegistration) {
+      await this.clearCache();
+      this.showNotification('All content refreshed! Fresh data will load on next page visit.', 'success');
+      
+      // Optional: Reload page after clearing cache
+      setTimeout(() => {
+        if (confirm('Content refreshed. Reload page to see latest updates?')) {
+          window.location.reload();
+        }
+      }, 1000);
     }
   }
 
@@ -590,7 +720,6 @@ class MateriosPWA {
     // Use the enhanced offline indicator for all notifications
     this.showOfflineIndicator(message, type);
   }
-
   // Public methods for manual cache management
   async clearCache() {
     if (this.swRegistration) {
@@ -603,6 +732,56 @@ class MateriosPWA {
     if (this.swRegistration) {
       await this.swRegistration.update();
       this.showNotification('Cache updated!', 'success');
+    }
+  }
+  async checkVersionUpdate() {
+    if (!navigator.onLine) return;
+    
+    try {
+      const response = await fetch('/version.json?' + Date.now()); // Cache bust
+      if (!response.ok) return;
+      
+      const versionData = await response.json();
+      const currentStoredVersion = localStorage.getItem('materio-version');
+      
+      if (!currentStoredVersion) {
+        // First time, just store the version
+        localStorage.setItem('materio-version', versionData.version);
+        this.currentVersion = versionData.version;
+        return;
+      }
+      
+      if (currentStoredVersion !== versionData.version) {
+        console.log(`[PWA] Version update detected: ${currentStoredVersion} → ${versionData.version}`);
+        localStorage.setItem('materio-version', versionData.version);
+        this.currentVersion = versionData.version;
+        
+        // Force service worker update
+        if (this.swRegistration) {
+          await this.swRegistration.update();
+        }
+        
+        // Show update notification if not already showing
+        if (!document.getElementById('update-notification')) {
+          this.updateAvailable = true;
+          this.showUpdateNotification();
+        }
+      }
+    } catch (error) {
+      console.warn('[PWA] Version check failed:', error);
+    }
+  }
+
+  // Force refresh version data immediately (now clears all cache)
+  async forceRefreshVersionData() {
+    if (this.swRegistration) {
+      await this.refreshVersionData();
+      this.showNotification('Cache cleared! Fresh content will load immediately.', 'success');
+      
+      // Reload page after clearing cache to show fresh content
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   }
 

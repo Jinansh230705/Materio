@@ -2,57 +2,38 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitButton = document.getElementById('submitButton');
     const popup = document.getElementById('popup');
     const popupContent = document.getElementById('popupContent');
-    const cacheKey = 'recentPdfs';
     let pdfIframe = document.getElementById('pdf-iframe') || null;
     const pdfCache = new Map();
+    const MAX_CACHE_SIZE = 3; // Reduce from 5 to 3 for memory efficiency
 
-    function getCachedPdfs() {
-        const cached = localStorage.getItem(cacheKey);
-        return cached ? JSON.parse(cached) : [];
-    }
-
-    function addToCache(pdfUrl) {
-        let cachedPdfs = getCachedPdfs().filter(url => url !== pdfUrl);
-        cachedPdfs.unshift(pdfUrl);
-        if (cachedPdfs.length > 5) cachedPdfs.pop();
-        localStorage.setItem(cacheKey, JSON.stringify(cachedPdfs));
-    } async function preloadPdf(pdfUrl) {
+    // Lightweight preload - only validates URL, doesn't download blob
+    async function preloadPdf(pdfUrl) {
         if (pdfCache.has(pdfUrl)) {
-            // console.log('PDF already preloaded:', pdfUrl);
-            return;
+            return pdfCache.get(pdfUrl);
         }
+        
+        // Just validate URL is accessible, don't download
         try {
-            const response = await fetch(pdfUrl);
-            if (!response.ok) throw new Error(`Failed to fetch PDF: ${response.statusText}`);
-            const pdfBlob = await response.blob();
-            const pdfBlobUrl = URL.createObjectURL(pdfBlob);
-
-            // Create a cache key for the service worker
-            const cacheKey = btoa(pdfUrl).replace(/[^a-zA-Z0-9]/g, '').substring(0, 32);
-
-            // Store in service worker cache for faster access
-            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-                const arrayBuffer = await pdfBlob.arrayBuffer();
-                const messageChannel = new MessageChannel();
-
-                navigator.serviceWorker.controller.postMessage({
-                    type: 'STORE_BLOB_CACHE',
-                    key: cacheKey,
-                    arrayBuffer: arrayBuffer,
-                    size: pdfBlob.size
-                }, [messageChannel.port2, arrayBuffer]);
-            }
-
+            const response = await fetch(pdfUrl, { method: 'HEAD' });
+            if (!response.ok) throw new Error(`PDF not accessible: ${response.status}`);
+            
+            // Cache just the URL as "validated"
             pdfCache.set(pdfUrl, {
-                blobUrl: pdfBlobUrl,
-                blob: pdfBlob,
                 originalUrl: pdfUrl,
-                cacheKey: cacheKey,
-                cachedAt: Date.now()
+                validated: true,
+                validatedAt: Date.now()
             });
-            // console.log('PDF preloaded:', pdfUrl);
+            
+            // Limit cache size
+            if (pdfCache.size > MAX_CACHE_SIZE) {
+                const firstKey = pdfCache.keys().next().value;
+                pdfCache.delete(firstKey);
+            }
+            
+            return pdfCache.get(pdfUrl);
         } catch (error) {
-            console.error('Error preloading PDF:', error);
+            console.error('Error validating PDF:', error);
+            return null;
         }
     }
 
@@ -60,28 +41,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!pdfIframe) {
             pdfIframe = document.createElement('iframe');
             pdfIframe.id = 'pdf-iframe';
+            pdfIframe.src = 'about:blank'; // Initialize with blank to prevent loading current page
             pdfIframe.style.border = 'none';
             pdfIframe.style.width = '100%';
             pdfIframe.style.height = 'calc(100% - 17px)';
             pdfIframe.style.borderRadius = '10px';
             pdfIframe.style.marginTop = '22px';
 
-            // Add load event listener to setup blob intercept and overlay modes
+            // Add load event listener to setup overlay modes
             pdfIframe.addEventListener('load', function () {
-                // Give PDF.js a moment to initialize, then setup blob intercept and request overlay modes
+                // Quick setup for PDF.js viewer
                 setTimeout(() => {
                     const mainPopup = document.getElementById('popup');
                     if (mainPopup && pdfIframe.contentWindow) {
-                        // Setup blob intercept for faster PDF loading
-                        pdfIframe.contentWindow.postMessage({
-                            type: 'setupBlobIntercept',
-                            pdfCache: Array.from(pdfCache.entries()).map(([key, value]) => ({
-                                originalUrl: key,
-                                blobUrl: value.blobUrl || value,
-                                cachedAt: value.cachedAt || Date.now()
-                            }))
-                        }, '*');
-
                         // Send current overlay states to iframe
                         if (mainPopup.classList.contains('paper-mode')) {
                             pdfIframe.contentWindow.postMessage({
@@ -106,13 +78,36 @@ document.addEventListener('DOMContentLoaded', function () {
                             isDark: isDarkMode
                         }, '*');
                     }
-                }, 500);
+                }, 100); // Reduced from 500ms to 100ms
             });
         }
-        if (!document.getElementById('pdf-iframe')) {
+        
+        // Clear any existing content (like error messages) before adding iframe
+        const existingIframe = document.getElementById('pdf-iframe');
+        if (!existingIframe) {
+            popupContent.innerHTML = ''; // Clear existing content
             popupContent.appendChild(pdfIframe);
+        } else {
+            // IMPORTANT: Hide iframe while clearing to prevent showing old PDF
+            pdfIframe.style.visibility = 'hidden';
+            
+            // Clear the iframe completely by setting src to about:blank
+            pdfIframe.src = 'about:blank';
+            
+            // Clear popup content and re-add iframe
+            popupContent.innerHTML = ''; 
+            popupContent.appendChild(pdfIframe);
+            
+            // Show loading indicator while clearing
+            const loadingDiv = document.createElement('div');
+            loadingDiv.id = 'pdf-loading-indicator';
+            loadingDiv.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;';
+            loadingDiv.innerHTML = '<i class="far fa-spinner-third fa-spin" style="font-size: 48px; color: #ff8400;"></i><p style="margin-top: 20px; color: var(--text-color);">Loading PDF...</p>';
+            popupContent.appendChild(loadingDiv);
         }
-    }    // Enhanced PDF loading function with error handling and caching
+    }
+    
+    // Enhanced PDF loading function with error handling - optimized for speed
     async function loadPdfWithCache(pdfUrl) {
         // Check offline status first
         if (!navigator.onLine) {
@@ -127,9 +122,14 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Check if PDF exists (HEAD request) for non-cached PDFs
-        const cachedPdf = pdfCache.get(pdfUrl);
-        if (!cachedPdf) {
+        // Initialize iframe immediately for faster display
+        initializeIframe();
+        
+        // Check if PDF is already validated in cache
+        const cachedInfo = pdfCache.get(pdfUrl);
+        
+        // If not in cache, validate it (lightweight HEAD request)
+        if (!cachedInfo || !cachedInfo.validated) {
             try {
                 const headResponse = await fetch(pdfUrl, { method: 'HEAD' });
                 if (!headResponse.ok) {
@@ -150,6 +150,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     popup.style.display = 'block';
                     return;
                 }
+                
+                // Cache validation result
+                pdfCache.set(pdfUrl, {
+                    originalUrl: pdfUrl,
+                    validated: true,
+                    validatedAt: Date.now()
+                });
+                
             } catch (error) {
                 document.getElementById('popupContent').innerHTML =
                     `<div style="padding:20px;text-align:center;">
@@ -163,52 +171,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Always pass the original URL to PDF.js, but send the blob data to the iframe
-        // This allows our interceptor to catch requests and serve cached content
+        // Load PDF directly in viewer - let PDF.js handle streaming
+        const viewerUrl = `/oread/web/viewer.html?file=${encodeURIComponent(pdfUrl)}`;
+        
+        // Remove loading indicator and show iframe
+        const loadingIndicator = document.getElementById('pdf-loading-indicator');
+        if (loadingIndicator) loadingIndicator.remove();
+        pdfIframe.style.visibility = 'visible';
+        
+        // Load directly - PDF.js will stream it efficiently
+        pdfIframe.src = viewerUrl;
 
-        // Initialize iframe and load the PDF
-        initializeIframe();        if (cachedPdf) {
-            // Load PDF.js with the original URL - our interceptor will catch and serve from cache
-            pdfIframe.src = `/oread/web/viewer.html?disableStream=true&disableRange=true&disableAutoFetch=false&file=${encodeURIComponent(pdfUrl)}`;
-            
-            // Send cached blob data to iframe after a short delay to ensure PDF.js is ready
-            setTimeout(() => {
-                if (pdfIframe.contentWindow) {
-                    pdfIframe.contentWindow.postMessage({
-                        type: 'blobDataResponse',
-                        originalUrl: pdfUrl,
-                        blobUrl: cachedPdf.blobUrl,
-                        arrayBuffer: cachedPdf.blob,
-                        size: cachedPdf.blob.size
-                    }, '*');
-                }
-            }, 100);
-        } else {
-            // For non-cached PDFs, preload them first and then load
-            // console.log('🌐 Loading PDF from network:', pdfUrl);
-            await preloadPdf(pdfUrl);
-            const newCachedPdf = pdfCache.get(pdfUrl);            if (newCachedPdf) {
-                // Now load with cache
-                pdfIframe.src = `/oread/web/viewer.html?disableStream=true&disableRange=true&disableAutoFetch=false&file=${encodeURIComponent(pdfUrl)}`;
-                setTimeout(() => {
-                    if (pdfIframe.contentWindow) {
-                        pdfIframe.contentWindow.postMessage({
-                            type: 'blobDataResponse',
-                            originalUrl: pdfUrl,
-                            blobUrl: newCachedPdf.blobUrl,
-                            arrayBuffer: newCachedPdf.blob,
-                            size: newCachedPdf.blob.size
-                        }, '*');
-                    }
-                }, 100);
-            } else {
-                // Fallback to direct loading
-                pdfIframe.src = `/oread/web/viewer.html?disableStream=false&disableRange=false&rangeChunkSize=1048576&file=${encodeURIComponent(pdfUrl)}`;
-            }
-        }
-
-        // Add to recent cache and show popup
-        addToCache(pdfUrl);
+        // Show popup
         popup.classList.remove('closing');
         popup.style.display = 'block';
     }// Note: submitButton event listener removed to prevent conflicts with main.js
@@ -220,7 +194,21 @@ document.addEventListener('DOMContentLoaded', function () {
         const categorySelect = document.getElementById('categorySelect');
         const topic = this.value;
         if (semester && subject && categorySelect.selectedIndex !== 0 && topic) {
-            const pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+            let pdfUrl;
+            
+            // Special handling for Vault (semester 9999)
+            if (semester === '9999') {
+                // Format: pdfs/9999/UUID/vault/filename.pdf
+                pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/vault/${topic}.pdf`;
+            } else {
+                // Normal format: pdfs/semester/subject/topic.pdf
+                pdfUrl = `https://cdn-materioa.netlify.app/pdfs/${semester}/${subject}/${topic}.pdf`;
+            }
+            
+            // Transform to local CDN if enabled
+            pdfUrl = window.MaterioLocalCDN?.transformUrl(pdfUrl) || pdfUrl;
+            
+            // Lightweight validation only (no heavy download)
             preloadPdf(pdfUrl);
         }
     });
@@ -277,9 +265,11 @@ document.addEventListener('DOMContentLoaded', function () {
     window.pdfCache = pdfCache;
     window.loadPdfWithCache = loadPdfWithCache;
 
+    // ===== SHARED STATE =====
+    let currentPdfUrl = null; // Shared between bookmark and download features
+    
     // ===== BOOKMARK FUNCTIONALITY =====
     const bookmarkCacheKey = 'bookmarkedPdfs';
-    let currentPdfUrl = null;
     let bookmarkButton = null;
 
     // Initialize bookmark button and functionality
@@ -348,7 +338,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Handle bookmark button click
     async function handleBookmarkClick() {
         if (!currentPdfUrl) {
-            console.warn('No PDF currently loaded');
             return;
         }
 
@@ -454,53 +443,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Show bookmark notification
-    function showBookmarkNotification(message, type = 'info') {
-        // Create notification element
-        const notification = document.createElement('div');
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 12px 20px;
-            border-radius: 8px;
-            color: white;
-            font-weight: 600;
-            z-index: 10000;
-            max-width: 300px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-        `;
-
-        // Set colors based on type
-        switch (type) {
-            case 'success':
-                notification.style.backgroundColor = '#28a745';
-                break;
-            case 'error':
-                notification.style.backgroundColor = '#dc3545';
-                break;
-            case 'info':
-            default:
-                notification.style.backgroundColor = '#17a2b8';
-                break;
-        }
-
-        notification.textContent = message;
-        document.body.appendChild(notification);
-
-        // Remove after 3 seconds
-        setTimeout(() => {
-            notification.style.opacity = '0';
-            notification.style.transform = 'translateX(100%)';
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.parentNode.removeChild(notification);
-                }
-            }, 300);
-        }, 3000);
-    }
-
     // Enhanced loadPdfWithCache to track current PDF and handle offline scenarios
     const originalLoadPdfWithCache = window.loadPdfWithCache;
 
@@ -515,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 // console.log('📴 Loading cached PDF while offline:', pdfUrl);                // Initialize iframe and load from cache
                 initializeIframe();
 
-                pdfIframe.src = `/oread/web/viewer.html?disableStream=true&disableRange=true&disableAutoFetch=false&file=${encodeURIComponent(pdfUrl)}`;
+                pdfIframe.src = `/oread/web/viewer.html?disableStream=false&disableRange=false&disableAutoFetch=false&rangeChunkSize=1048576&file=${encodeURIComponent(pdfUrl)}`;
 
                 // Send cached blob data to iframe
                 setTimeout(() => {
@@ -532,7 +474,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Show popup and update bookmark icon
                 popup.classList.remove('closing');
                 popup.style.display = 'block';
-                addToCache(pdfUrl);
 
                 // Update bookmark icon after a short delay
                 setTimeout(updateBookmarkIcon, 500);
@@ -566,6 +507,202 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize bookmark feature when DOM is ready
     initializeBookmarkFeature();
+
+    // ===== DOWNLOAD FUNCTIONALITY (YouTube-style offline downloads) =====
+    let downloadButton = null;
+
+    // Initialize download button and functionality
+    function initializeDownloadFeature() {
+        downloadButton = document.getElementById('downloadButton');
+        if (!downloadButton) return;
+
+        // Set up download button click handler
+        downloadButton.addEventListener('click', handleDownloadClick);
+
+        // Update download icon based on current PDF
+        updateDownloadIcon();
+    }
+
+    // Update download icon visual state
+    async function updateDownloadIcon() {
+        if (!downloadButton || !currentPdfUrl) return;
+
+        const icon = downloadButton.querySelector('i');
+        if (!icon) return;
+
+        try {
+            const isDownloaded = await window.pdfDownloadManager.isDownloaded(currentPdfUrl);
+
+            if (isDownloaded) {
+                // Solid bookmark for downloaded PDFs
+                icon.className = 'fa-solid fa-bookmark-plus';
+                downloadButton.style.color = '#8dac49';
+                downloadButton.title = 'Downloaded for offline reading';
+                downloadButton.style.cursor = 'default';
+            } else {
+                // Regular bookmark for non-downloaded PDFs
+                icon.className = 'fa-regular fa-bookmark-plus';
+                downloadButton.style.color = '#ff8200';
+                downloadButton.title = 'Download for offline reading';
+                downloadButton.style.cursor = 'pointer';
+            }
+        } catch (error) {
+            console.error('Error checking download status:', error);
+        }
+    }
+
+    // Handle download button click
+    async function handleDownloadClick() {
+        if (!currentPdfUrl) {
+            return;
+        }
+
+        try {
+            const isDownloaded = await window.pdfDownloadManager.isDownloaded(currentPdfUrl);
+
+            if (isDownloaded) {
+                // Already downloaded - do nothing
+                return;
+            }
+
+            // Show downloading state
+            const icon = downloadButton.querySelector('i');
+            icon.className = 'fa-solid fa-loader';
+            downloadButton.style.color = '#888';
+            downloadButton.title = 'Downloading...';
+            downloadButton.disabled = true;
+
+            // Extract metadata from URL
+            const urlParts = currentPdfUrl.split('/');
+            const filename = urlParts[urlParts.length - 1];
+            const subject = urlParts[urlParts.length - 2] || 'Unknown Subject';
+            const semester = urlParts[urlParts.length - 3] || 'Unknown Semester';
+
+            const metadata = {
+                title: filename.replace('.pdf', ''),
+                subject: subject,
+                semester: semester
+            };
+
+            // Download the PDF
+            const result = await window.pdfDownloadManager.downloadPDF(currentPdfUrl, metadata);
+
+            if (result.success) {
+                // Update to downloaded state
+                updateDownloadIcon();
+            }
+
+        } catch (error) {
+            console.error('Error downloading PDF:', error);
+            
+            // Show error state
+            const icon = downloadButton.querySelector('i');
+            icon.className = 'fa-solid fa-loader';
+            downloadButton.style.color = '#ff0000';
+            downloadButton.title = 'Download failed - Click to retry';
+        } finally {
+            downloadButton.disabled = false;
+        }
+    }
+
+    // Enhanced loadPdfWithCache to work with downloads and track current PDF
+    const originalLoadPdfWithCache2 = window.loadPdfWithCache;
+
+    async function enhancedLoadPdfWithCacheForDownloads(pdfUrl) {
+        // Update current PDF URL for download functionality
+        currentPdfUrl = pdfUrl;
+
+        // Ensure IndexedDB is fully initialized before checking
+        try {
+            // Wait for pdfDownloadManager to be available and initialized
+            if (!window.pdfDownloadManager) {
+                const result = await originalLoadPdfWithCache2(pdfUrl);
+                setTimeout(updateDownloadIcon, 500);
+                return result;
+            }
+
+            // Wait for IndexedDB initialization to complete
+            await window.pdfDownloadManager.initPromise;
+            
+            const isDownloaded = await window.pdfDownloadManager.isDownloaded(pdfUrl);
+            
+            if (isDownloaded) {
+                // Show loading indicator while fetching from IndexedDB
+                document.getElementById('popupContent').innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; height: 87vh; text-align: center; flex-direction: column; padding: 20px;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 48px; color:#ff8200; margin-bottom: 20px;"></i>
+                        <p style="font-weight:600; font-size: 18px;">Loading from offline storage...</p>
+                    </div>
+                `;
+                popup.classList.remove('closing');
+                popup.style.display = 'block';
+                
+                // Get PDF data from IndexedDB
+                const pdfData = await window.pdfDownloadManager.getPDFData(pdfUrl);
+                
+                if (pdfData) {
+                    // Initialize iframe
+                    initializeIframe();
+                    
+                    // Load PDF.js viewer
+                    const viewerUrl = `/oread/web/viewer.html?disableStream=false&disableRange=false&disableAutoFetch=false&rangeChunkSize=1048576&file=${encodeURIComponent(pdfUrl)}`;
+                    pdfIframe.src = viewerUrl;
+                    
+                    // Wait for iframe to be ready before sending data
+                    const iframeLoadPromise = new Promise((resolve) => {
+                        if (pdfIframe.contentWindow) {
+                            pdfIframe.addEventListener('load', resolve, { once: true });
+                        } else {
+                            setTimeout(resolve, 200);
+                        }
+                    });
+                    
+                    await iframeLoadPromise;
+                    
+                    // Send the downloaded PDF data to iframe
+                    if (pdfIframe.contentWindow) {
+                        pdfIframe.contentWindow.postMessage({
+                            type: 'blobDataResponse',
+                            originalUrl: pdfUrl,
+                            arrayBuffer: pdfData,
+                            size: pdfData.byteLength,
+                            fromDownload: true
+                        }, '*');
+                    }
+                    
+                    // Show popup and update download icon
+                    popup.classList.remove('closing');
+                    popup.style.display = 'block';
+                    
+                    // Update download icon
+                    setTimeout(updateDownloadIcon, 500);
+                    
+                    return;
+                }
+            }
+        } catch (error) {
+            console.error('Error loading from IndexedDB:', error);
+            // Fall through to network loading
+        }
+
+        // Not downloaded or error - use original loading method
+        const result = await originalLoadPdfWithCache2(pdfUrl);
+
+        // Update download icon after loading
+        setTimeout(updateDownloadIcon, 500);
+
+        return result;
+    }
+
+    // Replace the global function
+    window.loadPdfWithCache = enhancedLoadPdfWithCacheForDownloads;
+
+    // Initialize download feature
+    initializeDownloadFeature();
+
+    // Expose download functions globally
+    window.handleDownloadClick = handleDownloadClick;
+    window.updateDownloadIcon = updateDownloadIcon;
 
     // Expose bookmark functions globally for testing/debugging
     window.getBookmarkedPdfs = getBookmarkedPdfs;

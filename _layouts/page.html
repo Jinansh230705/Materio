@@ -23,17 +23,63 @@
     {%- feed_meta -%}
     {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}
-    {%- endif -%}
-    <script>
+    {%- endif -%}    <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const isDark = document.cookie.includes('theme=dark');
-            if (isDark) {
-                document.body.classList.add('dark-mode');
-                document.querySelector('header').classList.add('dark-mode');
-                document.querySelector('header').classList.remove('light-mode');
-            } else {
-                document.querySelector('header').classList.add('light-mode');
+            function getCookie(name) {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(";");
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i].trim();
+                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+                }
+                return null;
             }
+            
+            function setCookie(name, value, days) {
+                let expires = "";
+                if (days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + value + expires + "; path=/";
+            }
+            
+            function applyTheme(isDark) {
+                const elements = [
+                    document.body,
+                    document.querySelector('header'),
+                    document.querySelector('.site-header')
+                ];
+                
+                elements.forEach(el => {
+                    if (el) {
+                        if (isDark) {
+                            el.classList.add('dark-mode');
+                        } else {
+                            el.classList.remove('dark-mode');
+                        }
+                    }
+                });
+            }
+            
+            // Initialize theme
+            const userTheme = getCookie("theme");
+            const isDark = userTheme === "dark" || (!userTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+            
+            applyTheme(isDark);
+            
+            // Set up theme toggle
+            const themeToggle = document.getElementById('pageThemeToggle');
+            if (themeToggle) {
+                themeToggle.checked = isDark;
+                themeToggle.addEventListener("change", function () {
+                    const newIsDark = this.checked;
+                    setCookie("theme", newIsDark ? "dark" : "light", 30);
+                    applyTheme(newIsDark);
+                });
+            }
+            
             const logo = document.querySelector('.header-logo');
             if (logo) {
                 logo.addEventListener('click', () => {
@@ -47,6 +93,7 @@
 <body>
     <header class="site-header">
         <div class="header-logo" role="link" tabindex="0" aria-label="Go to homepage"></div>
+    
     </header>
     <main class="page-content">
         <h1 class="page-title">{{ page.title }}</h1>

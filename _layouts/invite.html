@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title | default: 'Claim Materio Plus' }}</title>
+  <script src="https://materioa.github.io/kit/6a787c7335.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/assets/style/icon-fallback.css">
+  <link rel="stylesheet" href="/account/css/styles.css">
+  <link rel="stylesheet" href="/account/css/redesigned-styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+    
+<!-- Open Graph Meta Tags -->
+<meta property="og:title" content="Materio Plus">
+<meta property="og:description" content="Official materials you trust, in a way you love — Because e-learning shouldn't feel like suffering. Find organized, official study materials, notes, and peer help — all in one clean place." />
+<meta property="og:image" itemprop="image" content="https://materioa.netlify.app/assets/img/ogp.jpeg">
+<meta property="og:image:secure_url" itemprop="image" content="https://materioa.netlify.app/assets/img/ogp.jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://materioa.netlify.app">
+<meta property="og:type" content="website">
+  <style>
+    body {
+      background-image: url('/assets/img/events/invite_bg.webp');
+      background-color: #ebebeb;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .invite-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .invite-heading {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      font-size: 1.82rem;
+      margin-top: 50px;
+      margin-bottom: 2px;
+      color: var(--invite-text-color);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    .plus-banner {
+      width: 420px;
+      height: auto;
+      margin: 2rem 0;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+      user-select: none;
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      pointer-events: none;
+    }
+
+    .benefits-section {
+      /* margin: 2rem 0; */
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .benefits-section .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .benefits-section .benefit-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .benefits-section .benefit-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+    }
+
+    .benefits-section .benefit-card h2 {
+      color: var(--invite-text-color);
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .benefits-section .benefit-card h4 {
+      color: rgba(255, 250, 239, 0.8);
+      font-family: var(--font-family);
+      font-size: 0.9rem;
+      font-weight: 400;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .claim-button {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 1rem 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: var(--font-family);
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      position: relative;
+    }
+
+    .claim-button .arrow-circle {
+      width: 28px;
+      height: 28px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .claim-button .arrow-circle i {
+      color: #333;
+      font-size: 12px;
+      transform: rotate(-45deg);
+    }
+
+    .claim-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0px 8px 25px rgba(255, 130, 0, 0.3);
+    }
+
+    /* Registration form styles (hidden initially) */
+    .registration-form {
+      display: none;
+      width: 100%;
+      max-width: 450px;
+      margin: 2rem auto;
+    }
+
+    .card-one {
+      background: var(--card-color);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      margin: 1rem 0;
+    }
+
+    .auth-form h2 {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--text-color);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #e8e4e0;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      font-family: var(--font-family);
+      font-size: 1rem;
+      background: white;
+      transition: border-color 0.3s ease;
+      color: var(--text-color);
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .profile-picture-input {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .profile-picture-input input[type="file"] {
+      display: none;
+    }
+
+    .profile-picture-preview {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .profile-picture-preview img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border-color);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      font-family: var(--font-family);
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .terms-agreement {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .terms-agreement input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      border-radius: 50%;
+      border: 2px solid var(--border-color);
+      background: white;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .terms-agreement input[type="checkbox"]:checked {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+
+    .terms-agreement input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .terms-agreement label {
+      color: #e8e4e0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .terms-agreement a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .terms-agreement a:hover {
+      text-decoration: underline;
+    }
+
+    .password-input {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: var(--text-light-color);
+    }
+
+    .btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+      color: white;
+      border: none;
+      padding: 0.875rem;
+      border-radius: var(--border-radius);
+      font-family: var(--font-family);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0px 6px 20px rgba(255, 130, 0, 0.25);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .form-footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .error-message {
+      color: var(--error-color);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .success-message {
+      color: var(--success-color);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .invite-heading {
+        font-size: 2rem;
+      }
+      
+      .plus-banner {
+        width: 360px;
+      }
+      
+      .invite-container {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Initial Invite Display -->
+  <div id="inviteDisplay" class="invite-container">
+    <h1 class="invite-heading">{{ page.heading | default: 'You have been invited to try Materio' }}</h1>
+    
+    <img src="/assets/img/plus_shim.svg" alt="Materio Plus" class="plus-banner">
+    
+    <div class="benefits-section">
+      
+<div class="benefits-grid">
+<div class="benefit-card">
+    <h2><i class="fa-solid fa-down-to-bracket"></i>  Download the PDFs</h2>
+    <h4>Get to download and save PDFs for offline reading</h4>
+  </div>
+
+  <div class="benefit-card">
+    <h2><i class="fa-solid fa-wand-magic-sparkles"></i>  AI Summary</h2>
+    <h4>Access AI Summaries and follow ups inside insightroom posts</h4>
+  </div>
+  
+  <div class="benefit-card">
+    <h2><i class="fa-solid fa-book-open-cover"></i>  Read all resources</h2>
+    <h4>Access to all posts without restrictions of visibility</h4>
+  </div>
+  
+  <div class="benefit-card">
+    <h2><i class="fa-solid fa-vial"></i>  Get latest features first.</h2>
+    <h4>Be the first to try out new feature drops and UI changes</h4>
+  </div>
+  
+  <div class="benefit-card">
+    <h2><i class="fa-solid fa-gift"></i>  More Perks...</h2>
+    <h4>Additional exclusive benefits. </h4>
+  </div>
+</div>
+    </div>
+    
+    <button class="claim-button" onclick="showRegistrationForm()">
+      Claim Invite
+      <div class="arrow-circle">
+        <i class="fa-solid fa-arrow-right"></i>
+      </div>
+    </button>
+  </div>
+
+  <!-- Registration Form (hidden initially) -->
+  <div id="registrationForm" class="registration-form">
+    <div class="card-one">
+      <div class="auth-form">
+        <h2>Complete Your Registration</h2>
+        <form id="signupForm">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <div class="error-message" id="usernameError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="displayName">Display Name</label>
+            <input type="text" id="displayName" name="displayName" placeholder="Enter your display name" required>
+            <div class="error-message" id="displayNameError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <div class="error-message" id="emailError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div class="password-input">
+              <input type="password" id="password" name="password" placeholder="Enter your password" required>
+              <i class="fas fa-eye toggle-password" data-target="password"></i>
+            </div>
+            <div class="error-message" id="passwordError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="password-input">
+              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+              <i class="fas fa-eye toggle-password" data-target="confirmPassword"></i>
+            </div>
+            <div class="error-message" id="confirmPasswordError"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="profilePicture">Profile Picture</label>
+            <div class="profile-picture-input">
+              <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+              <div class="profile-picture-preview">
+                <img id="picturePreview" src="/assets/img/default-avatar.svg" alt="Profile Preview">
+                <button type="button" id="uploadButton" class="btn btn-outline">Upload</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <div class="terms-agreement">
+              <input type="checkbox" id="terms" name="terms" required>
+              <label for="terms">I agree to <a href="/privacy" target="_blank">privacy policy & terms</a></label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn">Create Account</button>
+          <div class="success-message" id="successMessage">Account created successfully!</div>
+          <div class="error-message" id="generalError"></div>
+        </form>
+
+        <div class="form-footer">
+          <p><i class="fas fa-arrow-left"></i> <a href="#" onclick="showInviteDisplay()">Back to Invite</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Constants (same as auth.js)
+    const API_URL = '/api/v1';
+    const LOCAL_STORAGE_TOKEN_KEY = 'materio_auth_token';
+
+    // API Functions (from auth.js)
+    async function makeApiRequest(endpoint, method = 'GET', data = null, requiresAuth = false) {
+      try {
+        const headers = {
+          'Content-Type': 'application/json'
+        };
+        
+        // Add auth token if required
+        if (requiresAuth) {
+          const token = localStorage.getItem(LOCAL_STORAGE_TOKEN_KEY);
+          if (!token) {
+            throw new Error('Authentication required');
+          }
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+        
+        const options = {
+          method,
+          headers,
+          credentials: 'same-origin'
+        };
+        
+        // Add request body if needed
+        if (data && (method === 'POST' || method === 'PUT' || method === 'DELETE')) {
+          options.body = JSON.stringify(data);
+        }
+        
+        // Make fetch request
+        console.log(`Making ${method} request to ${endpoint}`, data ? 'with data' : 'without data');
+        const response = await fetch(`${API_URL}/${endpoint}`, options);
+        
+        // Parse response
+        let result;
+        try {
+          // Clone the response so we can read it multiple times if needed
+          const responseClone = response.clone();
+          
+          try {
+            // Try to parse as JSON first
+            result = await response.json();
+          } catch (jsonError) {
+            // If JSON parsing fails, try to get as text from the cloned response
+            try {
+              const textResponse = await responseClone.text();
+              result = { error: textResponse || 'Unknown server error' };
+            } catch (textError) {
+              result = { error: 'Unable to parse server response' };
+            }
+          }
+        } catch (parseError) {
+          console.error('Error parsing response:', parseError);
+          throw new Error(`Failed to parse server response: ${parseError.message}`);
+        }
+        
+        // Handle API errors
+        if (!response.ok) {
+          console.error('API Error Response:', result);
+          throw new Error(result.error || result.message || 'Something went wrong');
+        }
+        
+        return result;
+      } catch (error) {
+        console.error('API Request Error:', error);
+        throw error;
+      }
+    }
+
+    // Auth Functions (from auth.js)
+    function setAuthToken(token) {
+      localStorage.setItem(LOCAL_STORAGE_TOKEN_KEY, token);
+    }
+
+    // Extract invite code from URL
+    function getInviteCodeFromURL() {
+      const pathSegments = window.location.pathname.split('/');
+      const inviteIndex = pathSegments.findIndex(segment => segment === 'invites');
+      if (inviteIndex !== -1 && inviteIndex + 1 < pathSegments.length) {
+        return pathSegments[inviteIndex + 1];
+      }
+      return null;
+    }
+    
+    // Get URL parameters
+    function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+    
+    // Fetch heading from database and update
+    async function fetchSharelinkHeading(inviteCode) {
+      try {
+        console.log('Fetching heading from database for invite code:', inviteCode);
+        // First try to get the heading from the database
+        const response = await fetch(`/sharelink-info?code=${inviteCode}`);
+        console.log('Sharelink info response status:', response.status);
+        
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Sharelink info data:', data);
+          if (data && data.customHeading) {
+            const headingElement = document.querySelector('.invite-heading');
+            if (headingElement) {
+              console.log('Setting heading from database:', data.customHeading);
+              headingElement.textContent = data.customHeading;
+              return true;
+            }
+          } else {
+            console.log('No custom heading found in database response');
+          }
+        } else {
+          console.log('Failed to fetch sharelink info from database');
+          const errorText = await response.text();
+          console.log('Error response:', errorText);
+        }
+        return false;
+      } catch (error) {
+        console.error('Error fetching sharelink info:', error);
+        return false;
+      }
+    }
+    
+    // Update heading from URL parameter if present
+    function updateHeadingFromUrl() {
+      console.log('Checking for heading in URL parameters');
+      const customHeading = getUrlParameter('heading');
+      console.log('URL parameter heading:', customHeading);
+      
+      if (customHeading) {
+        const headingElement = document.querySelector('.invite-heading');
+        if (headingElement) {
+          console.log('Setting heading from URL parameter:', decodeURIComponent(customHeading));
+          headingElement.textContent = decodeURIComponent(customHeading);
+        } else {
+          console.log('Heading element not found in DOM');
+        }
+      } else {
+        console.log('No heading parameter found in URL');
+      }
+    }
+    
+    // Call this when the page loads
+    document.addEventListener('DOMContentLoaded', async function() {
+      console.log('DOMContentLoaded event fired');
+      const inviteCode = getInviteCodeFromURL();
+      console.log('Invite code from URL:', inviteCode);
+      
+      // Process invite heading
+      if (inviteCode) {
+        console.log('Attempting to fetch heading from database');
+        // Try to get heading from database first
+        const success = await fetchSharelinkHeading(inviteCode);
+        console.log('Database fetch result:', success ? 'succeeded' : 'failed');
+        
+        // Only use URL parameter if database fetch failed
+        if (!success) {
+          console.log('Falling back to URL parameter for heading');
+          updateHeadingFromUrl();
+        }
+        
+        // Clean URL by removing parameters if we have them
+        if (window.location.search) {
+          console.log('Cleaning URL by removing parameters');
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+      } else {
+        console.log('No invite code found, checking URL parameter as fallback');
+        // No invite code, check URL parameter as fallback
+        updateHeadingFromUrl();
+      }
+    });
+
+    // Show registration form
+    function showRegistrationForm() {
+      const inviteCode = getInviteCodeFromURL();
+      
+      // Debug: Show what invite code was extracted
+      console.log('Extracted invite code:', inviteCode);
+      console.log('Current URL:', window.location.pathname);
+      
+      // First validate the invite code
+      if (inviteCode) {
+        validateInviteCode(inviteCode).then(isValid => {
+          if (isValid) {
+            document.getElementById('inviteDisplay').style.display = 'none';
+            document.getElementById('registrationForm').style.display = 'block';
+          } else {
+            alert('This invite code is invalid or has been already used or has expired, Please check your invite link.');
+          }
+        });
+      } else {
+        alert('No invite code found in URL: ' + window.location.pathname);
+      }
+    }
+
+    // Show invite display
+    function showInviteDisplay() {
+      document.getElementById('registrationForm').style.display = 'none';
+      document.getElementById('inviteDisplay').style.display = 'flex';
+    }
+
+    // Validate invite code (same as signup page)
+    async function validateInviteCode(code) {
+      try {
+        // Validate invite code with the server (same endpoint as signup page)
+        const response = await fetch('/api/v1/invites/validate', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ inviteCode: code })
+        });
+
+        const data = await response.json();
+        
+        if (response.ok && data.valid) {
+          console.log('Invite code validated successfully:', data.message);
+          return true;
+        } else {
+          console.log('Invalid invite code:', data.message || 'Invalid or used invite code');
+          return false;
+        }
+      } catch (error) {
+        console.error('Error validating invite code:', error);
+        alert('Error validating invite code. Please try again.');
+        return false;
+      }
+    }
+
+    // Password visibility toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggleButtons = document.querySelectorAll('.toggle-password');
+      
+      toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const targetInput = document.getElementById(targetId);
+          
+          if (targetInput.type === 'password') {
+            targetInput.type = 'text';
+            this.classList.remove('fa-eye');
+            this.classList.add('fa-eye-slash');
+          } else {
+            targetInput.type = 'password';
+            this.classList.remove('fa-eye-slash');
+            this.classList.add('fa-eye');
+          }
+        });
+      });
+
+      // Profile picture handling
+      const profilePictureInput = document.getElementById('profilePicture');
+      const picturePreview = document.getElementById('picturePreview');
+      const uploadButton = document.getElementById('uploadButton');
+
+      if (profilePictureInput && picturePreview) {
+        profilePictureInput.addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            if (!file.type.startsWith('image/')) {
+              alert('Please select an image file');
+              return;
+            }
+            
+            if (file.size > 5 * 1024 * 1024) { // 5MB max
+              alert('Image size should be less than 5MB');
+              return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(event) {
+              picturePreview.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+        
+        // Trigger file selection when the upload button is clicked
+        if (uploadButton) {
+          uploadButton.addEventListener('click', function() {
+            profilePictureInput.click();
+          });
+        }
+      }
+    });
+
+    // Registration form submission
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      // Clear previous errors
+      document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+      
+      const formData = new FormData(this);
+      const userData = Object.fromEntries(formData);
+      const inviteCode = getInviteCodeFromURL();
+      const termsAgreed = document.getElementById('terms').checked;
+      const picturePreview = document.getElementById('picturePreview');
+      
+      // Basic validation
+      if (!userData.username || !userData.displayName || !userData.email || !userData.password) {
+        document.getElementById('generalError').textContent = 'Please fill in all required fields';
+        document.getElementById('generalError').style.display = 'block';
+        return;
+      }
+      
+      if (userData.password !== userData.confirmPassword) {
+        document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
+        document.getElementById('confirmPasswordError').style.display = 'block';
+        return;
+      }
+      
+      if (userData.password.length < 8) {
+        document.getElementById('passwordError').textContent = 'Password must be at least 8 characters long';
+        document.getElementById('passwordError').style.display = 'block';
+        return;
+      }
+
+      if (!termsAgreed) {
+        document.getElementById('generalError').textContent = 'Please agree to the terms and conditions';
+        document.getElementById('generalError').style.display = 'block';
+        return;
+      }
+      
+      try {
+        // Show loading state
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = 'Creating Account...';
+        
+        // Prepare data for API request (same as signup page)
+        const signupData = {
+          inviteCode: inviteCode,
+          username: userData.username.trim(),
+          displayName: userData.displayName.trim(),
+          email: userData.email.trim(),
+          password: userData.password
+        };
+
+        // Add profile picture if uploaded
+        if (picturePreview && picturePreview.src && !picturePreview.src.includes('default-avatar.svg')) {
+          signupData.profilePicture = picturePreview.src;
+        }
+        
+        // Make signup API request using same endpoint as signup page
+        const response = await makeApiRequest('signup', 'POST', signupData);
+        
+        // Handle successful signup
+        if (response && response.token) {
+          setAuthToken(response.token);
+          
+          // Show success notification with recovery key
+          let successMessage = 'Account created successfully!';
+          if (response.user && response.user.recoveryKey) {
+            successMessage += ` Your recovery key is: ${response.user.recoveryKey}. Please save this in a secure place.`;
+          }
+          
+          document.getElementById('successMessage').textContent = successMessage;
+          document.getElementById('successMessage').style.display = 'block';
+          
+          // Redirect to profile page after a short delay
+          setTimeout(() => {
+            window.location.href = '/account/profile.html';
+          }, 5000);
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        document.getElementById('generalError').textContent = error.message || 'Failed to create account. Please try again.';
+        document.getElementById('generalError').style.display = 'block';
+        
+        // Reset button state
+        const submitButton = this.querySelector('button[type="submit"]');
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    });
+  </script>
+</body>
+
+</html>

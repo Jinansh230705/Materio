@@ -26,6 +26,7 @@ header {
   -webkit-backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
 }
 
@@ -43,11 +44,62 @@ header.dark-mode {
 }
 
 .light-mode .header-logo {
-  background-image: url('/assets/img/materio_new_bk.svg');
+  background-image: url('/assets/img/The InsightRoom-bk.png') !important;
 }
 
 .dark-mode .header-logo {
-  background-image: url('/assets/img/materio_new_wh.svg');
+  background-image: url('/assets/img/The InsightRoom.png') !important;
+}
+
+/* Theme Toggle Styles */
+.theme-toggle-container {
+  display: flex;
+  align-items: center;
+}
+
+.theme-toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+}
+
+.theme-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 28px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: #ff8400;
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(22px);
 }
 
 main {
@@ -147,6 +199,32 @@ body.dark-mode .markdown-body .alert {
 }
 
 @media (max-width: 768px){
+  header {
+    padding: 0 15px;
+    height: 50px;
+  }
+  
+  .header-logo {
+    width: 100px;
+    height: 26px;
+  }
+  
+  .theme-toggle {
+    width: 45px;
+    height: 25px;
+  }
+  
+  .toggle-slider:before {
+    height: 17px;
+    width: 17px;
+    left: 4px;
+    bottom: 4px;
+  }
+  
+  input:checked + .toggle-slider:before {
+    transform: translateX(20px);
+  }
+  
   .page-content,
   .markdown-body {
     padding: 1rem;

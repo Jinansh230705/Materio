@@ -1,35 +1,92 @@
-[   
+[
     {
         "branch":"stable",
-        "version":"4.5.7.0",
-        "build":"15/07/2025",
+        "version": "4.6.1.1",
+        "build":"14/11/2025",
         "logs":[
-           "Security Patch - 1 to for CVE-2025-6442 and other vulnerabilities.",
-           "The InsightRoom Overhaul and Moved to Public via sharable links.",
-           "The InsightRoom posts can be shared or downloaded to printable ebook."
+            "AI Search was optimised so you can now ask something like `what to read?`, `resources with basics of turing machines` etc. and get suggestions based on it.",
+            "Improved user experience by revamping the items in reading card.",
+            "Little improvements to PDF loading logic to reduce lag."
         ]
     },
     {
         "branch":"stable",
-        "version":"4.5.6.2",
-        "build":"09/07/2025",
+        "version": "4.6.1.0",
+        "build":"01/11/2025",
         "logs":[
+            "SQUIRCLES!!!! - Feel the Smooth Consistent UI",
+            "Adressed known bugs",
+            "Local Resources - Load files locally on-device (Available to Super tier)",
+            "Service Worker updated - Made offline experience better"
+        ]
+    },
+    {
+        "branch": "beta",
+        "version": "4.6.0.2",
+        "build": "1/11/2025",
+        "logs":[
+            "Little changes to UI",
+            "Experimental migration to Hugeicons",
+            "Local Resources - Load files locally on-device (Available to Super tier)",
+            "Service Worker updated - Made offline experience better"
+        ]
+    },
+     {
+        "branch":"stable",
+        "version": "4.6.0.0",
+        "build":"27/09/2025",
+        "logs":[
+           "Introducing Materio Plus!",
+           "Get Exclusive perks as a plus user that normal user's won't get.",
+           "Materio will now show ads, Plus user's can get ad-free experience.",
+           "You can now choose to disable homepage insightroom feed from settings.",
+           "Introducing four all new background wallpaper options - Dynamic (changes scenes depending on the time of the day.), Zen, Blissful night and Dusk.",
+           "Improvements made in the Insightroom UI and printable's template.",
+           "Additions fixes here and there."
+        ]
+    },
+    {
+        "branch":"stable",
+        "version": "4.5.7.0 Patch-2",
+        "build":"29/07/2025",
+        "logs":[
+            "Perfomance optimisations made in oread.",
+            "UX improvements",
+            "Upgraded icons to FontAwesome 7.0 Pro",
+            "The Insightroom is now publicly available."
+        ]
+    },
+    {
+        "branch": "stable",
+        "version": "4.5.7.0",
+        "build": "15/07/2025",
+        "logs": [
+            "Security Patch - 1 to for CVE-2025-6442 and other vulnerabilities.",
+            "The InsightRoom Overhaul and Moved to Public via sharable links.",
+            "The InsightRoom posts can be shared or downloaded to printable ebook."
+        ]
+    },
+    {
+        "branch": "stable",
+        "version": "4.5.6.2",
+        "build": "09/07/2025",
+        "logs": [
             "Bug Fixes to Admin CMS - uploading binary files like pdf were overwritten or getting corrupted.",
             "UX - navigation to profile and settings can be done from any page now",
             "Other minor improvements"
         ]
     },
     {
-        "branch":"stable",
-        "version":"4.5.6.1",
-        "build":"04/07/2025",
-        "logs":[
+        "branch": "stable",
+        "version": "4.5.6.1",
+        "build": "04/07/2025",
+        "logs": [
             "Changed Default set Semester",
             "Maintainance check updates",
             "Deprecation of AI Chat from open beta due to rate limit issues and unsatisfatory outputs."
         ]
     },
-     {
+    {
         "branch": "stable",
         "version": "4.5.6.0",
         "build": "23/06/2025",

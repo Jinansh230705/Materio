@@ -1,3 +1,23 @@
 <header class="site-header">
   <a href="/#" class="header-logo" role="button" aria-label="Go to homepage"></a>
+
+  <!-- Search box for home layout -->
+  {% if page.layout == 'home' %}
+  <div class="header-search">
+    <input type="text" id="search-input" placeholder="Search posts..." aria-label="Search posts">
+    <i class="fa-solid fa-search"></i>
+  </div>
+  {% endif %}
+
+  <!-- Exit icon for post pages -->
+  {% if page.layout == 'post' %}
+  <a href="javascript:void(0)"
+    style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--text); text-decoration: none; font-size: 1.2rem;"
+    onclick="if (document.referrer) history.back(); else window.location.href='/room';"
+    onmousedown="this.style.color='#ff8200'" onmouseup="this.style.color='var(--text)'"
+    onmouseleave="this.style.color='var(--text)'" aria-label="Back">
+    <i class="fa-regular fa-arrow-left-from-bracket"></i>
+  </a>
+
+  {% endif %}
 </header>

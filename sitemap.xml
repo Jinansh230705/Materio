@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- Main Pages -->
+  <url>
+    <loc>https://materioa.netlify.app/</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/room</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/whatisthis</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/chat</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- Policy Pages -->
+  <url>
+    <loc>https://materioa.netlify.app/privacy</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/cookies</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/cookies-policy</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/license</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://materioa.netlify.app/docs/api</loc>
+    <lastmod>2025-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/cheatsheet/java.html</loc>
+    <lastmod>2024-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/cheatsheet/python.html</loc>
+    <lastmod>2024-11-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/notes/cnip.html</loc>
+    <lastmod>2025-04-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/programming/hello.html</loc>
+    <lastmod>2025-04-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/programming%20humor/lorem.html</loc>
+    <lastmod>2025-05-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/howto/how-to-download-from-pulms.html</loc>
+    <lastmod>2025-05-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/code%20craftsmanship/func.html</loc>
+    <lastmod>2025-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/links/Useful-links-for-Software-Engineering.html</loc>
+    <lastmod>2025-06-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/announcement/Introducing-Accounts-in-Materio.html</loc>
+    <lastmod>2025-06-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/resource/dadv-assignment-1-with-solutions.html</loc>
+    <lastmod>2025-07-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/resource/enterprise-java-assignment-solution.html</loc>
+    <lastmod>2025-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/resource/software-engineering-assignment.html</loc>
+    <lastmod>2025-07-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/resource/dadv-assigmnent-2-solutions.html</loc>
+    <lastmod>2025-07-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/programming/greedy-algorithm-codes.html</loc>
+    <lastmod>2025-07-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/syllabus/theory-of-computation.html</loc>
+    <lastmod>2025-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/resource/data-analytics-and-data-analysis-question-bank-with-solutions.html</loc>
+    <lastmod>2025-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/programming/psuedo-codes.html</loc>
+    <lastmod>2025-08-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/resource/epj-assignment-2.html</loc>
+    <lastmod>2025-08-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/paper%20solution/daa-mid.html</loc>
+    <lastmod>2025-09-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Redirects -->
+  <url>
+    <loc>https://materioa.netlify.app/redirects/pplx</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/r/comet</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/redirects/p/perplexity-comet</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- Plus Invites (Private pages - lower priority) -->
+  <url>
+    <loc>https://materioa.netlify.app/invites/65FFCCD5E1EA4FA2</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/invites/735D88DCA5C8423F</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+  
+  <url>
+    <loc>https://materioa.netlify.app/invites/886420AB33F643D6</loc>
+    <lastmod>2025-11-11</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+  
+</urlset>

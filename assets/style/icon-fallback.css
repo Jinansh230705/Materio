@@ -1,0 +1,194 @@
+/* Icon Fallback - Show text when Font Awesome fonts fail to load (offline mode) */
+
+/* Detect when Font Awesome font isn't loaded by checking if the icon renders as a specific character */
+@supports (font-variation-settings: normal) {
+  /* Common icon classes with text fallbacks */
+  
+  /* Navigation Icons */
+  .fa-house::after,
+  .fa-home::after { content: " Home"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-comment::after,
+  .fa-message::after,
+  .fa-comments::after { content: " Chat"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-bell::after { content: " Notifications"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-download::after,
+  .fa-arrow-down-to-line::after { content: " Downloads"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-user::after,
+  .fa-user-circle::after { content: " Profile"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-gear::after,
+  .fa-cog::after { content: " Settings"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  /* Action Icons */
+  .fa-book-open-lines::after,
+  .fa-book-open::after,
+  .fa-book::after { content: " Open"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-trash::after,
+  .fa-trash-can::after { content: " Delete"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-xmark::after,
+  .fa-times::after,
+  .fa-close::after { content: " Close"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-pen::after,
+  .fa-edit::after,
+  .fa-pencil::after { content: " Edit"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-plus::after,
+  .fa-add::after { content: " Add"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-minus::after,
+  .fa-subtract::after { content: " Remove"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-check::after,
+  .fa-check-circle::after { content: " Done"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-save::after,
+  .fa-floppy-disk::after { content: " Save"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-share::after,
+  .fa-share-nodes::after { content: " Share"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-copy::after { content: " Copy"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-print::after { content: " Print"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-search::after,
+  .fa-magnifying-glass::after { content: " Search"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-filter::after { content: " Filter"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-upload::after,
+  .fa-arrow-up-from-line::after { content: " Upload"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-link::after { content: " Link"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-info::after,
+  .fa-info-circle::after { content: " Info"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-question::after,
+  .fa-question-circle::after { content: " Help"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-exclamation::after,
+  .fa-exclamation-circle::after,
+  .fa-exclamation-triangle::after { content: " Warning"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-arrow-left::after,
+  .fa-chevron-left::after { content: " Back"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-arrow-right::after,
+  .fa-chevron-right::after { content: " Next"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-rotate::after,
+  .fa-sync::after,
+  .fa-refresh::after { content: " Refresh"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-sign-out::after,
+  .fa-sign-out-alt::after,
+  .fa-right-from-bracket::after { content: " Logout"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-sign-in::after,
+  .fa-sign-in-alt::after,
+  .fa-right-to-bracket::after { content: " Login"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-bars::after,
+  .fa-menu::after { content: " Menu"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-ellipsis::after,
+  .fa-ellipsis-vertical::after { content: " More"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-calendar::after { content: " Calendar"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-clock::after { content: " Time"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-location-dot::after,
+  .fa-map-marker::after { content: " Location"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-file::after,
+  .fa-file-lines::after { content: " File"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-folder::after { content: " Folder"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-image::after { content: " Image"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-video::after { content: " Video"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-music::after { content: " Music"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-envelope::after,
+  .fa-mail::after { content: " Email"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-phone::after { content: " Phone"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-heart::after { content: " Like"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-star::after { content: " Favorite"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-bookmark::after { content: " Bookmark"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-tag::after { content: " Tag"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-eye::after { content: " View"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-eye-slash::after { content: " Hide"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-lock::after { content: " Lock"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-unlock::after { content: " Unlock"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-key::after { content: " Key"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-shield::after { content: " Security"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-crown::after { content: " Premium"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-chart-line::after,
+  .fa-chart-bar::after { content: " Stats"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-list::after { content: " List"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-grid::after,
+  .fa-th::after { content: " Grid"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-play::after { content: " Play"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-pause::after { content: " Pause"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  .fa-stop::after { content: " Stop"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  /* PDF specific */
+  .fa-file-pdf::after { content: " PDF"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  
+  /* Social icons */
+  .fa-github::after { content: " GitHub"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  .fa-twitter::after { content: " Twitter"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  .fa-facebook::after { content: " Facebook"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  .fa-instagram::after { content: " Instagram"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  .fa-linkedin::after { content: " LinkedIn"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  .fa-youtube::after { content: " YouTube"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  .fa-whatsapp::after { content: " WhatsApp"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  .fa-telegram::after { content: " Telegram"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+  .fa-discord::after { content: " Discord"; font-family: "Manrope", sans-serif; font-size: 0.75em; }
+}
+
+/* Hide the ::after when icons are loaded properly */
+@font-face {
+  font-family: 'Font Awesome 6 Pro';
+  src: local('Font Awesome 6 Pro');
+}
+
+/* If Font Awesome is loaded, hide fallback text */
+@supports (font-family: 'Font Awesome 6 Pro') or (font-family: 'Font Awesome 7 Pro') {
+  .fa::after,
+  .fas::after,
+  .far::after,
+  .fal::after,
+  .fab::after {
+    content: none !important;
+  }
+}

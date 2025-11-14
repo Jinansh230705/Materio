@@ -154,11 +154,17 @@ document.addEventListener('DOMContentLoaded', function() {
         if (response && response.token) {
           setAuthToken(response.token);
           
-          // Show success notification with recovery key
-          let successMessage = 'Account created successfully!';
+          // Show success notification with recovery key and plus benefits
+          let successMessage = response.message || 'Account created successfully!';
+          
+          if (response.user && response.user.grantedPlusFromInvite) {
+            successMessage += ' 🌟 You have been granted Plus benefits from your invite code!';
+          }
+          
           if (response.user && response.user.recoveryKey) {
             successMessage += ` Your recovery key is: ${response.user.recoveryKey}. Please save this in a secure place.`;
           }
+          
           showNotification(successMessage, 'success');
           
           // Redirect to profile page after a short delay
@@ -185,3 +191,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const inviteCode = params.get("code");
+    if (inviteCode) {
+        document.getElementById("inviteCodeInput").value = inviteCode;
+    }
+});
+
+

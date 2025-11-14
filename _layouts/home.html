@@ -3,34 +3,693 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#333333">
+   <meta property="og:title" content="Materio - The InsightRoom">
+  <meta property="og:description" content="The InsightRoom is a place to find insightful reads">
+  <meta property="og:image" itemprop="image" content="https://materioa.netlify.app/assets/img/og-theinsroom.jpg">
+  <meta property="og:image:secure_url" itemprop="image" content="https://materioa.netlify.app/assets/img/og-theinsroom.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://materioa.netlify.app/blog">
+  <meta property="og:type" content="website">
+  
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/assets/img/room-icon-x.svg" sizes="256x256">
+
+
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.css">  <style></style>
   <title>{{ site.title }}</title>
   <link rel="stylesheet" href="/assets/style/style.css" />
-</head>
+  <style>
+    /* Blog-specific header images for home layout */
+    .site-header {
+      background-image: url('/assets/img/The InsightRoom-bk.png');
+      /* background-size: auto; */
+    }
 
+    .dark .site-header {
+      background-image: url('/assets/img/The InsightRoom.png');
+    }
+
+    /* Header Search Box */
+    .header-search {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      background: rgba(231, 231, 221, 0.5);
+      border: 1px solid var(--border, #e0e0e0);
+      border-radius: 25px;
+      padding: 0.5rem 1rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      width: 250px;
+    }
+
+    .header-search:focus-within {
+      border-color: var(--primary, #ff9320);
+      box-shadow: 0 0 0 2px rgba(255, 145, 0, 0.2);
+    }
+
+    .header-search input {
+      font-family: 'Manrope', sans-serif;
+      background: transparent;
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 0.9rem;
+      color: var(--text, #333);
+      padding: 0;
+    }
+
+    .header-search input::placeholder {
+      color: var(--muted-text, #999);
+    }
+
+    .header-search i {
+      color: var(--muted-text, #999);
+      margin-left: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    /* Dark mode styles for search */
+    .dark .header-search {
+      background: rgba(33, 33, 33, 0.5);
+      border-color: var(--border, #404040);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .dark .header-search input {
+      color: var(--text, #ccc);
+    }
+
+    /* Hero Section Layout */
+    .hero-section {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      align-items: flex-start;
+    }
+
+    .hero-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-post {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Search Results at Hero Position */
+    .search-results-hero {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .search-results-title {
+      font-size: 1.5rem;
+      margin: 0 0 1.5rem 0;
+      color: var(--text, #333);
+      font-weight: 600;
+    }
+
+    .search-results-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .search-result-card {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      background: var(--card-bg, #ffffff);
+      border: 1px solid var(--border, #e5e5e5);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .search-result-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-result-card .post-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    /* Video thumbnail styles for home layout */
+    .video-thumbnail {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .video-thumbnail video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Hero video thumbnail styles */
+    .hero-video {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .hero-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .search-result-card .post-meta {
+      padding: 1rem;
+    }
+
+    .search-result-card .post-title {
+      font-size: 1rem;
+      margin: 0 0 0.5rem 0;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    .search-result-card .post-category {
+      font-size: 0.8rem;
+      color: var(--primary, #007bff);
+      margin: 0 0 0.25rem 0;
+      font-weight: 500;
+    }
+
+    .search-result-card .post-date {
+      font-size: 0.8rem;
+      color: var(--muted-text, #666);
+      margin: 0;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted-text, #666);
+      background: var(--card-bg, #ffffff);
+      border: 1px solid var(--border, #e5e5e5);
+      border-radius: 12px;
+    }
+
+    .no-results p {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    /* Dark mode styles for search results */
+    .dark .search-result-card {
+      background: var(--card-bg, #1e1e1e);
+      border-color: var(--border, #333);
+    }
+
+    .dark .search-result-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .dark .no-results {
+      background: var(--card-bg, #1e1e1e);
+      border-color: var(--border, #333);
+    }
+
+    /* Uncategorized Posts Container */
+    .uncategorized-posts {
+      width: 300px;
+      flex-shrink: 0;
+      background: var(--card-bg, #f9f8f7);
+      border-radius: 16px;
+      padding: 1.5rem;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border, #e5e5e5);
+      box-sizing: border-box;
+    }
+
+    .uncategorized-title {
+      margin: 0 0 1rem 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text, #333);
+    }
+
+    .uncategorized-list {
+      flex: 1;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border, #e5e5e5) transparent;
+    }
+
+    .uncategorized-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .uncategorized-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .uncategorized-list::-webkit-scrollbar-thumb {
+      background: var(--border, #e5e5e5);
+      border-radius: 3px;
+    }
+
+    .uncategorized-item {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border, #f0f0f0);
+      transition: background-color 0.2s ease;
+    }
+
+    .uncategorized-item:hover {
+      background: var(--hover-bg, #f8f8f8);
+      border-radius: 8px;
+      margin: 0 -0.5rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+
+    .uncategorized-item:last-child {
+      border-bottom: none;
+    }
+
+    .uncategorized-item-title {
+      margin: 0 0 0.25rem 0;
+      font-size: 0.95rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text, #333);
+    }
+
+    .uncategorized-item-date {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--muted-text, #666);
+    }
+
+    /* Category Selector */
+    .category-selector {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .category-pill {
+      font-family: 'Manrope', sans-serif;
+      background: var(--pill-bg, #f9f8f7);
+      border: 1px solid var(--border, #e0e0e0);
+      color: var(--text, #666);
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .category-pill:hover {
+      background: var(--pill-hover-bg, #e8e8e8);
+      backdrop-filter: blur(10px);
+      transform: translateY(-1px);
+    }
+
+    .category-pill.active {
+      background: var(--primary, #ff9320);
+      color: white;
+      border-color: var(--primary, #ffcc1d);
+    }
+
+    /* Dark mode styles */
+    .dark .uncategorized-posts {
+      background: var(--card-bg, #1e1e1e);
+      border-color: var(--border, #333);
+    }
+
+    .dark .uncategorized-item:hover {
+      background: var(--hover-bg, #2a2a2a);
+    }
+
+    .dark .category-pill {
+      background: var(--pill-bg, #2a2a2a);
+      border-color: var(--border, #404040);
+      color: var(--text, #ccc);
+    }
+
+    .dark .category-pill:hover {
+      background: var(--pill-hover-bg, #3a3a3a);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header-search {
+        width: 200px;
+        padding: 0.4rem 0.8rem;
+        right: 15px;
+      }
+
+      .header-search input {
+        font-size: 0.85rem;
+      }
+
+      .hero-section {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .search-results-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .search-result-card .post-image {
+        height: 150px;
+      }
+
+      .search-results-title {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+
+      .uncategorized-posts {
+        width: 100%;
+        max-width: 100%;
+        height: 200px;
+        padding: 1rem;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      .uncategorized-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .uncategorized-item {
+        padding: 0.5rem 0;
+      }
+
+      .uncategorized-item-title {
+        font-size: 0.9rem;
+        line-height: 1.2;
+      }
+
+      .uncategorized-item-date {
+        font-size: 0.75rem;
+      }
+
+      .category-selector {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 0.5rem;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        margin: 0 -1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .category-selector::-webkit-scrollbar {
+        display: none;
+      }
+
+      .category-pill {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+  <script>
+    
+function updateThemeColor() {
+    const isDarkMode = document.body.classList.contains("dark-mode");
+    const metaThemeColor = document.querySelector("meta[name=theme-color]");
+
+    if (metaThemeColor) {
+        metaThemeColor.setAttribute("content", isDarkMode ? "#1a1a1a" : "#f2f2eb");
+    }
+}
+    // Check for saved theme or default to system preference
+    document.addEventListener('DOMContentLoaded', function () {
+      function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i].trim();
+          if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+        }
+        return null;
+      }
+
+      const userTheme = getCookie("theme");
+      const isDark = userTheme === "dark" || (!userTheme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+      if (isDark) {
+        document.body.classList.add('dark');
+        document.querySelector('header').classList.add('dark-mode');
+      }
+
+      // Check if user has admin privileges for private posts
+      checkUserPrivileges();
+    });
+
+    // Function to check if user is authenticated and has admin privileges
+    async function checkUserPrivileges() {
+      const token = localStorage.getItem('materio_auth_token');
+      if (!token) {
+        hidePrivatePosts();
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/v1/profile', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          credentials: 'same-origin'
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          if (userData.user?.hasAdminPrivileges || userData.user?.isPlusUser) {
+            showAllPosts();
+          } else {
+            hidePrivatePosts();
+          }
+        } else {
+          const errorData = await response.text();
+          hidePrivatePosts();
+        }
+      } catch (error) {
+        hidePrivatePosts();
+      }
+    }
+
+    function hidePrivatePosts() {
+      const privatePosts = document.querySelectorAll('[data-visibility="private"]');
+      privatePosts.forEach(post => {
+        post.style.display = 'none';
+      });
+
+      // Set data attribute for category filtering
+      document.body.dataset.hasPrivateAccess = 'false';
+
+      // Check if hero post is private and handle grid layout
+      const heroPost = document.querySelector('.hero-post[data-visibility="private"]');
+      if (heroPost) {
+        // If hero post is private, promote the first visible post from grid that has an image
+        const firstVisiblePost = document.querySelector('.post-grid .post-card:not([data-visibility="private"]) img');
+        if (firstVisiblePost) {
+          const postCard = firstVisiblePost.closest('.post-card');
+          if (postCard) {
+            promotePostToHero(postCard);
+          }
+        }
+      }
+    }
+
+    function showAllPosts() {
+      const privatePosts = document.querySelectorAll('[data-visibility="private"]');
+      privatePosts.forEach(post => {
+        post.style.display = '';
+      });
+
+      // Set data attribute for category filtering
+      document.body.dataset.hasPrivateAccess = 'true';
+    }
+
+    function promotePostToHero(postCard) {
+      const heroPost = document.querySelector('.hero-post');
+      const postMeta = postCard.querySelector('.post-meta');
+      const postImage = postCard.querySelector('.post-image');
+      
+      if (heroPost && postMeta) {
+        // Update hero post content
+        const heroTitle = heroPost.querySelector('.post-title');
+        const heroDate = heroPost.querySelector('.post-date');
+        const heroImage = heroPost.querySelector('.hero-image');
+        
+        const newTitle = postMeta.querySelector('.post-title');
+        const newDate = postMeta.querySelector('.post-date');
+        
+        if (heroTitle && newTitle) heroTitle.innerHTML = newTitle.innerHTML;
+        if (heroDate && newDate) heroDate.textContent = newDate.textContent;
+        if (heroImage && postImage) {
+          heroImage.src = postImage.src;
+          heroImage.alt = postImage.alt;
+        }
+        
+        // Update hero post link
+        heroPost.href = postCard.href;
+        
+        // Hide the promoted post from grid
+        postCard.style.display = 'none';
+      }
+    }
+  </script>
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MJ4P8TZNBR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MJ4P8TZNBR');
+</script>
 <body>
   {% include header.html %}
+
   <main class="home-container">
-    {% assign posts = site.posts | where_exp: 'post', 'post.draft != true' %}
-    {% if posts.size > 0 %}
-    {% assign first_post = posts[0] %}
-    <a class="hero-post" href="{{ first_post.url }}">
-      {% if first_post.image %}
-      <img src="{{ first_post.image }}" class="hero-image" alt="{{ first_post.title }} thumbnail">
-      {% endif %}
-      <div class="hero-meta">
-        <p class="post-date">{{ first_post.date | date: "%B %d, %Y" }}</p>
-        <h2 class="post-title">{{ first_post.title }}</h2>
+    {% assign posts = site.posts | where_exp: 'post', 'post.draft != true and post.hidden != true' %}
+    
+    <!-- Hero Section with Uncategorized Posts -->
+    <div class="hero-section">
+      {% if posts.size > 0 %}
+      {% assign posts_with_images = posts | where_exp: 'post', 'post.image != nil and post.image != ""' %}
+      {% if posts_with_images.size > 0 %}
+      {% assign first_post = posts_with_images[0] %}
+      <div class="hero-content">
+        <a class="hero-post" href="{{ first_post.url }}" {% if first_post.visibility == 'private' %}data-visibility="private"{% endif %}>
+          {% if first_post.image %}
+            {% if first_post.image contains '.mp4' or first_post.image contains '.webm' or first_post.image contains '.mov' %}
+              <!-- Video thumbnail -->
+              <div class="hero-video">
+                <video muted loop autoplay>
+                  {% assign file_ext = first_post.image | split: '.' | last %}
+                  {% if file_ext == 'webm' %}
+                    <source src="{{ first_post.image }}" type="video/webm">
+                  {% elsif file_ext == 'mov' %}
+                    <source src="{{ first_post.image }}" type="video/quicktime">
+                  {% else %}
+                    <source src="{{ first_post.image }}" type="video/mp4">
+                  {% endif %}
+                </video>
+              </div>
+            {% else %}
+              <!-- Image thumbnail -->
+              <img src="{{ first_post.image }}" class="hero-image" alt="{{ first_post.title }} thumbnail">
+            {% endif %}
+          {% endif %}
+          <div class="hero-meta">
+            <p class="post-date">{{ first_post.date | date: "%B %d, %Y" }}</p>
+            <h2 class="post-title">{{ first_post.title }}{% if first_post.visibility == 'private' %} <span class="private-badge"><i class="fa-solid fa-lock"></i> Private</span>{% endif %}</h2>
+          </div>
+        </a>
       </div>
-    </a>
-    {% endif %}
+      
+      <!-- Search Results Container (hidden by default) -->
+      <div class="search-results-hero" id="search-results-hero" style="display: none;">
+        <h2 class="search-results-title">Search Results</h2>
+        <div class="search-results-grid" id="search-results-grid">
+          <!-- Search results will be populated here -->
+        </div>
+        <div class="no-results" id="no-results" style="display: none;">
+          <p>No posts found matching your search.</p>
+        </div>
+      </div>
+      {% endif %}
+      {% endif %}
+      
+      <!-- Quick Reads Posts Container -->
+      <div class="uncategorized-posts">
+        <h3 class="uncategorized-title">Quick Reads</h3>
+        <div class="uncategorized-list">
+          {% assign quick_reads_posts = posts | where_exp: 'post', 'post.image == nil or post.image == ""' | sort: 'date' | reverse %}
+          {% for post in quick_reads_posts limit:10 %}
+          <a class="uncategorized-item" href="{{ post.url }}" {% if post.visibility == 'private' %}data-visibility="private"{% endif %}>
+            <h4 class="uncategorized-item-title">{{ post.title }}{% if post.visibility == 'private' %} <i class="fa-solid fa-lock"></i>{% endif %}</h4>
+            <p class="uncategorized-item-date">{{ post.date | date: "%b %d, %Y" }}</p>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Category Selection Row -->
+    <div class="category-selector">
+      {% assign visible_posts = posts | where_exp: 'post', 'post.image != nil and post.image != "" and post.visibility != "private"' %}
+      {% assign all_categories = visible_posts | map: 'category' | uniq | compact | sort %}
+      {% if all_categories.size > 0 %}
+      <button class="category-pill active" data-category="all">All Posts</button>
+      {% for category in all_categories %}
+      {% assign category_posts_count = visible_posts | where: 'category', category | size %}
+      {% if category_posts_count > 0 %}
+      <button class="category-pill" data-category="{{ category | slugify }}">{{ category }}</button>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+    </div>
     <div class="post-grid">
-      {% for post in posts offset:1 %}
-      <a class="post-card no-border" href="{{ post.url }}">
+      {% assign filtered_posts = posts | where_exp: 'post', 'post.image != nil and post.image != ""' %}
+      {% for post in filtered_posts offset:1 %}
+      <a class="post-card no-border" href="{{ post.url }}" {% if post.visibility == 'private' %}data-visibility="private"{% endif %} data-category="{% if post.category %}{{ post.category | slugify }}{% else %}uncategorized{% endif %}">
         {% if post.image %}
-        <img src="{{ post.image }}" class="post-image rounded" alt="{{ post.title }} thumbnail">
+          {% if post.image contains '.mp4' or post.image contains '.webm' or post.image contains '.mov' %}
+            <!-- Video thumbnail -->
+            <div class="video-thumbnail">
+              <video muted loop autoplay>
+                {% assign file_ext = post.image | split: '.' | last %}
+                {% if file_ext == 'webm' %}
+                  <source src="{{ post.image }}" type="video/webm">
+                {% elsif file_ext == 'mov' %}
+                  <source src="{{ post.image }}" type="video/quicktime">
+                {% else %}
+                  <source src="{{ post.image }}" type="video/mp4">
+                {% endif %}
+              </video>
+            </div>
+          {% else %}
+            <!-- Image thumbnail -->
+            <img src="{{ post.image }}" class="post-image rounded" alt="{{ post.title }} thumbnail">
+          {% endif %}
         {% endif %}
         <div class="post-meta">
-          <h2 class="post-title">{{ post.title }}</h2>
+          <h2 class="post-title">{{ post.title }}{% if post.visibility == 'private' %} <span class="private-badge"><i class="fa-solid fa-lock"></i> Private</span>{% endif %}</h2>
           {% if post.category %}
           <p class="post-category">{{ post.category }}</p>
           {% endif %}
@@ -53,6 +712,363 @@
       <div class="post-body">{{ content }}</div>
     </article>
   </main>
+
+
+  <!-- Theme Toggle Styles and Script -->
+  <style>
+    body.dark {
+      --bg: #121212;
+      --text: #eeeeee;
+      --link: #3ea6ff;
+      --card-bg: #1e1e1e;
+      --border: #333;
+    }
+
+    .dark .site-header {
+      background-color: rgba(33, 33, 33, 0.5);
+      background-image: url('/assets/img/materio_new_wh.svg');
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      function setCookie(name, value, days) {
+        let expires = "";
+        if (days) {
+          const date = new Date();
+          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+          expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+      }
+
+      function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(";");
+        for (let i = 0; i < ca.length; i++) {
+          let c = ca[i].trim();
+          if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
+        }
+        return null;
+      }
+
+      function applyTheme(isDark) {
+        const elements = [
+          document.body,
+          document.querySelector('header'),
+          document.querySelector('.site-header')
+        ];
+
+        elements.forEach(el => {
+          if (el) {
+            if (isDark) {
+              el.classList.add('dark');
+              el.classList.add('dark-mode');
+            } else {
+              el.classList.remove('dark');
+              el.classList.remove('dark-mode');
+            }
+          }
+        });
+        
+        // Dispatch theme change event for Mermaid
+        window.dispatchEvent(new CustomEvent('themeChanged'));
+      }
+
+      // Initialize theme
+      let userTheme = getCookie("theme");
+      if (userTheme === "dark") {
+        applyTheme(true);
+      } else if (userTheme === "light") {
+        applyTheme(false);
+      } else if (userTheme === "system") {
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        applyTheme(systemPrefersDark);
+      } else {
+        // Default to system preference if no theme is set
+        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        applyTheme(systemPrefersDark);
+      }
+
+      // Global function for footer theme buttons
+      window.setTheme = function (theme) {
+        if (theme === 'dark') {
+          setCookie("theme", "dark", 30);
+          applyTheme(true);
+        } else if (theme === 'light') {
+          setCookie("theme", "light", 30);
+          applyTheme(false);
+        } else if (theme === 'system') {
+          setCookie("theme", "system", 30);
+          const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          applyTheme(systemPrefersDark);
+        }
+      };
+
+      // Listen for system theme changes when using system mode
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', function (e) {
+        if (getCookie("theme") === "system") {
+          applyTheme(e.matches);
+        }
+      });
+    });
+  </script>
+
+  <!-- Category Filter Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const categoryPills = document.querySelectorAll('.category-pill');
+      const postCards = document.querySelectorAll('.post-card');
+
+      categoryPills.forEach(pill => {
+        pill.addEventListener('click', function() {
+          const selectedCategory = this.getAttribute('data-category');
+          
+          // Update active pill
+          categoryPills.forEach(p => p.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Filter posts
+          postCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            const isPrivate = card.getAttribute('data-visibility') === 'private';
+            
+            // Check if user has private access (admin or plus users)
+            const token = localStorage.getItem('materio_auth_token');
+            let hasPrivateAccess = false;
+            
+            // Simple check - if no token, definitely no private access
+            if (token) {
+              // For immediate filtering, we'll assume if they have a token they might have access
+              // The actual privilege check happens in checkUserPrivileges() function
+              // But for immediate UI response, we'll be more restrictive
+              hasPrivateAccess = document.body.dataset.hasPrivateAccess === 'true';
+            }
+            
+            // Hide private posts if user doesn't have private access
+            if (isPrivate && !hasPrivateAccess) {
+              card.style.display = 'none';
+              return;
+            }
+            
+            if (selectedCategory === 'all') {
+              card.style.display = '';
+            } else if (cardCategory === selectedCategory) {
+              card.style.display = '';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+
+  <!-- Search Functionality Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const searchInput = document.getElementById('search-input');
+      const heroContent = document.querySelector('.hero-content');
+      const searchResultsHero = document.getElementById('search-results-hero');
+      const searchResultsGrid = document.getElementById('search-results-grid');
+      const noResults = document.getElementById('no-results');
+      const categorySelector = document.querySelector('.category-selector');
+      const postGrid = document.querySelector('.post-grid');
+      const quickReadsItems = document.querySelectorAll('.uncategorized-item');
+      const postCards = document.querySelectorAll('.post-card');
+
+      if (searchInput) {
+        searchInput.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase().trim();
+          
+          if (searchTerm === '') {
+            // Show normal layout
+            showNormalLayout();
+          } else {
+            // Show search results at hero position
+            showSearchResults(searchTerm);
+          }
+        });
+      }
+      
+      function showNormalLayout() {
+        heroContent.style.display = '';
+        searchResultsHero.style.display = 'none';
+        categorySelector.style.display = '';
+        postGrid.style.display = '';
+        
+        // Reset all posts visibility based on private access privileges
+        const hasPrivateAccess = document.body.dataset.hasPrivateAccess === 'true';
+        
+        postCards.forEach(card => {
+          const isPrivate = card.getAttribute('data-visibility') === 'private';
+          
+          if (isPrivate && !hasPrivateAccess) {
+            card.style.display = 'none';
+          } else {
+            card.style.display = '';
+          }
+        });
+        
+        quickReadsItems.forEach(item => {
+          const isPrivate = item.getAttribute('data-visibility') === 'private';
+          
+          if (isPrivate && !hasPrivateAccess) {
+            item.style.display = 'none';
+          } else {
+            item.style.display = '';
+          }
+        });
+      }
+      
+      function showSearchResults(searchTerm) {
+        heroContent.style.display = 'none';
+        searchResultsHero.style.display = '';
+        categorySelector.style.display = 'none';
+        postGrid.style.display = 'none';
+        
+        const hasPrivateAccess = document.body.dataset.hasPrivateAccess === 'true';
+        
+        // Collect all posts for search
+        const allPosts = [];
+        
+        // Collect from main grid
+        postCards.forEach(card => {
+          const title = card.querySelector('.post-title')?.textContent.trim() || '';
+          const category = card.querySelector('.post-category')?.textContent.trim() || '';
+          const date = card.querySelector('.post-date')?.textContent.trim() || '';
+          const href = card.getAttribute('href') || '';
+          const isPrivate = card.getAttribute('data-visibility') === 'private';
+          const image = card.querySelector('.post-image')?.src || '';
+          
+          allPosts.push({
+            title: title.replace(/🔒.*$/, '').trim(),
+            category,
+            date,
+            href,
+            isPrivate,
+            image,
+            type: 'main'
+          });
+        });
+        
+        // Collect from quick reads
+        quickReadsItems.forEach(item => {
+          const title = item.querySelector('.uncategorized-item-title')?.textContent.trim() || '';
+          const date = item.querySelector('.uncategorized-item-date')?.textContent.trim() || '';
+          const href = item.getAttribute('href') || '';
+          const isPrivate = item.getAttribute('data-visibility') === 'private';
+          
+          allPosts.push({
+            title: title.replace(/🔒.*$/, '').trim(),
+            category: 'Quick Reads',
+            date,
+            href,
+            isPrivate,
+            image: '',
+            type: 'quick-read'
+          });
+        });
+        
+        // Filter posts based on search term
+        const matchingPosts = allPosts.filter(post => {
+          if (post.isPrivate && !hasPrivateAccess) return false;
+          
+          const titleMatch = post.title.toLowerCase().includes(searchTerm);
+          const categoryMatch = post.category.toLowerCase().includes(searchTerm);
+          
+          return titleMatch || categoryMatch;
+        });
+        
+        // Clear previous results
+        searchResultsGrid.innerHTML = '';
+        
+        if (matchingPosts.length === 0) {
+          noResults.style.display = 'block';
+        } else {
+          noResults.style.display = 'none';
+          
+          // Create search result cards
+          matchingPosts.forEach(post => {
+            const card = createSearchResultCard(post);
+            searchResultsGrid.appendChild(card);
+          });
+        }
+        
+        // Filter quick reads in place (keep visible)
+        quickReadsItems.forEach(item => {
+          const title = item.querySelector('.uncategorized-item-title')?.textContent.toLowerCase() || '';
+          const isPrivate = item.getAttribute('data-visibility') === 'private';
+          const cleanTitle = title.replace(/🔒.*$/, '').trim();
+          const matches = cleanTitle.includes(searchTerm);
+          
+          if (isPrivate && !hasPrivateAccess) {
+            item.style.display = 'none';
+          } else if (matches) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }
+      
+      function createSearchResultCard(post) {
+        const card = document.createElement('a');
+        card.className = 'search-result-card';
+        card.href = post.href;
+        
+        let cardHTML = '';
+        
+        if (post.image) {
+          // Check if it's a video file
+          const isVideo = post.image.includes('.mp4') || post.image.includes('.webm') || post.image.includes('.mov');
+          
+          if (isVideo) {
+            const fileExt = post.image.split('.').pop().toLowerCase();
+            let videoType = 'video/mp4';
+            
+            if (fileExt === 'webm') {
+              videoType = 'video/webm';
+            } else if (fileExt === 'mov') {
+              videoType = 'video/quicktime';
+            }
+            
+            cardHTML += `
+              <div class="video-thumbnail">
+                <video muted loop autoplay>
+                  <source src="${post.image}" type="${videoType}">
+                </video>
+              </div>
+            `;
+          } else {
+            cardHTML += `<img src="${post.image}" class="post-image" alt="${post.title} thumbnail">`;
+          }
+        }
+        
+        cardHTML += `
+          <div class="post-meta">
+            <h3 class="post-title">${post.title}${post.isPrivate ? ' <span class="private-badge"><i class="fa-solid fa-lock"></i> Private</span>' : ''}</h3>
+            <p class="post-category">${post.category}</p>
+            <p class="post-date">${post.date}</p>
+          </div>
+        `;
+        
+        card.innerHTML = cardHTML;
+        return card;
+      }
+    });
+
+    // Re-initialize video controls after search results are populated
+    const originalPerformSearch = window.performSearch;
+    if (typeof originalPerformSearch === 'function') {
+      window.performSearch = function(...args) {
+        const result = originalPerformSearch.apply(this, args);
+        return result;
+      };
+    }
+  </script>
+
+  {% include footer.html %}
 </body>
 
 </html>

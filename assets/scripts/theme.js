@@ -21,7 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return null;
     }
 
-    function applyTheme(isDark) {        const elements = [
+    function applyTheme(isDark) {
+        const elements = [
             document.body,
             document.querySelector('header'),
             document.querySelector('.navbar'),
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('notificationBoard'),
             document.getElementById('advanced'),
             document.getElementById('about'),
-            document.getElementById('cookiesToggleCard'),            document.getElementById('paperModeCard'),
+            document.getElementById('cookiesToggleCard'), document.getElementById('paperModeCard'),
             document.getElementById('grainSizeControl'),
             document.getElementById('creatorInfo'),
             document.getElementById('licensesCard'),
@@ -45,7 +46,25 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('gh'),
             document.getElementById('nightReadingCard'),
             document.getElementById('einkModeCard'),
-            document.getElementById('tabSwitcherCard')
+            document.getElementById('tabSwitcherCard'),
+            document.getElementById('blogs'),
+            document.getElementById('blogPost1'),
+            document.getElementById('blogPost2'),
+            document.getElementById('blogPost3'),
+            document.getElementById('blogPost4'),
+            document.getElementById('blogPost5'),
+            document.getElementById('recommendedPosts'),
+            document.getElementById('recommendedPost1'),
+            document.getElementById('recommendedPost2'),
+            document.getElementById('recommendedPost3'),
+            document.getElementById('recommendedPost4'),
+            document.getElementById('recommendedPost5'),
+            document.getElementById('wallpaperSelectionCard'),
+            document.getElementById('getinsights'),
+            document.getElementById('storageInfoCard'),
+            document.getElementById('localCdnCard'),
+            document.getElementById('serverTerminal')
+
         ];
         const notifyCards = document.querySelectorAll('#notify');
         notifyCards.forEach(card => elements.push(card));
@@ -54,14 +73,14 @@ document.addEventListener("DOMContentLoaded", function () {
             if (el) {
                 isDark ? el.classList.add('dark-mode') : el.classList.remove('dark-mode');
             }
-        });        const giscusFrame = document.querySelector("iframe.giscus-frame");
+        }); const giscusFrame = document.querySelector("iframe.giscus-frame");
         if (giscusFrame) {
             giscusFrame.contentWindow.postMessage(
                 { giscus: { setConfig: { theme: isDark ? "http://localhost:8888/assets/style/giscus.css" : "noborder_light" } } },
                 "https://giscus.app"
             );
         }
-          // Sync theme with PDF iframe if it exists
+        // Sync theme with PDF iframe if it exists
         const pdfIframe = document.getElementById('pdf-iframe');
         if (pdfIframe && pdfIframe.contentWindow) {
             try {
@@ -98,7 +117,7 @@ function updateThemeColor() {
     const metaThemeColor = document.querySelector("meta[name=theme-color]");
 
     if (metaThemeColor) {
-        metaThemeColor.setAttribute("content", isDarkMode ? "#1a1a1a" : "#f3f3ee");
+        metaThemeColor.setAttribute("content", isDarkMode ? "#1a1a1a" : "#f2f2eb");
     }
 }
 const themeChoice = document.getElementById("themeToggle");
@@ -111,13 +130,13 @@ if (themeChoice) {
 document.addEventListener("DOMContentLoaded", updateThemeColor);
 
 // Listen for system theme changes and update PDF iframe if using system theme
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
     const userTheme = getCookie("theme");
-    
+
     // Only auto-switch if using system theme (no explicit theme cookie)
     if (!userTheme) {
         const isDark = e.matches;
-        
+
         // Update PDF iframe with new system theme
         const pdfIframe = document.getElementById('pdf-iframe');
         if (pdfIframe && pdfIframe.contentWindow) {

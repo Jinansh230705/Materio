@@ -4238,6 +4238,20 @@ body.night-reading .pdfViewer .canvasWrapper {
   position: relative;
 }
 
+/* PERFORMANCE OPTIMIZED: Overlay modes for PDF reading */
+/* Use will-change to hint browser for GPU acceleration */
+body.paper-mode .pdfViewer .canvasWrapper::after,
+body.night-reading .pdfViewer .canvasWrapper::before,
+body.eink-mode .pdfViewer .canvasWrapper::before {
+  will-change: opacity;
+  transform: translateZ(0); /* Force GPU layer */
+}
+
+body:is(.paper-mode, .night-reading, .eink-mode) :is(.pdfViewer .canvasWrapper) canvas {
+  will-change: filter;
+  transform: translateZ(0); /* Force GPU layer */
+}
+
 body.paper-mode .pdfViewer .canvasWrapper::after {
   content: "";
   position: absolute;
@@ -4286,10 +4300,7 @@ body.night-reading :is(.pdfViewer .canvasWrapper) canvas {
 }
 
 /* Ensure overlays work in presentation mode */
-body.paper-mode #viewerContainer.pdfPresentationMode .pdfViewer .canvasWrapper {
-  position: relative;
-}
-
+body.paper-mode #viewerContainer.pdfPresentationMode .pdfViewer .canvasWrapper,
 body.night-reading #viewerContainer.pdfPresentationMode .pdfViewer .canvasWrapper {
   position: relative;
 }
@@ -4364,9 +4375,9 @@ body.paper-mode.night-reading :is(.pdfViewer .canvasWrapper) canvas {
   filter: contrast(1.08) sepia(0.45) hue-rotate(18deg) saturate(0.85) brightness(0.9);
 }
 
-/* E-Ink Mode Styles - Grayscale like e-ink displays */
+/* E-Ink Mode Styles - Grayscale like e-ink displays (Simplified for performance) */
 body.eink-mode :is(.pdfViewer .canvasWrapper) canvas {
-  filter: grayscale(1) contrast(1.15) brightness(1.1) saturate(0);
+  filter: grayscale(1) contrast(1.15) brightness(1.1);
 }
 
 body.eink-mode :is(.pdfViewer .canvasWrapper)::before {
@@ -4402,7 +4413,7 @@ body.eink-mode #viewerContainer.pdfPresentationMode .pdfViewer .canvasWrapper::b
 
 /* Combined Paper + E-Ink mode */
 body.paper-mode.eink-mode :is(.pdfViewer .canvasWrapper) canvas {
-  filter: grayscale(1) contrast(1.2) brightness(1.05) saturate(0);
+  filter: grayscale(1) contrast(1.2) brightness(1.05);
 }
 
 body.paper-mode.eink-mode .pdfViewer .canvasWrapper::after {
@@ -4414,19 +4425,20 @@ body.paper-mode.eink-mode .pdfViewer .canvasWrapper::after {
   background-blend-mode: multiply;
 }
 
-/* Combined Night Reading + E-Ink mode */
+/* Combined Night Reading + E-Ink mode (Simplified) */
 body.night-reading.eink-mode :is(.pdfViewer .canvasWrapper) canvas {
-  filter: grayscale(1) contrast(1.1) brightness(0.95) saturate(0) sepia(0.2) hue-rotate(15deg);
+  filter: grayscale(1) contrast(1.1) brightness(0.95) sepia(0.2);
 }
 
-/* Combined Paper + Night Reading + E-Ink mode */
+/* Combined Paper + Night Reading + E-Ink mode (Simplified) */
 body.paper-mode.night-reading.eink-mode :is(.pdfViewer .canvasWrapper) canvas {
-  filter: grayscale(1) contrast(1.15) brightness(0.98) saturate(0) sepia(0.15) hue-rotate(10deg);
+  filter: grayscale(1) contrast(1.15) brightness(0.98) sepia(0.15);
 }
 
 :is(:is(.pdfViewer .canvasWrapper) canvas) .structTree {
   contain: strict;
 }
+
 
 .pdfViewer .page {
   --user-unit: 1;

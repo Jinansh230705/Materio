@@ -30,5 +30,40 @@ build_timestamp: "${timestamp}"
 const outputPath = path.join(dataDir, 'build_id.yml');
 fs.writeFileSync(outputPath, yamlContent, 'utf8');
 
+// Maintain build history in JSON format
+const historyPath = path.join(dataDir, 'build_history.json');
+let buildHistory = [];
+
+// Load existing history if file exists
+if (fs.existsSync(historyPath)) {
+    try {
+        const existingHistory = fs.readFileSync(historyPath, 'utf8');
+        buildHistory = JSON.parse(existingHistory);
+    } catch (error) {
+        console.log('Warning: Could not parse existing build history, starting fresh');
+        buildHistory = [];
+    }
+}
+
+// Add new build entry
+const buildEntry = {
+    build_id: buildId,
+    timestamp: timestamp,
+    date: new Date(timestamp).toLocaleDateString(),
+    time: new Date(timestamp).toLocaleTimeString(),
+    build_number: buildHistory.length + 1
+};
+
+buildHistory.unshift(buildEntry); // Add to beginning of array (most recent first)
+
+// Keep only last 100 builds to prevent file from growing too large
+if (buildHistory.length > 100) {
+    buildHistory = buildHistory.slice(0, 100);
+}
+
+// Write updated history
+fs.writeFileSync(historyPath, JSON.stringify(buildHistory, null, 2), 'utf8');
+
 console.log('Build ID file updated successfully!');
 console.log(`Written to: ${outputPath}`);
+console.log(`Build history updated: ${historyPath} (${buildHistory.length} builds recorded)`);

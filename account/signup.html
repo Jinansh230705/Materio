@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Try out new features first! - Materio</title>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <title>Try out new features first! - Materio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/redesigned-styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
   <style>
     body {
       background-image: url('/assets/img/events/invite_bg.webp');
@@ -16,6 +20,7 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
     }
+
     .invite-heading {
       font-family: 'Libre Baskerville', serif;
       font-size: 1.8rem;
@@ -23,9 +28,11 @@
       margin-bottom: 0.5rem;
       color: var(--invite-text-color);
     }
+
     .invite-heading em {
       font-style: italic;
     }
+
     .invite-description {
       font-family: 'Manrope', sans-serif;
       text-align: center;
@@ -35,20 +42,22 @@
     }
   </style>
 </head>
-<body>  <div class="container">
+
+<body>
+  <div class="container">
     <!-- Step 1: Invite Code Validation -->
     <div class="card-one" id="inviteStep">
       <div class="auth-form">
         <h2 class="invite-heading">Do you have an <em>Invite</em>?</h2>
         <p class="invite-description">Enter the invite code to access new features first</p>
-        
+
         <form id="inviteForm">
           <div class="form-group">
             <input type="text" id="inviteCodeInput" name="inviteCode" placeholder="Enter your invite code" required>
           </div>
           <button type="submit" class="btn">Continue</button>
         </form>
-        
+
         <div class="form-footer">
           <p><i class="fas fa-arrow-left"></i> <a href="/account">Back to Login</a></p>
         </div>
@@ -59,7 +68,8 @@
     <div class="card-one" id="signupStep" style="display: none;">
       <div class="auth-form">
         <h2>Complete Your Registration</h2>
-        <form id="signupForm">          <div class="form-group">
+        <form id="signupForm">
+          <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter your username" required>
           </div>
@@ -85,7 +95,8 @@
           <div class="form-group">
             <label for="confirmPassword">Confirm Password</label>
             <div class="password-input">
-              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password"
+                required>
               <i class="fas fa-eye toggle-password" data-target="confirmPassword"></i>
             </div>
           </div>
@@ -109,7 +120,7 @@
           </div>
 
           <button type="submit" class="btn">SIGN UP</button>
-          
+
           <div class="form-footer">
             <p>Already have an account? <a href="/account">Sign in instead</a></p>
           </div>
@@ -134,13 +145,16 @@
   </div>
   <script>
     // Auto-detect and apply dark mode based on cookie
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       const darkModeCookie = document.cookie.split('; ').find(row => row.startsWith('darkMode='));
       if (darkModeCookie && darkModeCookie.split('=')[1] === 'true') {
         document.body.classList.add('dark-mode');
       }
     });
-  </script>  <script src="js/auth.js"></script>
+  </script>
+  <script src="js/auth.js"></script>
   <script src="js/signup.js"></script>
+  <script src="js/ux-enhancers.js"></script>
 </body>
+
 </html>

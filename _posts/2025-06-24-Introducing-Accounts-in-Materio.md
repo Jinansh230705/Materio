@@ -5,7 +5,8 @@ date: '2025-06-24 18:30:00'
 category: Announcement
 excerpt: Materio v4.5.6.0 brings many changes to underlying system including UI changes
   and feature additions opening ways from being just a reading material library.
-image: /assets/img/covers/cover.png
+image: /assets/img/covers/cover.webp
+summarize: true
 ---
 
 Materio v4.5.6.0 brings a ton of changes while it might not look like much's happening on the top at User side but the entire codebase has been restructured from scratch with performance enhancements, better user experiences, minor to mild UI changes and some new features additions.
@@ -60,3 +61,53 @@ after invite code is validated you may continue the onboarding process to create
 ![onboarding](/assets/img/post-content/c0b21caa-4d04-41b9-b3b0-7e863b418261-onboard.png)
 
 Special Clause: Materio is Vibe Coded and built with agentic help of Claude.
+
+
+## Updates to the Insightroom 
+
+- Homepage redesign
+ - changes made to color scheme
+ - Sorting according to categories via category tags
+ - Quick reads section: all posts with no images are here.
+ - Search: quickly find what you're looking for.
+
+- Post redesign
+ - Date & Category show up in a modern pill shape
+ - introduced linked posts
+   usage:
+   Add the following tags in the markdown frontmatter
+
+    ```MD
+    ---
+    previous_post: "/path-to-previous-post"
+    next_post: "/path-to-next-post"
+    ---
+    ```
+ - Introducing AI Summary for the Super users, powered by gpt-oss (20b) model by OpenAI.
+   Usage:
+
+   Enable the AI summary in the any post by adding the tag in the md frontmatter
+
+   ```MD
+   ---
+   summarize: true
+   ---
+   ```
+
+   - you can summarize the post content in consise form factor and typically 1/6th of the original content.
+   - Didn't find what you wanted in the summary? Ask a follow up - ask your question and it will explain your query.
+
+
+ - Introducing File attachments
+   Now the posts like those for general announcements or special posts can contain attachments of anyfile type Image/Documents.
+   To attach:
+
+   - enable attachment in the md frontmatter and declare the attachment content like this.
+   ```MD
+   ---
+   attachment: true
+   ---
+
+   [attachment:/path-to-your-attachment:Name of your attachment]
+   ```
+

@@ -24,16 +24,139 @@ document.addEventListener('DOMContentLoaded', function () {
         return null;
     }
 
-    function applyEventBackgroundForHome() {
-        if (disableBgToggle && disableBgToggle.checked) {
-            homeElem.style.setProperty("--bg-img", "none");
-            return;
+    function setWallpaperAsBackground(wallpaperType) {
+        const selectedCard = document.querySelector(`[data-wallpaper="${wallpaperType}"]`);
+        if (selectedCard) {
+            const bgImage = selectedCard.dataset.bgImage;
+            if (wallpaperType === 'dynamic') {
+                // Apply dynamic wallpaper
+                applyDynamicWallpaper();
+            } else if (bgImage && bgImage !== '') {
+                homeElem.style.setProperty("--bg-img", bgImage);
+            } else {
+                // Default background - apply event background directly
+                if (cachedEventToApply) {
+                    updateBgFromEvent(cachedEventToApply);
+                } else {
+                    // Load and apply event background
+                    loadAndApplyEventBackground();
+                }
+            }
+        } else {
+            console.error('❌ Wallpaper card not found for:', wallpaperType);
         }
+    }
 
-        if (cachedEventToApply) {
-            updateBgFromEvent(cachedEventToApply);
-            return;
+    // Dynamic wallpaper functionality
+    function getDynamicImageIndex() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const totalMinutes = hours * 60 + minutes;
+        
+        // Custom time mappings for part_0 to part_8
+        // part_0: 5:45 AM - 6:00 AM
+        if ((totalMinutes >= 345 && totalMinutes < 360)) { // 5:45-6:00 AM
+            return 0;
         }
+        // part_1: 6:00 AM - 6:45 AM
+        else if (totalMinutes >= 360 && totalMinutes < 405) { // 6:00-6:45 AM
+            return 1;
+        }
+        // part_2: 6:45 AM - 5:45 AM (next day) - This seems like it should be PM, assuming 6:45 AM - 5:45 PM
+        else if (totalMinutes >= 405 && totalMinutes < 1065) { // 6:45 AM - 5:45 PM
+            return 2;
+        }
+        // part_3: 5:45 PM - 6:00 PM
+        else if (totalMinutes >= 1065 && totalMinutes < 1080) { // 5:45-6:00 PM
+            return 3;
+        }
+        // part_4: 6:00 PM - 7:00 PM
+        else if (totalMinutes >= 1080 && totalMinutes < 1140) { // 6:00-7:00 PM
+            return 4;
+        }
+        // part_5: 7:00 PM - 7:45 PM
+        else if (totalMinutes >= 1140 && totalMinutes < 1185) { // 7:00-7:45 PM
+            return 5;
+        }
+        // part_6: 7:45 PM - 11:50 PM
+        else if (totalMinutes >= 1185 && totalMinutes < 1430) { // 7:45-11:50 PM
+            return 6;
+        }
+        // part_7: 11:50 PM - 12:30 AM (next day)
+        else if (totalMinutes >= 1430 || totalMinutes < 30) { // 11:50 PM - 12:30 AM
+            return 7;
+        }
+        // part_8: 12:30 AM - 5:45 AM
+        else if (totalMinutes >= 30 && totalMinutes < 345) { // 12:30-5:45 AM
+            return 8;
+        }
+        
+        // Fallback to part_0
+        return 0;
+    }
+
+    function getDynamicImageUrl() {
+        const index = getDynamicImageIndex();
+        return `url('/assets/img/events/dynamic/part_${index}.webp')`;
+    }
+
+    function applyDynamicWallpaper() {
+        const imageUrl = getDynamicImageUrl();
+        homeElem.style.setProperty("--bg-img", imageUrl);
+        
+        // Update preview card to show current image
+        updateDynamicPreview();
+    }
+
+    function updateDynamicPreview() {
+        const dynamicPreview = document.getElementById('dynamicPreview');
+        const dynamicTime = document.getElementById('dynamicTime');
+        
+        if (dynamicPreview) {
+            const index = getDynamicImageIndex();
+            const imageUrl = `/assets/img/events/dynamic/part_${index}.webp`;
+            dynamicPreview.style.backgroundImage = `url('${imageUrl}')`;
+            dynamicPreview.style.backgroundSize = 'cover';
+            dynamicPreview.style.backgroundPosition = 'center';
+            
+            // Remove the animated gradient
+            dynamicPreview.style.animation = 'none';
+        }
+        
+        if (dynamicTime) {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            dynamicTime.textContent = timeString;
+        }
+    }
+
+    // Dynamic wallpaper timer
+    let dynamicWallpaperInterval = null;
+
+    function startDynamicWallpaperTimer() {
+        // Clear any existing interval
+        if (dynamicWallpaperInterval) {
+            clearInterval(dynamicWallpaperInterval);
+        }
+        
+        // Update every minute to check for time changes
+        dynamicWallpaperInterval = setInterval(() => {
+            const selectedWallpaper = getCookie("selectedWallpaper");
+            if (selectedWallpaper === 'dynamic') {
+                applyDynamicWallpaper();
+            }
+        }, 60000); // Update every minute
+    }
+
+    function stopDynamicWallpaperTimer() {
+        if (dynamicWallpaperInterval) {
+            clearInterval(dynamicWallpaperInterval);
+            dynamicWallpaperInterval = null;
+        }
+    }
+
+    function loadAndApplyEventBackground() {
         fetch('/assets/data/events.json')
             .then(response => response.json())
             .then(events => {
@@ -56,10 +179,37 @@ document.addEventListener('DOMContentLoaded', function () {
             .catch(err => console.error("Error loading event backgrounds:", err));
     }
 
+    function applyEventBackgroundForHome() {
+        if (disableBgToggle && disableBgToggle.checked) {
+            homeElem.style.setProperty("--bg-img", "none");
+            return;
+        }
+
+        // Check if a custom wallpaper is selected
+        const selectedWallpaper = getCookie("selectedWallpaper");
+        if (selectedWallpaper && selectedWallpaper !== 'default') {
+            setWallpaperAsBackground(selectedWallpaper);
+            return;
+        }
+
+        if (cachedEventToApply) {
+            updateBgFromEvent(cachedEventToApply);
+            return;
+        }
+        
+        loadAndApplyEventBackground();
+    }
+
     function updateBgFromEvent(eventToApply) {
         const isMobile = window.matchMedia("(max-width: 768px)").matches;
         const bgUrl = isMobile ? eventToApply.url_mobile : eventToApply.url_pc;
-        homeElem.style.setProperty("--bg-img", `url('${bgUrl}')`);
+        
+        // Check if the URL is set to "dynamic"
+        if (bgUrl === "dynamic") {
+            applyDynamicWallpaper();
+        } else {
+            homeElem.style.setProperty("--bg-img", `url('${bgUrl}')`);
+        }
     }
 
     const savedSetting = getCookie("disableBg");
@@ -94,7 +244,106 @@ document.addEventListener('DOMContentLoaded', function () {
             applyEventBackgroundForHome();
             lastIsMobile = currentIsMobile;
         }
-    }, 200));    // Paper Mode functionality
+    }, 200));
+
+    // User tier checking functionality
+    function getUserTierStatus() {
+        try {
+            const userData = localStorage.getItem('materio_user');
+            if (!userData) {
+                return { isPlusUser: false, hasAdminPrivileges: false, isLoggedIn: false };
+            }
+            
+            const user = JSON.parse(userData);
+            return {
+                isPlusUser: user.isPlusUser || false,
+                hasAdminPrivileges: user.hasAdminPrivileges || false,
+                isLoggedIn: true
+            };
+        } catch (error) {
+            console.error('Error parsing user data:', error);
+            return { isPlusUser: false, hasAdminPrivileges: false, isLoggedIn: false };
+        }
+    }
+
+    function canAccessWallpaperSelection() {
+        const userStatus = getUserTierStatus();
+        return userStatus.isPlusUser || userStatus.hasAdminPrivileges;
+    }
+
+    function hideWallpaperSelectionCard() {
+        const wallpaperSelectionCard = document.getElementById('wallpaperSelectionCard');
+        if (wallpaperSelectionCard) {
+            wallpaperSelectionCard.style.display = 'none';
+        }
+    }
+
+    // Wallpaper Selection functionality (Plus/Super users only)
+    const wallpaperCards = document.querySelectorAll('.wallpaper-preview-card');
+    
+    function initializeWallpaperSelection() {
+        // Check if user can access wallpaper selection
+        if (!canAccessWallpaperSelection()) {
+            // Hide the entire wallpaper selection card for non-eligible users
+            hideWallpaperSelectionCard();
+            return;
+        }
+        
+        // Initialize dynamic preview
+        updateDynamicPreview();
+        
+        const savedWallpaper = getCookie("selectedWallpaper");
+        if (savedWallpaper) {
+            setWallpaperAsBackground(savedWallpaper);
+            // Update UI to show selected wallpaper
+            wallpaperCards.forEach(card => {
+                card.classList.remove('selected');
+                if (card.dataset.wallpaper === savedWallpaper) {
+                    card.classList.add('selected');
+                }
+            });
+            
+            // Start timer if dynamic wallpaper is selected
+            if (savedWallpaper === 'dynamic') {
+                startDynamicWallpaperTimer();
+            }
+        }
+    }
+    
+    // Add click handlers to wallpaper cards
+    wallpaperCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Check user access before allowing wallpaper selection
+            if (!canAccessWallpaperSelection()) {
+                return;
+            }
+            
+            // Remove selected class from all cards
+            wallpaperCards.forEach(c => c.classList.remove('selected'));
+            
+            // Add selected class to clicked card
+            this.classList.add('selected');
+            
+            // Get wallpaper type and apply it
+            const wallpaperType = this.dataset.wallpaper;
+            setWallpaperAsBackground(wallpaperType);
+            
+            // Handle dynamic wallpaper timer
+            if (wallpaperType === 'dynamic') {
+                startDynamicWallpaperTimer();
+            } else {
+                stopDynamicWallpaperTimer();
+            }
+            
+            // Save the selection
+            setCookie("selectedWallpaper", wallpaperType, 30);
+        });
+    });
+    
+    // Initialize wallpaper selection on page load
+    initializeWallpaperSelection();
+
+    // Paper Mode functionality
     const paperModeToggle = document.getElementById("paperModeToggle");
     const grainDetails = document.getElementById("grainDetails");
     const grainSizeControl = document.getElementById("grainSizeControl");

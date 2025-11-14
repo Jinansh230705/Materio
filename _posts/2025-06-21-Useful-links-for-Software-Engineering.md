@@ -4,7 +4,10 @@ layout: post
 date: '2025-06-21'
 category: Links
 excerpt: This blog post list various useful links for software engineering (SE).
-image: "/assets/img/covers/2025-06-22-15.51.54_2276f695.jpg"
+image: "/assets/img/covers/2025-06-22-15.51.54_2276f695.webp"
+summarize: true
+semester: "5"
+subject: "Software Engineering"
 ---
 
 Here's your list of blogs and web links for software engineering, formatted in Markdown:
