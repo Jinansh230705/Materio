@@ -24,7 +24,6 @@ saved_changes
 # Logs
 *.log
 
-migrations/
 # IDE
 .vscode/
 .idea/

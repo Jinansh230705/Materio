@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "clean-css": "^5.3.3",
-    "glob": "^10.5.0",
+    "glob": "^10.3.10",
     "html-minifier-terser": "^7.2.0",
     "jest": "^30.2.0",
     "netlify-cli": "^23.11.0",
