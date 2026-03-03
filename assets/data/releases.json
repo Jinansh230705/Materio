@@ -1,19 +1,60 @@
 [
     {
-        "branch":"stable",
+        "branch": "stable",
+        "version": "4.8.0.0",
+        "build": "08/02/2026",
+        "logs": [
+            "Upto 45% faster loading times.",
+            "New bug reporting system.",
+            "Forms wizard",
+            "Notebooks with cloud sync.",
+            "Exam timeline",
+            "Bug fixes and performance improvements."
+        ]
+    },
+    {
+        "branch": "stable",
+        "version": "4.7.0.0",
+        "build": "01/12/2025",
+        "logs": [
+            "A New Home - Migrated to Vercel.",
+            "Introducing Materio Originals.",
+            "Added Table of Contents sidebar in the insightroom.",
+            "New Reading Mode - Inversion.",
+            "Option to clear all Data.",
+            "Bug Fix - Shake-scroll in insightroom.",
+            "Bug Fix - Search not working."
+        ]
+    },
+    {
+        "branch": "beta",
+        "version": "4.7.0.0",
+        "build": "01/12/2025",
+        "logs": [
+            "A New Home - Migrated to Vercel.",
+            "Introducing Materio Originals.",
+            "Added Table of Contents sidebar in the insightroom.",
+            "New Reading Mode - Inversion.",
+            "Option to clear all Data.",
+            "Bug Fix - Shake-scroll in insightroom.",
+            "Bug Fix - Search not working."
+        ]
+    },
+    {
+        "branch": "stable",
         "version": "4.6.1.1",
-        "build":"14/11/2025",
-        "logs":[
+        "build": "14/11/2025",
+        "logs": [
             "AI Search was optimised so you can now ask something like `what to read?`, `resources with basics of turing machines` etc. and get suggestions based on it.",
             "Improved user experience by revamping the items in reading card.",
             "Little improvements to PDF loading logic to reduce lag."
         ]
     },
     {
-        "branch":"stable",
+        "branch": "stable",
         "version": "4.6.1.0",
-        "build":"01/11/2025",
-        "logs":[
+        "build": "01/11/2025",
+        "logs": [
             "SQUIRCLES!!!! - Feel the Smooth Consistent UI",
             "Adressed known bugs",
             "Local Resources - Load files locally on-device (Available to Super tier)",
@@ -24,32 +65,32 @@
         "branch": "beta",
         "version": "4.6.0.2",
         "build": "1/11/2025",
-        "logs":[
+        "logs": [
             "Little changes to UI",
             "Experimental migration to Hugeicons",
             "Local Resources - Load files locally on-device (Available to Super tier)",
             "Service Worker updated - Made offline experience better"
         ]
     },
-     {
-        "branch":"stable",
+    {
+        "branch": "stable",
         "version": "4.6.0.0",
-        "build":"27/09/2025",
-        "logs":[
-           "Introducing Materio Plus!",
-           "Get Exclusive perks as a plus user that normal user's won't get.",
-           "Materio will now show ads, Plus user's can get ad-free experience.",
-           "You can now choose to disable homepage insightroom feed from settings.",
-           "Introducing four all new background wallpaper options - Dynamic (changes scenes depending on the time of the day.), Zen, Blissful night and Dusk.",
-           "Improvements made in the Insightroom UI and printable's template.",
-           "Additions fixes here and there."
+        "build": "27/09/2025",
+        "logs": [
+            "Introducing Materio Plus!",
+            "Get Exclusive perks as a plus user that normal user's won't get.",
+            "Materio will now show ads, Plus user's can get ad-free experience.",
+            "You can now choose to disable homepage insightroom feed from settings.",
+            "Introducing four all new background wallpaper options - Dynamic (changes scenes depending on the time of the day.), Zen, Blissful night and Dusk.",
+            "Improvements made in the Insightroom UI and printable's template.",
+            "Additions fixes here and there."
         ]
     },
     {
-        "branch":"stable",
+        "branch": "stable",
         "version": "4.5.7.0 Patch-2",
-        "build":"29/07/2025",
-        "logs":[
+        "build": "29/07/2025",
+        "logs": [
             "Perfomance optimisations made in oread.",
             "UX improvements",
             "Upgraded icons to FontAwesome 7.0 Pro",

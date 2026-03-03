@@ -1,0 +1,9 @@
+{
+  "presets": ["@babel/preset-env"],
+  "ignore": [
+    "**/.netlify/**",
+    "**/node_modules/**"
+  ],
+  "compact": true,
+  "comments": false
+}

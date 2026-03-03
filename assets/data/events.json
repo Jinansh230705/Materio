@@ -1,16 +1,141 @@
 [
     {
-        "event": " ",
-        "url_pc": "/static/res/e1pc.jpg",
-        "url_mobile": "/static/res/e1mobile.jpg",
-        "setDate": "2025-11-30T24:00:00Z",
+        "event": "Christmas",
+        "url_pc": "dynamic",
+        "url_mobile": "dynamic",
+        "dynamic_config": [
+            {
+                "image": "/assets/img/events/dynamic/part_0.webp",
+                "start": "05:45",
+                "end": "06:00"
+            },
+            {
+                "image": "/assets/img/events/dynamic/part_1.webp",
+                "start": "06:00",
+                "end": "06:45"
+            },
+            {
+                "image": "/assets/img/events/dynamic/christmas/part_2.webp",
+                "start": "06:45",
+                "end": "17:45"
+            },
+            {
+                "image": "/assets/img/events/dynamic/christmas/part_3.webp",
+                "start": "17:45",
+                "end": "18:00"
+            },
+            {
+                "image": "/assets/img/events/dynamic/christmas/part_4.webp",
+                "start": "18:00",
+                "end": "19:00"
+            },
+            {
+                "image": "/assets/img/events/dynamic/christmas/part_5.webp",
+                "start": "19:00",
+                "end": "21:20"
+            },
+            {
+                "image": "/assets/img/events/dynamic/christmas/part_7.webp",
+                "start": "21:20",
+                "end": "22:50",
+                "exclusive_dates": [
+                    "2025-12-25",
+                    "2025-12-26",
+                    "2025-12-27"
+                ]
+            },
+            {
+                "image": "/assets/img/events/dynamic/christmas/part_8.webp",
+                "start": "22:50",
+                "end": "05:45",
+                "exclusive_dates": [
+                    "2025-12-25",
+                    "2025-12-26",
+                    "2025-12-27"
+                ]
+            },
+            {
+                "image": "/assets/img/events/dynamic/christmas/part_2026.webp",
+                "start": "22:50",
+                "end": "05:45",
+                "showLockscreen": true,
+                "exclusive_dates": [
+                    "2025-12-30",
+                    "2025-12-31",
+                    "2025-12-01"
+                ]
+            },
+            {
+                "image": "/assets/img/events/dynamic/christmas/part_6.webp",
+                "start": "19:45",
+                "end": "05:45"
+            }
+        ],
+        "setDate": "2025-12-24T00:00:00Z",
+        "endDate": "2026-01-15T23:59:59Z",
         "default": 0
     },
     {
         "event": "Default",
         "url_pc": "dynamic",
         "url_mobile": "dynamic",
-        "setDate": "2000-01-01T00:00:00Z",
-        "default": 1
+        "header_logo_light": "/assets/img/materio_new_bk.svg",
+        "header_logo_dark": "/assets/img/materio_new_wh.svg",
+        "dynamic_config": [
+            {
+                "image": "/assets/img/events/dynamic/part_0.webp",
+                "start": "05:45",
+                "end": "06:00"
+            },
+            {
+                "image": "/assets/img/events/dynamic/part_1.webp",
+                "start": "06:00",
+                "end": "06:45"
+            },
+            {
+                "image": "/assets/img/events/dynamic/part_2.webp",
+                "start": "06:45",
+                "end": "17:45"
+            },
+            {
+                "image": "/assets/img/events/dynamic/part_3.webp",
+                "start": "17:45",
+                "end": "18:00"
+            },
+            {
+                "image": "/assets/img/events/dynamic/part_4.webp",
+                "start": "18:00",
+                "end": "19:00"
+            },
+            {
+                "image": "/assets/img/events/dynamic/part_5.webp",
+                "start": "19:00",
+                "end": "19:45"
+            },
+            {
+                "image": "/assets/img/events/dynamic/part_6.webp",
+                "start": "19:45",
+                "end": "23:50"
+            },
+            {
+                "image": "/assets/img/events/dynamic/part_7.webp",
+                "start": "23:50",
+                "end": "00:30"
+            },
+            {
+                "image": "/assets/img/events/dynamic/part_8.webp",
+                "start": "00:30",
+                "end": "05:45"
+            }
+        ],
+        "setDate": "2025-01-01T00:00:00Z",
+        "default": 0
+    },
+    {
+        "event": "old",
+        "url_pc": "/assets/img/events/hero.webp",
+        "url_mobile": "/assets/img/events/hero_mobile.webp",
+        "setDate": "2020-01-01T00:00:00Z",
+        "default": 0
     }
 ]

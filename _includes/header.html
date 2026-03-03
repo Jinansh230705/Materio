@@ -1,5 +1,10 @@
 <header class="site-header">
   <a href="/#" class="header-logo" role="button" aria-label="Go to homepage"></a>
+  {% if page.layout == 'post' %}
+  <button class="toc-toggle" aria-label="Toggle table of contents" title="Toggle table of contents">
+    <i class="fa-light fa-sidebar"></i>
+  </button>
+  {% endif %}
 
   <!-- Search box for home layout -->
   {% if page.layout == 'home' %}

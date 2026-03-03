@@ -2,6 +2,174 @@
   "archive": [
     {
       "enabled": true,
+      "category": "whats-new",
+      "frequency": "every-12hr",
+      "customFrequencyHours": "null",
+      "title": "What's New",
+      "description": "The all new insightroom experience.\n The insightroom is re-written in svelte providing faster loading of content.\n Materio homepage provides a new layout for insightroom feed and smart recommendations.",
+      "link": "/changelog",
+      "images": [
+        "assets/img/covers/e6ddc339-0012-4c4b-83cd-6c37d1c7af9a.webp"
+      ],
+      "showImageOnMaintenance": false,
+      "imageRotationInterval": 5000,
+      "imageAnimation": {
+        "type": "slide-left",
+        "duration": 600,
+        "direction": "left"
+      },
+      "isLimitedOffer": true,
+      "startDate": "2025-12-18T00:00",
+      "endDate": "2025-12-20T00:00",
+      "showDateInfo": false,
+      "lastUpdated": "2025-12-18T13:15:00",
+      "buttons": {
+        "primary": {
+          "show": false,
+          "text": "Show Changes",
+          "icon": "&#8206;"
+        },
+        "secondary": {
+          "show": true,
+          "text": "Got it",
+          "icon": "&#8206;"
+        }
+      },
+      "disclaimer": {
+        "show": false,
+        "text": "Terms and conditions.",
+        "linkText": "Read more",
+        "linkUrl": ""
+      }
+    },
+    {
+      "enabled": true,
+      "category": "whats-new",
+      "frequency": "every-12hr",
+      "customFrequencyHours": "null",
+      "title": "What's New",
+      "description": " 1. Introducing Materio Originals !- A brand-new category of resources created, curated, and refined entirely by Materio — to help students understand concepts faster and more clearly.\n 2. Dark Mode in PDF natively - toggle from Settings - Reading modes\n 3. Optimizations made to OpenReader component.",
+      "link": "/changelog",
+      "images": [
+        "assets/img/covers/e6d2c600-a047-4a60-baa5-06adea6a054d.webp",
+        "assets/img/covers/8abb551b-2bb4-4879-800e-e936a1c44632.webp"
+      ],
+      "showImageOnMaintenance": false,
+      "imageRotationInterval": 5000,
+      "imageAnimation": {
+        "type": "slide-left",
+        "duration": 600,
+        "direction": "left"
+      },
+      "isLimitedOffer": true,
+      "startDate": "2025-12-01T00:00",
+      "endDate": "2025-12-04T00:00",
+      "showDateInfo": false,
+      "lastUpdated": "2025-11-30T22:15:00",
+      "buttons": {
+        "primary": {
+          "show": true,
+          "text": "Show Changes",
+          "icon": "&#8206;"
+        },
+        "secondary": {
+          "show": true,
+          "text": "Got it",
+          "icon": "&#8206;"
+        }
+      },
+      "disclaimer": {
+        "show": false,
+        "text": "Terms and conditions.",
+        "linkText": "Read more",
+        "linkUrl": ""
+      }
+    },
+    {
+      "enabled": true,
+      "category": "notice",
+      "frequency": "once",
+      "customFrequencyHours": "null",
+      "title": "A New Home for Materio’s Reliability",
+      "description": "Materio has officially completed its move to Vercel. The platform is now live again, powered by faster delivery, improved stability, and a more resilient infrastructure. You’re all set to continue using Materio with a smoother, more reliable experience than before.\n Thank you for your patience during the transition. For ongoing updates, our status page is always available.",
+      "link": "https://statuspage.incident.io/materio",
+      "images": [
+        "assets/img/covers/f58a6024-35aa-4982-aec9-c8270cfa76c4.webp"
+      ],
+      "showImageOnMaintenance": false,
+      "imageRotationInterval": 5000,
+      "imageAnimation": {
+        "type": "cascade",
+        "duration": 600,
+        "direction": "left"
+      },
+      "isLimitedOffer": true,
+      "startDate": "2025-11-23T14:00",
+      "endDate": "2025-11-24T00:00",
+      "showDateInfo": false,
+      "lastUpdated": "2025-11-23T13:31:00",
+      "buttons": {
+        "primary": {
+          "show": true,
+          "text": "View Status",
+          "icon": "&#8206;"
+        },
+        "secondary": {
+          "show": true,
+          "text": "Got it",
+          "icon": "&#8206;"
+        }
+      },
+      "disclaimer": {
+        "show": false,
+        "text": "Terms and conditions.",
+        "linkText": "Read more",
+        "linkUrl": ""
+      }
+    },
+    {
+      "enabled": true,
+      "category": "whats-new",
+      "frequency": "once",
+      "customFrequencyHours": "null",
+      "title": "What's New?",
+      "description": "1. AI Search was optimised so you can now ask something like `what to read?`, `resources with basics of turing machines` etc. and get suggestions based on it.\n 2. Improved user experience by revamping the items in the reading card.\n 3. Little improvements to PDF loading logic to reduce lag and faster loading (this will be improved more later).",
+      "link": "null",
+      "images": [
+        "assets/img/covers/211dbe97-430f-4637-b459-5bbc9e63ffcd.webp"
+      ],
+      "imageRotationInterval": 5000,
+      "imageAnimation": {
+        "type": "cascade",
+        "duration": 600,
+        "direction": "left"
+      },
+      "isLimitedOffer": true,
+      "startDate": "2025-11-14T19:00",
+      "endDate": "2025-11-15T19:00",
+      "showDateInfo": false,
+      "lastUpdated": "2025-11-14T18:55:00.000Z",
+      "buttons": {
+        "primary": {
+          "show": false,
+          "text": "Try Now",
+          "icon": "&#8206;"
+        },
+        "secondary": {
+          "show": true,
+          "text": "Got it",
+          "icon": "&#8206;"
+        }
+      },
+      "disclaimer": {
+        "show": false,
+        "text": "Terms and conditions.",
+        "linkText": "Read more",
+        "linkUrl": ""
+      }
+    },
+    {
+      "enabled": true,
       "title": "What was shipped - 08-11-25",
       "description": "Introducing Search! The faster way to access the materials you want to read. Just type few keywords and open from the results quickly. Didn't find what you were looking for? Try AI Search for better results.",
       "link": "#quickSearchBox",

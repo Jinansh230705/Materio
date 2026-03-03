@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }      try {
         // Validate invite code with the server
-        const response = await fetch('/api/v1/invites/validate', {
+        const response = await fetch('/api/v2/invites/validate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

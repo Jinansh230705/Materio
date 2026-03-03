@@ -17,13 +17,13 @@ class PDFDownloadManager {
             const request = indexedDB.open(this.dbName, this.dbVersion);
 
             request.onerror = () => {
-                console.error('Failed to open IndexedDB:', request.error);
+
                 reject(request.error);
             };
 
             request.onsuccess = () => {
                 this.db = request.result;
-                console.log('IndexedDB initialized successfully');
+
                 resolve(this.db);
             };
 
@@ -36,7 +36,7 @@ class PDFDownloadManager {
                     objectStore.createIndex('downloadedAt', 'downloadedAt', { unique: false });
                     objectStore.createIndex('semester', 'semester', { unique: false });
                     objectStore.createIndex('subject', 'subject', { unique: false });
-                    console.log('Created IndexedDB object store:', this.storeName);
+
                 }
             };
         });
@@ -50,13 +50,13 @@ class PDFDownloadManager {
             // Check if already downloaded
             const existing = await this.getPDF(pdfUrl);
             if (existing) {
-                console.log('PDF already downloaded:', pdfUrl);
+
                 return { success: true, message: 'Already downloaded', existing: true };
             }
 
             // Check storage quota
             const currentSize = await this.getTotalStorageSize();
-            
+
             // Fetch the PDF
             const response = await fetch(pdfUrl);
             if (!response.ok) {
@@ -96,16 +96,16 @@ class PDFDownloadManager {
             // Store in IndexedDB
             await this.savePDF(downloadEntry);
 
-            console.log('PDF downloaded successfully:', filename, `(${this.formatBytes(fileSize)})`);
-            return { 
-                success: true, 
-                message: 'Download complete', 
+
+            return {
+                success: true,
+                message: 'Download complete',
                 fileSize: fileSize,
-                existing: false 
+                existing: false
             };
 
         } catch (error) {
-            console.error('Error downloading PDF:', error);
+
             throw error;
         }
     }
@@ -158,7 +158,7 @@ class PDFDownloadManager {
                 }
             };
         } catch (error) {
-            console.error('Error updating last accessed time:', error);
+
         }
     }
 
@@ -184,7 +184,7 @@ class PDFDownloadManager {
             const request = objectStore.delete(url);
 
             request.onsuccess = () => {
-                console.log('PDF deleted from downloads:', url);
+
                 resolve(true);
             };
             request.onerror = () => reject(request.error);
@@ -207,7 +207,7 @@ class PDFDownloadManager {
     async getStorageInfo() {
         const downloads = await this.getAllDownloads();
         const totalSize = downloads.reduce((total, item) => total + (item.fileSize || 0), 0);
-        
+
         return {
             totalFiles: downloads.length,
             totalSize: totalSize,
@@ -258,7 +258,7 @@ class PDFDownloadManager {
             const request = objectStore.clear();
 
             request.onsuccess = () => {
-                console.log('All downloads cleared');
+
                 resolve(true);
             };
             request.onerror = () => reject(request.error);
@@ -268,16 +268,16 @@ class PDFDownloadManager {
     // Delete old downloads to free space (LRU - Least Recently Used)
     async deleteOldestDownloads(count = 1) {
         const downloads = await this.getAllDownloads();
-        
+
         // Sort by last accessed time (oldest first)
         downloads.sort((a, b) => (a.lastAccessedAt || 0) - (b.lastAccessedAt || 0));
-        
+
         const toDelete = downloads.slice(0, count);
-        
+
         for (const pdf of toDelete) {
             await this.deletePDF(pdf.url);
         }
-        
+
         return toDelete.length;
     }
 }

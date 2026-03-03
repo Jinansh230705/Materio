@@ -17,11 +17,11 @@
 <!-- Open Graph Meta Tags -->
 <meta property="og:title" content="Materio Plus">
 <meta property="og:description" content="Official materials you trust, in a way you love — Because e-learning shouldn't feel like suffering. Find organized, official study materials, notes, and peer help — all in one clean place." />
-<meta property="og:image" itemprop="image" content="https://materioa.netlify.app/assets/img/ogp.jpeg">
-<meta property="og:image:secure_url" itemprop="image" content="https://materioa.netlify.app/assets/img/ogp.jpeg">
+<meta property="og:image" itemprop="image" content="https://materioa.vercel.app/assets/img/ogp.jpeg">
+<meta property="og:image:secure_url" itemprop="image" content="https://materioa.vercel.app/assets/img/ogp.jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:url" content="https://materioa.netlify.app">
+<meta property="og:url" content="https://materioa.vercel.app">
 <meta property="og:type" content="website">
   <style>
     body {
@@ -584,7 +584,7 @@
       try {
         console.log('Fetching heading from database for invite code:', inviteCode);
         // First try to get the heading from the database
-        const response = await fetch(`/sharelink-info?code=${inviteCode}`);
+        const response = await fetch(`/api/v2/invites/sharelink-info?code=${inviteCode}`);
         console.log('Sharelink info response status:', response.status);
         
         if (response.ok) {
@@ -695,7 +695,7 @@
     async function validateInviteCode(code) {
       try {
         // Validate invite code with the server (same endpoint as signup page)
-        const response = await fetch('/api/v1/invites/validate', {
+        const response = await fetch('/api/v2/invites/validate', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

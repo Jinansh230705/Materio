@@ -2,8 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 /* Base Styles */
 :root {
-  --primary-color: #ff8200;
-  --primary-light: #ffa544;
+  --primary-color: #ff5400;
+  --primary-light: #ff8400;
   --secondary-color: #8a8d93;
   --success-color: #56ca00;
   --error-color: #ff4c51;
@@ -18,6 +18,8 @@
   --font-family: "Manrope", sans-serif;
   --shadow: 0px 4px 18px rgba(75, 70, 92, 0.1);
   --border-radius: 6px;
+  --outer-radius : 40px;
+  --inner-radius : 24px;
 }
 
 * {
@@ -56,8 +58,9 @@ a:hover {
 /* Card Styles */
 .auth-card, .profile-card {
   background-color: var(--card-color);
-  border-radius: var(--border-radius);
+  border-radius: var(--outer-radius);
   overflow: hidden;
+  corner-shape: squircle;
 }
 
 .auth-header, .profile-header {
@@ -116,7 +119,8 @@ input[type="password"] {
   width: 100%;
   padding: 0.625rem 0.875rem;
   border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
+  corner-shape: squircle;
+  border-radius: var(--outer-radius);
   font-size: 0.875rem;
   font-family:var(--font-family);
   color: var(--text-color);
@@ -177,6 +181,7 @@ input[type="file"] {
   padding: 0.75rem;
   background: none;
   border: none;
+    corner-shape: squircle;
   border-radius: var(--border-radius);
   font-weight: 500;
   font-family: var(--font-family);

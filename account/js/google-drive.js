@@ -1,7 +1,7 @@
 // Google Drive Integration JavaScript
 class GoogleDriveManager {
   constructor() {
-    this.apiBase = '/api/v1/google-drive';
+    this.apiBase = '/api/v2/features/google-drive';
     this.isLinked = false;
     this.files = [];
     this.materioFolderId = null;
@@ -16,7 +16,7 @@ class GoogleDriveManager {
   async checkServerAvailability() {
     try {
       // Simple health check to see if server is responding
-      const response = await fetch('/api/v1/health', {
+      const response = await fetch('/api/v2/health', {
         method: 'GET',
         timeout: 5000 // 5 second timeout
       });

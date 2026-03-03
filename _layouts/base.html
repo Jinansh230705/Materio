@@ -8,17 +8,34 @@
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/assets/img/room-icon-x.svg" sizes="256x256">
 
-  <meta property="og:title" content="Materio - The InsightRoom">
-  <meta property="og:description" content="The InsightRoom is a place to find insightful reads">
-  <meta property="og:image" itemprop="image" content="https://materioa.netlify.app/assets/img/og-theinsroom.jpg">
+  <meta property="og:title" content="{{ page.title | default: 'Materio - The InsightRoom' }}">
+  <meta property="og:description"
+    content="{{ page.excerpt | default: 'For minds that want more - a lil more than academics. Discover perspectives, originals, and knowledge that outgrows the classroom. Fuel for curious minds.' | strip_html | strip_newlines | truncate: 200 }}">
+  <meta property="og:image" itemprop="image"
+    content="https://materioa.vercel.app{{ page.image | default: '/assets/img/og-theinsroom.jpg' }}">
   <meta property="og:image:secure_url" itemprop="image"
-    content="https://materioa.netlify.app/assets/img/og-theinsroom.jpg">
+    content="https://materioa.vercel.app{{ page.image | default: '/assets/img/og-theinsroom.jpg' }}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:url" content="https://materioa.netlify.app/blog">
+  <meta property="og:url" content="https://materioa.vercel.app{{ page.url }}">
   <meta property="og:type" content="website">
+
+  <!-- Standard SEO -->
+  <meta name="description"
+    content="{{ page.excerpt | default: 'For minds that want more - a lil more than academics. Discover perspectives, originals, and knowledge that outgrows the classroom. Fuel for curious minds.' | strip_html | strip_newlines | truncate: 200 }}">
+  <link rel="canonical" href="https://materioa.vercel.app{{ page.url }}">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page.title | default: 'Materio - The InsightRoom' }}">
+  <meta name="twitter:description"
+    content="{{ page.excerpt | default: 'For minds that want more - a lil more than academics. Discover perspectives, originals, and knowledge that outgrows the classroom. Fuel for curious minds.' | strip_html | strip_newlines | truncate: 200 }}">
+  <meta name="twitter:image"
+    content="https://materioa.vercel.app{{ page.image | default: '/assets/img/og-theinsroom.jpg' }}">
+
   <title>{{ page.title | default: site.title }}</title>
   <link rel="stylesheet" href="/assets/style/style.css" />
+  <link rel="stylesheet" href="/assets/style/notebook.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
@@ -26,14 +43,28 @@
   <link id="highlight-theme"
     href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <script>hljs.highlightAll();</script>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
   <!-- <script src="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/js/fontawesome.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.css"> -->
   {% include fa-icons.html %}
+
+  <!-- Load Hugeicons CSS if enabled -->
+  <script>
+    (function () {
+      if (localStorage.getItem('materio_ota_hugeicons') === 'true') {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://use.hugeicons.com/font/icons.css';
+        document.head.appendChild(link);
+      }
+    })();
+  </script>
+
   <script>
     window.addEventListener('load', function () {
       if (typeof QRCode !== 'undefined') {
@@ -41,6 +72,11 @@
     });
   </script>
   <style>
+    /* Default link color for light mode */
+    body {
+      --link: #000000;
+    }
+
     body.dark {
       --bg: #121212;
       --text: #eeeeee;
@@ -54,7 +90,6 @@
       background-image: url('/assets/img/materio_new_wh.svg');
     }
 
-    /* Blog-specific header images for home and post layouts */
     body.blog-layout .site-header {
       background-image: url('/assets/img/banner.svg');
       width: 575px;
@@ -62,6 +97,101 @@
 
     body.blog-layout.dark .site-header {
       background-image: url('/assets/img/banner.svg');
+    }
+
+    /* Mobile: ensure header is full width and properly sized */
+    @media (max-width: 768px) {
+
+      body.blog-layout .site-header,
+      body.blog-layout.dark .site-header {
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+    }
+
+    /* Use Libre Baskerville for emphasized/italic text in posts */
+    article em,
+    article i,
+    .post-content em,
+    .post-content i,
+    .changelog-excerpt em,
+    .changelog-excerpt i {
+      font-family: 'Libre Baskerville', serif;
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    /* Link pill styling for in-post links */
+    .post-body a.link-pill,
+    .post-content a.link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.04);
+      color: var(--link, #0b66c3);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      line-height: 1;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .post-body a.link-pill i.fa-regular,
+    .post-content a.link-pill i.fa-regular {
+      opacity: 0.9;
+      font-size: 0.9rem;
+      margin-left: 0.1rem;
+    }
+
+    /* Label inside the pill; truncates with ellipsis when long */
+    .post-body a.link-pill .pill-label,
+    .post-content a.link-pill .pill-label {
+      display: inline-block;
+      max-width: 18ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    body.dark .post-body a.link-pill,
+    body.dark .post-content a.link-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+    }
+
+    /* (previously used ::after for domain) */
+    /* Skip pill styling for images inside anchors */
+    .post-body a.link-pill img,
+    .post-content a.link-pill img {
+      display: inline-block;
+      max-height: 1.2rem;
+    }
+
+    /* Ensure the icon sits at the very end of the pill */
+    .post-body a.link-pill i.fa-regular,
+    .post-content a.link-pill i.fa-regular {
+      order: 2;
+    }
+
+    .post-body a.link-pill .pill-label,
+    .post-content a.link-pill .pill-label {
+      order: 1;
+    }
+
+    @media (max-width: 640px) {
+
+      .post-body a.link-pill::after,
+      .post-content a.link-pill::after {
+        display: none;
+      }
+
+      .post-body a.link-pill,
+      .post-content a.link-pill {
+        font-size: 0.92rem;
+      }
     }
   </style>
 </head>
@@ -78,563 +208,60 @@
   {% include header.html %}
   {{ content }}
   {% include footer.html %}
-  </body>
   <script>
-    // Enhanced code block functionality
-    document.addEventListener('DOMContentLoaded', function () {
-      // Wrap tables in responsive containers
-      document.querySelectorAll('table').forEach(function (table) {
-        // Skip if already wrapped
-        if (table.parentElement.classList.contains('table-wrapper')) {
-          return;
-        }
-
-        const wrapper = document.createElement('div');
-        wrapper.className = 'table-wrapper';
-        table.parentNode.insertBefore(wrapper, table);
-        wrapper.appendChild(table);
-      });
-
-      // Process all code blocks
-      document.querySelectorAll('pre code').forEach(function (codeBlock) {
-        const pre = codeBlock.parentElement;
-        const classList = codeBlock.className;
-
-        let language = '';
-
-        // Method 1: Check Rouge classes (Jekyll's default highlighter)
-        // Rouge uses classes like 'language-go', 'language-javascript', etc.
-        const rougeMatch = classList.match(/(?:^|\s)language-([a-zA-Z0-9-]+)(?:\s|$)/);
-        if (rougeMatch) {
-          language = rougeMatch[1];
-        }
-
-        // Method 2: Check highlight.js classes 
-        if (!language) {
-          const hlMatch = classList.match(/(?:^|\s)(?:hljs-|hljs )([a-zA-Z0-9-]+)(?:\s|$)/);
-          if (hlMatch) {
-            language = hlMatch[1];
-          }
-        }
-
-        // Method 3: Check pre element classes (sometimes language is on pre)
-        if (!language) {
-          const preClasses = pre.className;
-          const preMatch = preClasses.match(/(?:^|\s)language-([a-zA-Z0-9-]+)(?:\s|$)/);
-          if (preMatch) {
-            language = preMatch[1];
-          }
-        }
-
-        // Method 4: Check data attributes
-        if (!language) {
-          const dataLang = codeBlock.getAttribute('data-language') || pre.getAttribute('data-language');
-          if (dataLang) {
-            language = dataLang;
-          }
-        }
-
-        // Method 5: Parse from text content or DOM structure
-        if (!language) {
-          // Look for Rouge's highlight class pattern
-          const highlightMatch = classList.match(/(?:^|\s)highlight(?:\s|$)/);
-          if (highlightMatch) {
-            // Rouge often puts the language in a parent div or data attribute
-            let parent = pre.parentElement;
-            while (parent && !language) {
-              const parentClass = parent.className;
-              const parentLangMatch = parentClass.match(/(?:^|\s)language-([a-zA-Z0-9-]+)(?:\s|$)/);
-              if (parentLangMatch) {
-                language = parentLangMatch[1];
-                break;
-              }
-              parent = parent.parentElement;
+    (function () {
+      // Enhance links inside post content to look like pills.
+      function enhancePostLinks(rootSelector) {
+        var roots = document.querySelectorAll(rootSelector);
+        if (!roots.length) return;
+        roots.forEach(function (root) {
+          var anchors = root.querySelectorAll('a[href]:not(.no-pill)');
+          anchors.forEach(function (a) {
+            // Skip anchors that wrap block elements or images (image links)
+            if (a.querySelector('img')) return;
+            // Skip anchors inside code or pre
+            if (a.closest('code, pre')) return;
+            // Add pill class if not already present
+            if (!a.classList.contains('link-pill')) a.classList.add('link-pill');
+            // Ensure FontAwesome arrow exists
+            if (!a.querySelector('i.fa-arrow-up-right')) {
+              var i = document.createElement('i');
+              i.className = 'fa-regular fa-arrow-up-right';
+              a.appendChild(i);
             }
-          }
-        }
-
-        // Method 6: Manual detection for common languages
-        if (!language) {
-          const codeText = codeBlock.textContent.toLowerCase();
-
-          // Go detection
-          if (codeText.includes('func ') || codeText.includes('package ') || codeText.includes(':=') || codeText.includes('os.Open')) {
-            language = 'go';
-          }
-          // JavaScript detection
-          else if (codeText.includes('function ') || codeText.includes('const ') || codeText.includes('let ') || codeText.includes('=>')) {
-            language = 'javascript';
-          }
-          // Java detection
-          else if (codeText.includes('public class') || codeText.includes('int ') || codeText.includes('System.out')) {
-            language = 'java';
-          }
-          // Python detection
-          else if (codeText.includes('def ') || codeText.includes('import ') || codeText.includes('print(')) {
-            language = 'python';
-          }
-        }
-
-        // Check if this is a single-line code block
-        const codeText = codeBlock.textContent.trim();
-        const lineCount = codeText.split('\n').length;
-        const isSingleLine = lineCount <= 1;
-
-        if (isSingleLine) {
-          pre.classList.add('single-line');
-        }
-
-        // Add language label if detected
-        if (language) {
-          pre.classList.add('has-language');
-
-          // Create language label element
-          const langLabel = document.createElement('div');
-          langLabel.className = 'code-language';
-          langLabel.textContent = language.toUpperCase();
-          pre.insertBefore(langLabel, codeBlock);
-        }
-
-        // Create copy button
-        const copyBtn = document.createElement('button');
-        copyBtn.className = 'code-copy-btn';
-        copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> ';
-        copyBtn.setAttribute('aria-label', 'Copy code to clipboard');
-
-        // Add click handler
-        copyBtn.addEventListener('click', function () {
-          const code = codeBlock.textContent;
-
-          navigator.clipboard.writeText(code).then(() => {
-            copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i> ';
-            // copyBtn.style.background = '#28a745';
-
-            setTimeout(() => {
-              copyBtn.innerHTML = '<i class="fa-regular fa-copy"></i> ';
-              copyBtn.style.background = '';
-            }, 2000);
-          }).catch(() => {
-            // Fallback for older browsers
-            fallbackCopyToClipboard(code, copyBtn);
+            // Add data-domain (short host or path) for ::after display
+            try {
+              var href = a.getAttribute('href');
+              var url = new URL(href, window.location.href);
+              var domain = url.host + (url.pathname && url.pathname !== '/' ? url.pathname.replace(/\/$/, '') : '');
+              // If relative link on same host, show path only
+              if (url.origin === window.location.origin) domain = url.pathname.replace(/\/$/, '') || url.pathname || url.href;
+              a.setAttribute('data-domain', domain);
+              // For external links, open in new tab and add rel
+              if (url.origin && url.origin !== window.location.origin) {
+                a.setAttribute('target', '_blank');
+                a.setAttribute('rel', 'noopener noreferrer');
+              }
+            } catch (e) {
+              // ignore parse errors
+            }
           });
         });
-
-        pre.appendChild(copyBtn);
-      });
-    });
-
-    // Fallback copy function for older browsers
-    function fallbackCopyToClipboard(text, button) {
-      const textArea = document.createElement('textarea');
-      textArea.value = text;
-      textArea.style.position = 'fixed';
-      textArea.style.left = '-999999px';
-      textArea.style.top = '-999999px';
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-
-      try {
-        const successful = document.execCommand('copy');
-        if (successful) {
-          button.innerHTML = ' ';
-          button.style.background = '#28a745';
-
-          setTimeout(() => {
-            button.innerHTML = '<i class="fa-regular fa-copy"></i> ';
-            button.style.background = '';
-          }, 2000);
-        }
-      } catch (err) {
-
-        button.innerHTML = 'Could not copy';
-
-        setTimeout(() => {
-          button.innerHTML = '<i class="fa-regular fa-copy"></i> ';
-        }, 2000);
       }
-
-      document.body.removeChild(textArea);
-    }
-  </script>
-
-  <script>
-    // Initialize Mermaid with theme support
-    document.addEventListener("DOMContentLoaded", function () {
-      // Check current theme for Mermaid
-      function getMermaidTheme() {
-        const isDark = document.body.classList.contains('dark') ||
-          (!getCookie("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches) ||
-          getCookie("theme") === "dark";
-        return isDark ? 'dark' : 'default';
-      }
-
-      // Initialize Mermaid
-      mermaid.initialize({
-        startOnLoad: true,
-        theme: getMermaidTheme(),
-        themeVariables: {
-          primaryColor: '#3ea6ff',
-          primaryTextColor: '#ffffff',
-          primaryBorderColor: '#ff8200',
-          lineColor: '#ff8200',
-          secondaryColor: '#1e1e1e',
-          tertiaryColor: '#333333'
-        },
-        flowchart: {
-          useMaxWidth: true,
-          htmlLabels: true
-        },
-        securityLevel: 'loose'
-      });
-
-      // Process Mermaid code blocks
-      document.querySelectorAll('pre code.language-mermaid, pre code[class*="mermaid"]').forEach(function (element) {
-        const pre = element.parentElement;
-        const mermaidCode = element.textContent;
-
-        // Create new div for mermaid
-        const mermaidDiv = document.createElement('div');
-        mermaidDiv.className = 'mermaid-diagram';
-        mermaidDiv.textContent = mermaidCode;
-
-        // Replace the pre element with mermaid div
-        pre.parentNode.replaceChild(mermaidDiv, pre);
-      });
-
-      // Re-render mermaid when theme changes
-      window.addEventListener('themeChanged', function () {
-        mermaid.initialize({
-          startOnLoad: true,
-          theme: getMermaidTheme(),
-          themeVariables: {
-            primaryColor: '#3ea6ff',
-            primaryTextColor: '#ffffff',
-            primaryBorderColor: '#ff8200',
-            lineColor: '#ff8200',
-            secondaryColor: '#1e1e1e',
-            tertiaryColor: '#333333'
-          }
+      // Run on DOMContentLoaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function () {
+          enhancePostLinks('.post-body');
+          enhancePostLinks('.post-content');
         });
-        mermaid.init(undefined, document.querySelectorAll('.mermaid-diagram'));
-      });
-
-      function getCookie(name) {
-        const nameEQ = name + "=";
-        const ca = document.cookie.split(";");
-        for (let i = 0; i < ca.length; i++) {
-          let c = ca[i].trim();
-          if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
-        }
-        return null;
-      }
-    });
-  </script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      function setCookie(name, value, days) {
-        let expires = "";
-        if (days) {
-          const date = new Date();
-          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-          expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + value + expires + "; path=/";
-      }
-
-      function getCookie(name) {
-        const nameEQ = name + "=";
-        const ca = document.cookie.split(";");
-        for (let i = 0; i < ca.length; i++) {
-          let c = ca[i].trim();
-          if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length);
-        }
-        return null;
-      }
-
-      function applyTheme(isDark) {
-        const elements = [
-          document.body,
-          document.querySelector('header'),
-          document.querySelector('.site-header')
-        ];
-
-        elements.forEach(el => {
-          if (el) {
-            if (isDark) {
-              el.classList.add('dark');
-              el.classList.add('dark-mode');
-            } else {
-              el.classList.remove('dark');
-              el.classList.remove('dark-mode');
-            }
-          }
-        });
-
-        // Update highlight.js theme
-        updateHighlightTheme(isDark);
-
-        // Dispatch theme change event for Mermaid
-        window.dispatchEvent(new CustomEvent('themeChanged'));
-      }
-
-      // Global function for footer theme buttons
-      window.setTheme = function (theme) {
-        if (theme === 'dark') {
-          setCookie("theme", "dark", 30);
-          applyTheme(true);
-        } else if (theme === 'light') {
-          setCookie("theme", "light", 30);
-          applyTheme(false);
-        } else if (theme === 'system') {
-          setCookie("theme", "system", 30);
-          const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-          applyTheme(systemPrefersDark);
-        }
-      };
-
-      // Initialize theme
-      let userTheme = getCookie("theme");
-      if (userTheme === "dark") {
-        applyTheme(true);
-      } else if (userTheme === "light") {
-        applyTheme(false);
       } else {
-        const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        applyTheme(systemPrefersDark);
+        enhancePostLinks('.post-body');
+        enhancePostLinks('.post-content');
       }
-
-      // Listen for system theme changes when using system mode
-      window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', function (e) {
-        if (getCookie("theme") === "system") {
-          applyTheme(e.matches);
-        }
-      });
-    });
+    })();
   </script>
-  <script>
-    // Highlight.js theme switching
-    function updateHighlightTheme(isDark) {
-      const highlightTheme = document.getElementById('highlight-theme');
-      if (highlightTheme) {
-        if (isDark) {
-          highlightTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github-dark.min.css';
-        } else {
-          highlightTheme.href = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/github.min.css';
-        }
-      }
-    }
-  </script>
+  <script src="{{ '/assets/scripts/post-base.js' | relative_url }}"></script>
+  </body>
 
-  <script>
-    // Print enhancement - First page only header with QR code and logo
-    document.addEventListener("DOMContentLoaded", function () {
-      // Generate print elements when printing
-      window.addEventListener('beforeprint', function () {
-        console.log('beforeprint event triggered');
-        generatePrintElements();
-      });
-
-      function generatePrintElements() {
-        console.log('generatePrintElements called');
-        // Remove existing print elements
-        const existingElements = document.querySelectorAll('.print-only-element');
-        existingElements.forEach(el => el.remove());
-
-        // Only add to post pages (check if we have a post container)
-        const postContainer = document.querySelector('.post-container');
-        if (!postContainer) {
-          console.log('No post container found');
-          return;
-        }
-
-        console.log('Creating print elements...');
-
-        // Debug: Check if elements will be visible
-        console.log('Post container found:', postContainer);
-        console.log('Hidden QR found:', document.getElementById('hidden-qr-code'));
-
-        // Create print-only container that appears before content
-        const printContainer = document.createElement('div');
-        printContainer.className = 'print-only-element print-page-header';
-        printContainer.style.cssText = `
-          display: none;
-          width: 100%;
-          height: 100px;
-          margin-bottom: 10px;
-          position: relative;
-          border-bottom: 1px solid #ddd;
-          padding-bottom: 8px;
-        `;
-
-        // Logo on the left
-        const logoDiv = document.createElement('div');
-        logoDiv.style.cssText = 'position: absolute; left: 0; top: 3px;';
-        logoDiv.innerHTML = '<img src="/assets/img/materio_new_bk.svg" alt="Materio" style="height: 32px; width: auto;">';
-
-        // QR section on the right - just placeholder for print
-        const qrSection = document.createElement('div');
-        qrSection.style.cssText = 'position: absolute; right: 0; top: 0; text-align: center;';
-
-        // QR title
-        const qrTitle = document.createElement('div');
-        qrTitle.style.cssText = 'font-family: "Libre Baskerville", serif; font-size: 8px; color: #666; margin-bottom: 3px;';
-        qrTitle.textContent = 'Scan to read online';
-
-        // QR container - will use the pre-generated one
-        const qrContainer = document.createElement('div');
-        qrContainer.id = 'print-qr-display';
-        qrContainer.style.cssText = 'width: 90px; height: 90px;';
-
-        // Copy the pre-generated QR code from the hidden element
-        const hiddenQR = document.getElementById('hidden-qr-code');
-        console.log('Hidden QR element:', hiddenQR);
-        console.log('Hidden QR has child:', hiddenQR && hiddenQR.firstChild);
-
-        if (hiddenQR && hiddenQR.firstChild) {
-          qrContainer.appendChild(hiddenQR.firstChild.cloneNode(true));
-          console.log('QR code cloned successfully');
-        } else {
-          qrContainer.innerHTML = '<div style="font-size: 5px; word-break: break-all; text-align: center;">' + window.location.href + '</div>';
-          console.log('Using fallback QR (text URL)');
-        }
-
-        qrSection.appendChild(qrTitle);
-        qrSection.appendChild(qrContainer);
-
-        printContainer.appendChild(logoDiv);
-        printContainer.appendChild(qrSection);
-
-        // Insert at the very beginning of post container
-        postContainer.insertBefore(printContainer, postContainer.firstChild);
-        console.log('Print container inserted into DOM');
-        console.log('Print container element:', printContainer);
-
-        // Add print styles
-        addPrintStyles();
-        console.log('Print elements created successfully');
-
-        // Verify the element is actually in the DOM
-        const inserted = document.querySelector('.print-page-header');
-        console.log('Verification - print header in DOM:', inserted);
-      }
-
-      // Make generatePrintElements globally accessible for manual triggering
-      window.generatePrintElements = generatePrintElements;
-
-      function addPrintStyles() {
-        // Remove existing print style
-        const existingStyle = document.getElementById('print-element-style');
-        if (existingStyle) existingStyle.remove();
-
-        // Add new print style
-        const printStyle = document.createElement('style');
-        printStyle.id = 'print-element-style';
-        printStyle.textContent = `
-          @media print {
-            .print-page-header {
-              display: block !important;
-            }
-            
-            /* Hide share and print icons in print view */
-            .fa-share, .fa-print {
-              display: none !important;
-            }
-            
-            /* Reduce top margins significantly for first page, normal for others */
-            @page :first {
-              margin-top: 0.5in;
-            }
-            
-            @page {
-              margin-top: 0.75in;
-            }
-          }
-          
-          /* Hide in normal view */
-          @media screen {
-            .print-only-element {
-              display: none !important;
-            }
-          }
-        `;
-        document.head.appendChild(printStyle);
-        console.log('Print styles added to document head');
-        console.log('Print style element:', printStyle);
-      }
-
-      // Clean up after printing
-      window.addEventListener('afterprint', function () {
-        const printElements = document.querySelectorAll('.print-only-element');
-        printElements.forEach(el => el.remove());
-
-        const printStyle = document.getElementById('print-element-style');
-        if (printStyle) printStyle.remove();
-      });
-
-    });
-  </script>
-
-  <script>
-    // QR Code pre-generation for posts (hidden, for print use)
-    document.addEventListener("DOMContentLoaded", function () {
-      // Only generate QR for post pages
-      const postContainer = document.querySelector('.post-container');
-      if (!postContainer) return;
-
-      // Create hidden QR code container
-      const hiddenQRContainer = document.createElement('div');
-      hiddenQRContainer.id = 'hidden-qr-code';
-      hiddenQRContainer.style.cssText = 'position: absolute; left: -9999px; top: -9999px; visibility: hidden;';
-      document.body.appendChild(hiddenQRContainer);
-
-      // Generate QR code when page loads
-      generateHiddenQRCode();
-
-      function generateHiddenQRCode() {
-        try {
-          // Use Google Charts QR Code API - more reliable
-          const qrSize = 90;
-          const currentUrl = encodeURIComponent(window.location.href);
-          const qrApiUrl = `https://chart.googleapis.com/chart?chs=${qrSize}x${qrSize}&cht=qr&chl=${currentUrl}&choe=UTF-8`;
-
-          // Create img element for QR code
-          const qrImg = document.createElement('img');
-          qrImg.src = qrApiUrl;
-          qrImg.style.cssText = 'width: 90px; height: 90px; display: block;';
-          qrImg.alt = 'QR Code for ' + window.location.href;
-
-          // Add to hidden container when loaded
-          qrImg.onload = function () {
-
-            hiddenQRContainer.appendChild(qrImg);
-          };
-
-          qrImg.onerror = function () {
-
-            // Fallback to qr-server.com API
-            const fallbackUrl = `https://api.qrserver.com/v1/create-qr-code/?size=90x90&data=${currentUrl}`;
-            const fallbackImg = document.createElement('img');
-            fallbackImg.src = fallbackUrl;
-            fallbackImg.style.cssText = 'width: 90px; height: 90px; display: block;';
-            fallbackImg.alt = 'QR Code for ' + window.location.href;
-
-            fallbackImg.onload = function () {
-
-              hiddenQRContainer.appendChild(fallbackImg);
-            };
-
-            fallbackImg.onerror = function () {
-
-            };
-          };
-
-        } catch (error) {
-
-        }
-      }
-    });
-  </script>
 
 </html>

@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
           submitButton.textContent = 'VERIFYING...';
           
           // Step 1: Verify recovery key
-          const verifyResponse = await makeApiRequest('forgot-password', 'POST', {
+          const verifyResponse = await makeApiRequest('auth?action=forgot-password', 'POST', {
             email,
             recoveryKey
           });
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
           submitButton.textContent = 'RESETTING...';
           
           // Make password reset API request
-          const resetResponse = await makeApiRequest('forgot-password', 'POST', {
+          const resetResponse = await makeApiRequest('auth?action=forgot-password', 'POST', {
             email,
             recoveryKey,
             newPassword

@@ -23,13 +23,6 @@
     <priority>0.6</priority>
   </url>
   
-  <url>
-    <loc>https://materioa.netlify.app/chat</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
   <!-- Policy Pages -->
   <url>
     <loc>https://materioa.netlify.app/privacy</loc>
@@ -96,7 +89,7 @@
   </url>
   
   <url>
-    <loc>https://materioa.netlify.app/programming%20humor/lorem.html</loc>
+    <loc>https://materioa.netlify.app/programming-humor/lorem.html</loc>
     <lastmod>2025-05-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -110,7 +103,7 @@
   </url>
   
   <url>
-    <loc>https://materioa.netlify.app/code%20craftsmanship/func.html</loc>
+    <loc>https://materioa.netlify.app/code-craftsmanship/func.html</loc>
     <lastmod>2025-05-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -194,54 +187,10 @@
   </url>
   
   <url>
-    <loc>https://materioa.netlify.app/paper%20solution/daa-mid.html</loc>
+    <loc>https://materioa.netlify.app/paper-solution/daa-mid.html</loc>
     <lastmod>2025-09-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  
-  <!-- Redirects -->
-  <url>
-    <loc>https://materioa.netlify.app/redirects/pplx</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  
-  <url>
-    <loc>https://materioa.netlify.app/r/comet</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  
-  <url>
-    <loc>https://materioa.netlify.app/redirects/p/perplexity-comet</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  
-  <!-- Plus Invites (Private pages - lower priority) -->
-  <url>
-    <loc>https://materioa.netlify.app/invites/65FFCCD5E1EA4FA2</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  
-  <url>
-    <loc>https://materioa.netlify.app/invites/735D88DCA5C8423F</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.1</priority>
-  </url>
-  
-  <url>
-    <loc>https://materioa.netlify.app/invites/886420AB33F643D6</loc>
-    <lastmod>2025-11-11</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.1</priority>
   </url>
   
 </urlset>

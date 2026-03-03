@@ -1,0 +1,209 @@
+{
+  "version": 2,
+  "buildCommand": "node scripts/generate-build-id.js && bundle exec jekyll build && node scripts/minify-assets.js && node scripts/version-assets.js",
+  "outputDirectory": "_site",
+  "framework": "jekyll",
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/data/(.*).json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "source": "/channels/(.*).json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(style|scripts|img)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/account/css/(.*).css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/v2/login",
+      "destination": "/api/v2/login.js"
+    },
+    {
+      "source": "/api/v2/search",
+      "destination": "/api/v2/search.js"
+    },
+    {
+      "source": "/api/v2/features/(.*)",
+      "destination": "/api/v2/features.js?path=$1"
+    },
+    {
+      "source": "/api/v2/health/report",
+      "destination": "/api/v2/health.js?action=report"
+    },
+    {
+      "source": "/api/v2/health/alert",
+      "destination": "/api/v2/health.js?action=alert"
+    },
+    {
+      "source": "/api/v2/health/test-incident-email",
+      "destination": "/api/v2/health.js?action=test-incident-email"
+    },
+    {
+      "source": "/api/v2/health",
+      "destination": "/api/v2/health.js"
+    },
+    {
+      "source": "/api/v2/invites/sharelink-info",
+      "destination": "/api/v2/invites.js"
+    },
+    {
+      "source": "/api/v2/invites/(.*)",
+      "destination": "/api/v2/invites.js?path=$1"
+    },
+    {
+      "source": "/api/v2/chat/(.*)",
+      "destination": "/api/v2/chat.js?path=$1"
+    },
+    {
+      "source": "/sharelink-info",
+      "destination": "/api/v2/invites.js"
+    },
+    {
+      "source": "/share/llm/(.*)",
+      "destination": "/api/v2/features.js?action=pdf-share&subAction=resolve-llm&llmMaskId=$1"
+    },
+    {
+      "source": "/llm",
+      "destination": "/api/v2/features.js?action=pdf-share&subAction=resolve-llm"
+    },
+    {
+      "source": "/invites/:code",
+      "destination": "/invite.html"
+    },
+    {
+      "source": "/account/profile",
+      "destination": "/account/profile.html"
+    },
+    {
+      "source": "/account/signup",
+      "destination": "/account/signup.html"
+    },
+    {
+      "source": "/account/forgot-password",
+      "destination": "/account/forgot-password.html"
+    },
+    {
+      "source": "/api/v2/profile",
+      "destination": "/api/v2/profile.js"
+    },
+    {
+      "source": "/account",
+      "destination": "/account/index.html"
+    },
+    {
+      "source": "/sharelink-test",
+      "destination": "/sharelink-test.html"
+    },
+    {
+      "source": "/api/v1/(.*)",
+      "destination": "/api/v2/$1"
+    },
+    {
+      "source": "/:slug([a-zA-Z0-9_-]{2,20})",
+      "destination": "/index.html?r=:slug"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/blog",
+      "destination": "/room",
+      "permanent": true
+    },
+    {
+      "source": "/programming%20humor/(.*)",
+      "destination": "/programming-humor/$1",
+      "permanent": true
+    },
+    {
+      "source": "/code%20craftsmanship/(.*)",
+      "destination": "/code-craftsmanship/$1",
+      "permanent": true
+    },
+    {
+      "source": "/paper%20solution/(.*)",
+      "destination": "/paper-solution/$1",
+      "permanent": true
+    },
+    {
+      "source": "/status",
+      "destination": "https://statuspage.incident.io/materio",
+      "permanent": true
+    },
+    {
+      "source": "/room",
+      "destination": "https://insightroom.vercel.app",
+      "permanent": true
+    }
+  ]
+}

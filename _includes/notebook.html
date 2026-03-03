@@ -1,0 +1,271 @@
+<!-- Notebook Modal -->
+<!-- Rich text note-taking interface with markdown support -->
+<div class="notebook-modal" id="notebookModal" role="dialog" aria-hidden="true" aria-labelledby="notebookTitle">
+    <div class="notebook-backdrop" id="notebookBackdrop"></div>
+    <div class="notebook-dialog">
+        <!-- Close Button -->
+        <button class="notebook-close-btn" id="notebookCloseBtn" aria-label="Close Notebook">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Notebook Header -->
+        <div class="notebook-header">
+            <div class="notebook-title-section">
+                <i class="far fa-book-open notebook-icon"></i>
+                <input type="text" id="notebookTitleInput" class="notebook-title-input" placeholder="Untitled Note"
+                    maxlength="100" autocomplete="off">
+            </div>
+            <div class="notebook-meta">
+                <span class="notebook-date" id="notebookDate"></span>
+                <span class="notebook-link" id="notebookLinkBadge" style="display: none;">
+                    <i class="fas fa-link"></i>
+                    <span id="notebookLinkText"></span>
+                </span>
+            </div>
+        </div>
+
+        <!-- Notebook Toolbar -->
+        <div class="notebook-toolbar" id="notebookToolbar">
+            <div class="toolbar-group toolbar-formatting">
+                <button type="button" class="toolbar-btn" data-action="bold" title="Bold (Ctrl+B)">
+                    <i class="fas fa-bold"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="italic" title="Italic (Ctrl+I)">
+                    <i class="fas fa-italic"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="underline" title="Underline (Ctrl+U)">
+                    <i class="fas fa-underline"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="strikethrough" title="Strikethrough">
+                    <i class="fas fa-strikethrough"></i>
+                </button>
+            </div>
+
+            <div class="toolbar-divider"></div>
+
+            <div class="toolbar-group toolbar-headings">
+                <button type="button" class="toolbar-btn" data-action="heading1" title="Heading 1">
+                    <span class="heading-text">H1</span>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="heading2" title="Heading 2">
+                    <span class="heading-text">H2</span>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="heading3" title="Heading 3">
+                    <span class="heading-text">H3</span>
+                </button>
+            </div>
+
+            <div class="toolbar-divider"></div>
+
+            <div class="toolbar-group toolbar-lists">
+                <button type="button" class="toolbar-btn" data-action="bulletList" title="Bullet List">
+                    <i class="fas fa-list-ul"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="numberedList" title="Numbered List">
+                    <i class="fas fa-list-ol"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="checkbox" title="Checkbox">
+                    <i class="fas fa-square-check"></i>
+                </button>
+            </div>
+
+            <div class="toolbar-divider"></div>
+
+            <div class="toolbar-group toolbar-insert">
+                <button type="button" class="toolbar-btn" data-action="link" title="Insert Link (Ctrl+K)">
+                    <i class="fas fa-link"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="image" title="Insert Image">
+                    <i class="fas fa-image"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="code" title="Code Block">
+                    <i class="fas fa-code"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="math" title="Math/LaTeX">
+                    <i class="fas fa-square-root-variable"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="quote" title="Blockquote">
+                    <i class="fas fa-quote-left"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="divider" title="Horizontal Divider">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+
+            <div class="toolbar-divider"></div>
+
+            <div class="toolbar-group toolbar-actions">
+                <button type="button" class="toolbar-btn" data-action="linkPdf" title="Link to PDF"
+                    id="notebookLinkPdfBtn">
+                    <i class="fas fa-file-pdf"></i>
+                </button>
+                <button type="button" class="toolbar-btn" data-action="attachment" title="Add Attachment">
+                    <i class="fas fa-paperclip"></i>
+                </button>
+            </div>
+
+            <!-- AI Write Button (Super users only) -->
+            <div class="toolbar-group toolbar-ai" id="notebookAiToolbar" style="display: none;">
+                <div class="toolbar-divider"></div>
+                <button type="button" class="toolbar-btn toolbar-btn-ai" data-action="aiWrite" title="Write with AI">
+                    <i class="fas fa-wand-magic-sparkles"></i>
+                    <span>AI</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Notebook Editor -->
+        <div class="notebook-editor-container">
+            <div class="notebook-editor" id="notebookEditor" contenteditable="true"
+                data-placeholder="Start writing your note..."></div>
+
+            <!-- AI Input Overlay (Super users only) -->
+            <div class="ai-input-overlay" id="aiInputOverlay" style="display: none;">
+                <div class="ai-input-container">
+                    <div class="ai-sparkle-indicator">
+                        <i class="fas fa-sparkles"></i>
+                    </div>
+                    <input type="text" id="aiPromptInput" class="ai-prompt-input"
+                        placeholder="Describe what you want AI to write...">
+                    <button type="button" class="ai-submit-btn" id="aiSubmitBtn">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="button" class="ai-cancel-btn" id="aiCancelBtn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="ai-suggestions">
+                    <span class="ai-suggestion" data-prompt="Summarize the linked PDF">Summarize PDF</span>
+                    <span class="ai-suggestion" data-prompt="Create a study guide">Study Guide</span>
+                    <span class="ai-suggestion" data-prompt="Generate key takeaways">Key Takeaways</span>
+                </div>
+            </div>
+
+            <!-- AI Writing Indicator -->
+            <div class="ai-writing-indicator" id="aiWritingIndicator" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>AI is writing...</span>
+                <button type="button" class="ai-stop-btn" id="aiStopBtn">Stop</button>
+            </div>
+        </div>
+
+        <!-- Notebook Footer -->
+        <div class="notebook-footer">
+            <div class="notebook-status">
+                <a href="#notebooks" class="notebook-manage-link" id="notebookManageBtn" title="Manage all notebooks">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Manage Notebooks</span>
+                </a>
+                <span class="save-status" id="notebookSaveStatus">
+                    <i class="fas fa-cloud-check"></i>
+                    <span>Saved locally</span>
+                </span>
+                <span class="word-count" id="notebookWordCount">0 words</span>
+            </div>
+            <div class="notebook-footer-actions">
+                <button type="button" class="notebook-btn notebook-btn-secondary" id="notebookDeleteBtn"
+                    style="display: none; color: var(--notebook-error);">
+                    <i class="fas fa-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <button type="button" class="notebook-btn notebook-btn-secondary" id="notebookPreviewBtn">
+                    <i class="fas fa-eye"></i>
+                    <span>Preview</span>
+                </button>
+                <button type="button" class="notebook-btn notebook-btn-secondary" id="notebookExportBtn">
+                    <i class="fas fa-download"></i>
+                    <span>Export</span>
+                </button>
+                <button type="button" class="notebook-btn notebook-btn-primary" id="notebookSaveBtn">
+                    <i class="fas fa-floppy-disk"></i>
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Link PDF Modal -->
+<div class="notebook-link-pdf-modal" id="linkPdfModal" style="display: none;">
+    <div class="link-pdf-dialog">
+        <div class="link-pdf-header">
+            <h3><i class="fas fa-link"></i> Link to PDF</h3>
+            <div class="link-pdf-actions">
+                <button class="link-new-note-btn" id="linkNewNoteBtn" title="Create a new note for a PDF">
+                    <i class="fas fa-plus-circle"></i> New Note
+                </button>
+                <button class="link-pdf-close" id="linkPdfCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="link-pdf-content">
+            <p class="link-pdf-description">Select a PDF to link this note with:</p>
+            <div class="link-pdf-options" id="linkPdfOptions">
+                <!-- Current PDF option (if popup is open) -->
+                <div class="link-pdf-option link-pdf-current" id="linkPdfCurrentOption" style="display: none;">
+                    <i class="fas fa-file-pdf"></i>
+                    <div class="link-pdf-info">
+                        <span class="link-pdf-name" id="linkPdfCurrentName"></span>
+                        <span class="link-pdf-path" id="linkPdfCurrentPath"></span>
+                    </div>
+                    <button class="link-pdf-select-btn" data-type="current">Link</button>
+                </div>
+
+                <!-- Search for PDF -->
+                <div class="link-pdf-search-container">
+                    <input type="text" id="linkPdfSearchInput" class="link-pdf-search"
+                        placeholder="Search downloaded PDFs...">
+                </div>
+                <div class="link-pdf-list" id="linkPdfList">
+                    <!-- Downloaded PDFs will be listed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Notebook Preview Modal -->
+<div class="notebook-preview-modal" id="notebookPreviewModal" style="display: none;">
+    <div class="notebook-preview-dialog">
+        <div class="notebook-preview-header">
+            <h3><i class="fas fa-eye"></i> Preview</h3>
+            <button class="notebook-preview-close" id="notebookPreviewCloseBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notebook-preview-content" id="notebookPreviewContent">
+            <!-- Rendered markdown will appear here -->
+        </div>
+    </div>
+</div>
+
+<!-- Export Options Modal -->
+<div class="notebook-export-modal" id="notebookExportModal" style="display: none;">
+    <div class="notebook-export-dialog">
+        <div class="notebook-export-header">
+            <h3><i class="fas fa-download"></i> Export Note</h3>
+            <button class="notebook-export-close" id="notebookExportCloseBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notebook-export-content">
+            <div class="export-option" data-format="markdown">
+                <i class="fab fa-markdown"></i>
+                <span>Markdown (.md)</span>
+            </div>
+            <div class="export-option" data-format="html">
+                <i class="fas fa-code"></i>
+                <span>HTML (.html)</span>
+            </div>
+            <div class="export-option" data-format="txt">
+                <i class="fas fa-file-lines"></i>
+                <span>Plain Text (.txt)</span>
+            </div>
+            <div class="export-option" data-format="pdf">
+                <i class="fas fa-file-pdf"></i>
+                <span>PDF (.pdf)</span>
+            </div>
+        </div>
+    </div>
+</div>

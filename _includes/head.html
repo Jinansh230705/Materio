@@ -1,45 +1,87 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Materio - Home | Materio</title>
-<meta name="description" content="Official materials you trust, in a way you love — Because e-learning shouldn't feel like suffering. Find organized, official study materials, notes, and peer help — all in one clean place." />
+<meta name="description"
+    content="Official materials you trust, in a way you love — Because e-learning shouldn't feel like suffering. Find organized, official study materials, notes, and peer help — all in one clean place." />
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://materioa.netlify.app">
+<link rel="canonical" href="https://materioa.vercel.app">
 <meta name="keywords"
     content="Materio, Materio PU, Materio - Home, Materioa, materio, materioa, Parul University, PU, PU Materials, CSE Materials PU, Vadodara, Jinansh Mehta, Materio Github, Materio Study Materials, Study materials, CSE Materials PU">
 
 <!-- Open Graph Meta Tags -->
 <meta property="og:title" content="Materio">
-<meta property="og:description" content="Official materials you trust, in a way you love — Because e-learning shouldn't feel like suffering. Find organized, official study materials, notes, and peer help — all in one clean place." />
-<meta property="og:image" itemprop="image" content="https://materioa.netlify.app/assets/img/og.jpeg">
-<meta property="og:image:secure_url" itemprop="image" content="https://materioa.netlify.app/assets/img/og.jpeg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:url" content="https://materioa.netlify.app">
+<meta property="og:description"
+    content="Official materials you trust, in a way you love — Because e-learning shouldn't feel like suffering. Find organized, official study materials, notes, and peer help — all in one clean place." />
+<meta property="og:image" content="https://materioa.vercel.app/assets/img/open-graph.png">
+<meta property="og:image" content="https://materioa.vercel.app/assets/img/open-graph.jpeg">
+<meta property="og:image" content="https://materioa.vercel.app/assets/img/open-graph-general.png">
+<meta property="og:image" content="https://materioa.vercel.app/assets/img/open-graph-general.jpg">
+<meta property="og:url" content="https://materioa.vercel.app">
 <meta property="og:type" content="website">
 
-<!-- PWA Configuration -->
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Materio">
+<meta name="twitter:description"
+    content="Official materials you trust, in a way you love — Because e-learning shouldn't feel like suffering.">
+<meta name="twitter:image" content="https://materioa.vercel.app/assets/img/open-graph.png">
 <meta name="theme-color" content="#333333">
+
+{% unless site.disable_service_worker %}
+<!-- PWA Configuration -->
 <link rel="manifest" href="/manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Materio">
 <link rel="apple-touch-icon" href="/assets/img/icon.svg">
+{% endunless %}
 
 <!-- Favicon and Icons -->
-<link rel="icon" type="image/x-icon" href="/assets/img/icon.svg" sizes="256x256">
-<link rel="icon" href="/assets/img/icon-x.svg" sizes="16x16" type="image/svg">
+<link rel="icon" href="/assets/img/favico.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/assets/img/favico.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/assets/img/favicon.png" sizes="128x128" type="image/png">
+<link rel="icon" type="image/x-icon" href="/assets/img/favicon.svg" sizes="32x32" type="image/svg">
+<link rel="icon" href="/assets/img/i16.svg" sizes="16x16" type="image/svg">
+<link rel="icon" href="/assets/img/favico.svg" sizes="128x128" type="image/svg">
 
-<!-- External Stylesheets -->
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.css"> -->
 <script src="https://materioa.github.io/kit/6a787c7335.js" crossorigin="anonymous"></script>
+<script src="/assets/scripts/referral.js"></script>
 <link rel="stylesheet" href="/assets/style/icon-fallback.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+<link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@200..800&display=swap"
+    rel="stylesheet">
 
 <!-- Service Worker Registration -->
+{% comment %} Service worker control: respects `_config.yml:disable_service_worker` {% endcomment %}
+{% if site.disable_service_worker %}
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            // Unregister any existing service workers and clear caches.
+            navigator.serviceWorker.getRegistrations()
+                .then(function (registrations) {
+                    registrations.forEach(function (reg) {
+                        try { reg.unregister(); } catch (e) { console.log('SW unregister error', e); }
+                    });
+                })
+                .catch(function (err) { console.log('Error getting SW registrations:', err); });
+
+            if (window.caches && caches.keys) {
+                caches.keys()
+                    .then(function (names) {
+                        return Promise.all(names.map(function (name) { return caches.delete(name); }));
+                    })
+                    .then(function () { console.log('Client caches cleared'); })
+                    .catch(function (e) { console.log('Cache clear failed', e); });
+            }
+        });
+    }
+</script>
+<!-- Service Worker registration is disabled. See docs/SERVICE_WORKER_DISABLE.md to re-enable. -->
+{% else %}
 <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
@@ -53,6 +95,7 @@
         });
     }
 </script>
+{% endif %}
 
 <!-- Google Tag Manager -->
 <script>(function (w, d, s, l, i) {
@@ -65,9 +108,25 @@
     })(window, document, 'script', 'dataLayer', 'GTM-M6PC6RJL');</script>
 
 <!-- Google AdSense - Load conditionally based on user subscription -->
+<!-- Vercel Analytics & Speed Insights -->
+<!-- <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    // Only load Vercel scripts on Vercel deployments (not localhost)
+    if (window.location.hostname.includes('vercel.app') || window.location.hostname === 'materioa.vercel.app') {
+        var s1 = document.createElement('script');
+        s1.defer = true;
+        s1.src = '/_vercel/insights/script.js';
+        document.head.appendChild(s1);
+
+        var s2 = document.createElement('script');
+        s2.defer = true;
+        s2.src = '/_vercel/speed-insights/script.js';
+        document.head.appendChild(s2);
+    }
+</script> -->
 <script>
     function hasAdFreePrivileges() {
-        try {  
+        try {
             const userDataStr = localStorage.getItem('materio_user');
             if (!userDataStr) {
                 return false;
@@ -75,7 +134,6 @@
             const userData = JSON.parse(userDataStr);
             return userData.isPlusUser === true || userData.hasAdminPrivileges === true;
         } catch (error) {
-            console.log('Error checking user privileges for ads:', error);
             return false;
         }
     }
@@ -87,5 +145,51 @@
         document.head.appendChild(adsenseScript);
     } else {
         console.log('Enjoy un-interrupted reading.');
+        const version = "1.0.0";
+
+        console.log(
+            `%c
+                                                                                      z$$a\`                             
+                                                                                     %$$$$$:                            
+                                             <k@$$c                                  Q$$$$$                             
+                                             Q$$$$c                                    '"                               
+ t$$o u@$$$$$q[a$$$$$$k;    ?p$$$$$$$$O    ?U&$$$$$$$$J    nB$$$$$$w'    U$$w'Q$$$$O -$$$$M     ;m$$$$$$$C"             
+ t$$$$$$$$$$$$$$$$$$$$$$j   U$$$$$$$$$$$Q !$$$$$$$$$$$J  z$$$$$$$$$$$b   U$$$$$$$$$O -$$$$M    W$$$$$$$$$$$$            
+ t$$$$&^  z$$$$$:  /$$$$*   zp+     $$$$$  ))k$$$$q)))> ]$$$$a   _$$$$x  U$$$$%]     -$$$$M   w$$$$p   M$$$$8           
+ t$$$$p   >$$$$$   l$$$$8      >np#W$$$$$.   Q$$$$c     $$$$$     @$$$a  U$$$$J      -$$$$M   $$$$$     $$$$$           
+ t$$$$p   >$$$$$   l$$$$8   #$$$$$$$$$$$$.   Q$$$$c     $$$$$$$$$$$$$$a  U$$$$J      -$$$$M  ;$$$$8     $$$$$           
+ t$$$$p   >$$$$$   l$$$$8  W$$$B    @$$$$.   Q$$$$c     8$$$$I""""""""\`  U$$$$J      -$$$$M   $$$$$    .$$$$$           
+ t$$$$p   >$$$$$   l$$$$8  $$$$%    $$$$$.   Y$$$$8:    <$$$$%:    \`?b:  U$$$$J      -$$$$$]  m$$$$o\` ^%$$$$b  #$$$$/   
+ t$$$$p   >$$$$$   l$$$$8  1$$$$$$$$$$$$$.   .$$$$$$$$i  \\$$$$$$$$$$$$:  U$$$$J       8$$$$$   o$$$$$$$$$$$B   $$$$$$   
+ t$$$$p   >$$$$$   l$$$$8    v$$$$$p. @$$.     +8$$$$$i    !#$$$$$$$b_   U$$$$J        ;a$$$     n$$$$$$@x     :@$$#    
+
+Version: v4.8.0.0
+`,
+            "color: #ff5200; font-weight: bold;"
+        );
+
     }
+</script>
+
+<!-- PDF.js Viewer Preloading - Only on pages that use the PDF viewer -->
+<script>
+    (function () {
+        // Only preload PDF.js assets if the page contains a PDF viewer or download links
+        if (document.querySelector('[data-pdf-src], .pdf-viewer, .download-card, a[href$=".pdf"]') ||
+            window.location.pathname.includes('/docs/')) {
+            var preloads = [
+                { href: '/oread/build/pdf.mjs', as: 'script', rel: 'modulepreload' },
+                { href: '/oread/web/viewer.mjs', as: 'script', rel: 'modulepreload' },
+                { href: '/oread/web/viewer.css', as: 'style', rel: 'preload' }
+            ];
+            preloads.forEach(function (p) {
+                var link = document.createElement('link');
+                link.rel = p.rel;
+                link.href = p.href;
+                if (p.as && p.rel === 'preload') link.setAttribute('as', p.as);
+                if (p.rel === 'modulepreload' || p.rel === 'preload') link.crossOrigin = 'anonymous';
+                document.head.appendChild(link);
+            });
+        }
+    })();
 </script>

@@ -1,19 +1,50 @@
+# Environment variables
 .env
-.netlify
-api/
-.netlifycfg
-.npmrc
-.pages.yml
-Gemfile
-Gemfile.lock
-netlify.dev.toml
-config/
-node_modules
+server/.env
+
+# Node modules
+node_modules/
+server/node_modules/
+
+# History and saved changes
 .history 
 saved_changes
-.babelrc
-netlify/
-.github/instructions
-_data
-.github/instructions
-scripts/*
+
+# Build outputs
+# _site/
+# dist/
+# build/
+
+# Netlify
+.netlify
+
+# Vercel
+.vercel
+
+# Logs
+*.log
+
+migrations/
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+devdocs.md
+
+
+
+# New !
+insightroom/*
+analytics-api/*
+_site/
+_drafts/*
+.private
+blog-svelte/*
+community-api/*
+pdfs/*
+.gemini/

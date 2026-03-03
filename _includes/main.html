@@ -1,50 +1,159 @@
 <div class="container">
+    <!-- Mobile Frame Corners -->
+    <div class="mobile-corner-tl" aria-hidden="true"></div>
+    <div class="mobile-corner-tr" aria-hidden="true"></div>
+    <div class="mobile-corner-bl" aria-hidden="true"></div>
+    <div class="mobile-corner-br" aria-hidden="true"></div>
+
     <nav class="navbar">
         <div class="navbar-top-group">
             <a href="#" class="tab-link active" data-tab="home">
-                <i class="far fa-house-chimney"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M22 10.5L12.8825 2.82207C12.6355 2.61407 12.3229 2.5 12 2.5C11.6771 2.5 11.3645 2.61407 11.1175 2.82207L2 10.5" />
+                    <path
+                        d="M20.5 9.5V16C20.5 18.3456 20.5 19.5184 19.8801 20.3263C19.7205 20.5343 19.5343 20.7205 19.3263 20.8801C18.5184 21.5 17.3456 21.5 15 21.5V17C15 15.5858 15 14.8787 14.5607 14.4393C14.1213 14 13.4142 14 12 14C10.5858 14 9.87868 14 9.43934 14.4393C9 14.8787 9 15.5858 9 17V21.5C6.65442 21.5 5.48164 21.5 4.67372 20.8801C4.46572 20.7205 4.27954 20.5343 4.11994 20.3263C3.5 19.5184 3.5 18.3456 3.5 16V9.5" />
+                </svg>
             </a>
-            <a href="#local" class="tab-link" data-tab="local" id="localTabLink" style="display: none;">
-                <i class="far fa-hard-drive"></i>
+            <a href="#local" class="tab-link" data-tab="local" id="localTabLink" style="display: none;"
+                aria-label="Local Resources">
+                <i class="far fa-hard-drive" aria-hidden="true"></i>
             </a>
             <a href="#2" class="tab-link" data-tab="chat">
-                <i class="far fa-comments"></i>
-            </a> 
-            <a href="#3" class="tab-link" data-tab="notifications">
-                <i class="far fa-bell"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor"
+                    fill="none" stroke="#141B34" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12.0045 10.5H12.0135M16 10.5H16.009M8.009 10.5H8.01797" />
+                    <path
+                        d="M2 10.5C2 9.72921 2.01346 8.97679 2.03909 8.2503C2.12282 5.87683 2.16469 4.69009 3.13007 3.71745C4.09545 2.74481 5.3157 2.6926 7.7562 2.58819C9.09517 2.5309 10.5209 2.5 12 2.5C13.4791 2.5 14.9048 2.5309 16.2438 2.58819C18.6843 2.6926 19.9046 2.74481 20.8699 3.71745C21.8353 4.69009 21.8772 5.87683 21.9609 8.2503C21.9865 8.97679 22 9.72921 22 10.5C22 11.2708 21.9865 12.0232 21.9609 12.7497C21.8772 15.1232 21.8353 16.3099 20.8699 17.2826C19.9046 18.2552 18.6843 18.3074 16.2437 18.4118C15.5098 18.4432 14.7498 18.4667 13.9693 18.4815C13.2282 18.4955 12.8576 18.5026 12.532 18.6266C12.2064 18.7506 11.9325 18.9855 11.3845 19.4553L9.20503 21.3242C9.07273 21.4376 8.90419 21.5 8.72991 21.5C8.32679 21.5 8 21.1732 8 20.7701V18.4219C7.91842 18.4186 7.83715 18.4153 7.75619 18.4118C5.31569 18.3074 4.09545 18.2552 3.13007 17.2825C2.16469 16.3099 2.12282 15.1232 2.03909 12.7497C2.01346 12.0232 2 11.2708 2 10.5Z" />
+                </svg>
             </a>
+            <a href="#community" class="tab-link" data-tab="community" title="Community Boards" style="display: none;">
+                <i class="far fa-messages-question"></i>
+            </a>
+            <a href="#3" class="tab-link" data-tab="notifications">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor"
+                    fill="none" stroke="#141B34" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15.5 18C15.5 19.933 13.933 21.5 12 21.5C10.067 21.5 8.5 19.933 8.5 18" />
+                    <path
+                        d="M19.2311 18H4.76887C3.79195 18 3 17.208 3 16.2311C3 15.762 3.18636 15.3121 3.51809 14.9803L4.12132 14.3771C4.68393 13.8145 5 13.0514 5 12.2558V9.5C5 5.63401 8.13401 2.5 12 2.5C15.866 2.5 19 5.634 19 9.5V12.2558C19 13.0514 19.3161 13.8145 19.8787 14.3771L20.4819 14.9803C20.8136 15.3121 21 15.762 21 16.2311C21 17.208 20.208 18 19.2311 18Z" />
+                </svg>
+            </a>
+
             <!-- <a href="#4" class="tab-link" data-tab="ai-chat">
                 <i class="far fa-robot"></i>
             </a> -->
-           
-            <a href="/room" target="_blank">
-               <i class="far fa-lightbulb-on"></i>
+
+
+            <a href="https://insightroom.vercel.app" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M17.5055 2.01874C12.8289 2.83455 12 7.5 12 7.5V22C12 22 12.8867 17.1272 18.0004 16.5588C18.5493 16.4978 19 16.0576 19 15.5058V3.39309C19 2.5654 18.3216 1.87638 17.5055 2.01874Z" />
+                    <path
+                        d="M5.33333 5.00001C7.79379 4.99657 10.1685 5.88709 12 7.5V22C10.1685 20.3871 7.79379 19.4966 5.33333 19.5C3.77132 19.5 2.99032 19.5 2.64526 19.2792C2.4381 19.1466 2.35346 19.0619 2.22086 18.8547C2 18.5097 2 17.8941 2 16.6629V8.40322C2 6.97543 2 6.26154 2.54874 5.68286C3.09748 5.10418 3.65923 5.07432 4.78272 5.0146C4.965 5.00491 5.14858 5.00001 5.33333 5.00001Z" />
+                    <path
+                        d="M12 22.001C13.8315 20.3881 16.2062 19.4976 18.6667 19.501C20.2287 19.501 21.0097 19.501 21.3547 19.2802C21.5619 19.1476 21.6465 19.0629 21.7791 18.8558C22 18.5107 22 17.8951 22 16.6639V8.40424C22 6.97645 22 6.26256 21.4513 5.68388C20.9025 5.1052 20.1235 5.05972 19 5" />
+                </svg>
             </a>
         </div>
         <div class="navbar-bottom-group">
+            <!-- Changelog Link (Desktop only) -->
+            {% assign latest_changelog = site.categories['whats-new'] | first %}
+            <a href="/changelog" class="changelog-btn desktop-only" role="button" aria-label="Changelog"
+                title="Changelog" {% if latest_changelog %}data-latest-update="{{ latest_changelog.date | date: '%s' }}"
+                {% endif %}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor"
+                    fill="none" stroke="#141B34" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M2 21.494C3.2945 21.5899 4.38367 20.5 5.33333 20.5C6.283 20.5 7.82473 21.5053 8.66667 21.494C9.67699 21.5025 10.8604 20.5 12 20.5C13.1396 20.5 14.323 21.5025 15.3333 21.494C16.6278 21.5899 17.717 20.5 18.6667 20.5C19.6163 20.5 21.1581 21.5053 22 21.494" />
+                    <path
+                        d="M6 20.5C4.58214 18.7336 3.58286 16.4728 3.15734 15.2748C3.0224 14.8949 2.95494 14.705 3.03329 14.5234C3.11163 14.3419 3.30377 14.2568 3.68803 14.0866L11.1772 10.7692C11.5824 10.5897 11.785 10.5 12 10.5C12.215 10.5 12.4176 10.5897 12.8228 10.7692L20.312 14.0866C20.6962 14.2568 20.8884 14.3419 20.9667 14.5234C21.0451 14.705 20.9776 14.8949 20.8427 15.2748C20.4171 16.4728 19.4179 18.7336 18 20.5" />
+                    <path
+                        d="M6 13L6.21591 10.1932C6.35068 8.44115 6.41807 7.56511 6.99316 7.03256C7.56826 6.5 8.44688 6.5 10.2041 6.5H13.7959C15.5531 6.5 16.4317 6.5 17.0068 7.03256C17.5819 7.56511 17.6493 8.44115 17.7841 10.1932L18 13" />
+                    <path
+                        d="M8.5 6.5L8.67151 5.1279C8.82792 3.87661 8.90613 3.25097 9.33147 2.87548C9.75681 2.5 10.3873 2.5 11.6483 2.5H12.3517C13.6127 2.5 14.2432 2.5 14.6685 2.87548C15.0939 3.25097 15.1721 3.87661 15.3285 5.1279L15.5 6.5" />
+                </svg>
+            </a>
+            <!-- Keyboard Shortcuts Help (Desktop only) -->
+            <a href="#" class="keyboard-shortcuts-btn desktop-only" id="keyboardShortcutsBtn" role="button"
+                aria-label="Keyboard Shortcuts" title="Keyboard Shortcuts">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" color="currentColor"
+                    fill="none" stroke="#141B34" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path
+                        d="M9.5 9.5C9.5 8.11929 10.6193 7 12 7C13.3807 7 14.5 8.11929 14.5 9.5C14.5 10.3569 14.0689 11.1131 13.4117 11.5636C12.7283 12.0319 12 12.6716 12 13.5" />
+                    <path d="M12.0001 17H12.009" />
+                </svg>
+            </a>
             <div class="profile-icon-container">
-                <a href="#" class="tab-link profile-icon" data-tab="settings" role="button" aria-label="Profile and Settings">
+                <a href="#" class="tab-link profile-icon" data-tab="settings" role="button"
+                    aria-label="Profile and Settings">
                     <i id="settings-icon" class="far fa-cog"></i>
-                    <img id="profile-image" src="/assets/img/default-avatar.svg" style="display: none;" alt="Profile Picture">
+                    <img id="profile-image" src="/assets/img/default-avatar.svg" style="display: none;"
+                        alt="Profile Picture">
                 </a>
                 <!-- Profile dropdown menu -->
                 <div id="profile-dropdown" class="profile-dropdown" role="menu" aria-hidden="true">
-                    <a href="/account/profile" class="dropdown-item" data-action="profile" role="menuitem" tabindex="0">
-                        <i class="fas fa-user"></i>
-                        <span style="font-size: 15px;">Profile</span>
+                    <div id="profile-menu-item" class="dropdown-item" role="menuitem" tabindex="-1"
+                        onclick="if(!this.classList.contains('has-submenu')&&!localStorage.getItem('materio_auth_token')&&!localStorage.getItem('materio_user')){window.location.href='/account?callback=../';}">
+                        <i class="fa-regular fa-user" aria-hidden="true"></i>
+                        <span id="profile-item-text">Account</span>
+                        <i class="fa-regular fa-chevron-right submenu-chevron" id="profile-chevron"
+                            aria-hidden="true"></i>
+                        <div class="dropdown-submenu" id="profile-submenu">
+                            <a href="/account/profile" class="dropdown-item">
+                                <i class="fa-regular fa-user-circle" aria-hidden="true"></i>
+                                <span>Profile</span>
+                            </a>
+                            <a href="#" class="dropdown-item" id="logout-btn"
+                                onclick="if(window.handleLogout) { window.handleLogout(); } return false;">
+                                <i class="fa-regular fa-sign-out-alt" aria-hidden="true"></i>
+                                <span>Log Out</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="dropdown-item has-submenu" role="menuitem" tabindex="-1">
+                        <i class="fa-regular fa-book-bookmark" aria-hidden="true"></i>
+                        <span>Notebooks</span>
+                        <i class="fa-regular fa-chevron-right submenu-chevron" aria-hidden="true"></i>
+                        <div class="dropdown-submenu" role="menu" aria-hidden="true">
+                            <a href="#" class="dropdown-item" onclick="createNewNotebook(true); return false;"
+                                role="menuitem" tabindex="-1">
+                                <i class="fa-regular fa-plus" aria-hidden="true"></i>
+                                <span>Create</span>
+                            </a>
+                            <a href="#notebooks" class="dropdown-item tab-link" data-tab="notebooks" role="menuitem"
+                                tabindex="-1">
+                                <i class="fa-regular fa-tasks" aria-hidden="true"></i>
+                                <span>Manage</span>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="#5" class="dropdown-item" data-action="downloads" role="menuitem" tabindex="-1">
+                        <i class="fa-regular fa-folder-arrow-down" aria-hidden="true"></i>
+                        <span>Downloads</span>
                     </a>
-                     <a href="#5" class="dropdown-item" data-action="downloads" role="menuitem" tabindex="0">
-                <i class="fa-solid fa-folder-arrow-down"></i>
-                <span style="font-size: 15px;">Downloads</span>
-            </a>
-                    <a href="#4" class="dropdown-item" data-action="settings" role="menuitem" tabindex="0">
-                        <i class="fas fa-cog"></i>
-                        <span style="font-size: 15px;">Settings</span>
+                    <a href="#4" class="dropdown-item" data-action="settings" role="menuitem" tabindex="-1">
+                        <i class="fa-regular fa-cog" aria-hidden="true"></i>
+                        <span>Settings</span>
                     </a>
                 </div>
             </div>
         </div>
     </nav>
+
+    <!-- Keyboard Shortcuts Popup Modal (outside nav for proper viewport centering) -->
+    <div class="keyboard-shortcuts-modal" id="keyboardShortcutsModal" role="dialog" aria-hidden="true"
+        aria-labelledby="shortcutsTitle">
+        <div class="keyboard-shortcuts-backdrop" id="keyboardShortcutsBackdrop"></div>
+        <div class="keyboard-shortcuts-dialog">
+            <button class="shortcuts-close-btn" id="shortcutsCloseBtn" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            {% include keyboard-shortcuts.html %}
+        </div>
+    </div>
 
     <div class="content">
         <div id="home" class="tab-content active">
@@ -77,108 +186,247 @@
                     </div>
                 </form>
 
-                <div class="reading-controls-wrapper" style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
+                <div class="reading-controls-wrapper"
+                    style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 20px; flex-wrap: wrap;">
                     <!-- Quick Resource Search Box - First on Desktop, Second Row on Mobile -->
                     <div id="quickSearchContainer">
                         <div style="position: relative;">
                             <i class="far fa-search quick-search-icon-left"></i>
-                            <input 
-                                type="text" 
-                                id="quickSearchInput" 
-                                placeholder="Finder" 
-                            />
-                            <button id="aiSearchToggle" class="ai-search-toggle" title="Toggle AI Search" aria-label="Toggle AI Search">
+                            <input type="text" id="quickSearchInput" placeholder="Finder" />
+                            <button id="clearSearchBtn" class="clear-search-btn" title="Clear Search"
+                                aria-label="Clear Search" style="display: none;">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            <button id="aiSearchToggle" class="ai-search-toggle" title="Toggle AI Search"
+                                aria-label="Toggle AI Search">
                                 <i class="far fa-sparkles"></i> AI Mode
                             </button>
                         </div>
                     </div>
-                    
-                    <div class="icon-buttons-container" style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: auto;">
-                        <a href="https://github.com/Materioa/web-frontend/issues/new?template=contribute.yml" target="_blank" class="icon-button" style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; min-width: 45px; background: rgba(255, 130, 0, 0.1); border: 1px solid rgba(255, 130, 0, 0.3); border-radius: 25px; corner-shape:squircle; color: #ff8200; text-decoration: none; transition: all 0.3s ease; backdrop-filter: blur(4px);" onmouseover="this.style.background='rgba(255, 130, 0, 0.2)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='rgba(255, 130, 0, 0.1)'; this.style.transform='translateY(0)'">
+
+                    <div class="icon-buttons-container"
+                        style="display: flex; align-items: center; gap: 10px; flex-shrink: 0; margin-left: auto;">
+                        <button onclick="openDynamicForm('contribution', true)" class="icon-button"
+                            style="position: relative; display: inline-flex; align-items: center; justify-content: center; width: 45px; height: 45px; min-width: 45px; background: rgba(255, 130, 0, 0.1); border: 1px solid rgba(255, 130, 0, 0.3); border-radius: 25px; color: #ff8200; cursor: pointer; transition: all 0.3s ease; backdrop-filter: blur(4px);"
+                            onmouseover="this.style.background='rgba(255, 130, 0, 0.2)'; this.style.transform='translateY(-2px)'"
+                            onmouseout="this.style.background='rgba(255, 130, 0, 0.1)'; this.style.transform='translateY(0)'">
                             <i class="far fa-circle-plus" style="font-size: 18px;"></i>
-                            <span class="tooltip-text" style="position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9); color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;">Contribute</span>
-                        </a>
+                            <span class="tooltip-text"
+                                style="position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9); color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;">Contribute</span>
+                        </button>
                     </div>
-                    
-                    <button id="submitButton" class="shimmer-button"><span class="shimmer-text"><b>Start Reading</b></span></button>
+
+                    <button id="submitButton" class="shimmer-button"><span class="shimmer-text"><b>Start
+                                Reading</b></span></button>
                 </div>
             </div>
-            
-            <!-- Blog Posts Card -->
-            <div class="card-one" id="blogs">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h2 id="blogCardHeading">Latest from the Insightroom</h2>
-                    <a href="/room" style="text-decoration: none; color: #ff8200; font-weight: 600; background: rgba(255, 130, 0, 0.1); padding: 8px 16px; border-radius: 25px; backdrop-filter: blur(4px); border: 1px solid rgba(255, 130, 0, 0.3); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 6px;">
-                        View More 
-                        <i class="fas fa-arrow-up" style="transform: rotate(45deg); font-size: 12px;"></i>
-                    </a>
-                </div>
-                
-                <div class="blog-posts-container" id="blogPostsContent">
-                    <!-- Default: Latest 5 posts -->
-                    <div id="defaultPosts">
-                        {% assign recent_posts = site.posts | where_exp: 'post', 'post.hidden != true' | slice: 0, 5 %}
-                        {% for post in recent_posts %}
-                        <a href="{{ post.url }}" style="text-decoration: none; color: inherit; display: block;" {% if post.visibility == 'private' %}data-visibility="private"{% endif %}>
-                            <div class="card-layout blog-post-item" id="blogPost{{ forloop.index }}" style="backdrop-filter: blur(2px); cursor: pointer; transition: transform 0.2s ease;">
-                                <h3 class="blog-post-title">
-                                    <span class="blog-post-link" style="color: #ff8200;">{{ post.title }}</span>
-                                </h3>
-                                <p class="blog-post-excerpt">
-                                    {% if post.excerpt_home %}
-                                        {{ post.excerpt_home }}
-                                    {% else %}
-                                        {{ post.excerpt | strip_html | truncatewords: 20 }}
-                                    {% endif %}
-                                </p>
-                                <div class="blog-post-meta">
-                                    <span class="blog-post-date">{{ post.date | date: "%B %d, %Y" }}</span>
-                                </div>
-                            </div>
+
+            <!-- Blog Posts Card (hidden by default, shown by JS if enabled and user has access) -->
+            <div class="card-one" id="blogs" style="display: none;">
+                <!-- Header row - always visible, clickable in folded mode -->
+                <div class="blog-header-container" id="blogHeaderContainer">
+                    <h2 id="blogCardHeading" class="blog-header-title"><i class="fa-solid fa-lightbulb-on"
+                            style="color: #ff8200; margin-right: 8px;"></i>Latest from the Insightroom</h2>
+                    <div class="blog-header-right">
+                        <a href="https://insightroom.vercel.app" class="view-more-btn">
+                            View More
+                            <i class="fas fa-arrow-up" style="transform: rotate(45deg); font-size: 12px;"></i>
                         </a>
-                        {% endfor %}
+                        <!-- Chevron for folded mode (hidden by default) -->
+                        <i class="fas fa-chevron-down blog-fold-chevron" id="blogFoldChevron"
+                            style="display: none; color: #ff8200; font-size: 14px; margin-left: 12px; cursor: pointer; transition: transform 0.3s ease;"></i>
                     </div>
-                    
+                </div>
+
+                <!-- Posts container - collapsible in folded mode -->
+                <div class="blog-posts-container" id="blogPostsContent">
+                    <!-- Default: Latest 5 posts (loaded from API) - Horizontal Scroll -->
+                    <div id="defaultPosts" class="insight-cards-scroll">
+                        <!-- Exam Card in Default View -->
+                        <div id="examCardDefault" class="exam-card" style="display: none;" onclick="openExamModal()">
+                            <!-- View 1: Pre-Exam (Before exams start) -->
+                            <div class="exam-view exam-view-preexam" id="examViewPreexamDefault" style="display: none;">
+                                <div class="exam-card-header">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    <span>Exams are in the way!</span>
+                                </div>
+                                <p class="exam-subtitle">Your <span id="examPeriodNameDefault">Mid Semester</span> exams
+                                    are starting this week</p>
+                                <div class="exam-first-info">
+                                    <div class="exam-label">Start with</div>
+                                    <div class="exam-subject" id="preexamFirstSubjectDefault">Subject name</div>
+                                    <div class="exam-date" id="preexamFirstDateDefault">16-02-26</div>
+                                </div>
+                                <div class="exam-syllabus-preview" id="preexamSyllabusDefault">
+                                    <span>Syllabus</span>
+                                </div>
+                                <div class="exam-divider"></div>
+                                <div class="exam-show-all">Show all</div>
+                            </div>
+
+                            <!-- View 2: Ongoing - Today/Tomorrow focus -->
+                            <div class="exam-view exam-view-ongoing" id="examViewOngoingDefault" style="display: none;">
+                                <div class="exam-card-header">
+                                    <i class="fa-solid fa-fire"></i>
+                                    <span>Exams are on going!</span>
+                                </div>
+                                <p class="exam-subtitle">Your <span id="examPeriodNameOngoingDefault">Mid
+                                        Semester</span> exams have started</p>
+                                <div class="exam-today-tomorrow">
+                                    <div class="exam-item exam-today" id="examTodayItemDefault" style="display: none;">
+                                        <div class="exam-item-label">Tomorrow you have</div>
+                                        <div class="exam-item-subject" id="examTodaySubjectDefault">Subject name exam
+                                        </div>
+                                        <div class="exam-item-date" id="examTodayDateDefault">16-02-26</div>
+                                    </div>
+                                </div>
+                                <div class="exam-syllabus-preview" id="ongoingSyllabusDefault">
+                                    <span>Syllabus</span>
+                                </div>
+                                <div class="exam-divider"></div>
+                                <div class="exam-show-all">Show all</div>
+                            </div>
+
+                            <!-- View 3: Timeline view -->
+                            <div class="exam-view exam-view-timeline" id="examViewTimelineDefault"
+                                style="display: none;">
+                                <div class="exam-card-header">
+                                    <i class="fa-solid fa-fire"></i>
+                                    <span>Exams are on going!</span>
+                                </div>
+                                <p class="exam-subtitle">Your <span id="examPeriodNameTimelineDefault">Mid
+                                        Semester</span> exams have started</p>
+                                <div class="exam-mini-timeline" id="examMiniTimelineDefault">
+                                    <!-- Timeline items will be populated by JS -->
+                                </div>
+                                <div class="exam-show-all">Show all</div>
+                            </div>
+                        </div>
+
+                        <!-- Loading state -->
+                        <div id="postsLoading" class="posts-loading">
+                            <i class="fa-regular fa-loader fa-spin" style="font-size: 24px; color: #ff8200;"></i>
+                            <p style="margin-top: 12px; color: #666;">Just a sec...</p>
+                        </div>
+                        <!-- Posts will be populated by JavaScript as post cards -->
+                    </div>
+
                     <!-- Smart Recommendations (hidden by default) -->
-                    <div id="recommendedPosts" style="display: none;">
+                    <div id="recommendedPosts" class="insight-cards-scroll" style="display: none;">
+                        <!-- Exam Card - shown first when exams are approaching/ongoing -->
+                        <div id="examCard" class="exam-card" style="display: none;" onclick="openExamModal()">
+                            <!-- View 1: Pre-Exam (Before exams start) -->
+                            <div class="exam-view exam-view-preexam" id="examViewPreexam" style="display: none;">
+                                <div class="exam-card-header">
+                                    <i class="fa-solid fa-calendar-check"></i>
+                                    <span>Exams are on the way!</span>
+                                </div>
+                                <p class="exam-subtitle">Your <span id="examPeriodName">Mid Semester</span> exams are
+                                    starting this week</p>
+                                <div class="exam-first-info">
+                                    <div class="exam-label">Start with</div>
+                                    <div class="exam-subject" id="preexamFirstSubject">Subject name</div>
+                                    <div class="exam-date" id="preexamFirstDate">16-02-26</div>
+                                </div>
+                                <div class="exam-syllabus-preview" id="preexamSyllabus">
+                                    <span>Syllabus</span>
+                                </div>
+                                <div class="exam-divider"></div>
+                                <div class="exam-show-all">Show all</div>
+                            </div>
+
+                            <!-- View 2: Ongoing - Today/Tomorrow focus -->
+                            <div class="exam-view exam-view-ongoing" id="examViewOngoing" style="display: none;">
+                                <div class="exam-card-header">
+                                    <i class="fa-solid fa-fire"></i>
+                                    <span>Exams are on going!</span>
+                                </div>
+                                <p class="exam-subtitle">Your <span id="examPeriodNameOngoing">Mid Semester</span> exams
+                                    have started</p>
+                                <div class="exam-today-tomorrow">
+                                    <div class="exam-item exam-today" id="examTodayItem" style="display: none;">
+                                        <div class="exam-item-label">Tomorrow you have</div>
+                                        <div class="exam-item-subject" id="examTodaySubject">Subject name exam</div>
+                                        <div class="exam-item-date" id="examTodayDate">16-02-26</div>
+                                    </div>
+                                </div>
+                                <div class="exam-syllabus-preview" id="ongoingSyllabus">
+                                    <span>Syllabus</span>
+                                </div>
+                                <div class="exam-divider"></div>
+                                <div class="exam-show-all">Show all</div>
+                            </div>
+
+                            <!-- View 3: Timeline view -->
+                            <div class="exam-view exam-view-timeline" id="examViewTimeline" style="display: none;">
+                                <div class="exam-card-header">
+                                    <i class="fa-solid fa-fire"></i>
+                                    <span>Exams are on going!</span>
+                                </div>
+                                <p class="exam-subtitle">Your <span id="examPeriodNameTimeline">Mid Semester</span>
+                                    exams have started</p>
+                                <div class="exam-mini-timeline" id="examMiniTimeline">
+                                    <!-- Timeline items will be populated by JS -->
+                                </div>
+                                <div class="exam-show-all">Show all</div>
+                            </div>
+                        </div>
+
+                        <!-- Attachments Card - shown first in smart recommendations -->
+                        <div id="attachmentsCard" class="attachments-card" style="display: none;">
+                            <div class="attachments-card-header">
+                                <i class="fa-solid fa-paperclip"></i>
+                                <span>Attachments</span>
+                            </div>
+                            <div id="attachmentsPillsContainer" class="attachments-pills-container">
+                                <!-- Attachment pills will be populated by JavaScript -->
+                            </div>
+                            <div id="attachmentsEmpty" class="attachments-empty" style="display: none;">
+                                <i class="fas fa-folder-open"></i>
+                                <span>No attachments found</span>
+                            </div>
+                        </div>
                         <!-- Recommended posts will be populated by JavaScript -->
                     </div>
-                    
+
                     <!-- No posts found message -->
                     <div id="noPostsMessage" style="display: none; text-align: center; padding: 20px; color: #666;">
                         <p>No posts found for the selected semester and subject.</p>
-                        <p style="font-size: 14px;">Try selecting different options or check back later for new content.</p>
+                        <p style="font-size: 14px;">Try selecting different options or check back later for new
+                            content.
+                        </p>
+                    </div>
+
+                    <!-- Error message -->
+                    <div id="postsError" style="display: none; text-align: center; padding: 20px; color: #dc3545;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 24px; margin-bottom: 10px;"></i>
+                        <p>Failed to load posts. Please try again later.</p>
                     </div>
                 </div>
-                
-                <!-- Hidden data for all posts (for JavaScript filtering) -->
-                <script type="application/json" id="allPostsData">
-                [
-                    {% assign all_posts = site.posts | where_exp: 'post', 'post.hidden != true' %}
-                    {% for post in all_posts %}
-                    {
-                        "title": {{ post.title | jsonify }},
-                        "url": "{{ post.url }}",
-                        "date": "{{ post.date | date: '%B %d, %Y' }}",
-                        "excerpt_home": {{ post.excerpt_home | default: '' | jsonify }},
-                        "excerpt": {{ post.excerpt | strip_html | truncatewords: 20 | jsonify }},
-                        "semester": {{ post.semester | default: '' | jsonify }},
-                        "subject": {{ post.subject | default: '' | jsonify }},
-                        "visibility": {{ post.visibility | default: 'public' | jsonify }}
-                    }{% unless forloop.last %},{% endunless %}
-                    {% endfor %}
-                ]
-                </script>
+
+                <!-- Hidden data for all posts (populated by API via main.js) -->
+                <script type="application/json" id="allPostsData">[]</script>
             </div>
-            
+
             <div id="popup">
                 <div class="popup-controls">
-                    <button id="downloadButton" style="margin-top: 5px; transition: all 0.3s ease; cursor: pointer;" title="Download for offline reading" aria-label="Download for offline reading">
-                        <i class="fa-regular fa-bookmark-plus"></i>
+                    <button id="createNoteButton" title="Create Note" aria-label="Create Note"
+                        onclick="createNewNotebook()">
+                        <i class="far fa-edit"></i>
                     </button>
-                    <button id="fullscreenButton" style="margin-right: 40px; margin-top:5px;" aria-label="Enter fullscreen"><i
-                            class="fas fa-expand"></i></button>
-                    <button id="closePopup" aria-label="Close PDF viewer"><i class="fas fa-times"></i></button>
+                    <button id="sharePdfButton" title="Share PDF" aria-label="Share PDF">
+                        <i class="far fa-share-nodes"></i>
+                    </button>
+                    <button id="downloadButton" title="Download for offline reading"
+                        aria-label="Download for offline reading">
+                        <i class="far fa-bookmark"></i>
+                    </button>
+                    <button id="fullscreenButton" aria-label="Enter fullscreen">
+                        <i class="far fa-expand"></i>
+                    </button>
+                    <button id="closePopup" aria-label="Close PDF viewer">
+                        <i class="far fa-times"></i>
+                    </button>
                 </div>
                 <div id="popupContent">
                     <!-- PDF iframe will be loaded here -->
@@ -189,7 +437,7 @@
             <div class="promo-modal">
                 <!-- Close Button -->
                 <i class="fas fa-times promo-close-btn" onclick="closePromoModal()"></i>
-                
+
                 <!-- Left Section: Media Panel -->
                 <div class="promo-image">
                     <img src="" class="promo-cover" alt="Promotion Image" style="display: none;">
@@ -199,15 +447,15 @@
                         Your browser does not support the video tag.
                     </video>
                     <div class="video-controls" style="display: none;">
-                      <button class="video-control-btn play-pause-btn" title="Play/Pause">
-                        <i class="fa-solid fa-pause"></i>
-                      </button>
-                      <button class="video-control-btn mute-unmute-btn" title="Mute/Unmute">
-                        <i class="fa-solid fa-volume-high"></i>
-                      </button>
+                        <button class="video-control-btn play-pause-btn" title="Play/Pause">
+                            <i class="fa-solid fa-pause"></i>
+                        </button>
+                        <button class="video-control-btn mute-unmute-btn" title="Mute/Unmute">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
                     </div>
                 </div>
-                
+
                 <!-- Right Section: Content Panel -->
                 <div class="promo-content">
                     <h2><span class="promo-title">Loading...</span></h2>
@@ -217,11 +465,13 @@
                     <div class="promo-actions">
                         <a href="#" target="_blank" class="promo-link" style="display: none;">
                             <button id="offerButton" class="site-button promo-primary-btn">
-                                <i class="promo-primary-icon fa-solid fa-tag" style="margin-left: 5px; margin-right: 10px;"></i>
+                                <i class="promo-primary-icon fa-solid fa-tag"
+                                    style="margin-left: 5px; margin-right: 10px;"></i>
                                 <span class="promo-button-text">View Offer</span>
                             </button>
                         </a>
-                        <button id="remindLaterBtn" class="site-button promo-secondary-btn" onclick="remindMeLater()" style="display: none;">
+                        <button id="remindLaterBtn" class="site-button promo-secondary-btn" onclick="remindMeLater()"
+                            style="display: none;">
                             <i class="promo-secondary-icon fa-solid fa-clock" style="margin-right: 8px;"></i>
                             <span class="promo-secondary-text">Remind me later</span>
                         </button>
@@ -229,7 +479,7 @@
 
                     <!-- Disclaimer / Link Row -->
                     <small class="promo-disclaimer" style="display: none;">
-                        <span class="promo-disclaimer-text">*Terms and conditions apply.</span> 
+                        <span class="promo-disclaimer-text">*Terms and conditions apply.</span>
                         <a href="#" target="_blank" class="promo-disclaimer-link">Read more</a>.
                     </small>
 
@@ -244,11 +494,80 @@
             </div>
         </div>
 
+        <!-- Exam Schedule Modal (Promo-style) -->
+        <div class="promo-modal-overlay exam-modal-overlay" id="examModal" style="display: none;">
+            <div class="promo-modal exam-modal">
+                <!-- Close Button -->
+                <i class="fas fa-times promo-close-btn" onclick="closeExamModal()"></i>
+
+                <!-- Pages Slider Container -->
+                <div class="exam-modal-slider" id="examModalSlider">
+                    <!-- Page 1: Timeline -->
+                    <div class="exam-modal-page" id="examModalTimelinePage">
+                        <div class="promo-content exam-modal-content">
+                            <h2><span class="promo-title" id="examModalTitle">Mid semester Exams are on going !</span>
+                            </h2>
+                            <div class="exam-schedule-section">
+                                <div class="exam-schedule-header">
+                                    <h3 class="exam-schedule-heading">Exam schedule</h3>
+                                    <!-- Seating Lookup -->
+                                    <div class="seating-lookup" id="seatingLookup">
+                                        <div class="seating-input-row" id="seatingInputRow">
+                                            <input type="text" id="enrollmentInput" class="enrollment-input"
+                                                placeholder="Enrollment no." inputmode="numeric" maxlength="16">
+                                            <button id="seatingSearchBtn" class="seating-search-btn"
+                                                onclick="lookupSeating()"><i class="fas fa-arrow-right"></i></button>
+                                        </div>
+                                        <div class="seating-result" id="seatingResult" style="display: none;">
+                                            <span class="seating-result-text" id="seatingResultText"></span>
+                                            <button class="seating-clear-btn" onclick="clearSeatingLookup()"
+                                                title="Clear"><i class="fas fa-times"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="exam-timeline" id="examModalTimeline">
+                                    <!-- Timeline items will be populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page 2: Syllabus -->
+                    <div class="exam-modal-page" id="examModalSyllabusPage">
+                        <div class="exam-syllabus-view">
+                            <!-- Banner Section -->
+                            <div class="syllabus-banner" id="syllabusBanner">
+                                <button class="syllabus-back-btn" onclick="showExamTimeline()">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <img src="" alt="" id="syllabusBannerImg" class="syllabus-banner-img">
+                                <div class="syllabus-banner-overlay">
+                                    <h2 id="syllabusSubjectTitle">Subject Syllabus</h2>
+                                </div>
+                            </div>
+
+                            <!-- Scrollable Content -->
+                            <div class="syllabus-full-content" id="syllabusFullContent">
+                                <!-- Full syllabus content will be populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Forms Modal -->
+        {% include dynamic-forms.html %}
+
+        <!-- Notebook Modal -->
+        {% include notebook.html %}
+
         <div id="local" class="tab-content">
             <h1>
                 Local Resources
                 <i class="fas fa-circle-info info-icon">
-                    <span class="tooltip" style="font-weight: normal;">Load CDN resources from your local server or directory for faster access and offline use.</span>
+                    <span class="tooltip" style="font-weight: normal;">Load CDN resources from your local server or
+                        directory for faster access and offline use.</span>
                 </i>
             </h1>
 
@@ -268,39 +587,43 @@
                         </label>
                     </div>
                     <div class="local-cdn-settings" id="localCdnSettings" style="display: none; margin-top: 15px;">
-                        <div class="local-cdn-warning" style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 12px; color: #856404;">
+                        <div class="local-cdn-warning"
+                            style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px; margin-bottom: 15px; font-size: 12px; color: #856404;">
                             <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i>
                             <strong>Note:</strong> This feature requires a CORS-enabled local server.
                             <details style="margin-top: 10px; cursor: pointer;">
                                 <summary style="font-weight: 700; outline: none; user-select: none;">
-                                     Quick Setup Guide
+                                    Quick Setup Guide
                                 </summary>
-                                <div style="margin-top: 8px; padding-left: 20px; border-left: 3px solid #ffc107; padding-left: 12px;">
+                                <div
+                                    style="margin-top: 8px; padding-left: 20px; border-left: 3px solid #ffc107; padding-left: 12px;">
                                     <strong>Step 1:</strong> In your CDN directory, run:<br>
-                                    <code style="display: block; background: #f8f9fa; padding: 6px; margin: 4px 0; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 11px;">
+                                    <code
+                                        style="display: block; background: #f8f9fa; padding: 6px; margin: 4px 0; border-radius: 4px; font-family: 'Consolas', monospace; font-size: 11px;">
                                         python scripts/cors-server.py 8080
                                     </code>
                                     <strong>Step 2:</strong> Enter URL below and click Save Path<br>
-                                    <code style="background: #f8f9fa; padding: 2px 6px; border-radius: 3px;">http://localhost:8080</code>
+                                    <code
+                                        style="background: #f8f9fa; padding: 2px 6px; border-radius: 3px;">http://localhost:8080</code>
                                 </div>
                             </details>
                         </div>
                         <div class="local-cdn-input-group">
-                            <label for="localCdnPath" style="font-size: 13px; color: #666; margin-bottom: 8px; display: block;">
+                            <label for="localCdnPath"
+                                style="font-size: 13px; color: #666; margin-bottom: 8px; display: block;">
                                 <i class="fas fa-folder-open" style="margin-right: 5px;"></i>
                                 Server URL or Directory Path
                             </label>
-                            <input 
-                                type="text" 
-                                id="localCdnPath" 
+                            <input type="text" id="localCdnPath"
                                 placeholder="http://localhost:8080 or E:\GitHub\cdn-materio"
-                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 13px; box-sizing: border-box; max-width: 100%;"
-                            >
-                            <div id="serverStatus" style="margin-top: 8px; font-size: 12px; color: #666; display: none;">
+                                style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Consolas', monospace; font-size: 13px; box-sizing: border-box; max-width: 100%;">
+                            <div id="serverStatus"
+                                style="margin-top: 8px; font-size: 12px; color: #666; display: none;">
                                 <i class="fas fa-circle" id="serverStatusIcon"></i>
                                 <span id="serverStatusText"></span>
                             </div>
-                            <button id="saveLocalCdnPath" style="font-family: Manrope;margin-top: 12px; padding: 10px 20px; background: #ff8400; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; transition: transform 0.2s; box-sizing: border-box;">
+                            <button id="saveLocalCdnPath"
+                                style="font-family: Manrope;margin-top: 12px; padding: 10px 20px; background: #ff8400; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; transition: transform 0.2s; box-sizing: border-box;">
                                 <i class="fas fa-save" style="margin-right: 5px;"></i>
                                 Save Path
                             </button>
@@ -363,6 +686,60 @@
             </div>
         </div>
 
+        <!-- Community Boards Tab -->
+        <div id="community" class="tab-content" style="display: none;">
+            <h1>
+                Community Boards
+                <i class="fas fa-circle-info info-icon">
+                    <span class="tooltip" style="font-weight: normal;">
+                        Discuss topics, ask questions, and share knowledge with other Materio users.
+                        Faculty-verified and student-consensus community notes add context to discussions.
+                    </span>
+                </i>
+            </h1>
+            <!-- Injectable Community Module -->
+            <div id="materio-community" data-api-url="http://localhost:3001" data-theme="auto"
+                data-enable-anonymous="true" data-enable-notes="true" data-enable-attachments="true">
+            </div>
+        </div>
+
+        <div id="notebooks" class="tab-content">
+            <div class="notebooks-tab-header">
+                <h1>My Notebooks</h1>
+                <div class="notebooks-tab-actions">
+                    <select id="notebookFilter" class="notebook-filter-select">
+                        <option value="all">All Notes</option>
+                        <option value="linked">Linked to PDFs</option>
+                    </select>
+                    <button class="site-button" onclick="createNewNotebook(true)">
+                        <i class="fas fa-plus"></i> New Note
+                    </button>
+                    <button class="site-button secondary" onclick="syncNotebooks()" id="syncBtnInTab"
+                        style="display: none;">
+                        <i class="fas fa-sync"></i> Sync
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notebooks Grid -->
+            <div id="notebooksGridInTab" class="notebooks-grid">
+                <!-- Notebook cards will be populated here -->
+                <div class="notebook-loading">
+                    <i class="fas fa-spinner fa-spin"></i> Loading notebooks...
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyStateInTab" class="notebooks-empty" style="display: none;">
+                <div class="empty-icon">
+                    <i class="far fa-notebook"></i>
+                </div>
+                <h3>No notebooks yet</h3>
+                <p>Create your first note to get started.</p>
+                <button class="site-button" onclick="createNewNotebook(true)">Create Note</button>
+            </div>
+        </div>
+
         <div id="ai-chat" class="tab-content" disabled>
             <h1>AI Chat</h1>
             {% include ai-chat.html %}
@@ -372,10 +749,11 @@
             <h1>
                 Downloads
                 <i class="fas fa-info info-icon">
-                    <span class="tooltip" style="font-weight: normal;">Your downloaded PDFs are stored locally for offline reading.</span>
+                    <span class="tooltip" style="font-weight: normal;">Your downloaded PDFs are stored locally for
+                        offline reading.</span>
                 </i>
             </h1>
-            
+
             <!-- Storage Info Card -->
             <div class="card-layout" id="storageInfoCard" style="margin-bottom: 20px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
@@ -383,26 +761,31 @@
                         <h3 style="margin: 0; font-size: 16px;">Storage Usage</h3>
                         <p id="storageStats" style="margin: 5px 0; color: #666; font-size: 14px;">Loading...</p>
                     </div>
-                    <button id="clearAllDownloadsBtn" class="btn" style="background: #dc3545; color: white; padding: 8px 16px; border-radius: 25px; corner-shape:squircle; border: none; cursor: pointer; font-size: 14px;">
+                    <button id="clearAllDownloadsBtn" class="btn"
+                        style="background: #dc3545; color: white; padding: 8px 16px; border-radius: 25px; border: none; cursor: pointer; font-size: 14px;">
                         <i class="fas fa-trash"></i> Clear All
                     </button>
                 </div>
                 <div style="background: #f0f0f0; border-radius: 8px; height: 8px; overflow: hidden;">
-                    <div id="storageBar" style="background: linear-gradient(to right, #ffd54f, #ffc540, #ffb530, #ffa520, #ff9510, #ff6f00); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                    <div id="storageBar"
+                        style="background: linear-gradient(to right, #ffd54f, #ffc540, #ffb530, #ffa520, #ff9510, #ff6f00); height: 100%; width: 0%; transition: width 0.3s ease;">
+                    </div>
                 </div>
             </div>
-            
+
             <div id="downloadsBoard">
                 <div id="downloadsLoading" class="loading-state">
                     <i class="fas fa-spinner fa-spin"></i> Loading downloads...
                 </div>
-                <div id="downloadsEmpty" class="empty-state" style="display: none; text-align: center; padding: 60px 20px;">
+                <div id="downloadsEmpty" class="empty-state"
+                    style="display: none; text-align: center; padding: 60px 20px;">
                     <i class="fas fa-download" style="font-size: 48px; color: #ccc; margin-bottom: 16px;"></i>
                     <p style="font-size: 18px; font-weight: 600; margin: 10px 0;">No downloads yet</p>
                     <p style="color: #666; font-size: 14px;">Downloaded PDFs will appear here for offline access</p>
                 </div>
                 <div id="downloadsTableWrapper" style="display: none;">
-                    <div id="downloadsTableHeader" style="display: grid; grid-template-columns: 1fr 150px 120px 100px 100px; gap: 15px; padding: 12px 16px; background: rgba(255, 130, 0, 0.1); border-radius: 8px; margin-bottom: 10px; font-weight: 600; font-size: 14px;">
+                    <div id="downloadsTableHeader"
+                        style="display: grid; grid-template-columns: 1fr 150px 120px 100px 100px; gap: 15px; padding: 12px 16px; background: rgba(255, 130, 0, 0.1); border-radius: 8px; margin-bottom: 10px; font-weight: 600; font-size: 14px;">
                         <div style="text-align: left;">Name</div>
                         <div style="text-align: left;">Subject</div>
                         <div style="text-align: left;">Semester</div>
@@ -418,13 +801,13 @@
             <h1>Settings</h1>
             <!-- Version -->
             <div class="card-layout" id="versionInfo" style></div>
-            
+
             <!-- OTA Update Button (Plus/Super Users Only) -->
             <button id="otaUpdateButton" style="display: none;">
                 <!-- <i class="fa-solid fa-up-from-line"></i> -->
                 <span>Download Update</span>
             </button>
-            
+
             <!-- Account -->
             <div class="card-layout" id="account">
                 <div class="account-card">
@@ -436,7 +819,7 @@
                             <p class="account-username" id="account-username"></p>
                         </div>
                     </div>
-                    <a href="/account" class="account-link">
+                    <a href="/account?callback=../" class="account-link">
                         <i class="fas fa-chevron-right" style="text-decoration: none;"></i>
                     </a>
                 </div>
@@ -444,22 +827,42 @@
             <!-- Dark mode toggle -->
             <div class="card-layout" id="themeCard">
                 <div class="toggle-container">
-                    <div class="paper-mode-title">Enable Dark Mode</div>
+                    <div class="paper-mode-info">
+                        <div class="paper-mode-title">Enable Dark Mode</div>
+                        <div class="paper-mode-description" id="smartDarkModeStatus"></div>
+                    </div>
                     <label class="switch">
                         <input type="checkbox" id="themeToggle">
                         <span class="slider"></span>
                     </label>
                 </div>
+                <!-- Pure Light Mode option (shown when dark mode is off) -->
+                <div id="pureLightModeOptions"
+                    style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.08);">
+                    <div class="toggle-container">
+                        <div class="paper-mode-info">
+                            <div class="paper-mode-title" style="font-size: 13px;">Pure Light Mode</div>
+                            <div class="paper-mode-description" style="font-size: 11px;">Disables smart dark mode which
+                                switches theme based on time of day</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="pureLightModeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
             </div>
             <!-- Contributions -->
             <div class="card-layout" id="gh">
                 <div class="toggle-container">
-                    <a href="https://github.com/Materioa/materio/issues/new?template=contribute.yml"
-                        class="contribute-button">
+                    <button onclick="openDynamicForm('contribution', true)" class="contribute-button"
+                        style="border: none; background: transparent; width: 100%; text-align: left; cursor: pointer;">
                         <i class="fas fa-circle-plus" style="margin-right: 15px;"></i>
-                        <span style="font-weight: 600; color: #333; text-decoration: none;">Contribute Materials</span>
+                        <span
+                            style="font-weight: 600; color: var(--text-primary, #333); text-decoration: none;">Contribute
+                            Materials</span>
                         <i class="fas fa-chevron-right" style="position: absolute; right: 30px; margin-right: 0;"></i>
-                    </a>
+                    </button>
                 </div>
             </div>
             <!-- Tabs -->
@@ -474,6 +877,22 @@
             <div id="preferences-content" class="tab-content-section active">
                 <!-- Reading Modes -->
                 <p style="margin-left: 5px;"><b>Reading Modes</b></p>
+
+                <!-- Invert Colors Mode -->
+                <div class="card-layout" id="invertMode">
+                    <div class="toggle-container">
+                        <div class="paper-mode-info">
+                            <div class="paper-mode-title">Inversion</div>
+                            <div class="paper-mode-description">Reverses colors of content except some images and media
+                            </div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="invertModeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="card-layout" id="paperModeCard">
                     <div class="toggle-container">
                         <div class="paper-mode-info">
@@ -488,6 +907,9 @@
                     <details class="grain-details" id="grainDetails" style="display: none;">
                         <summary class="grain-summary">Grain Settings</summary>
                         <div class="grain-size-control" id="grainSizeControl">
+                            <!-- Paper Texture Selection -->
+
+                            <!-- Grain Size Control -->
                             <div class="grain-size-label">
                                 <span>Grain Size</span>
                                 <span class="grain-size-value" id="grainSizeValue">100%</span>
@@ -496,6 +918,45 @@
                                 class="grain-slider">
                         </div>
                     </details>
+                    <!-- Paper Texture Options (shown when paper mode is enabled) -->
+                    <div class="paper-texture-options" id="paperTextureOptions"
+                        style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.08);">
+                        <div class="toggle-container">
+                            <div class="paper-mode-info">
+                                <div class="paper-mode-title" style="font-size: 13px;">Paper Texture</div>
+                                <div class="paper-mode-description" style="font-size: 11px;">Choose the texture overlay
+                                </div>
+                            </div>
+                            <div class="paper-texture-dropdown-wrapper" id="paperTextureDropdownWrapper">
+                                <button class="paper-texture-trigger" id="paperTextureDropdownTrigger">
+                                    <span id="paperTextureSelectedText">Black Paper</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="profile-dropdown paper-texture-dropdown" id="paperTextureDropdown">
+                                    <a href="#" class="dropdown-item paper-texture-item selected"
+                                        data-value="black-paper">
+                                        <span>Black Paper</span>
+                                    </a>
+                                    <a href="#" class="dropdown-item paper-texture-item" data-value="cardboard-flat">
+                                        <span>Cardboard</span>
+                                    </a>
+                                    <a href="#" class="dropdown-item paper-texture-item"
+                                        data-value="light-paper-fibers">
+                                        <span>Light Paper</span>
+                                    </a>
+                                    <a href="#" class="dropdown-item paper-texture-item" data-value="sandpaper">
+                                        <span>Sandpaper</span>
+                                    </a>
+                                    <a href="#" class="dropdown-item paper-texture-item" data-value="textured-paper">
+                                        <span>Textured Paper</span>
+                                    </a>
+                                    <a href="#" class="dropdown-item paper-texture-item" data-value="gaussian">
+                                        <span>Gaussian</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-layout" id="nightReadingCard">
                     <div class="toggle-container">
@@ -557,15 +1018,49 @@
                 <div class="card-layout" id="bgToggleCard">
                     <div class="toggle-container">
                         <div class="paper-mode-info">
-                            <div class="paper-mode-title">Background Image</div>
-                            <div class="paper-mode-description">Disable home background image</div>
+                            <div class="paper-mode-title">Wallpaper Engine</div>
+                            <div class="paper-mode-description">Enable home background image</div>
                         </div>
                         <label class="switch">
-                            <input type="checkbox" id="disableBgToggle">
+                            <input type="checkbox" id="enableBgToggle" checked>
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div>
+
+
+
+                <!-- Haptic Feedback Toggle -->
+                <div class="card-layout" id="hapticToggleCard">
+                    <div class="toggle-container">
+                        <div class="paper-mode-info">
+                            <div class="paper-mode-title">Haptic Feedback</div>
+                            <div class="paper-mode-description">Vibration on touch interactions</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="hapticToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <!-- Intensity Options (shown when haptic is enabled) -->
+                    <div class="haptic-intensity-options" id="hapticIntensityOptions"
+                        style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.08);">
+                        <div class="haptic-intensity-control">
+                            <div class="haptic-intensity-header">
+                                <span class="haptic-intensity-label">Intensity</span>
+                                <span class="haptic-intensity-value" id="hapticIntensityValue">Medium</span>
+                            </div>
+                            <input type="range" id="hapticIntensitySlider" min="0" max="2" value="1" step="1"
+                                class="haptic-intensity-slider">
+                            <div class="haptic-intensity-labels">
+                                <span>Minimal</span>
+                                <span>Medium</span>
+                                <span>Strong</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <!-- Background Wallpaper Selection -->
                 <div class="card-layout" id="wallpaperSelectionCard">
@@ -576,7 +1071,8 @@
                         </div>
                         <div class="wallpaper-grid">
                             <div class="wallpaper-preview-card" data-wallpaper="default" data-bg-image="">
-                                <div class="wallpaper-preview" style="background-image: url('/assets/img/events/hero.webp'); background-size: cover; background-position: center;">
+                                <div class="wallpaper-preview"
+                                    style="background-image: url('/assets/img/events/hero.webp'); background-size: cover; background-position: center;">
                                     <div class="wallpaper-overlay">
                                         <span class="wallpaper-name">Default</span>
                                     </div>
@@ -590,26 +1086,60 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="wallpaper-preview-card" data-wallpaper="h2" data-bg-image="url('/assets/img/events/h2.webp')">
-                                <div class="wallpaper-preview" style="background-image: url('/assets/img/events/h2.webp'); background-size: cover; background-position: center;">
+                            <div class="wallpaper-preview-card" data-wallpaper="h2"
+                                data-bg-image="url('/assets/img/events/h2.webp')">
+                                <div class="wallpaper-preview"
+                                    style="background-image: url('/assets/img/events/h2.webp'); background-size: cover; background-position: center;">
                                     <div class="wallpaper-overlay">
                                         <span class="wallpaper-name">Zen</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="wallpaper-preview-card" data-wallpaper="h5" data-bg-image="url('/assets/img/events/h5.webp')">
-                                <div class="wallpaper-preview" style="background-image: url('/assets/img/events/h5.webp'); background-size: cover; background-position: center;">
+                            <div class="wallpaper-preview-card" data-wallpaper="h5"
+                                data-bg-image="url('/assets/img/events/h5.webp')">
+                                <div class="wallpaper-preview"
+                                    style="background-image: url('/assets/img/events/h5.webp'); background-size: cover; background-position: center;">
                                     <div class="wallpaper-overlay">
                                         <span class="wallpaper-name">Dusk</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="wallpaper-preview-card" data-wallpaper="h3" data-bg-image="url('/assets/img/events/h3.webp')">
-                                <div class="wallpaper-preview" style="background-image: url('/assets/img/events/h3.webp'); background-size: cover; background-position: center;">
+                            <div class="wallpaper-preview-card" data-wallpaper="h3"
+                                data-bg-image="url('/assets/img/events/h3.webp')">
+                                <div class="wallpaper-preview"
+                                    style="background-image: url('/assets/img/events/h3.webp'); background-size: cover; background-position: center;">
                                     <div class="wallpaper-overlay">
                                         <span class="wallpaper-name">A Blissful Night</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="wallpaper-preview-card" data-wallpaper="christmas-dynamic"
+                                data-bg-image="christmas-dynamic">
+                                <div class="wallpaper-preview christmas-preview" id="christmasPreview"
+                                    style="background-image: url('/assets/img/events/dynamic/christmas/part_2.webp'); background-size: cover; background-position: center;">
+                                    <div class="wallpaper-overlay">
+                                        <span class="wallpaper-name">Christmas</span>
+                                        <span class="dynamic-time" id="christmasTime"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Custom Upload Wallpaper Card -->
+                            <div class="wallpaper-preview-card wallpaper-upload-card" data-wallpaper="custom"
+                                id="customWallpaperCard">
+                                <div class="wallpaper-preview custom-preview" id="customPreview">
+                                    <div class="wallpaper-upload-content">
+                                        <i class="fa-solid fa-plus"></i>
+                                        <span class="wallpaper-upload-text">Upload</span>
+                                    </div>
+                                    <div class="wallpaper-overlay custom-wallpaper-overlay" style="display: none;">
+                                        <span class="wallpaper-name">Custom</span>
+                                        <button class="custom-wallpaper-remove" id="removeCustomWallpaper"
+                                            title="Remove custom wallpaper">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="file" id="customWallpaperInput" accept="image/*" style="display: none;">
                             </div>
                         </div>
                     </div>
@@ -623,9 +1153,37 @@
                             <div class="paper-mode-description">Display smart posts from insighroom</div>
                         </div>
                         <label class="switch">
-                            <input type="checkbox" id="insightroomToggle" checked>
+                            <input type="checkbox" id="insightroomToggle">
                             <span class="slider"></span>
                         </label>
+                    </div>
+                    <!-- View Options (shown when toggle is enabled) -->
+                    <div class="insightroom-view-options" id="insightroomViewOptions"
+                        style="display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.08);">
+                        <div class="toggle-container">
+                            <div class="paper-mode-info">
+                                <div class="paper-mode-title" style="font-size: 13px;">View Style</div>
+                                <div class="paper-mode-description" style="font-size: 11px;">Choose how the feed appears
+                                    on homepage</div>
+                            </div>
+                            <!-- Dropdown using profile-dropdown styles -->
+                            <div class="view-style-dropdown-wrapper" id="viewStyleDropdownWrapper">
+                                <button class="view-style-trigger" id="viewStyleDropdownTrigger">
+                                    <span id="viewStyleSelectedText">Normal</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="profile-dropdown view-style-dropdown" id="viewStyleDropdown">
+                                    <a href="#" class="dropdown-item view-style-item" data-value="normal">
+                                        <i class="far fa-rectangle-wide"></i>
+                                        <span>Normal</span>
+                                    </a>
+                                    <a href="#" class="dropdown-item view-style-item" data-value="folded">
+                                        <i class="far fa-rectangle-list"></i>
+                                        <span>Folded</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -639,6 +1197,17 @@
                             <input type="checkbox" id="optOutCookiesToggle">
                             <span class="slider"></span>
                         </label>
+                    </div>
+                </div>
+
+                <!-- Clear Site Data -->
+                <div class="card-layout" id="clearSiteDataCard">
+                    <div class="toggle-container" style="cursor: pointer;" onclick="clearAllSiteData()">
+                        <div class="paper-mode-info">
+                            <div class="paper-mode-title">Clear Data</div>
+                            <div class="paper-mode-description">Clear all data from storage</div>
+                        </div>
+                        <i class="fa-regular fa-trash" style="color: #DC3545; font-size: 18px;"></i>
                     </div>
                 </div>
             </div>
@@ -656,6 +1225,9 @@
                             <!-- log will appear here -->
                         </div>
                     </details>
+                    <a href="/changelog"
+                        style="display: block; margin-top: 10px; font-size: 14px; color: #ff8200; text-decoration: none;">Show
+                        all →</a>
                 </div>
 
                 <p style="margin-left: 5px;"><b>Legal</b></p>
@@ -663,38 +1235,38 @@
                     <p>
                         <i class="fas fa-circle-info"></i>
                         <span><a href="/whatisthis"
-                                    style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333; text-decoration: none;">About</a></span>
+                                style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333; text-decoration: none;">About</a></span>
                         <i class="fas fa-chevron-right"></i>
                     </p>
                     <hr>
                     <p>
                         <i class="fas fa-scroll"></i>
                         <span><a href="/license"
-                                    style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333;text-decoration: none;">License</a></span>
+                                style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333;text-decoration: none;">License</a></span>
                         <i class="fas fa-chevron-right"></i>
                     </p>
                     <hr>
                     <p>
                         <i class="fas fa-file-contract"></i>
                         <span><a href="/privacy"
-                                    style="font-family:'Manrope', sans-serif; font-weight:600; color: #333;text-decoration: none;">Privacy
-                                    Policy</a></span>
+                                style="font-family:'Manrope', sans-serif; font-weight:600; color: #333;text-decoration: none;">Privacy
+                                Policy</a></span>
                         <i class="fas fa-chevron-right"></i>
                     </p>
                     <hr>
                     <p>
                         <i class="fas fa-cookie"></i>
                         <span><a href="/cookies"
-                                    style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333;text-decoration: none;">Cookie
-                                    Policy</a></span>
+                                style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333;text-decoration: none;">Cookie
+                                Policy</a></span>
                         <i class="fas fa-chevron-right"></i>
                     </p>
                     <hr>
                     <p>
                         <i class="fab fa-github"></i>
                         <span><a href="https://github.com/Jinansh230705"
-                                    style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333;text-decoration: none;">Developer's
-                                    Github</a></span>
+                                style="font-family:'Manrope', sans-serif; font-weight: 600; color: #333;text-decoration: none;">Developer's
+                                Github</a></span>
                         <i class="fas fa-chevron-right"></i>
                     </p>
                 </div>
@@ -734,7 +1306,7 @@
             </details>
         </div>
 
-<!-- Quick Search Results Dropdown (positioned absolutely at body level) -->
-<div id="quickSearchResults">
-    <!-- Results will be populated here -->
-</div>
+        <!-- Quick Search Results Dropdown (positioned absolutely at body level) -->
+        <div id="quickSearchResults">
+            <!-- Results will be populated here -->
+        </div>

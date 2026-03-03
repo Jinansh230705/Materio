@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upgrade - Materio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@r3dz0n3/fontawesome-pro@6.3.0/css/all.css">
+    <link rel="stylesheet" href="/account/css/styles.css">
+    <link rel="stylesheet" href="/account/css/redesigned-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --plus-gold: #FFD700;
+            --plus-silver: #ebebeb;
+            --card-bg: rgba(51, 51, 51, 0.5);
+            --text-main: #ffffff;
+            --text-muted: #ff5200;
+            --text-muted-2: #e6e6e6;
+        }
+
+        body {
+            background-color: #0f0f12;
+            background-image: url('/assets/img/events/h8.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main);
+            font-family: 'Manrope', -apple-system, sans-serif;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom,
+                    rgba(255, 242, 225, 0.95) 0%,
+                    rgba(255, 242, 225, 0.7) 30%,
+                    rgba(255, 242, 225, 0.3) 60%,
+                    rgba(255, 242, 225, 0) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .upgrade-container {
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .upgrade-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #6b6b6b;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .upgrade-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .pricing-grid {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: nowrap;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            corner-shape: squircle;
+            border-radius: 40px;
+            padding: 36px;
+            flex: 1;
+            max-width: 480px;
+            min-width: 320px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .pricing-card p {
+            color: var(--text-muted-2) !important;
+        }
+
+        .pricing-card.premium {
+            border: 2px solid var(--plus-silver);
+            box-shadow: 0 12px 32px rgba(192, 192, 192, 0.1);
+        }
+
+        .pricing-card.pro {
+            border: 2px solid var(--plus-gold);
+            box-shadow: 0 12px 32px rgba(255, 215, 0, 0.1);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: -14px;
+            right: 28px;
+            background: var(--plus-silver);
+            color: #000;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-card.pro .card-badge {
+            background: var(--plus-gold);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            color: #fff;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 16px 0;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .price span {
+            font-size: 1.1rem;
+            color: var(--text-muted-2);
+            margin-left: 8px;
+            font-weight: 500;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 24px 0;
+            flex-grow: 1;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .features-list li i {
+            color: var(--plus-silver);
+            margin-right: 12px;
+            font-size: 1rem;
+        }
+
+        .pricing-card.pro .features-list li i {
+            color: var(--plus-gold);
+        }
+
+        .upgrade-btn {
+            background: var(--plus-silver);
+            color: #000;
+            border: none;
+            corner-shape: squircle;
+            padding: 16px;
+            border-radius: 24px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.15s;
+            width: 100%;
+            margin-top: 16px;
+        }
+
+        .pricing-card.pro .upgrade-btn {
+            background: var(--plus-gold);
+        }
+
+        .upgrade-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .upgrade-btn:disabled {
+            background: #333;
+            color: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-bottom: 24px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: #fff;
+        }
+
+        .back-btn i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .pricing-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pricing-card {
+                max-width: 100%;
+                min-width: unset;
+            }
+
+            .upgrade-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="upgrade-container">
+        <a href="/account/profile.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Profile</a>
+
+        <div class="upgrade-header">
+            <h1>Upgrade Your Experience</h1>
+            <p>Choose the plan that fits your study needs.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Plus Tier -->
+            <div class="pricing-card premium">
+                <div class="card-badge">Most Popular</div>
+                <h3>Plus</h3>
+                <div class="price">₹59<span>/3mo</span></div>
+                <p style="color: var(--text-muted);">Renewal every 3 months.</p>
+
+                <ul class="features-list">
+                    <li><i class="fas fa-check-circle"></i> Private Cloud Storage</li>
+                    <li><i class="fas fa-check-circle"></i> Exclusive Silver Badge</li>
+                    <li><i class="fas fa-check-circle"></i> Ad-free Experience</li>
+                    <li><i class="fas fa-check-circle"></i> Basic Notebook Sync</li>
+                </ul>
+
+                <button class="upgrade-btn" onclick="initiateUpgrade('plus_subscription', 59)">Get Plus</button>
+            </div>
+
+            <!-- Pro Tier -->
+            <div class="pricing-card pro">
+                <div class="card-badge">Best Value</div>
+                <h3>Pro</h3>
+                <div class="price">₹299<span>one-time</span></div>
+                <p style="color: var(--text-muted);">Ultimate power for serious learners.</p>
+
+                <ul class="features-list">
+                    <li><i class="fas fa-check-circle"></i> <strong>All Plus Features</strong></li>
+                    <li><i class="fas fa-check-circle"></i> Priority PDF Chunking</li>
+                    <li><i class="fas fa-check-circle"></i> Exclusive <strong>Gold Badge</strong></li>
+                    <li><i class="fas fa-check-circle"></i> Advanced AI Insights</li>
+                    <li><i class="fas fa-check-circle"></i> Full Notebook Cloud-Sync</li>
+                    <li><i class="fas fa-check-circle"></i> Early Beta Access</li>
+                </ul>
+
+                <button class="upgrade-btn" onclick="initiateUpgrade('pro_lifetime', 299)">Get Pro</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification">
+        <div class="notification-icon"></div>
+        <div class="notification-content">
+            <span class="notification-message"></span>
+        </div>
+        <button class="notification-close">&times;</button>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="/account/js/auth.js"></script>
+    <script src="/account/js/upgrade.js"></script>
+</body>
+
+</html>

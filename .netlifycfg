@@ -1,0 +1,12 @@
+{
+  "telemetry": false,
+  "noInstallMissingDependencies": true,
+  "redirectsProxyRedirectTo301": true,
+  "hidePromotions": true,
+  "promptUpgrade": false,
+  "dev": {
+    "quiet": true,
+    "showPromptsForOnSaveCommands": false,
+    "showBanner": false
+  }
+}

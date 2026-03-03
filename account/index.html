@@ -6,14 +6,81 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Materio</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/redesigned-styles.css">
+  <link rel="stylesheet" href="/account/css/styles.css">
+  <link rel="stylesheet" href="/account/css/redesigned-styles.css">
   <script>
     // Check for dark mode cookie
     document.addEventListener('DOMContentLoaded', function () {
       const darkModeCookie = document.cookie.split('; ').find(row => row.startsWith('darkMode='));
       if (darkModeCookie && darkModeCookie.split('=')[1] === 'true') {
         document.body.classList.add('dark-mode');
+      }
+
+      // Check if user is already logged in
+      const tokenRow = document.cookie.split('; ').find(row => row.startsWith('materio_auth_token='));
+
+      if (tokenRow) {
+        const authToken = tokenRow.split('=')[1];
+        // Parse URL params specifically for this immediate check
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get('callback');
+
+        if (redirectUrl) {
+          // Check for redirect loop: if referrer matches the redirect target
+          const referrer = document.referrer;
+          const targetUrl = new URL(redirectUrl, window.location.origin);
+
+          if (referrer && (referrer.includes(targetUrl.pathname) || targetUrl.href.includes(referrer))) {
+            console.warn('Redirect loop detected. Clearing invalid token.');
+            // Clear cookie and storage to break loop
+            document.cookie = 'materio_auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            localStorage.removeItem('materio_auth_token');
+            // Do not redirect, let form show
+            return;
+          }
+
+          console.log('Creating handoff for existing user...');
+          // For already logged-in users, create a handoff code via API
+          fetch('/api/v2/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.handoffCode) {
+                // Redirect with the handoff code
+                targetUrl.searchParams.set('handoff', data.handoffCode);
+                console.log('Redirecting with handoff code to:', targetUrl.toString());
+                window.location.replace(targetUrl.toString());
+              } else {
+                // Fallback: redirect without code (receiving site should check localStorage)
+                console.warn('Could not create handoff code, redirecting anyway');
+                window.location.replace(redirectUrl);
+              }
+            })
+            .catch(error => {
+              console.error('Handoff creation failed:', error);
+              // Fallback redirect
+              window.location.replace(redirectUrl);
+            });
+          return; // Stop further execution
+        } else {
+          // Only redirect to profile if NOT on a redirect loop
+          // But first check if we just came from profile (logout or error)
+          if (document.referrer && document.referrer.includes('/account/profile')) {
+            console.log('Came from profile, assuming logout/expire. Clearing token.');
+            document.cookie = 'materio_auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            localStorage.removeItem('materio_auth_token');
+            return;
+          }
+
+          console.log('Redirecting existing user to profile');
+          window.location.replace('/account/profile');
+          return;
+        }
       }
     });
   </script>
@@ -42,7 +109,7 @@
               <input type="checkbox" id="remember" name="remember">
               <label for="remember">Remember Me</label>
             </div>
-            <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
+            <a href="/account/forgot-password" class="forgot-link">Forgot Password?</a>
           </div>
 
           <button type="submit" class="btn">SIGN IN</button>
@@ -122,9 +189,9 @@
     checkAndApplyDarkMode();
   </script>
 
-  <script src="js/auth.js"></script>
-  <script src="js/login.js"></script>
-  <script src="js/ux-enhancers.js"></script>
+  <script src="/account/js/auth.js"></script>
+  <script src="/account/js/login.js"></script>
+  <script src="/account/js/ux-enhancers.js"></script>
 </body>
 
 </html>

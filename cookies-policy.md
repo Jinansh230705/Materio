@@ -1,11 +1,13 @@
 ---
-layout: page
 title: Cookie Policy
-heading: Cookies Policy
+layout: post
+category: legal
+date: '2025-08-25'
+hide_author_share_row: true 
+image: null 
 permalink: /cookies
+no-ads: true
 ---
-
-> Last Updated: 20/08/25
 
 This Cookie Policy explains how Materio ("i", "we", "us," or "our") uses cookies and similar technologies on our website and related services (including Oread PDF reader and Insightroom). By using our website, you consent to the use of cookies as described in this policy. If you do not agree with our use of cookies, you can disable them through your browser settings or opt out of optional cookies by toggling off **"Accept Cookies"** in settings.
 

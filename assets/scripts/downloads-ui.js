@@ -1,7 +1,7 @@
 // Downloads Management UI
 // Handles displaying and managing downloaded PDFs
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const downloadsList = document.getElementById('downloadsList');
     const downloadsLoading = document.getElementById('downloadsLoading');
     const downloadsEmpty = document.getElementById('downloadsEmpty');
@@ -12,19 +12,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load downloads when the downloads tab is opened
     const downloadsTab = document.querySelector('[data-tab="downloads"]');
     if (downloadsTab) {
-        downloadsTab.addEventListener('click', function() {
+        downloadsTab.addEventListener('click', function () {
             loadDownloads();
         });
     }
-    
+
     // Also listen for custom event from profile dropdown
-    document.addEventListener('downloadsTabOpened', function() {
+    document.addEventListener('downloadsTabOpened', function () {
         loadDownloads();
     });
 
     // Clear all downloads button
     if (clearAllBtn) {
-        clearAllBtn.addEventListener('click', async function() {
+        clearAllBtn.addEventListener('click', async function () {
             if (!confirm('Are you sure you want to delete all downloaded PDFs? This action cannot be undone.')) {
                 return;
             }
@@ -42,8 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load and display downloads
     async function loadDownloads() {
-        console.log('[Downloads UI] loadDownloads called');
-        
+
         if (!downloadsList) {
             console.error('[Downloads UI] downloadsList element not found');
             return;
@@ -73,15 +72,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            console.log('[Downloads UI] Waiting for IndexedDB initialization...');
             // Wait for IndexedDB to initialize
             await window.pdfDownloadManager.initPromise;
-            console.log('[Downloads UI] IndexedDB initialized');
-            
+
             // Get all downloads
             const downloads = await window.pdfDownloadManager.getAllDownloads();
-            console.log('[Downloads UI] Found downloads:', downloads.length);
-            
+
             // Sort by download date (newest first)
             downloads.sort((a, b) => (b.downloadedAt || 0) - (a.downloadedAt || 0));
 
@@ -123,11 +119,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function createDownloadCard(download) {
         const row = document.createElement('div');
         row.className = 'download-row';
-        
+
         // Generate a unique ID based on the URL
         const rowId = 'download-row-' + btoa(download.url).replace(/[^a-zA-Z0-9]/g, '').substring(0, 32);
         row.id = rowId;
-        
+
         row.style.cssText = `
             display: grid;
             grid-template-columns: 1fr 150px 120px 100px 100px;
@@ -198,27 +194,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Hover effects
-        row.addEventListener('mouseenter', function() {
+        row.addEventListener('mouseenter', function () {
             this.style.background = 'rgba(255, 130, 0, 0.05)';
         });
-        row.addEventListener('mouseleave', function() {
+        row.addEventListener('mouseleave', function () {
             this.style.background = 'transparent';
         });
 
-        openBtn.addEventListener('mouseenter', function() {
+        openBtn.addEventListener('mouseenter', function () {
             this.style.color = '#e67300';
             this.style.transform = 'scale(1.1)';
         });
-        openBtn.addEventListener('mouseleave', function() {
+        openBtn.addEventListener('mouseleave', function () {
             this.style.color = '#ff8200';
             this.style.transform = 'scale(1)';
         });
 
-        deleteBtn.addEventListener('mouseenter', function() {
+        deleteBtn.addEventListener('mouseenter', function () {
             this.style.color = '#c82333';
             this.style.transform = 'scale(1.1)';
         });
-        deleteBtn.addEventListener('mouseleave', function() {
+        deleteBtn.addEventListener('mouseleave', function () {
             this.style.color = '#dc3545';
             this.style.transform = 'scale(1)';
         });
@@ -231,21 +227,21 @@ document.addEventListener('DOMContentLoaded', function() {
         // Switch to home tab first
         const homeTab = document.querySelector('[data-tab="home"]');
         const homeContent = document.getElementById('home');
-        
+
         if (homeTab && homeContent) {
             // Remove active from all tabs
             document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
+
             // Activate home tab
             homeTab.classList.add('active');
             homeContent.classList.add('active');
-            
+
             // Set cookie for active tab
             if (typeof setCookie === 'function') {
                 setCookie('activeTab', 'home', 7);
             }
-            
+
             // Small delay to ensure tab switch completes, then open PDF
             setTimeout(() => {
                 if (typeof window.loadPdfWithCache === 'function') {
@@ -268,14 +264,14 @@ document.addEventListener('DOMContentLoaded', function() {
     async function updateStorageInfo() {
         try {
             const info = await window.pdfDownloadManager.getStorageInfo();
-            
+
             if (storageStats) {
                 storageStats.textContent = `${info.totalFiles} files • ${info.totalSizeFormatted} of ${info.maxSizeFormatted} used`;
             }
 
             if (storageBar) {
                 storageBar.style.width = `${info.percentUsed}%`;
-                
+
                 // Change color based on usage
                 if (info.percentUsed > 90) {
                     storageBar.style.background = '#dc3545';
@@ -345,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('downloads')?.classList.contains('active')) {
         loadDownloads();
     }
-    
+
     // Expose loadDownloads globally for external access
     window.loadDownloads = loadDownloads;
 });

@@ -660,7 +660,7 @@ class MateriosPWA {
       if (this.swRegistration && navigator.onLine) {
         this.refreshVersionData();
       }
-    }, 30 * 60 * 1000);
+    }, 259200 * 60 * 1000);
   }
 
   async setupPushNotifications() {

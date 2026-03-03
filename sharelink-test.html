@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sharelink Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    button {
+      padding: 8px 15px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3367d6;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      overflow-wrap: break-word;
+    }
+    .heading-preview {
+      font-style: italic;
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sharelink Test Tool</h1>
+  
+  <div class="form-group">
+    <label for="inviteCode">Invite Code:</label>
+    <input type="text" id="inviteCode" placeholder="Enter invite code">
+  </div>
+  
+  <div class="form-group">
+    <label for="customHeading">Custom Heading:</label>
+    <input type="text" id="customHeading" placeholder="Enter custom heading (optional)">
+  </div>
+  
+  <button id="createBtn">Create/Update Sharelink</button>
+  <button id="lookupBtn">Lookup Sharelink</button>
+  
+  <div id="result" class="result" style="display: none;"></div>
+  
+  <script>
+    document.getElementById('createBtn').addEventListener('click', async function() {
+      const inviteCode = document.getElementById('inviteCode').value.trim();
+      const customHeading = document.getElementById('customHeading').value.trim();
+      const resultDiv = document.getElementById('result');
+      
+      if (!inviteCode) {
+        resultDiv.textContent = 'Please enter an invite code';
+        resultDiv.style.display = 'block';
+        return;
+      }
+      
+      try {
+        resultDiv.textContent = 'Creating sharelink...';
+        resultDiv.style.display = 'block';
+        
+        // Use features endpoint
+        const response = await fetch('/api/v2/features?action=sharelink', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            // Note: This endpoint requires auth, so this test tool might need updating to include auth token
+            // or use a debug endpoint if available. For now, pointing to the new location.
+            'Authorization': `Bearer ${localStorage.getItem('materio_auth_token')}`
+          },
+          body: JSON.stringify({
+            inviteCode,
+            customHeading: customHeading || null
+          })
+        });
+        
+        const data = await response.json();
+        
+        resultDiv.innerHTML = '<h3>Create/Update Result:</h3>';
+        resultDiv.innerHTML += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+        
+        if (data.sharelink && data.sharelink.url) {
+          resultDiv.innerHTML += `<p>Generated URL: <a href="${data.sharelink.url}" target="_blank">${data.sharelink.url}</a></p>`;
+        }
+      } catch (error) {
+        resultDiv.textContent = 'Error: ' + error.message;
+      }
+    });
+    
+    document.getElementById('lookupBtn').addEventListener('click', async function() {
+      const inviteCode = document.getElementById('inviteCode').value.trim();
+      const resultDiv = document.getElementById('result');
+      
+      if (!inviteCode) {
+        resultDiv.textContent = 'Please enter an invite code';
+        resultDiv.style.display = 'block';
+        return;
+      }
+      
+      try {
+        resultDiv.textContent = 'Looking up sharelink...';
+        resultDiv.style.display = 'block';
+        
+        const response = await fetch(`/api/v2/invites/sharelink-info?code=${inviteCode}`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          
+          resultDiv.innerHTML = '<h3>Lookup Result:</h3>';
+          resultDiv.innerHTML += '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+          
+          if (data.customHeading) {
+            resultDiv.innerHTML += `<div class="heading-preview">Heading Preview: "${data.customHeading}"</div>`;
+          }
+          
+          resultDiv.innerHTML += `<p>Visit URL: <a href="/invites/${inviteCode}" target="_blank">/invites/${inviteCode}</a></p>`;
+        } else {
+          resultDiv.innerHTML = '<h3>Lookup Failed:</h3>';
+          resultDiv.innerHTML += `<p>Status: ${response.status}</p>`;
+          
+          try {
+            const errorData = await response.json();
+            resultDiv.innerHTML += '<pre>' + JSON.stringify(errorData, null, 2) + '</pre>';
+          } catch (e) {
+            resultDiv.innerHTML += '<p>No valid JSON response</p>';
+          }
+        }
+      } catch (error) {
+        resultDiv.textContent = 'Error: ' + error.message;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!-- Dynamic Forms Modal -->
+<!-- Uses same styling as promotional modal for consistency -->
+<div class="promo-modal-overlay dynamic-form-overlay" id="dynamicFormModal" role="dialog" aria-hidden="true"
+    aria-labelledby="dynamicFormTitle">
+    <div class="promo-modal dynamic-form-modal">
+        <!-- Close Button -->
+        <i class="fas fa-times promo-close-btn" onclick="closeDynamicForm()"></i>
+
+        <!-- Content Panel (no image panel for forms) -->
+        <div class="promo-content dynamic-form-content-wrapper">
+            <!-- Header -->
+            <div class="dynamic-form-header">
+                <i id="dynamicFormIcon" class="fa-solid fa-circle-plus dynamic-form-icon"></i>
+                <h2 id="dynamicFormTitle">Form Title</h2>
+                <p id="dynamicFormDescription" class="promo-description">Form description goes here</p>
+            </div>
+
+            <!-- Form Content -->
+            <form id="dynamicFormContent" class="dynamic-form-fields-container">
+                <!-- Loading State -->
+                <div id="dynamicFormLoading" class="dynamic-form-loading" style="display: none;">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Loading form...</span>
+                </div>
+
+                <!-- Fields Container (populated by JavaScript) -->
+                <div id="dynamicFormFields" class="dynamic-form-fields"></div>
+
+                <!-- Confirmations Container -->
+                <div id="dynamicFormConfirmations" class="dynamic-form-confirmations"></div>
+            </form>
+
+            <!-- Actions -->
+            <div class="promo-actions dynamic-form-actions">
+                <button type="button" id="dynamicFormSubmitBtn" class="site-button promo-primary-btn"
+                    onclick="submitDynamicForm()">
+                    <i id="dynamicFormSubmitIcon" class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i>
+                    <span id="dynamicFormSubmitText">Submit</span>
+                </button>
+            </div>
+
+            <!-- Success State -->
+            <div id="dynamicFormSuccess" class="dynamic-form-result" style="display: none;">
+                <div class="result-icon success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>Thank You!</h3>
+                <p id="dynamicFormSuccessMessage">Your submission has been received.</p>
+                <button type="button" class="site-button promo-secondary-btn"
+                    onclick="closeDynamicForm()">Close</button>
+            </div>
+
+            <!-- Error State -->
+            <div id="dynamicFormError" class="dynamic-form-result" style="display: none;">
+                <div class="result-icon error-icon">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <h3>Something went wrong</h3>
+                <p id="dynamicFormErrorMessage">Please try again later.</p>
+                <button type="button" class="site-button promo-primary-btn" onclick="resetDynamicForm()">Try
+                    Again</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Dynamic Form Modal - Extends promo modal styles */
+    .dynamic-form-overlay {
+        display: none;
+    }
+
+    .dynamic-form-overlay.show {
+        display: flex;
+    }
+
+    .dynamic-form-modal {
+        flex-direction: column;
+        max-width: 600px;
+    }
+
+    .dynamic-form-content-wrapper {
+        padding: 32px;
+        max-height: 75vh;
+        overflow-y: auto;
+        /* Hide scrollbar */
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* IE/Edge */
+    }
+
+    .dynamic-form-content-wrapper::-webkit-scrollbar {
+        display: none;
+        /* Chrome/Safari/Opera */
+    }
+
+    /* Header */
+    .dynamic-form-header {
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .dynamic-form-icon {
+        font-size: 48px;
+        color: #ff8200;
+        margin-bottom: 16px;
+        display: inline-block;
+    }
+
+    .dynamic-form-header h2 {
+        margin: 0 0 8px;
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+
+    /* Form Fields */
+    .dynamic-form-fields-container {
+        margin-bottom: 24px;
+    }
+
+    .dynamic-form-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        gap: 12px;
+    }
+
+    .dynamic-form-loading i {
+        font-size: 24px;
+        color: #ff8200;
+    }
+
+    .dynamic-form-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* Form Groups */
+    .dynamic-form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .dynamic-form-group label {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .dynamic-form-group label .required {
+        color: #ff4444;
+        margin-left: 2px;
+    }
+
+    .dynamic-form-group input[type="text"],
+    .dynamic-form-group input[type="email"],
+    .dynamic-form-group select,
+    .dynamic-form-group textarea {
+        width: 100%;
+        padding: 8px 16px;
+        border: 1px solid rgba(128, 128, 128, 0.2);
+        border-radius: 25px;
+        corner-shape: squircle;
+        font-size: 14px;
+        font-family: inherit;
+        background: #f8f9fa;
+        color: #333;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        box-sizing: border-box;
+    }
+
+    .dynamic-form-group input:focus,
+    .dynamic-form-group select:focus,
+    .dynamic-form-group textarea:focus {
+        outline: none;
+        border-color: #ff8200;
+        box-shadow: 0 0 0 3px rgba(255, 130, 0, 0.1);
+    }
+
+    .dynamic-form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    .dynamic-form-group .field-hint {
+        font-size: 0.8rem;
+        color: #888;
+        margin-top: 4px;
+    }
+
+    /* File Upload Area */
+    .dynamic-form-file-area {
+        border: 2px dashed rgba(255, 130, 0, 0.3);
+        border-radius: 25px;
+        corner-shape: squircle;
+        padding: 32px 16px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: rgba(255, 130, 0, 0.02);
+    }
+
+    .dynamic-form-file-area:hover,
+    .dynamic-form-file-area.dragover {
+        border-color: #ff8200;
+        background: rgba(255, 130, 0, 0.05);
+    }
+
+    .dynamic-form-file-area i {
+        font-size: 32px;
+        color: #ff8200;
+        margin-bottom: 12px;
+    }
+
+    .dynamic-form-file-area p {
+        margin: 0;
+    }
+
+    .dynamic-form-file-area input[type="file"] {
+        display: none;
+    }
+
+    /* File Preview */
+    .dynamic-form-file-preview {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .dynamic-form-file-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        background: rgba(128, 128, 128, 0.05);
+        border-radius: 10px;
+    }
+
+    .dynamic-form-file-item i {
+        color: #ff8200;
+    }
+
+    .dynamic-form-file-item .file-name {
+        flex: 1;
+        font-size: 0.9rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .dynamic-form-file-item .file-size {
+        font-size: 0.8rem;
+        color: #888;
+    }
+
+    .dynamic-form-file-item .remove-file {
+        background: none;
+        border: none;
+        color: #ff4444;
+        cursor: pointer;
+        padding: 4px;
+    }
+
+    /* Rating Field */
+    .dynamic-form-rating {
+        display: flex;
+        gap: 12px;
+        padding: 8px 0;
+    }
+
+    .dynamic-form-rating .star {
+        font-size: 32px;
+        color: rgba(128, 128, 128, 0.3);
+        cursor: pointer;
+        transition: color 0.2s ease, transform 0.2s ease;
+        user-select: none;
+        -webkit-user-select: none;
+        pointer-events: auto;
+    }
+
+    .dynamic-form-rating .star:hover {
+        color: #ff8200;
+        transform: scale(1.15);
+    }
+
+    .dynamic-form-rating .star.active {
+        color: #ff8200;
+        transform: scale(1.1);
+    }
+
+    .dynamic-form-rating .star.hovered {
+        color: #ff8200;
+    }
+
+    /* Confirmations */
+    .dynamic-form-confirmations {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(128, 128, 128, 0.1);
+    }
+
+    .dynamic-form-confirmation {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .dynamic-form-confirmation input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+        accent-color: #ff8200;
+        cursor: pointer;
+    }
+
+    .dynamic-form-confirmation label {
+        font-size: 0.9rem;
+        cursor: pointer;
+        line-height: 1.5;
+    }
+
+    /* Actions */
+    .dynamic-form-actions {
+        margin-top: 16px;
+    }
+
+    .dynamic-form-actions .promo-primary-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 24px;
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    /* Result States */
+    .dynamic-form-result {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px;
+        box-sizing: border-box;
+        border-radius: 40px;
+        corner-shape: squircle;
+    }
+
+    .result-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .result-icon i {
+        font-size: 40px;
+    }
+
+    .success-icon {
+        background: linear-gradient(135deg, rgba(40, 199, 111, 0.2), rgba(40, 199, 111, 0.1));
+    }
+
+    .success-icon i {
+        color: #28c76f;
+    }
+
+    .error-icon {
+        background: linear-gradient(135deg, rgba(234, 84, 85, 0.2), rgba(234, 84, 85, 0.1));
+    }
+
+    .error-icon i {
+        color: #ea5455;
+    }
+
+    .dynamic-form-result h3 {
+        margin: 0 0 12px;
+        font-size: 1.5rem;
+    }
+
+    .dynamic-form-result p {
+        margin: 0 0 24px;
+    }
+
+    /* Mobile Bottom Sheet */
+    @media (max-width: 500px) {
+        .dynamic-form-modal {
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .dynamic-form-content-wrapper {
+            padding: 28px 20px 20px;
+            padding-top: 36px;
+        }
+
+        .dynamic-form-icon-wrapper {
+            width: 52px;
+            height: 52px;
+        }
+
+        .dynamic-form-header h2 {
+            font-size: 1.3rem;
+        }
+    }
+
+    /* Dark Mode - Extends promo modal dark mode */
+    body.dark-mode .dynamic-form-group input,
+    body.dark-mode .dynamic-form-group select,
+    body.dark-mode .dynamic-form-group textarea {
+        background: #2a2a2a;
+        border-color: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+    }
+
+    body.dark-mode .dynamic-form-group input::placeholder,
+    body.dark-mode .dynamic-form-group textarea::placeholder {
+        color: #888;
+    }
+
+    body.dark-mode .dynamic-form-group label {
+        color: #ffffff;
+    }
+
+    body.dark-mode .dynamic-form-group .field-hint {
+        color: #999;
+    }
+
+    body.dark-mode .dynamic-form-file-area {
+        border-color: rgba(255, 130, 0, 0.4);
+        background: rgba(255, 130, 0, 0.05);
+    }
+
+    body.dark-mode .dynamic-form-file-item {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    body.dark-mode .dynamic-form-file-item .file-name {
+        color: #ffffff;
+    }
+
+    body.dark-mode .dynamic-form-confirmation label {
+        color: #cccccc;
+    }
+
+    body.dark-mode .dynamic-form-confirmations {
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .dynamic-form-rating .star {
+        color: rgba(255, 255, 255, 0.2);
+    }
+
+    body.dark-mode .dynamic-form-result {
+        background: #1e1e1e;
+    }
+
+    body.dark-mode .dynamic-form-result h3 {
+        color: #ffffff;
+    }
+
+    body.dark-mode .dynamic-form-result p {
+        color: #cccccc;
+    }
+
+    /* ==========================================
+       Wizard Pages
+       ========================================== */
+
+    /* Cover Page */
+    .wizard-cover-page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        text-align: center;
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .wizard-cover-video {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        z-index: 0;
+    }
+
+    .wizard-cover-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+        opacity: 0.85;
+    }
+
+    .wizard-cover-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        position: relative;
+        z-index: 2;
+    }
+
+    .wizard-cover-icon {
+        font-size: 64px;
+        color: #ffffff;
+        text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        margin-bottom: 16px;
+    }
+
+    .wizard-cover-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .wizard-cover-subtitle {
+        font-size: 18px;
+        color: #ffffff;
+        margin: 0;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .wizard-next-btn {
+        margin-top: 32px;
+        padding: 16px 40px;
+        font-family: 'Manrope', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #ff8200;
+        background: #ffffff;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .wizard-next-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Info Page */
+    .wizard-info-page {
+        padding: 40px 32px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .wizard-info-title {
+        font-family: 'Manrope', sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--text-primary, #1a1a1a);
+        margin: 0 0 32px 0;
+        text-align: center;
+    }
+
+    .wizard-info-content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .wizard-info-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 16px;
+        background: rgba(255, 130, 0, 0.05);
+        border-radius: 16px;
+        border: 1px solid rgba(255, 130, 0, 0.1);
+    }
+
+    .wizard-info-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ff8200, #ff6000);
+        border-radius: 12px;
+        flex-shrink: 0;
+    }
+
+    .wizard-info-icon i {
+        font-size: 20px;
+        color: #ffffff;
+    }
+
+    .wizard-info-text {
+        flex: 1;
+    }
+
+    .wizard-info-text h4 {
+        margin: 0 0 4px 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--text-primary, #1a1a1a);
+    }
+
+    .wizard-info-text p {
+        margin: 0;
+        font-size: 14px;
+        color: var(--text-secondary, #666);
+        line-height: 1.4;
+    }
+
+    .wizard-info-paragraph {
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--text-secondary, #4a4a4a);
+        margin: 0 0 16px 0;
+        text-align: left;
+    }
+
+    .wizard-info-text-block {
+        width: 100%;
+        margin-bottom: 24px;
+        text-align: left;
+    }
+
+    .wizard-info-text-block h4 {
+        margin: 0 0 8px 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-primary, #1a1a1a);
+    }
+
+    .wizard-info-text-block p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--text-secondary, #4a4a4a);
+    }
+
+    body.dark-mode .wizard-info-paragraph,
+    body.dark-mode .wizard-info-text-block p {
+        color: #cccccc;
+    }
+
+    body.dark-mode .wizard-info-text-block h4 {
+        color: #ffffff;
+    }
+
+    .wizard-info-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 32px;
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .wizard-continue-btn {
+        padding: 14px 32px;
+        font-family: 'Manrope', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #ffffff;
+        background: linear-gradient(135deg, #ff8200, #ff6000);
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .wizard-exit-btn {
+        padding: 12px 24px;
+        font-family: 'Manrope', sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-secondary, #666);
+        background: transparent;
+        border: 1px solid rgba(128, 128, 128, 0.2);
+        border-radius: 25px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .wizard-exit-btn:hover {
+        background: rgba(128, 128, 128, 0.1);
+    }
+
+    /* Dark mode for wizard */
+    body.dark-mode .wizard-info-title {
+        color: #ffffff;
+    }
+
+    body.dark-mode .wizard-info-item {
+        background: rgba(255, 130, 0, 0.08);
+        border-color: rgba(255, 130, 0, 0.15);
+    }
+
+    body.dark-mode .wizard-info-text h4 {
+        color: #ffffff;
+    }
+
+    body.dark-mode .wizard-info-text p {
+        color: #aaaaaa;
+    }
+
+    body.dark-mode .wizard-exit-btn {
+        color: #aaaaaa;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .wizard-exit-btn:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Mobile adjustments for wizard */
+    @media (max-width: 768px) {
+        .wizard-cover-page {
+            min-height: 350px;
+            padding: 32px 24px;
+        }
+
+        .wizard-cover-icon {
+            font-size: 48px;
+        }
+
+        .wizard-cover-title {
+            font-size: 26px;
+        }
+
+        .wizard-cover-subtitle {
+            font-size: 16px;
+        }
+
+        .wizard-info-page {
+            padding: 32px 24px;
+        }
+
+        .wizard-info-title {
+            font-size: 20px;
+        }
+    }
+</style>

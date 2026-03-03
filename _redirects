@@ -1,5 +1,10 @@
 # Redirect old profile URL to account root to handle redirection logic
 /account/profile  /account/profile.html  200
 
+# Redirect category URLs with spaces to hyphenated versions (backward compatibility)
+/programming%20humor/*  /programming-humor/:splat  301
+/code%20craftsmanship/*  /code-craftsmanship/:splat  301
+/paper%20solution/*  /paper-solution/:splat  301
+
 # Keep the existing API and other redirects below
 /api/v1/*  /.netlify/functions/:splat  200

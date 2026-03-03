@@ -4,6 +4,11 @@ description: >- # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
+# Set to `true` to temporarily disable the service worker registration
+# and trigger client-side unregistration/cleanup. Set back to `false`
+# to resume normal service-worker behavior.
+disable_service_worker: true
+enable_experimental_filters: true
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
@@ -14,6 +19,7 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-admin
+  - jekyll-toc
 
 highlighter: rouge
 markdown: kramdown
@@ -34,7 +40,30 @@ sass:
 # Handle redirects
 include:
   - _redirects
+  
+exclude:
+  - insightroom
+  - insightroom/**
+  - api
+  - server
+  - node_modules
+  - scripts
+  - migrations
+  - netlify
+  - Gemfile
+  - Gemfile.lock
+  - package.json
+  - package-lock.json
+  - vercel.json
+  - netlify.toml
+  - netlify.dev.toml
+  - netlify.json
+  - run.bat
+  - deploy.bat
+  - count-loc.js
+  - README.md
 
 # Custom permalink structure
 permalink: /:categories/:title/ #default permalink: pretty
 
+timezone: Asia/Kolkata

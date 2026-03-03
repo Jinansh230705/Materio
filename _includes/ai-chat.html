@@ -489,7 +489,7 @@ class AIChatInterface {
     }
 
     getApiBaseUrl() {
-        // Check if we're running locally or on Netlify
+        // Check if we're running locally or on vercel
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
             return 'http://localhost:8888/api/v1/chat';
         } else {

@@ -1,17 +1,17 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   // Sidebar tab switching functionality
   const sidebarNavItems = document.querySelectorAll('.sidebar-nav-item');
   const tabPanes = document.querySelectorAll('.tab-pane');
-  
+
   if (sidebarNavItems.length) {
     sidebarNavItems.forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         const targetTab = this.getAttribute('data-tab');
-        
+
         // Update active state for buttons
         sidebarNavItems.forEach(btn => btn.classList.remove('active'));
         this.classList.add('active');
-        
+
         // Show the selected tab content
         tabPanes.forEach(pane => {
           pane.classList.remove('active');
@@ -22,37 +22,37 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
   }
-    // Profile picture handling
+  // Profile picture handling
   const profilePictureInput = document.getElementById('profilePicture');
   const picturePreview = document.getElementById('picturePreview');
   const dashboardProfileImage = document.getElementById('dashboard-profile-image');
   const dashboardDisplayName = document.getElementById('dashboard-display-name');
   const dashboardUsername = document.getElementById('dashboard-username');
   const uploadButton = document.getElementById('uploadButton');
-  
+
   if (profilePictureInput && picturePreview) {
     // Ensure file input is hidden but functional
     if (uploadButton) {
-      uploadButton.addEventListener('click', function() {
+      uploadButton.addEventListener('click', function () {
         profilePictureInput.click();
       });
     }
-    
-    profilePictureInput.addEventListener('change', function(e) {
+
+    profilePictureInput.addEventListener('change', function (e) {
       const file = e.target.files[0];
       if (file) {
         if (!file.type.startsWith('image/')) {
           showNotification('Please select an image file', 'error');
           return;
         }
-        
+
         if (file.size > 5 * 1024 * 1024) { // 5MB max
           showNotification('Image size should be less than 5MB', 'error');
           return;
         }
-        
+
         const reader = new FileReader();
-        reader.onload = function(event) {
+        reader.onload = function (event) {
           picturePreview.src = event.target.result;
           // Also update the dashboard profile image preview
           if (dashboardProfileImage) {
@@ -61,13 +61,14 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         reader.readAsDataURL(file);
       }
-    });  }    // Admin invite card reference
+    });
+  }    // Admin invite card reference
   const adminInviteCard = document.getElementById('adminInviteCard');
-  
+
   // Function to extract username from URL or session storage
   function getProfileUsername() {
     let username = null;
-    
+
     // Just use the logged in user's username
     const userData = localStorage.getItem('materio_user');
     if (userData) {
@@ -78,35 +79,35 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error parsing user data:', e);
       }
     }
-      return username;
+    return username;
   }
-  
+
   // Load user profile data
   async function loadUserProfile() {
     try {
       const profileUsername = getProfileUsername();
       let response;
-      
+
       // Get the currently logged in user's info from localStorage
       const currentUser = JSON.parse(localStorage.getItem('materio_user') || '{}');
-      
+
       // Just fetch the current user's profile (no URL-based username support)
       response = await makeApiRequest('profile', 'GET', null, true);
-      
+
       if (response && response.user) {
         const user = response.user;
-        
+
         // Store user data for future use
         localStorage.setItem('materio_user', JSON.stringify(user));
         // Fill form fields with user data
         document.getElementById('username').value = user.username || '';
         document.getElementById('displayName').value = user.displayName || '';
         document.getElementById('email').value = user.email || '';
-          // Set recovery key if available
+        // Set recovery key if available
         if (user.recoveryKey) {
           document.getElementById('recoveryKey').value = user.recoveryKey;
         }
-          // Show admin invite card if user has admin privileges
+        // Show admin invite card if user has admin privileges
         if (user.hasAdminPrivileges && adminInviteCard) {
           adminInviteCard.style.display = 'block';
         }        // Show Files tab if user has admin privileges
@@ -120,43 +121,72 @@ document.addEventListener('DOMContentLoaded', function() {
           // Initialize promotion management functionality
           initializePromotionManagement();
         }
-        
+
         // Set profile picture if available
         if (user.profilePicture) {
           // Update profile form preview
           picturePreview.src = user.profilePicture;
-          
+
           // Update dashboard profile card
           if (dashboardProfileImage) {
             dashboardProfileImage.src = user.profilePicture;
           }
-          
+
           // Also update the stored user data to ensure profile image is available across site
           localStorage.setItem('materio_user', JSON.stringify(user));
         }
-        
+
         // Update dashboard profile info
         if (dashboardDisplayName) {
           const displayName = user.displayName || user.username;
-          dashboardDisplayName.innerHTML = displayName;
-          
-          // Add verified badges
+          const upgradeContainer = document.getElementById('upgrade-plus-container');
+
+          // Build the display name HTML
+          let nameHtml = displayName;
+
+          // Add verified badges and hide/update upgrade link
           if (user.hasAdminPrivileges) {
-            dashboardDisplayName.innerHTML += '<i class="fas fa-badge-check verified-badge admin" title="Admin"></i>';
-          } else if (user.isPlusUser) {
-            dashboardDisplayName.innerHTML += '<i class="fas fa-badge-check verified-badge plus" title="Plus User"></i>';
+            nameHtml += ' <i class="fas fa-badge-check verified-badge admin" title="Admin"></i>';
+            if (upgradeContainer) upgradeContainer.style.display = 'none';
+          } else if (user.isProUser || user.isPlusUser) {
+            nameHtml += ' <i class="fas fa-badge-check verified-badge pro" title="Pro User"></i>'; // Pro Badge
+            if (upgradeContainer) upgradeContainer.style.display = 'none';
+          } else if (user.isLiteUser) {
+            nameHtml += ' <i class="fas fa-badge-check verified-badge plus" title="Plus User"></i>'; // Plus Badge
+
+            // Add expiry info if available
+            if (user.plusExpiry) {
+              const expiryDate = new Date(user.plusExpiry).toLocaleDateString();
+              nameHtml += ` <span class="expiry-text" style="font-size: 0.7rem; color: #666; margin-left: 5px;">(Expires: ${expiryDate})</span>`;
+            }
+
+            // If they are Plus, keep upgrade link but change text to "Upgrade to Pro"
+            if (upgradeContainer) {
+              const upgradeLink = upgradeContainer.querySelector('.upgrade-link');
+              if (upgradeLink) {
+                upgradeLink.textContent = 'Upgrade to Pro →';
+              }
+            }
           }
+
+          // Add upgrade container back at the end if it exists and is visible
+          if (upgradeContainer && upgradeContainer.style.display !== 'none') {
+            nameHtml += ' ' + upgradeContainer.outerHTML;
+            upgradeContainer.remove(); // Remove original to avoid duplicate
+          }
+
+          dashboardDisplayName.innerHTML = nameHtml;
         }
-          if (dashboardUsername) {
+        if (dashboardUsername) {
           dashboardUsername.textContent = '@' + user.username;
         }
       }
     } catch (error) {
       console.error('Failed to load user profile:', error);
-      
+
       // Check specific error types
-      if (error.message && error.message.includes('Authentication required') || 
-          error.message && error.message.includes('Invalid or expired token')) {
+      if (error.message && error.message.includes('Authentication required') ||
+        error.message && error.message.includes('Invalid or expired token')) {
         // Auth error - redirect to login
         showNotification('Please sign in to access your profile', 'error');
         setTimeout(() => {
@@ -168,8 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get current user from localStorage
         const currentUser = JSON.parse(localStorage.getItem('materio_user') || '{}');
         // Redirect to their own profile
-        const isLocalhost = window.location.hostname === 'localhost' || 
-                          window.location.hostname === '127.0.0.1';
+        const isLocalhost = window.location.hostname === 'localhost' ||
+          window.location.hostname === '127.0.0.1';
         setTimeout(() => {
           if (isLocalhost) {
             window.location.href = '/account/profile.html';
@@ -181,54 +211,55 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
       } else {
         // General error
-        showNotification('Failed to load user profile: ' + (error.message || 'Unknown error'), 'error');      }
+        showNotification('Failed to load user profile: ' + (error.message || 'Unknown error'), 'error');
+      }
     }
   }
-  
+
   // Load user profile when page loads
   loadUserProfile();
-  
+
   // Admin invite functionality
   const generateInviteBtn = document.getElementById('generateInviteBtn');
   const generatePlusInviteBtn = document.getElementById('generatePlusInviteBtn');
   const viewInvitesBtn = document.getElementById('viewInvitesBtn');
   const copyInviteBtn = document.getElementById('copyInviteBtn');
   const generatedInviteSection = document.getElementById('generatedInviteSection');
-  
+
   // Generate regular invite code
   if (generateInviteBtn) {
-    generateInviteBtn.addEventListener('click', async function() {
+    generateInviteBtn.addEventListener('click', async function () {
       await generateInvite(this, false);
     });
   }
-  
+
   // Generate plus invite code
   if (generatePlusInviteBtn) {
-    generatePlusInviteBtn.addEventListener('click', async function() {
+    generatePlusInviteBtn.addEventListener('click', async function () {
       await generateInvite(this, true);
     });
   }
-  
+
   // Function to generate invite (regular or plus)
   async function generateInvite(button, isPlusInvite = false) {
     try {
       const originalText = button.textContent;
       button.disabled = true;
       button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
-      
-      const response = await makeApiRequest('invites', 'POST', { 
-        containsPlusPerks: isPlusInvite 
+
+      const response = await makeApiRequest('invites', 'POST', {
+        containsPlusPerks: isPlusInvite
       }, true);
-      
+
       if (response && response.invite) {
         document.getElementById('generatedInviteCode').value = response.invite.code;
         generatedInviteSection.style.display = 'block';
-        
+
         const inviteType = isPlusInvite ? 'Plus invite' : 'Invite';
-        const helpText = isPlusInvite ? 
+        const helpText = isPlusInvite ?
           'Share this code with users you want to invite with Plus benefits. The code expires in 30 days.' :
           'Share this code with users you want to invite. The code expires in 30 days.';
-        
+
         document.querySelector('.invite-help').textContent = helpText;
         showNotification(`${inviteType} code generated successfully!`, 'success');
       }
@@ -242,12 +273,12 @@ document.addEventListener('DOMContentLoaded', function() {
       button.innerHTML = `<i class="fas ${iconClass}"></i> ${text}`;
     }
   }
-  
+
   // Copy invite code
   if (copyInviteBtn) {
-    copyInviteBtn.addEventListener('click', function() {
+    copyInviteBtn.addEventListener('click', function () {
       const inviteCodeInput = document.getElementById('generatedInviteCode');
-      
+
       if (inviteCodeInput && inviteCodeInput.value) {
         inviteCodeInput.select();
         document.execCommand('copy');
@@ -255,50 +286,50 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-    // View all invites - open modal
+  // View all invites - open modal
   if (viewInvitesBtn) {
-    viewInvitesBtn.addEventListener('click', function() {
+    viewInvitesBtn.addEventListener('click', function () {
       openInvitesModal();
     });
   }
-  
+
   // Handle profile update form submission
   const profileForm = document.getElementById('profileForm');
   if (profileForm) {
-    profileForm.addEventListener('submit', async function(e) {
+    profileForm.addEventListener('submit', async function (e) {
       e.preventDefault();
-      
+
       const username = document.getElementById('username').value.trim();
       const displayName = document.getElementById('displayName').value.trim();
-      
+
       if (!username || !displayName) {
         showNotification('Username and display name are required', 'error');
         return;
       }
-      
+
       try {
         // Show loading state
         const submitButton = this.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
         submitButton.disabled = true;
         submitButton.textContent = 'SAVING...';
-        
+
         // Prepare update data
         const updateData = {
           username,
           displayName
         };
-        
+
         // Add profile picture if changed
         if (picturePreview && picturePreview.src && !picturePreview.src.includes('default-avatar.svg')
-            && !picturePreview.src.includes('http')) {
+          && !picturePreview.src.includes('http')) {
           updateData.profilePicture = picturePreview.src;
         }        // Make profile update API request
         const response = await makeApiRequest('profile', 'PUT', updateData, true);
-        
+
         if (response && response.message) {
           showNotification(response.message, 'success');
-          
+
           // Update the stored user data in localStorage
           const userDataStr = localStorage.getItem('materio_user');
           if (userDataStr) {
@@ -309,24 +340,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 username,
                 displayName
               };
-              
+
               // Update profile picture if it was changed
               if (updateData.profilePicture) {
                 updatedUser.profilePicture = updateData.profilePicture;
               }
-              
+
               // Save updated user data
               localStorage.setItem('materio_user', JSON.stringify(updatedUser));
-              
+
               // Update dashboard profile card
               if (dashboardProfileImage && updateData.profilePicture) {
                 dashboardProfileImage.src = updateData.profilePicture;
               }
-              
+
               if (dashboardDisplayName) {
                 dashboardDisplayName.textContent = displayName;
               }
-              
+
               if (dashboardUsername) {
                 dashboardUsername.textContent = '@' + username;
               }
@@ -345,57 +376,57 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-  
+
   // Handle security form submission
   const securityForm = document.getElementById('securityForm');
   if (securityForm) {
-    securityForm.addEventListener('submit', async function(e) {
+    securityForm.addEventListener('submit', async function (e) {
       e.preventDefault();
-      
+
       const currentPassword = document.getElementById('currentPassword').value;
       const newPassword = document.getElementById('newPassword').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
-      
+
       // Validate passwords if provided
       if (newPassword || confirmPassword) {
         if (!currentPassword) {
           showNotification('Current password is required to set a new password', 'error');
           return;
         }
-        
+
         if (newPassword !== confirmPassword) {
           showNotification('New passwords do not match', 'error');
           return;
         }
-        
+
         if (newPassword.length < 8) {
           showNotification('Password must be at least 8 characters long', 'error');
           return;
         }
       }
-      
+
       try {
         // Show loading state
         const submitButton = this.querySelector('button[type="submit"]');
         const originalText = submitButton.textContent;
         submitButton.disabled = true;
         submitButton.textContent = 'UPDATING...';
-        
+
         // Prepare update data
         const updateData = {};
-        
+
         // Add password update if provided
         if (currentPassword && newPassword) {
           updateData.currentPassword = currentPassword;
           updateData.newPassword = newPassword;
         }
-        
+
         // Make security update API request
         const response = await makeApiRequest('profile', 'PUT', updateData, true);
-        
+
         if (response && response.message) {
           showNotification(response.message, 'success');
-          
+
           // Clear password fields after successful update
           document.getElementById('currentPassword').value = '';
           document.getElementById('newPassword').value = '';
@@ -411,15 +442,15 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-  
+
   // Recovery key functionality
   const copyKeyButton = document.getElementById('copyKey');
   const generateNewKeyButton = document.getElementById('generateNewKey');
-  
+
   if (copyKeyButton) {
-    copyKeyButton.addEventListener('click', function() {
+    copyKeyButton.addEventListener('click', function () {
       const recoveryKeyInput = document.getElementById('recoveryKey');
-      
+
       if (recoveryKeyInput && recoveryKeyInput.value) {
         recoveryKeyInput.select();
         document.execCommand('copy');
@@ -427,42 +458,42 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-    if (generateNewKeyButton) {
-    generateNewKeyButton.addEventListener('click', async function() {
+  if (generateNewKeyButton) {
+    generateNewKeyButton.addEventListener('click', async function () {
       try {
         // Confirm action
         if (!confirm('Generating a new recovery key will invalidate your old one. Are you sure?')) {
           return;
         }
-        
+
         // Get the current password from the security form
         const currentPassword = document.getElementById('currentPassword').value;
-        
+
         if (!currentPassword) {
           showNotification('Please enter your current password to generate a new recovery key', 'error');
           return;
         }
-        
+
         // Show loading state
         const originalText = this.textContent;
         this.disabled = true;
         this.textContent = 'GENERATING...';
-        
+
         // Make API request to generate new key
         const updateData = {
           generateNewRecoveryKey: true,
           currentPassword: currentPassword
         };
-          const response = await makeApiRequest('profile', 'PUT', updateData, true);
-        
+        const response = await makeApiRequest('profile', 'PUT', updateData, true);
+
         // Check for recovery key in the response, could be in either location based on server response
         const newRecoveryKey = response.recoveryKey || (response.user && response.user.recoveryKey);
-        
+
         if (newRecoveryKey) {
           // Display new recovery key
           document.getElementById('recoveryKey').value = newRecoveryKey;
           showNotification('New recovery key generated successfully', 'success');
-          
+
           // Clear password field after successful update
           document.getElementById('currentPassword').value = '';
         }
@@ -476,13 +507,13 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-  
+
   // Delete account functionality
   const deleteAccountButton = document.getElementById('deleteAccountButton');
   const deleteAccountModal = document.getElementById('deleteAccountModal');
   const confirmDeleteButton = document.getElementById('confirmDeleteButton');
-    if (deleteAccountButton && deleteAccountModal) {    // Open modal when delete button is clicked
-    deleteAccountButton.addEventListener('click', function() {
+  if (deleteAccountButton && deleteAccountModal) {    // Open modal when delete button is clicked
+    deleteAccountButton.addEventListener('click', function () {
       deleteAccountModal.style.display = 'flex';
       // Reinitialize password toggles for the modal
       setTimeout(() => {
@@ -490,19 +521,19 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Password toggles reinitialized for delete modal');
       }, 10);
     });
-    
+
     // Close modal when close button is clicked
     const closeButtons = deleteAccountModal.querySelectorAll('.modal-close, .modal-cancel');
     closeButtons.forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         deleteAccountModal.style.display = 'none';
       });
     });
-      // Handle account deletion confirmation
+    // Handle account deletion confirmation
     if (confirmDeleteButton) {
-      confirmDeleteButton.addEventListener('click', async function() {
+      confirmDeleteButton.addEventListener('click', async function () {
         const password = document.getElementById('deleteConfirmPassword').value;
-        
+
         if (!password) {
           showNotification('Please enter your password to confirm', 'error');
           return;
@@ -511,18 +542,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const originalText = this.textContent;
         this.disabled = true;
         this.textContent = 'DELETING...';
-        
+
         try {
           console.log('Attempting account deletion');
           // Make API request to delete account
           const response = await makeApiRequest('profile', 'DELETE', { password }, true);
-          
+
           if (response && response.message) {
             showNotification(response.message, 'success');
-            
+
             // Clear auth token and redirect to login
             clearAuthToken();
-            
+
             // Redirect to login after a short delay
             setTimeout(() => {
               redirectToLogin();
@@ -531,17 +562,18 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
           console.error('Account deletion error:', error);
           showNotification(error.message || 'Failed to delete account', 'error');
-          
+
           // Reset button state
           this.disabled = false;
           this.textContent = originalText;
-        }      });
+        }
+      });
     }
   }
   // Logout functionality
   const logoutButton = document.getElementById('logoutButton');
   if (logoutButton) {
-    logoutButton.addEventListener('click', function() {
+    logoutButton.addEventListener('click', function () {
       // Clear auth token and user data
       clearAuthToken();
       localStorage.removeItem('materio_user');
@@ -565,9 +597,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function handlePasswordToggle() {
     const targetId = this.getAttribute('data-target');
     const passwordInput = document.getElementById(targetId);
-    
+
     console.log('Toggle clicked for target:', targetId);
-    
+
     if (passwordInput) {
       // Toggle password visibility
       if (passwordInput.type === 'password') {
@@ -618,7 +650,7 @@ async function loadInvites() {
     const tableBody = document.getElementById('inviteTableBody');
     const inviteEmpty = document.getElementById('inviteEmpty');
     const tableContainer = document.querySelector('.invite-table-container');
-    
+
     // Show loading state
     tableBody.innerHTML = `
       <tr class="invite-loading">
@@ -630,12 +662,12 @@ async function loadInvites() {
         </td>
       </tr>
     `;
-    
+
     const response = await makeApiRequest('invites', 'GET', null, true);
-    
+
     if (response && response.invites) {
       const invites = response.invites;
-      
+
       if (invites.length === 0) {
         // Show empty state
         tableContainer.style.display = 'none';
@@ -645,7 +677,7 @@ async function loadInvites() {
         // Show table with data
         tableContainer.style.display = 'block';
         inviteEmpty.style.display = 'none';
-        
+
         // Calculate statistics
         const now = new Date();
         const stats = {
@@ -655,7 +687,7 @@ async function loadInvites() {
           expired: invites.filter(invite => !invite.redeemed && new Date(invite.expires_at) <= now).length
         };
         updateInviteStats(stats);
-        
+
         // Populate table
         tableBody.innerHTML = invites.map(invite => {
           const isExpired = new Date(invite.expires_at) <= now;
@@ -663,7 +695,7 @@ async function loadInvites() {
           const statusText = invite.redeemed ? 'Used' : (isExpired ? 'Expired' : 'Pending');
           const inviteType = invite.contains_plus_perks ? 'Plus' : 'Regular';
           const typeClass = invite.contains_plus_perks ? 'plus-invite' : 'regular-invite';
-          
+
           return `
             <tr>
               <td>
@@ -722,7 +754,7 @@ async function loadInvites() {
   } catch (error) {
     console.error('Failed to load invites:', error);
     showNotification('Failed to load invites', 'error');
-    
+
     const tableBody = document.getElementById('inviteTableBody');
     tableBody.innerHTML = `
       <tr>
@@ -752,10 +784,10 @@ function refreshInvites() {
 // Generate new invite from modal
 async function generateNewInviteFromModal(isPlusInvite = false) {
   try {
-    const response = await makeApiRequest('invites', 'POST', { 
-      containsPlusPerks: isPlusInvite 
+    const response = await makeApiRequest('invites', 'POST', {
+      containsPlusPerks: isPlusInvite
     }, true);
-    
+
     if (response && response.invite) {
       const inviteType = isPlusInvite ? 'Plus invite' : 'Invite';
       showNotification(`${inviteType} code generated successfully!`, 'success');
@@ -792,14 +824,14 @@ function fallbackCopyToClipboard(text) {
   document.body.appendChild(textArea);
   textArea.focus();
   textArea.select();
-  
+
   try {
     document.execCommand('copy');
     showNotification('Invite code copied to clipboard!', 'success');
   } catch (err) {
     showNotification('Failed to copy invite code', 'error');
   }
-    document.body.removeChild(textArea);
+  document.body.removeChild(textArea);
 }
 
 // Format date utility
@@ -815,7 +847,7 @@ async function toggleAdminPrivilege(userId, makeAdmin) {
       userId: userId,
       hasAdminPrivileges: makeAdmin
     }, true);
-    
+
     if (response && response.user) {
       showNotification(`User ${makeAdmin ? 'promoted to' : 'demoted from'} admin successfully`, 'success');
       loadInvites(); // Refresh the list
@@ -833,7 +865,7 @@ async function togglePlusPrivilege(userId, makePlus) {
       userId: userId,
       isPlusUser: makePlus
     }, true);
-    
+
     if (response && response.user) {
       showNotification(`User ${makePlus ? 'granted' : 'removed from'} plus access successfully`, 'success');
       loadInvites(); // Refresh the list
@@ -845,7 +877,7 @@ async function togglePlusPrivilege(userId, makePlus) {
 }
 
 // Close modal when clicking outside
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
   const modal = document.getElementById('viewInvitesModal');
   if (modal && event.target === modal) {
     closeInvitesModal();
@@ -853,7 +885,7 @@ document.addEventListener('click', function(event) {
 });
 
 // Close modal with Escape key
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
   if (event.key === 'Escape') {
     const modal = document.getElementById('viewInvitesModal');
     if (modal && modal.classList.contains('show')) {
@@ -885,7 +917,7 @@ function initializeFileManagement() {
   // File upload handling
   if (uploadArea && fileInput) {
     uploadArea.addEventListener('click', () => fileInput.click());
-    
+
     uploadArea.addEventListener('dragover', (e) => {
       e.preventDefault();
       uploadArea.classList.add('dragover');
@@ -937,7 +969,7 @@ async function loadFiles() {
     `;
 
     const response = await makeApiRequest(`cdn?path=${encodeURIComponent(currentPath)}`, 'GET', null, true);
-    
+
     if (response) {
       // Handle GitHub API response format
       if (response.type === 'directory' && response.items) {
@@ -981,25 +1013,32 @@ function displayFiles(files) {
     const icon = getFileIcon(file);
     const size = file.size ? formatFileSize(file.size) : '';
     const date = file.modified ? formatDate(file.modified) : '';
-    
+    const isJson = file.name.toLowerCase().endsWith('.json');
+    const downloadUrl = file.download_url || '';
+
     return `
-      <div class="file-item" data-name="${file.name}" data-type="${file.type}">
+      <div class="file-item" data-name="${file.name}" data-type="${file.type}" data-path="${file.path || ''}" data-download-url="${escapeHtml(downloadUrl)}">
         <div class="file-icon ${icon.class}">
           <i class="${icon.icon}"></i>
         </div>
         <div class="file-details">
-          <div class="file-name">${escapeHtml(file.name)}</div>
+          <div class="file-name">${escapeHtml(file.name)}${stagedJsonChanges[file.path] ? '<span class="staged-json-badge"><i class="fas fa-layer-group"></i> Staged</span>' : ''}</div>
           <div class="file-meta">${size} ${date}</div>
         </div>
         <div class="file-actions">
-          ${file.type === 'directory' ? 
-            `<button class="file-action-btn" onclick="openDirectory('${escapeHtml(file.name)}')" title="Open">
+          ${isJson && file.type !== 'directory' ?
+        `<button class="edit-json-btn" onclick="openJsonEditor('${escapeHtml(file.path || currentPath + '/' + file.name)}', '${escapeHtml(downloadUrl)}')" title="Edit JSON">
+              <i class="fas fa-edit"></i> Edit
+            </button>` : ''
+      }
+          ${file.type === 'directory' ?
+        `<button class="file-action-btn" onclick="openDirectory('${escapeHtml(file.name)}')" title="Open">
               <i class="fas fa-folder-open"></i>
-            </button>` : 
-            `<button class="file-action-btn download" onclick="downloadFile('${escapeHtml(file.name)}')" title="Download">
+            </button>` :
+        `<button class="file-action-btn download" onclick="downloadFile('${escapeHtml(file.name)}')" title="Download">
               <i class="fas fa-download"></i>
             </button>`
-          }
+      }
           <button class="file-action-btn rename" onclick="renameFile('${escapeHtml(file.name)}')" title="Rename">
             <i class="fas fa-edit"></i>
           </button>
@@ -1020,52 +1059,52 @@ function getFileIcon(file) {
   }
 
   const extension = file.name.split('.').pop().toLowerCase();
-  
+
   // Images
   if (['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp', 'bmp', 'ico', 'tiff'].includes(extension)) {
     return { icon: 'fas fa-image', class: 'image' };
   }
-  
+
   // Videos
   if (['mp4', 'avi', 'mov', 'wmv', 'flv', 'webm', 'mkv', '3gp', 'm4v'].includes(extension)) {
     return { icon: 'fas fa-video', class: 'video' };
   }
-  
+
   // Audio
   if (['mp3', 'wav', 'flac', 'aac', 'ogg', 'wma', 'm4a'].includes(extension)) {
     return { icon: 'fas fa-music', class: 'audio' };
   }
-  
+
   // Code files
   if (['js', 'ts', 'jsx', 'tsx', 'css', 'scss', 'sass', 'less', 'html', 'htm', 'php', 'py', 'java', 'cpp', 'c', 'cs', 'rb', 'go', 'rs', 'swift', 'kotlin', 'vue', 'svelte'].includes(extension)) {
     return { icon: 'fas fa-code', class: 'code' };
   }
-  
+
   // Configuration and data files
   if (['json', 'xml', 'yml', 'yaml', 'toml', 'ini', 'cfg', 'conf'].includes(extension)) {
     return { icon: 'fas fa-cog', class: 'code' };
   }
-  
+
   // Archives
   if (['zip', 'rar', '7z', 'tar', 'gz', 'bz2', 'xz', 'dmg', 'iso'].includes(extension)) {
     return { icon: 'fas fa-file-archive', class: 'archive' };
   }
-  
+
   // Documents
   if (['txt', 'md', 'pdf', 'doc', 'docx', 'rtf', 'odt', 'pages'].includes(extension)) {
     return { icon: 'fas fa-file-alt', class: 'document' };
   }
-  
+
   // Spreadsheets
   if (['xls', 'xlsx', 'csv', 'ods', 'numbers'].includes(extension)) {
     return { icon: 'fas fa-file-excel', class: 'document' };
   }
-  
+
   // Presentations
   if (['ppt', 'pptx', 'odp', 'key'].includes(extension)) {
     return { icon: 'fas fa-file-powerpoint', class: 'document' };
   }
-  
+
   // Default
   return { icon: 'fas fa-file', class: 'default' };
 }
@@ -1124,17 +1163,17 @@ async function handleFileUpload(files) {
 
   try {
     uploadProgress.style.display = 'block';
-    
+
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const progress = Math.round(((i + 1) / files.length) * 100);
-      
+
       progressBar.style.setProperty('--progress', `${progress}%`);
       progressText.textContent = `Uploading ${file.name}... (${i + 1}/${files.length})`;
 
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('path', currentPath);      const response = await fetch('/api/v1/cdn', {
+      formData.append('path', currentPath); const response = await fetch('/api/v2/cdn', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('materio_auth_token')}`
@@ -1147,7 +1186,7 @@ async function handleFileUpload(files) {
       if (!result || result.error) {
         throw new Error(result?.error || `Failed to upload ${file.name}`);
       }
-      
+
       // GitHub API returns file object on success
       if (!result.name && !result.sha) {
         throw new Error(`Invalid response for ${file.name}`);
@@ -1173,11 +1212,11 @@ function openDirectory(name) {
 
 function downloadFile(name) {
   // Find the file in the current listing to get its download_url
-  const fileList = document.getElementById('fileList');  const fileItem = fileList?.querySelector(`[data-name="${name}"]`);
-    if (fileItem) {
+  const fileList = document.getElementById('fileList'); const fileItem = fileList?.querySelector(`[data-name="${name}"]`);
+  if (fileItem) {
     // For GitHub CDN, we need to get the file's download URL from the API
     const filePath = currentPath ? currentPath + '/' + name : name;
-    
+
     // Make API request to get file details with download URL
     makeApiRequest(`cdn?path=${encodeURIComponent(filePath)}`, 'GET', null, true)
       .then(response => {
@@ -1209,7 +1248,7 @@ async function renameFile(oldName) {
   try {
     const filePath = currentPath ? currentPath + '/' + oldName : oldName;
     const newPath = currentPath ? currentPath + '/' + newName : newName;
-    
+
     const response = await makeApiRequest('cdn', 'PUT', {
       oldPath: filePath,
       newPath: newPath
@@ -1235,28 +1274,28 @@ async function renameFile(oldName) {
 
 async function deleteFile(name, type) {
   const itemType = type === 'directory' ? 'folder' : 'file';
-  const warningMessage = type === 'directory' 
+  const warningMessage = type === 'directory'
     ? `Are you sure you want to delete this folder and ALL its contents? This will permanently delete all files inside. This action cannot be undone.`
     : `Are you sure you want to delete this ${itemType}? This action cannot be undone.`;
-    
+
   if (!confirm(warningMessage)) {
     return;
   }
-  
+
   try {
     const filePath = currentPath ? currentPath + '/' + name : name;
-    
+
     // Show loading message for directories since they might take longer
     if (type === 'directory') {
       showNotification('Deleting folder and all contents...', 'info');
     }
-    
+
     const response = await makeApiRequest(`cdn?path=${encodeURIComponent(filePath)}`, 'DELETE', null, true);
 
     // Handle GitHub API response format
     if (response && !response.error) {
       // GitHub API returns success message or commit info
-      const successMessage = type === 'directory' 
+      const successMessage = type === 'directory'
         ? `Folder '${name}' and all its contents deleted successfully!`
         : `File '${name}' deleted successfully!`;
       showNotification(successMessage, 'success');
@@ -1275,7 +1314,7 @@ async function createNewFolder() {
   if (!name) return;
   try {
     const folderPath = currentPath ? currentPath + '/' + name : name;
-    
+
     const response = await makeApiRequest('cdn', 'POST', {
       path: folderPath,
       type: 'directory'
@@ -1295,27 +1334,29 @@ async function createNewFolder() {
   }
 }
 
-// Course Upload System
+// Course Upload System - Multi-Section with Queue
 let semesterSubjectMappings = {};
-let selectedFiles = [];
+let uploadSections = {}; // { sectionId: { semester, subject, category, files: [] } }
+let sectionCounter = 0;
+const BATCH_SIZE_LIMIT = 3.5 * 1024 * 1024; // 3.5MB to stay safely under Vercel's 4MB limit
 
 // Initialize course upload functionality
 function initializeCourseUpload() {
   // Load semester-subject mappings
   loadSemesterSubjectMappings();
-  
+
   // Sub-tab switching
   const subTabBtns = document.querySelectorAll('.sub-tab-btn');
   const subTabPanes = document.querySelectorAll('.sub-tab-pane');
-  
+
   subTabBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
       const targetTab = this.getAttribute('data-subtab');
-      
+
       // Update active state for buttons
       subTabBtns.forEach(b => b.classList.remove('active'));
       this.classList.add('active');
-      
+
       // Show the selected sub-tab content
       subTabPanes.forEach(pane => {
         pane.classList.remove('active');
@@ -1325,65 +1366,966 @@ function initializeCourseUpload() {
       });
     });
   });
-  
+
+  // Initialize the first section
+  initializeSection(0);
+
+  // Add Section button
+  const addSectionBtn = document.getElementById('addSectionBtn');
+  if (addSectionBtn) {
+    addSectionBtn.addEventListener('click', addNewSection);
+  }
+
+  // Upload All button
+  const uploadAllBtn = document.getElementById('uploadAllBtn');
+  if (uploadAllBtn) {
+    uploadAllBtn.addEventListener('click', handleMultiSectionUpload);
+  }
+
+  // Clear All button
+  const clearAllBtn = document.getElementById('clearAllBtn');
+  if (clearAllBtn) {
+    clearAllBtn.addEventListener('click', clearAllSections);
+  }
+}
+
+// Initialize a section with event listeners
+function initializeSection(sectionId) {
+  uploadSections[sectionId] = { semester: '', subject: '', category: '', files: [] };
+
+  const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+  if (!section) return;
+
+  const semesterSelect = section.querySelector('.section-semester');
+  const subjectSelect = section.querySelector('.section-subject');
+  const customSubjectInput = section.querySelector('.section-custom-subject');
+  const uploadArea = section.querySelector('.section-upload-area');
+  const fileInput = section.querySelector('.section-file-input');
+
   // Semester change handler
-  const semesterSelect = document.getElementById('semester');
-  const subjectSelect = document.getElementById('subject');
-  const customSubjectInput = document.getElementById('customSubject');
-  
-  if (semesterSelect && subjectSelect) {
-    semesterSelect.addEventListener('change', function() {
+  if (semesterSelect) {
+    semesterSelect.addEventListener('change', function () {
       const semester = this.value;
-      populateSubjects(semester);
+      uploadSections[sectionId].semester = semester;
+      populateSectionSubjects(sectionId, semester);
+      updateGlobalUploadOptions();
     });
-    
-    subjectSelect.addEventListener('change', function() {
+  }
+
+  // Subject change handler
+  if (subjectSelect) {
+    subjectSelect.addEventListener('change', function () {
       if (this.value === 'custom') {
         customSubjectInput.style.display = 'block';
         customSubjectInput.required = true;
+        uploadSections[sectionId].subject = '';
       } else {
         customSubjectInput.style.display = 'none';
         customSubjectInput.required = false;
+        uploadSections[sectionId].subject = this.value;
       }
+      updateGlobalUploadOptions();
     });
   }
-  
-  // Course file upload handling
-  const courseUploadArea = document.getElementById('courseUploadArea');
-  const courseFileInput = document.getElementById('courseFileInput');
-  
-  if (courseUploadArea && courseFileInput) {
-    courseUploadArea.addEventListener('click', () => courseFileInput.click());
-    
-    courseUploadArea.addEventListener('dragover', (e) => {
+
+  // Custom subject input handler
+  if (customSubjectInput) {
+    customSubjectInput.addEventListener('input', function () {
+      uploadSections[sectionId].subject = this.value;
+      updateGlobalUploadOptions();
+    });
+  }
+
+  // Category change handler
+  const categorySelect = section.querySelector('.section-category');
+  const customCategoryInput = section.querySelector('.section-custom-category');
+
+  if (categorySelect) {
+    categorySelect.addEventListener('change', function () {
+      if (this.value === 'Other') {
+        if (customCategoryInput) {
+          customCategoryInput.style.display = 'block';
+          customCategoryInput.required = true;
+        }
+        uploadSections[sectionId].category = '';
+      } else {
+        if (customCategoryInput) {
+          customCategoryInput.style.display = 'none';
+          customCategoryInput.required = false;
+        }
+        uploadSections[sectionId].category = this.value;
+      }
+      updateGlobalUploadOptions();
+    });
+  }
+
+  // Custom category input handler
+  if (customCategoryInput) {
+    customCategoryInput.addEventListener('input', function () {
+      uploadSections[sectionId].category = this.value;
+      updateGlobalUploadOptions();
+    });
+  }
+
+  // File upload handling
+  if (uploadArea && fileInput) {
+    uploadArea.addEventListener('click', () => fileInput.click());
+
+    uploadArea.addEventListener('dragover', (e) => {
       e.preventDefault();
-      courseUploadArea.classList.add('dragover');
+      uploadArea.classList.add('dragover');
     });
 
-    courseUploadArea.addEventListener('dragleave', (e) => {
+    uploadArea.addEventListener('dragleave', (e) => {
       e.preventDefault();
-      courseUploadArea.classList.remove('dragover');
+      uploadArea.classList.remove('dragover');
     });
 
-    courseUploadArea.addEventListener('drop', (e) => {
+    uploadArea.addEventListener('drop', (e) => {
       e.preventDefault();
-      courseUploadArea.classList.remove('dragover');
+      uploadArea.classList.remove('dragover');
       const files = Array.from(e.dataTransfer.files);
-      handleCourseFileSelection(files);
+      handleSectionFileSelection(sectionId, files);
     });
 
-    courseFileInput.addEventListener('change', (e) => {
+    fileInput.addEventListener('change', (e) => {
       const files = Array.from(e.target.files);
-      handleCourseFileSelection(files);
+      handleSectionFileSelection(sectionId, files);
+      fileInput.value = ''; // Reset to allow selecting same files again
     });
-  }
-  
-  // Form submission
-  const courseUploadForm = document.getElementById('courseUploadForm');
-  if (courseUploadForm) {
-    courseUploadForm.addEventListener('submit', handleCourseUploadSubmit);
   }
 }
+
+// Add a new upload section
+function addNewSection() {
+  sectionCounter++;
+  const newSectionId = sectionCounter;
+  const container = document.getElementById('uploadSectionsContainer');
+  const previousSection = container.querySelector('.upload-section:last-child');
+  const previousSectionId = previousSection ? parseInt(previousSection.dataset.sectionId) : 0;
+
+  // Create new section HTML with match previous option
+  const newSection = document.createElement('div');
+  newSection.className = 'upload-section';
+  newSection.dataset.sectionId = newSectionId;
+
+  newSection.innerHTML = `
+    <div class="upload-section-header">
+      <span class="upload-section-title">
+        <i class="fas fa-layer-group"></i>
+        Section ${newSectionId + 1}
+      </span>
+      <button type="button" class="remove-section-btn" onclick="removeUploadSection(${newSectionId})">
+        <i class="fas fa-times"></i> Remove
+      </button>
+    </div>
+
+    <div class="match-previous-option">
+      <input type="checkbox" class="match-previous-checkbox" data-section="${newSectionId}" id="matchPrevious${newSectionId}">
+      <label for="matchPrevious${newSectionId}">Match previous section's semester</label>
+      <small>Uses Semester ${uploadSections[previousSectionId]?.semester || '?'}</small>
+    </div>
+
+    <!-- Collapsible form fields -->
+    <div class="section-form-fields">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Semester</label>
+          <select class="section-semester" data-section="${newSectionId}" required>
+            <option value="">Select Semester</option>
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+            <option value="3">Semester 3</option>
+            <option value="4">Semester 4</option>
+            <option value="5">Semester 5</option>
+            <option value="6">Semester 6</option>
+            <option value="7">Semester 7</option>
+            <option value="8">Semester 8</option>
+            <option value="9">Miscellaneous</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <select class="section-subject" data-section="${newSectionId}" required disabled>
+            <option value="">Select Semester First</option>
+          </select>
+          <input type="text" class="section-custom-subject form-control" data-section="${newSectionId}"
+            placeholder="Enter new subject name" style="display: none; margin-top: 8px;">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select class="section-category" data-section="${newSectionId}" required>
+          <option value="">Select Category</option>
+          <option value="Syllabus">Syllabus</option>
+          <option value="Chapters">Chapters</option>
+          <option value="Presentations">Presentations</option>
+          <option value="Assignments">Assignments</option>
+          <option value="Question Banks">Question Banks</option>
+          <option value="Lab">Lab</option>
+          <option value="Previous Year Papers">Previous Year Papers</option>
+          <option value="Reference Books">Reference Books</option>
+          <option value="Lecture Notes">Lecture Notes</option>
+          <option value="Handwritten Notes">Handwritten Notes</option>
+          <option value="NPTEL Book">NPTEL Book</option>
+          <option value="NPTEL Assignment with Solutions">NPTEL Assignment with Solutions</option>
+          <option value="NPTEL Weekly Materials">NPTEL Weekly Materials</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="text" class="section-custom-category form-control" data-section="${newSectionId}"
+          placeholder="Enter new category name" style="display: none; margin-top: 8px;">
+      </div>
+    </div>
+
+    <div class="upload-area section-upload-area" data-section="${newSectionId}">
+      <div class="upload-icon">
+        <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: var(--text-secondary);"></i>
+      </div>
+      <div class="upload-text">
+        <h4>Drop files here or click to upload</h4>
+        <p>Supports only PDF Format files</p>
+      </div>
+      <input type="file" class="section-file-input" data-section="${newSectionId}" multiple accept=".pdf" style="display: none;">
+    </div>
+
+    <div class="section-file-preview" data-section="${newSectionId}" style="display: none;">
+      <div class="section-collapsed-summary"></div>
+      <div class="section-file-header">
+        <h5>Selected Files</h5>
+        <button type="button" class="section-expand-btn" onclick="expandUploadSection(${newSectionId})" title="Add more files">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <div class="section-file-list"></div>
+    </div>
+  `;
+
+  container.appendChild(newSection);
+
+  // Collapse previous sections that have files
+  collapsePreviousSections();
+
+  // Initialize the new section
+  initializeSection(newSectionId);
+
+  // Set up match previous checkbox
+  const matchPreviousCheckbox = newSection.querySelector('.match-previous-checkbox');
+  if (matchPreviousCheckbox) {
+    matchPreviousCheckbox.addEventListener('change', function () {
+      const semesterSelect = newSection.querySelector('.section-semester');
+      if (this.checked && uploadSections[previousSectionId]?.semester) {
+        semesterSelect.value = uploadSections[previousSectionId].semester;
+        semesterSelect.disabled = true;
+        uploadSections[newSectionId].semester = uploadSections[previousSectionId].semester;
+        populateSectionSubjects(newSectionId, uploadSections[previousSectionId].semester);
+      } else {
+        semesterSelect.disabled = false;
+      }
+      updateGlobalUploadOptions();
+    });
+  }
+
+  // Scroll to new section
+  newSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// Remove an upload section
+function removeUploadSection(sectionId) {
+  const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+  if (section) {
+    section.remove();
+    delete uploadSections[sectionId];
+    updateGlobalUploadOptions();
+    renumberSections();
+  }
+}
+
+// Renumber sections after removal
+function renumberSections() {
+  const sections = document.querySelectorAll('.upload-section');
+  sections.forEach((section, index) => {
+    const title = section.querySelector('.upload-section-title');
+    if (title) {
+      title.innerHTML = `<i class="fas fa-layer-group"></i> Section ${index + 1}`;
+    }
+  });
+}
+
+// Collapse all previous sections that have files
+function collapsePreviousSections() {
+  const sections = document.querySelectorAll('.upload-section');
+  sections.forEach((section, index) => {
+    // Collapse all sections except the last one
+    if (index < sections.length - 1) {
+      const sectionId = parseInt(section.dataset.sectionId);
+      const sectionData = uploadSections[sectionId];
+
+      // Only collapse if it has files
+      if (sectionData?.files && sectionData.files.length > 0) {
+        section.classList.add('collapsed');
+        updateCollapsedSummary(sectionId);
+      }
+    }
+  });
+}
+
+// Expand a collapsed section
+function expandUploadSection(sectionId) {
+  const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+  if (section) {
+    section.classList.remove('collapsed');
+  }
+}
+
+// Update the collapsed summary text
+function updateCollapsedSummary(sectionId) {
+  const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+  if (!section) return;
+
+  const summary = section.querySelector('.section-collapsed-summary');
+  if (!summary) return;
+
+  const sectionData = uploadSections[sectionId];
+  if (!sectionData) return;
+
+  const subject = sectionData.subject || 'No subject';
+  const category = sectionData.category || 'No category';
+  const fileCount = sectionData.files?.length || 0;
+
+  summary.innerHTML = `<i class="fas fa-info-circle"></i> ${subject} • ${category} • ${fileCount} file(s)`;
+}
+
+// Populate subjects for a specific section
+function populateSectionSubjects(sectionId, semester) {
+  const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+  if (!section) return;
+
+  const subjectSelect = section.querySelector('.section-subject');
+  if (!subjectSelect) return;
+
+  // Clear existing options
+  subjectSelect.innerHTML = '<option value="">Select Subject</option>';
+
+  if (semester && semesterSubjectMappings[semester]) {
+    semesterSubjectMappings[semester].forEach(subject => {
+      const option = document.createElement('option');
+      option.value = subject;
+      option.textContent = subject;
+      subjectSelect.appendChild(option);
+    });
+  }
+
+  // Add custom option
+  const customOption = document.createElement('option');
+  customOption.value = 'custom';
+  customOption.textContent = 'Add New Subject...';
+  subjectSelect.appendChild(customOption);
+
+  // Enable the subject dropdown
+  subjectSelect.disabled = false;
+}
+
+// Handle file selection for a specific section
+function handleSectionFileSelection(sectionId, files) {
+  const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB limit
+  const validFiles = [];
+  const rejectedFiles = [];
+
+  // Validate each file
+  for (const file of files) {
+    if (file.size > MAX_FILE_SIZE) {
+      rejectedFiles.push({
+        name: file.name,
+        reason: `File too large (${Math.round(file.size / 1024 / 1024)}MB). Maximum size is 50MB.`
+      });
+    } else if (!file.name.toLowerCase().endsWith('.pdf')) {
+      rejectedFiles.push({
+        name: file.name,
+        reason: 'Only PDF files are allowed for course materials.'
+      });
+    } else {
+      validFiles.push(file);
+    }
+  }
+
+  // Show warnings for rejected files
+  if (rejectedFiles.length > 0) {
+    const rejectedList = rejectedFiles.map(f => `• ${f.name}: ${f.reason}`).join('\n');
+    showNotification(`Some files were rejected:\n${rejectedList}`, 'warning');
+  }
+
+  // Add valid files to section
+  if (!uploadSections[sectionId]) {
+    uploadSections[sectionId] = { semester: '', subject: '', category: '', files: [] };
+  }
+  uploadSections[sectionId].files = [...uploadSections[sectionId].files, ...validFiles];
+
+  // Update file preview
+  displaySectionFilePreview(sectionId);
+  updateGlobalUploadOptions();
+}
+
+// Display file preview for a specific section
+function displaySectionFilePreview(sectionId) {
+  const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+  if (!section) return;
+
+  const previewContainer = section.querySelector('.section-file-preview');
+  const fileList = section.querySelector('.section-file-list');
+  const files = uploadSections[sectionId]?.files || [];
+
+  if (files.length === 0) {
+    previewContainer.style.display = 'none';
+    return;
+  }
+
+  previewContainer.style.display = 'block';
+  fileList.innerHTML = files.map((file, index) => {
+    const displayName = file.displayName || file.name.replace(/\.[^/.]+$/, "");
+    const priority = file.priority !== undefined ? file.priority : index + 1;
+    return `
+    <div class="section-file-chip" data-file-index="${index}" draggable="true">
+      <i class="fas fa-grip-vertical drag-handle" title="Drag to reorder"></i>
+      <i class="fas fa-file-pdf"></i>
+      <input type="text" class="file-name-input" value="${displayName}" 
+             onchange="renameSectionFile(${sectionId}, ${index}, this.value)"
+             onclick="event.stopPropagation()"
+             title="Click to rename">
+      <span class="file-extension">.pdf</span>
+      <input type="number" class="priority-input" value="${priority}" min="1"
+             onchange="setFilePriority(${sectionId}, ${index}, this.value)"
+             onclick="event.stopPropagation(); this.select()"
+             title="Priority (lower = first)">
+      <button type="button" class="remove-file" onclick="removeSectionFile(${sectionId}, ${index})">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  `;
+  }).join('');
+
+  // Add sort by priority button if more than 1 file
+  if (files.length > 1) {
+    const existingBtn = previewContainer.querySelector('.sort-by-priority-btn');
+    if (!existingBtn) {
+      const sortBtn = document.createElement('button');
+      sortBtn.type = 'button';
+      sortBtn.className = 'sort-by-priority-btn';
+      sortBtn.innerHTML = '<i class="fas fa-sort-numeric-down"></i> Sort by Priority';
+      sortBtn.onclick = () => sortFilesByPriority(sectionId);
+      previewContainer.appendChild(sortBtn);
+    }
+  }
+
+  // Set up drag-and-drop for file reordering
+  setupFileDragAndDrop(sectionId, fileList);
+
+  // Update collapsed summary in case this section gets collapsed
+  updateCollapsedSummary(sectionId);
+}
+
+// Set file priority
+function setFilePriority(sectionId, fileIndex, priority) {
+  if (uploadSections[sectionId]?.files && uploadSections[sectionId].files[fileIndex]) {
+    uploadSections[sectionId].files[fileIndex].priority = parseInt(priority) || 1;
+  }
+}
+
+// Sort files by priority number
+function sortFilesByPriority(sectionId) {
+  const files = uploadSections[sectionId]?.files;
+  if (!files || files.length < 2) return;
+
+  // Sort by priority (lower number = first)
+  files.sort((a, b) => {
+    const priorityA = a.priority !== undefined ? a.priority : Infinity;
+    const priorityB = b.priority !== undefined ? b.priority : Infinity;
+    return priorityA - priorityB;
+  });
+
+  // Re-render the file list
+  displaySectionFilePreview(sectionId);
+  showNotification('Files sorted by priority', 'info');
+}
+
+// Set up drag-and-drop for file reordering within a section
+function setupFileDragAndDrop(sectionId, fileList) {
+  const chips = fileList.querySelectorAll('.section-file-chip');
+
+  chips.forEach(chip => {
+    chip.addEventListener('dragstart', (e) => {
+      chip.classList.add('dragging');
+      fileList.classList.add('drag-active');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', chip.dataset.fileIndex);
+    });
+
+    chip.addEventListener('dragend', () => {
+      chip.classList.remove('dragging');
+      fileList.classList.remove('drag-active');
+      chips.forEach(c => c.classList.remove('drag-over'));
+    });
+
+    chip.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const dragging = fileList.querySelector('.dragging');
+      if (dragging && chip !== dragging) {
+        chip.classList.add('drag-over');
+      }
+    });
+
+    chip.addEventListener('dragleave', () => {
+      chip.classList.remove('drag-over');
+    });
+
+    chip.addEventListener('drop', (e) => {
+      e.preventDefault();
+      chip.classList.remove('drag-over');
+
+      const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+      const toIndex = parseInt(chip.dataset.fileIndex);
+
+      if (fromIndex !== toIndex) {
+        reorderSectionFiles(sectionId, fromIndex, toIndex);
+      }
+    });
+  });
+}
+
+// Reorder files within a section
+function reorderSectionFiles(sectionId, fromIndex, toIndex) {
+  const files = uploadSections[sectionId]?.files;
+  if (!files) return;
+
+  // Remove the file from its original position
+  const [movedFile] = files.splice(fromIndex, 1);
+
+  // Insert at the new position
+  files.splice(toIndex, 0, movedFile);
+
+  // Re-render the file list
+  displaySectionFilePreview(sectionId);
+}
+
+// Rename a file in a section
+function renameSectionFile(sectionId, fileIndex, newName) {
+  if (uploadSections[sectionId]?.files && uploadSections[sectionId].files[fileIndex]) {
+    const originalFile = uploadSections[sectionId].files[fileIndex];
+    const newFileName = newName + '.pdf';
+
+    // Create a new File object with the new name
+    const renamedFile = new File([originalFile], newFileName, {
+      type: originalFile.type,
+      lastModified: originalFile.lastModified
+    });
+
+    // Store the display name for UI
+    renamedFile.displayName = newName;
+
+    uploadSections[sectionId].files[fileIndex] = renamedFile;
+  }
+}
+
+
+// Remove a file from a section
+function removeSectionFile(sectionId, fileIndex) {
+  if (uploadSections[sectionId]?.files) {
+    uploadSections[sectionId].files.splice(fileIndex, 1);
+    displaySectionFilePreview(sectionId);
+    updateGlobalUploadOptions();
+  }
+}
+
+// Update global upload options visibility
+function updateGlobalUploadOptions() {
+  const globalOptions = document.getElementById('globalUploadOptions');
+  const hasFiles = Object.values(uploadSections).some(s => s.files && s.files.length > 0);
+
+  if (globalOptions) {
+    globalOptions.style.display = hasFiles ? 'block' : 'none';
+  }
+}
+
+// Clear all sections (with confirmation for user-initiated clear)
+function clearAllSections() {
+  if (!confirm('Are you sure you want to clear all sections and files?')) return;
+  clearAllSectionsInternal();
+  showNotification('All sections cleared', 'info');
+}
+
+// Internal function to clear sections without confirmation
+function clearAllSectionsInternal() {
+  // Reset all sections
+  Object.keys(uploadSections).forEach(sectionId => {
+    uploadSections[sectionId].files = [];
+    displaySectionFilePreview(sectionId);
+
+    const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+    if (section) {
+      section.querySelector('.section-semester').value = '';
+      const subjectSelect = section.querySelector('.section-subject');
+      subjectSelect.innerHTML = '<option value="">Select Semester First</option>';
+      subjectSelect.disabled = true;
+      section.querySelector('.section-category').value = '';
+      const customSubject = section.querySelector('.section-custom-subject');
+      if (customSubject) {
+        customSubject.style.display = 'none';
+        customSubject.value = '';
+      }
+    }
+  });
+
+  // Remove all sections except the first one
+  const container = document.getElementById('uploadSectionsContainer');
+  const sections = container.querySelectorAll('.upload-section');
+  sections.forEach((section, index) => {
+    if (index > 0) {
+      section.remove();
+      const id = parseInt(section.dataset.sectionId);
+      delete uploadSections[id];
+    } else {
+      // Uncollapse the first section
+      section.classList.remove('collapsed');
+      // Clear valid state if any
+      section.querySelector('.section-collapsed-summary').innerHTML = '';
+    }
+  });
+
+  renumberSections();
+  updateGlobalUploadOptions();
+}
+
+// Create batches from all sections' files to stay under size limit
+function createUploadBatches() {
+  const batches = [];
+  let currentBatch = { items: [], totalSize: 0 };
+
+  // Collect all files with their metadata
+  Object.entries(uploadSections).forEach(([sectionId, section]) => {
+    if (!section.files || section.files.length === 0) return;
+
+    const subject = section.subject ||
+      document.querySelector(`[data-section-id="${sectionId}"] .section-custom-subject`)?.value;
+
+    section.files.forEach(file => {
+      const item = {
+        file,
+        sectionId,
+        semester: section.semester,
+        subject,
+        category: section.category
+      };
+
+      // Check if adding this file would exceed the batch limit
+      if (currentBatch.totalSize + file.size > BATCH_SIZE_LIMIT && currentBatch.items.length > 0) {
+        // Push current batch and start a new one
+        batches.push(currentBatch);
+        currentBatch = { items: [], totalSize: 0 };
+      }
+
+      // If single file is larger than limit, it gets its own batch (will likely fail but we try)
+      if (file.size > BATCH_SIZE_LIMIT) {
+        if (currentBatch.items.length > 0) {
+          batches.push(currentBatch);
+          currentBatch = { items: [], totalSize: 0 };
+        }
+        batches.push({ items: [item], totalSize: file.size });
+      } else {
+        currentBatch.items.push(item);
+        currentBatch.totalSize += file.size;
+      }
+    });
+  });
+
+  // Don't forget the last batch
+  if (currentBatch.items.length > 0) {
+    batches.push(currentBatch);
+  }
+
+  return batches;
+}
+
+// Handle multi-section upload with queue - uses staged uploads for single commit
+async function handleMultiSectionUpload() {
+  // Validate all sections
+  let hasValidSection = false;
+  let validationError = null;
+
+  for (const [sectionId, section] of Object.entries(uploadSections)) {
+    if (section.files && section.files.length > 0) {
+      const sectionEl = document.querySelector(`[data-section-id="${sectionId}"]`);
+      const subject = section.subject ||
+        sectionEl?.querySelector('.section-custom-subject')?.value;
+
+      if (!section.semester || !subject || !section.category) {
+        validationError = `Section ${parseInt(sectionId) + 1}: Please fill all required fields (semester, subject, category)`;
+        break;
+      }
+      hasValidSection = true;
+    }
+  }
+
+  if (validationError) {
+    showNotification(validationError, 'error');
+    return;
+  }
+
+  if (!hasValidSection) {
+    showNotification('Please select files to upload in at least one section', 'error');
+    return;
+  }
+
+  const autoPushNotify = document.getElementById('autoPushNotify')?.checked ?? true;
+
+  // Create batches
+  const batches = createUploadBatches();
+
+  if (batches.length === 0) {
+    showNotification('No files to upload', 'error');
+    return;
+  }
+
+  // Show queue progress
+  const queueProgress = document.getElementById('queueProgress');
+  const queueItems = document.getElementById('queueItems');
+  const queueStats = document.getElementById('queueStats');
+  const queueProgressBar = document.getElementById('queueProgressBar');
+  const queueProgressPercent = document.getElementById('queueProgressPercent');
+  const batchCommitInfo = document.getElementById('batchCommitInfo');
+  const commitMessage = document.getElementById('commitMessage');
+  const uploadAllBtn = document.getElementById('uploadAllBtn');
+
+  queueProgress.style.display = 'block';
+  batchCommitInfo.style.display = 'none';
+  uploadAllBtn.disabled = true;
+  uploadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Preparing files...';
+
+  // Initialize queue display with processing + upload phases
+  const totalSteps = batches.length + 1; // batches + 1 processing step
+  queueStats.textContent = `0 / ${totalSteps} steps`;
+
+  // Build queue items display
+  let queueHTML = batches.map((batch, index) => {
+    const fileCount = batch.items.length;
+    const size = (batch.totalSize / 1024 / 1024).toFixed(2);
+    return `
+      <div class="queue-item" data-batch="${index}">
+        <div class="queue-item-icon pending">
+          <i class="fas fa-clock"></i>
+        </div>
+        <div class="queue-item-details">
+          <div class="queue-item-name">Process batch ${index + 1}: ${fileCount} file(s)</div>
+          <div class="queue-item-meta">${size} MB</div>
+        </div>
+        <span class="queue-item-status pending">Pending</span>
+      </div>
+    `;
+  }).join('');
+
+  // Add final upload step
+  queueHTML += `
+    <div class="queue-item" data-batch="commit">
+      <div class="queue-item-icon pending">
+        <i class="fas fa-clock"></i>
+      </div>
+      <div class="queue-item-details">
+        <div class="queue-item-name">Finalize Upload</div>
+        <div class="queue-item-meta">Saving files to server</div>
+      </div>
+      <span class="queue-item-status pending">Pending</span>
+    </div>
+  `;
+  queueItems.innerHTML = queueHTML;
+
+  // Phase 1: Process all files in batches
+  let successCount = 0;
+  let failedCount = 0;
+  const allStagedFiles = [];
+
+  for (let i = 0; i < batches.length; i++) {
+    const batch = batches[i];
+    const queueItem = queueItems.querySelector(`[data-batch="${i}"]`);
+    const icon = queueItem.querySelector('.queue-item-icon');
+    const status = queueItem.querySelector('.queue-item-status');
+
+    // Update to processing state
+    icon.className = 'queue-item-icon uploading';
+    icon.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    status.className = 'queue-item-status uploading';
+    status.textContent = 'Processing...';
+
+    try {
+      // Group files by semester/subject/category for the API
+      const groupedFiles = {};
+      batch.items.forEach(item => {
+        const key = `${item.semester}|${item.subject}|${item.category}`;
+        if (!groupedFiles[key]) {
+          groupedFiles[key] = {
+            semester: item.semester,
+            subject: item.subject,
+            category: item.category,
+            files: []
+          };
+        }
+        groupedFiles[key].files.push(item.file);
+      });
+
+      const groups = Object.values(groupedFiles);
+
+      for (const group of groups) {
+        const stageFormData = new FormData();
+        stageFormData.append('semester', group.semester);
+        stageFormData.append('subject', group.subject);
+        stageFormData.append('category', group.category);
+        stageFormData.append('basePath', `pdfs/${group.semester}/${group.subject}`);
+
+        group.files.forEach(file => {
+          stageFormData.append('files', file);
+        });
+
+        // Use the new stage endpoint
+        const response = await fetch('/api/v2/cdn?stage=true', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('materio_auth_token')}`
+          },
+          body: stageFormData
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || result.error) {
+          throw new Error(result.error || `Processing failed: ${response.status}`);
+        }
+
+        // Collect processed files for the final upload
+        if (result.stagedFiles) {
+          allStagedFiles.push(...result.stagedFiles);
+        }
+      }
+
+      // Update to success state
+      icon.className = 'queue-item-icon success';
+      icon.innerHTML = '<i class="fas fa-check"></i>';
+      status.className = 'queue-item-status success';
+      status.textContent = 'Ready';
+      successCount++;
+
+    } catch (error) {
+      console.error(`Batch ${i + 1} processing failed:`, error);
+
+      // Update to error state
+      icon.className = 'queue-item-icon error';
+      icon.innerHTML = '<i class="fas fa-exclamation"></i>';
+      status.className = 'queue-item-status error';
+      status.textContent = 'Failed';
+      failedCount++;
+    }
+
+    // Update progress
+    const progress = Math.round(((i + 1) / totalSteps) * 100);
+    queueProgressBar.style.setProperty('--progress', `${progress}%`);
+    queueProgressPercent.textContent = `${progress}%`;
+    queueStats.textContent = `${i + 1} / ${totalSteps} steps`;
+  }
+
+  // Phase 2: Finalize upload with all files
+  const commitQueueItem = queueItems.querySelector('[data-batch="commit"]');
+  const commitIcon = commitQueueItem.querySelector('.queue-item-icon');
+  const commitStatus = commitQueueItem.querySelector('.queue-item-status');
+  const stagedJsonFiles = getStagedJsonForCommit();
+
+  if (failedCount > 0) {
+    // If processing failed, don't attempt upload
+    commitIcon.className = 'queue-item-icon error';
+    commitIcon.innerHTML = '<i class="fas fa-ban"></i>';
+    commitStatus.className = 'queue-item-status error';
+    commitStatus.textContent = 'Skipped';
+
+    showNotification(`Processing failed for ${failedCount} batch(es). Upload cancelled.`, 'error');
+  } else if (allStagedFiles.length === 0 && stagedJsonFiles.length === 0) {
+    commitIcon.className = 'queue-item-icon error';
+    commitIcon.innerHTML = '<i class="fas fa-exclamation"></i>';
+    commitStatus.className = 'queue-item-status error';
+    commitStatus.textContent = 'No items';
+
+    showNotification('No files or JSON edits were staged. Upload cancelled.', 'error');
+  } else {
+    // Update to uploading state
+    uploadAllBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Finalizing...';
+    commitIcon.className = 'queue-item-icon uploading';
+    commitIcon.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    commitStatus.className = 'queue-item-status uploading';
+    commitStatus.textContent = 'Finalizing...';
+
+    try {
+      // Get staged JSON changes
+      const stagedJsonFiles = getStagedJsonForCommit();
+
+      // Send commit request with all staged files
+      const response = await fetch('/api/v2/cdn?commit=true', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('materio_auth_token')}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          stagedFiles: allStagedFiles,
+          stagedJsonFiles, // Include staged JSON changes
+          autoPushNotify
+        })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || result.error) {
+        throw new Error(result.error || `Upload failed: ${response.status}`);
+      }
+
+      // Update to success state
+      commitIcon.className = 'queue-item-icon success';
+      commitIcon.innerHTML = '<i class="fas fa-check"></i>';
+      commitStatus.className = 'queue-item-status success';
+      commitStatus.textContent = 'Complete';
+
+      // Update progress to 100%
+      queueProgressBar.style.setProperty('--progress', '100%');
+      queueProgressPercent.textContent = '100%';
+      queueStats.textContent = `${totalSteps} / ${totalSteps} steps`;
+
+      // Show success
+      batchCommitInfo.style.display = 'flex';
+      const jsonCount = stagedJsonFiles.length;
+      const totalCount = allStagedFiles.length + jsonCount;
+      const jsonNote = jsonCount > 0 ? ` + ${jsonCount} JSON edit(s)` : '';
+      commitMessage.textContent = `All ${allStagedFiles.length} files${jsonNote} uploaded successfully!`;
+      showNotification(`Successfully uploaded ${totalCount} item(s)!`, 'success');
+
+      // Clear all sections and staged JSON on success
+      setTimeout(() => {
+        clearAllSectionsInternal();
+        clearStagedJson();
+        queueProgress.style.display = 'none';
+      }, 3000);
+
+    } catch (error) {
+      console.error('Upload failed:', error);
+
+      commitIcon.className = 'queue-item-icon error';
+      commitIcon.innerHTML = '<i class="fas fa-exclamation"></i>';
+      commitStatus.className = 'queue-item-status error';
+      commitStatus.textContent = 'Failed';
+
+      showNotification(`Upload failed: ${error.message}`, 'error');
+    }
+  }
+
+  // Reset button
+  uploadAllBtn.disabled = false;
+  uploadAllBtn.innerHTML = '<i class="fas fa-upload"></i> Upload All Sections';
+}
+
 
 // Load semester-subject mappings from GitHub
 async function loadSemesterSubjectMappings() {
@@ -1401,12 +2343,12 @@ async function loadSemesterSubjectMappings() {
     // File doesn't exist yet, this is expected for first-time setup
     console.log('No existing semester-subject mappings found, initializing with defaults');
   }
-    // Initialize with default subjects for each semester (matching your provided JSON)
+  // Initialize with default subjects for each semester
   semesterSubjectMappings = {
     "1": [
       "Engineering Mathematics I",
       "Physics",
-      "Chemistry", 
+      "Chemistry",
       "Engineering Graphics",
       "Basic Electrical Engineering",
       "Programming for Problem Solving"
@@ -1470,286 +2412,6 @@ async function loadSemesterSubjectMappings() {
   };
 }
 
-// Populate subjects based on selected semester
-function populateSubjects(semester) {
-  const subjectSelect = document.getElementById('subject');
-  if (!subjectSelect) return;
-  
-  // Clear existing options
-  subjectSelect.innerHTML = '<option value="">Select Subject</option>';
-  
-  if (semester && semesterSubjectMappings[semester]) {
-    semesterSubjectMappings[semester].forEach(subject => {
-      const option = document.createElement('option');
-      option.value = subject;
-      option.textContent = subject;
-      subjectSelect.appendChild(option);
-    });
-  }
-    // Add custom option
-  const customOption = document.createElement('option');
-  customOption.value = 'custom';
-  customOption.textContent = 'Add New Subject...';
-  subjectSelect.appendChild(customOption);
-  
-  // Enable the subject dropdown
-  subjectSelect.disabled = false;
-}
-
-// Handle file selection for course upload
-function handleCourseFileSelection(files) {
-  const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB limit as requested
-  const NETLIFY_LIMIT = 6 * 1024 * 1024; // 6MB actual limit due to Netlify Functions
-  const validFiles = [];
-  const rejectedFiles = [];
-  
-  // Validate each file
-  for (const file of files) {
-    if (file.size > MAX_FILE_SIZE) {
-      rejectedFiles.push({
-        name: file.name,
-        size: file.size,
-        reason: `File too large (${Math.round(file.size / 1024 / 1024)}MB). Maximum size is 50MB.`
-      });
-    } else if (file.size > NETLIFY_LIMIT) {
-      rejectedFiles.push({
-        name: file.name,
-        size: file.size,
-        reason: `File too large (${Math.round(file.size / 1024 / 1024)}MB) for current hosting. Due to Netlify Functions limitations, files must be under 6MB. Consider compressing or splitting the file.`
-      });
-    } else if (!file.name.toLowerCase().endsWith('.pdf')) {
-      rejectedFiles.push({
-        name: file.name,
-        size: file.size,
-        reason: 'Only PDF files are allowed for course materials.'
-      });
-    } else {
-      validFiles.push(file);
-    }
-  }
-  
-  // Show warnings for rejected files
-  if (rejectedFiles.length > 0) {
-    const rejectedList = rejectedFiles.map(f => `• ${f.name}: ${f.reason}`).join('\n');
-    showNotification(`Some files were rejected:\n${rejectedList}`, 'warning');
-  }
-  
-  // Add valid files to selection
-  selectedFiles = [...selectedFiles, ...validFiles];
-  displayFilePreview();
-  
-  const courseUploadArea = document.getElementById('courseUploadArea');
-  const filePreviewContainer = document.getElementById('filePreviewContainer');
-  const uploadOptions = document.getElementById('uploadOptions');
-  
-  if (selectedFiles.length > 0) {
-    courseUploadArea.classList.add('has-files');
-    filePreviewContainer.style.display = 'block';
-    uploadOptions.style.display = 'block';
-  }
-}
-
-// Display file preview cards
-function displayFilePreview() {
-  const filePreviewGrid = document.getElementById('filePreviewGrid');
-  if (!filePreviewGrid) return;
-  
-  filePreviewGrid.innerHTML = '';
-  
-  selectedFiles.forEach((file, index) => {
-    const fileCard = createFilePreviewCard(file, index);
-    filePreviewGrid.appendChild(fileCard);
-  });
-}
-
-// Create file preview card
-function createFilePreviewCard(file, index) {
-  const card = document.createElement('div');
-  card.className = 'file-preview-card';
-  
-  const extension = file.name.split('.').pop().toLowerCase();
-  const fileName = file.name.replace(/\.[^/.]+$/, ""); // Remove extension
-  const iconClass = getFileIconClass(extension);
-  
-  card.innerHTML = `
-    <button class="file-remove" onclick="removeFile(${index})" title="Remove file">
-      <i class="fas fa-times"></i>
-    </button>
-    <div class="file-type-icon ${extension}">
-      <i class="${iconClass}"></i>
-    </div>
-    <input type="text" class="file-name-edit" value="${fileName}" 
-           onchange="updateFileName(${index}, this.value)" 
-           title="Click to rename">
-  `;
-  
-  return card;
-}
-
-// Get file icon class based on extension
-function getFileIconClass(extension) {
-  const iconMap = {
-    'pdf': 'fas fa-file-pdf',
-    'doc': 'fas fa-file-word',
-    'docx': 'fas fa-file-word',
-    'ppt': 'fas fa-file-powerpoint',
-    'pptx': 'fas fa-file-powerpoint',
-    'xls': 'fas fa-file-excel',
-    'xlsx': 'fas fa-file-excel',
-    'zip': 'fas fa-file-archive',
-    'rar': 'fas fa-file-archive',
-    'txt': 'fas fa-file-alt'
-  };
-  
-  return iconMap[extension] || 'fas fa-file';
-}
-
-// Remove file from selection
-function removeFile(index) {
-  selectedFiles.splice(index, 1);
-  displayFilePreview();
-  
-  if (selectedFiles.length === 0) {
-    const courseUploadArea = document.getElementById('courseUploadArea');
-    const filePreviewContainer = document.getElementById('filePreviewContainer');
-    const uploadOptions = document.getElementById('uploadOptions');
-    
-    courseUploadArea.classList.remove('has-files');
-    filePreviewContainer.style.display = 'none';
-    uploadOptions.style.display = 'none';
-  }
-}
-
-// Update file name
-function updateFileName(index, newName) {
-  if (selectedFiles[index]) {
-    const extension = selectedFiles[index].name.split('.').pop();
-    const newFileName = newName + '.' + extension;
-    
-    // Create a new File object with the new name
-    const originalFile = selectedFiles[index];
-    const renamedFile = new File([originalFile], newFileName, {
-      type: originalFile.type,
-      lastModified: originalFile.lastModified
-    });
-    
-    selectedFiles[index] = renamedFile;
-  }
-}
-
-// Handle course upload form submission
-async function handleCourseUploadSubmit(e) {
-  e.preventDefault();
-  
-  const form = e.target;
-  const formData = new FormData(form);
-  const semester = formData.get('semester');
-  const subject = formData.get('subject') === 'custom' ? 
-    document.getElementById('customSubject').value : formData.get('subject');
-  const category = formData.get('category');
-  const autoPushNotify = document.getElementById('autoPushNotify').checked;
-  
-  if (!semester || !subject || !category || selectedFiles.length === 0) {
-    showNotification('Please fill all fields and select files', 'error');
-    return;
-  }
-  
-  try {
-    const uploadButton = document.getElementById('uploadCourseFiles');
-    const originalText = uploadButton.innerHTML;
-    uploadButton.disabled = true;
-    uploadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Uploading...';
-    
-    // Show progress
-    const progressDiv = document.getElementById('courseUploadProgress');
-    const progressBar = document.getElementById('courseProgressBar');
-    const progressText = document.getElementById('courseProgressText');
-    progressDiv.style.display = 'block';
-    
-    // Use batch upload for all files and metadata in a single git commit
-    progressBar.style.setProperty('--progress', '50%');
-    progressText.textContent = `Preparing to upload ${selectedFiles.length} files...`;
-    
-    // Create batch upload form data
-    const batchFormData = new FormData();
-    batchFormData.append('semester', semester);
-    batchFormData.append('subject', subject);
-    batchFormData.append('category', category);
-    batchFormData.append('autoPushNotify', autoPushNotify.toString());
-    batchFormData.append('basePath', `pdfs/${semester}/${subject}`);
-    
-    // Add all files to the batch
-    selectedFiles.forEach((file, index) => {
-      batchFormData.append('files', file);
-    });
-    
-    progressBar.style.setProperty('--progress', '75%');
-    progressText.textContent = `Uploading ${selectedFiles.length} files and updating database...`;
-    
-    // Send batch upload request to cdn.js with batch=true parameter
-    const response = await fetch('/api/v1/cdn?batch=true', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('materio_auth_token')}`
-      },
-      body: batchFormData
-    });
-    
-    let result;
-    try {
-      result = await response.json();
-    } catch (parseError) {
-      throw new Error(`Server error: Failed to process the upload. ${response.status} ${response.statusText}`);
-    }
-    
-    if (!response.ok || result.error) {
-      throw new Error(result.error || `Failed to upload files: ${response.status} ${response.statusText}`);
-    }
-    
-    progressBar.style.setProperty('--progress', '100%');
-    progressText.textContent = 'Upload completed successfully!';
-    
-    const fileCount = result.files ? result.files.length : selectedFiles.length;
-    const notificationText = autoPushNotify ? ' (notification created)' : '';
-    const databaseText = result.updatedDatabase ? ' and database updated' : '';
-    
-    showNotification(`Successfully uploaded ${fileCount} files${databaseText}${notificationText}!`, 'success');
-    
-    // Reset form
-    form.reset();
-    selectedFiles = [];
-    document.getElementById('filePreviewContainer').style.display = 'none';
-    document.getElementById('uploadOptions').style.display = 'none';
-    document.getElementById('courseUploadArea').classList.remove('has-files');
-    document.getElementById('subject').disabled = true;
-    document.getElementById('customSubject').style.display = 'none';
-    
-  } catch (error) {
-    console.error('Upload error:', error);
-    
-    let errorMessage = error.message || 'Failed to upload course materials';
-    
-    // Provide more helpful error messages based on the error type
-    if (errorMessage.includes('too large') || errorMessage.includes('413')) {
-      errorMessage = 'One or more files are too large. Due to hosting limitations, total upload size must be under 6MB. Please compress your PDFs or split them into smaller batches.';
-    } else if (errorMessage.includes('403') || errorMessage.includes('Permission denied')) {
-      errorMessage = 'Permission denied. Please check your account permissions.';
-    } else if (errorMessage.includes('500') || errorMessage.includes('Server error')) {
-      errorMessage = 'Server error occurred. Please try again later or contact support if the problem persists.';
-    } else if (errorMessage.includes('timeout')) {
-      errorMessage = 'Upload timeout. Please check your internet connection and try again.';
-    } else if (errorMessage.includes('Only PDF files are allowed')) {
-      errorMessage = 'Only PDF files are allowed for course material uploads.';
-    }
-    
-    showNotification(errorMessage, 'error');
-  } finally {
-    document.getElementById('courseUploadProgress').style.display = 'none';
-    const uploadButton = document.getElementById('uploadCourseFiles');
-    uploadButton.disabled = false;
-    uploadButton.innerHTML = '<i class="fas fa-upload"></i> Upload Materials';
-  }
-}
 
 // Legacy functions - now handled by batch upload
 // These functions are kept for reference but are no longer used
@@ -1759,17 +2421,17 @@ async function updateSemesterSubjectMappings_LEGACY(semester, subject) {
   if (!semesterSubjectMappings[semester]) {
     semesterSubjectMappings[semester] = [];
   }
-  
+
   if (!semesterSubjectMappings[semester].includes(subject)) {
     semesterSubjectMappings[semester].push(subject);
-      // Save to GitHub
+    // Save to GitHub
     const content = JSON.stringify(semesterSubjectMappings, null, 2);
     const formData = new FormData();
     const blob = new Blob([content], { type: 'application/json' });
     formData.append('file', blob, 'semester-subjects.json');
     formData.append('path', 'databases');
-    
-    await fetch('/api/v1/cdn', {
+
+    await fetch('/api/v2/cdn', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('materio_auth_token')}`
@@ -1783,14 +2445,14 @@ async function updateSemesterSubjectMappings_LEGACY(semester, subject) {
 async function updateResourceLibrary_LEGACY(semester, subject, category, uploadedFiles) {
   try {
     console.log('Starting resource library update...');
-    
+
     // Try to load existing resource library
     let resourceLib = {};
     try {
       console.log('Fetching existing resource library...');
       const response = await makeApiRequest('cdn?path=databases/beta/resource.lib.json', 'GET', null, true);
       console.log('Resource library fetch response:', response);
-      
+
       if (response && response.download_url) {
         console.log('Downloading resource library from:', response.download_url);
         const libResponse = await fetch(response.download_url);
@@ -1806,7 +2468,7 @@ async function updateResourceLibrary_LEGACY(semester, subject, category, uploade
     } catch (error) {
       console.log('Error loading existing resource library, creating new one:', error.message);
     }
-    
+
     // Initialize structure if needed
     if (!resourceLib[semester]) {
       resourceLib[semester] = {};
@@ -1814,7 +2476,7 @@ async function updateResourceLibrary_LEGACY(semester, subject, category, uploade
     if (!resourceLib[semester][subject]) {
       resourceLib[semester][subject] = [];
     }
-    
+
     // Find existing category or create new one
     let categoryIndex = resourceLib[semester][subject].findIndex(item => item.type === category);
     if (categoryIndex === -1) {
@@ -1824,28 +2486,28 @@ async function updateResourceLibrary_LEGACY(semester, subject, category, uploade
       });
       categoryIndex = resourceLib[semester][subject].length - 1;
     }
-    
+
     // Add uploaded file names to content
     const fileNames = uploadedFiles.map(file => file.name);
     resourceLib[semester][subject][categoryIndex].content.push(...fileNames);
-    
+
     // Save updated resource library
     const content = JSON.stringify(resourceLib, null, 2);
     const formData = new FormData();
     const blob = new Blob([content], { type: 'application/json' });
     formData.append('file', blob, 'resource.lib.json');
     formData.append('path', 'databases/beta');
-    
+
     console.log('Updating resource library with content:', resourceLib);
-    
-    const response = await fetch('/api/v1/cdn', {
+
+    const response = await fetch('/api/v2/cdn', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('materio_auth_token')}`
       },
       body: formData
     });
-    
+
     let result;
     try {
       result = await response.json();
@@ -1853,14 +2515,14 @@ async function updateResourceLibrary_LEGACY(semester, subject, category, uploade
       console.error('Failed to parse resource library update response:', parseError);
       throw new Error('Failed to update resource library - server returned invalid response');
     }
-    
+
     if (!response.ok || result.error) {
       console.error('Resource library update failed:', result);
       throw new Error(result.error || `Failed to update resource library: ${response.status} ${response.statusText}`);
     }
-    
+
     console.log('Resource library updated successfully:', result);
-    
+
   } catch (error) {
     console.error('Failed to update resource library:', error);
   }
@@ -1875,7 +2537,7 @@ async function createUploadNotification_LEGACY(subject, category, fileCount) {
       date: new Date().toISOString(),
       links: []
     };
-    
+
     // Try to load existing notifications
     let notifications = [];
     try {
@@ -1889,24 +2551,24 @@ async function createUploadNotification_LEGACY(subject, category, fileCount) {
     } catch (error) {
       console.log('Creating new notifications file');
     }
-      // Add new notification to the top
+    // Add new notification to the top
     notifications.unshift(notification);
-    
+
     // Save updated notifications
     const content = JSON.stringify(notifications, null, 2);
     const formData = new FormData();
     const blob = new Blob([content], { type: 'application/json' });
     formData.append('file', blob, 'notifications.json');
     formData.append('path', '');
-    
-    await fetch('/api/v1/cdn', {
+
+    await fetch('/api/v2/cdn', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('materio_auth_token')}`
       },
       body: formData
     });
-    
+
   } catch (error) {
     console.error('Failed to create notification:', error);
   }
@@ -1917,7 +2579,7 @@ async function deleteInvite(inviteId) {
   if (!confirm('Are you sure you want to delete this invite code? This action cannot be undone.')) {
     return;
   }
-  
+
   // Find the delete button to show a loading indicator
   const deleteButton = document.querySelector(`.delete-invite[data-invite-id="${inviteId}"]`);
   if (deleteButton) {
@@ -1926,29 +2588,29 @@ async function deleteInvite(inviteId) {
     deleteButton.disabled = true;
     deleteButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
   }
-  
+
   try {
     console.log('Deleting invite with ID:', inviteId);
     // Show deletion in progress notification
     showNotification('Deleting invite code...', 'info', 2000);
-    
+
     let attempts = 0;
     const maxAttempts = 3;
     let success = false;
     let lastError = null;
-    
+
     // Try up to 3 times with exponential backoff
     while (attempts < maxAttempts && !success) {
       attempts++;
       try {
         console.log(`Delete attempt ${attempts}/${maxAttempts}...`);
-        
+
         const response = await makeApiRequest('invites/delete', 'POST', {
           inviteId: inviteId
         }, true);
-        
+
         console.log('Delete response:', response);
-        
+
         if (response && response.message) {
           success = true;
           showNotification(response.message, 'success');
@@ -1959,7 +2621,7 @@ async function deleteInvite(inviteId) {
         } else if (response && response.error) {
           lastError = response.error;
           console.warn(`Delete attempt ${attempts} failed:`, response.error);
-          
+
           // Wait before trying again (exponential backoff)
           if (attempts < maxAttempts) {
             const waitTime = Math.pow(2, attempts) * 500; // 1s, 2s, 4s...
@@ -1972,7 +2634,7 @@ async function deleteInvite(inviteId) {
       } catch (attemptError) {
         lastError = attemptError.message || `Error in attempt ${attempts}`;
         console.warn(`Delete attempt ${attempts} exception:`, attemptError);
-        
+
         // Wait before trying again (exponential backoff)
         if (attempts < maxAttempts) {
           const waitTime = Math.pow(2, attempts) * 500; // 1s, 2s, 4s...
@@ -1981,7 +2643,7 @@ async function deleteInvite(inviteId) {
         }
       }
     }
-    
+
     if (!success) {
       throw new Error(lastError || `Failed after ${maxAttempts} attempts`);
     }
@@ -2007,7 +2669,8 @@ let currentPromoData = {
   title: "",
   description: "",
   link: "",
-  images: [],
+  media: [],
+  mediaFit: "contain",
   imageRotationInterval: 5000,
   isLimitedOffer: false,
   startDate: "",
@@ -2052,13 +2715,13 @@ function initializePromotionManagement() {
 
   // Event listeners
   if (promoElements.enabledCheckbox) {
-    promoElements.enabledCheckbox.addEventListener('change', function() {
+    promoElements.enabledCheckbox.addEventListener('change', function () {
       updatePromotionStatus();
     });
   }
 
   if (promoElements.limitedOfferCheckbox) {
-    promoElements.limitedOfferCheckbox.addEventListener('change', function() {
+    promoElements.limitedOfferCheckbox.addEventListener('change', function () {
       toggleDateRangeSection();
     });
   }
@@ -2068,10 +2731,10 @@ function initializePromotionManagement() {
   }
 
   if (promoElements.imageUploadArea) {
-    promoElements.imageUploadArea.addEventListener('click', function() {
+    promoElements.imageUploadArea.addEventListener('click', function () {
       promoElements.imageInput.click();
     });
-    
+
     // Drag and drop functionality
     promoElements.imageUploadArea.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -2089,19 +2752,20 @@ function initializePromotionManagement() {
       const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
       if (files.length > 0) {
         handleImageUploadFiles(files);
-      }    });
+      }
+    });
   }
 
   if (promoElements.addImageUrlBtn) {
     promoElements.addImageUrlBtn.addEventListener('click', async () => {
       try {
         const imageUrl = promoElements.imageUrlInput.value.trim();
-        
+
         if (!imageUrl) {
           showNotification('Please enter a valid image URL', 'error');
           return;
         }
-        
+
         // Validate URL format
         try {
           new URL(imageUrl);
@@ -2109,16 +2773,16 @@ function initializePromotionManagement() {
           showNotification('Please enter a valid URL', 'error');
           return;
         }
-        
-        // Add the URL to images array
-        currentPromoData.images.push(imageUrl);
-        
+
+        // Add the URL to media array
+        currentPromoData.media.push(imageUrl);
+
         // Update UI
         displayExistingImages();
-        
+
         // Clear input
         promoElements.imageUrlInput.value = '';
-        
+
         showNotification('Image URL added successfully', 'success');
       } catch (error) {
         console.error('Error adding image URL:', error);
@@ -2128,7 +2792,7 @@ function initializePromotionManagement() {
   }
 
   if (promoElements.addMoreImagesBtn) {
-    promoElements.addMoreImagesBtn.addEventListener('click', function() {
+    promoElements.addMoreImagesBtn.addEventListener('click', function () {
       promoElements.imageInput.click();
     });
   }
@@ -2138,7 +2802,8 @@ function initializePromotionManagement() {
   }
 
   if (promoElements.previewBtn) {
-    promoElements.previewBtn.addEventListener('click', previewPromotion);  }
+    promoElements.previewBtn.addEventListener('click', previewPromotion);
+  }
   if (promoElements.clearBtn) {
     promoElements.clearBtn.addEventListener('click', clearPromotion);
   }
@@ -2148,7 +2813,15 @@ async function loadPromotionData() {
   try {
     const response = await fetch('/assets/data/promo.json');
     if (response.ok) {
-      currentPromoData = await response.json();
+      const loadedData = await response.json();
+      // Support both 'media' (new) and 'images' (legacy) properties
+      currentPromoData = {
+        ...loadedData,
+        media: loadedData.media || loadedData.images || [],
+        mediaFit: loadedData.mediaFit || 'cover'
+      };
+      // Remove legacy 'images' key if media exists
+      delete currentPromoData.images;
       populatePromotionForm();
       updateStatusDisplay();
     } else {
@@ -2178,8 +2851,9 @@ function populatePromotionForm() {
   if (elements.startDate) elements.startDate.value = currentPromoData.startDate || '';
   if (elements.endDate) elements.endDate.value = currentPromoData.endDate || '';
 
-  // Handle image display
-  if (currentPromoData.images && currentPromoData.images.length > 0) {
+  // Handle media display (support both 'media' and legacy 'images')
+  const mediaItems = currentPromoData.media || currentPromoData.images || [];
+  if (mediaItems.length > 0) {
     displayExistingImages();
   }
 
@@ -2193,11 +2867,12 @@ function displayExistingImages() {
 
   if (uploadPlaceholder) uploadPlaceholder.style.display = 'none';
   if (imagePreviewContainer) imagePreviewContainer.style.display = 'block';
-  
+
   if (imagePreviewGrid) {
     imagePreviewGrid.innerHTML = '';
-    currentPromoData.images.forEach((imagePath, index) => {
-      const imageItem = createImagePreviewItem(imagePath, index);
+    const mediaItems = currentPromoData.media || [];
+    mediaItems.forEach((mediaPath, index) => {
+      const imageItem = createImagePreviewItem(mediaPath, index);
       imagePreviewGrid.appendChild(imageItem);
     });
   }
@@ -2218,7 +2893,7 @@ function createImagePreviewItem(imagePath, index) {
 function toggleDateRangeSection() {
   const checkbox = document.getElementById('isLimitedOffer');
   const section = document.getElementById('dateRangeSection');
-  
+
   if (checkbox && section) {
     section.style.display = checkbox.checked ? 'block' : 'none';
   }
@@ -2247,17 +2922,17 @@ async function handleImageUploadFiles(files) {
         continue;
       }
 
-      // Upload to assets/img folder
-      const uploadedImagePath = await uploadPromoImage(file);
-      if (uploadedImagePath) {
-        currentPromoData.images.push(uploadedImagePath);
+      // Upload to assets/media folder
+      const uploadedMediaPath = await uploadPromoImage(file);
+      if (uploadedMediaPath) {
+        currentPromoData.media.push(uploadedMediaPath);
       }
     }
 
     // Update UI
     displayExistingImages();
     showNotification('Images uploaded successfully', 'success');
-    
+
   } catch (error) {
     console.error('Error uploading images:', error);
     showNotification('Failed to upload images', 'error');
@@ -2268,15 +2943,15 @@ async function uploadPromoImage(file) {
   try {
     // Keep original filename instead of generating a new one
     const fileName = file.name;
-    
+
     // Create FormData for upload
-   
+
     const formData = new FormData();
     formData.append('file', file, fileName);
     formData.append('path', 'assets/img');
-    
+
     // Upload via CDN API
-    const response = await fetch('/api/v1/cdn', {
+    const response = await fetch('/api/v2/cdn', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('materio_auth_token')}`
@@ -2291,7 +2966,7 @@ async function uploadPromoImage(file) {
 
     // Return the path for the uploaded image
     return `/assets/img/${fileName}`;
-    
+
   } catch (error) {
     console.error('Upload error:', error);
     throw error;
@@ -2299,21 +2974,22 @@ async function uploadPromoImage(file) {
 }
 
 function removePromoImage(index) {
-  if (currentPromoData.images && index >= 0 && index < currentPromoData.images.length) {
-    currentPromoData.images.splice(index, 1);
-    
-    if (currentPromoData.images.length === 0) {
+  const mediaItems = currentPromoData.media || [];
+  if (index >= 0 && index < mediaItems.length) {
+    currentPromoData.media.splice(index, 1);
+
+    if (currentPromoData.media.length === 0) {
       // Show upload placeholder again
       const uploadPlaceholder = document.getElementById('uploadPlaceholder');
       const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-      
+
       if (uploadPlaceholder) uploadPlaceholder.style.display = 'flex';
       if (imagePreviewContainer) imagePreviewContainer.style.display = 'none';
     } else {
       displayExistingImages();
     }
-    
-    showNotification('Image removed', 'info');
+
+    showNotification('Media removed', 'info');
   }
 }
 
@@ -2327,7 +3003,8 @@ async function savePromotion(event) {
       title: document.getElementById('promoTitle')?.value || '',
       description: document.getElementById('promoDescription')?.value || '',
       link: document.getElementById('promoLink')?.value || '',
-      images: currentPromoData.images || [],
+      media: currentPromoData.media || [],
+      mediaFit: currentPromoData.mediaFit || 'contain',
       imageRotationInterval: 5000, // 5 seconds default
       isLimitedOffer: document.getElementById('isLimitedOffer')?.checked || false,
       startDate: document.getElementById('promoStartDate')?.value || '',
@@ -2358,11 +3035,11 @@ async function savePromotion(event) {
 
     // Save to promo.json file
     await savePromotionToFile(formData);
-    
+
     // Update current data
     currentPromoData = formData;
     updateStatusDisplay();
-    
+
     showNotification('Promotion saved successfully', 'success');
   } catch (error) {
     console.error('Error saving promotion:', error);
@@ -2373,26 +3050,26 @@ async function savePromotion(event) {
 async function savePromotionToFile(data) {
   try {
     console.log('🔄 Saving promotion data:', data);
-    
+
     // Update in-memory data first
     currentPromoData = data;
     localStorage.setItem('materio_promo_data', JSON.stringify(data, null, 2));
-      // Try to save via Netlify function
+    // Try to save via Netlify function
     try {
-      const response = await fetch('/api/v1/save-promo', {
+      const response = await fetch('/api/v2/features/save-promo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
       });
-      
+
       if (response.ok) {
         const result = await response.json();
         console.log('✅ Successfully saved via Netlify function:', result);
-        
+
         showNotification('Promotion saved successfully!', 'success');
-        
+
         // Trigger promotion reload on main page
         setTimeout(() => {
           if (window.loadAndDisplayPromotion) {
@@ -2403,7 +3080,7 @@ async function savePromotionToFile(data) {
             window.parent.loadAndDisplayPromotion();
           }
         }, 500);
-        
+
         return { success: true };
       } else {
         const error = await response.json();
@@ -2411,36 +3088,36 @@ async function savePromotionToFile(data) {
       }
     } catch (netlifyError) {
       console.log('⚠️ Netlify function save failed:', netlifyError.message);
-      
+
       // Fallback: Try the standalone server (if running)
       try {
-        const response = await fetch('/api/save-promo', {
+        const response = await fetch('/api/v2/features/save-promo', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(data)
         });
-        
+
         if (response.ok) {
           const result = await response.json();
           console.log('✅ Successfully saved via standalone server:', result);
-          
+
           showNotification('Promotion saved successfully!', 'success');
-          
+
           // Trigger promotion reload
           setTimeout(() => {
             if (window.loadAndDisplayPromotion) {
               window.loadAndDisplayPromotion();
             }
           }, 500);
-          
+
           return { success: true };
         }
       } catch (serverError) {
         console.log('⚠️ Standalone server also failed:', serverError.message);
       }
-      
+
       // If all automatic methods fail, show error
       showNotification('❌ Auto-save failed. Please check console for details.', 'error');
       console.error('Full error details:', netlifyError);
@@ -2457,7 +3134,7 @@ async function savePromotionToFile(data) {
 function copyPromotionJson() {
   try {
     const jsonData = localStorage.getItem('materio_promo_data') || JSON.stringify(currentPromoData, null, 2);
-    
+
     navigator.clipboard.writeText(jsonData).then(() => {
       showNotification('Promotion JSON copied to clipboard! You can paste this into assets/data/promo.json', 'success');
     }).catch(err => {
@@ -2468,10 +3145,10 @@ function copyPromotionJson() {
       textarea.select();
       document.execCommand('copy');
       document.body.removeChild(textarea);
-      
+
       showNotification('Promotion JSON copied to clipboard!', 'success');
     });
-    
+
     console.log('JSON data copied:', jsonData);
   } catch (error) {
     console.error('Error copying JSON:', error);
@@ -2510,7 +3187,7 @@ function updateStatusDisplay() {
 function copyPromotionJson() {
   try {
     const jsonData = localStorage.getItem('materio_promo_data') || JSON.stringify(currentPromoData, null, 2);
-    
+
     navigator.clipboard.writeText(jsonData).then(() => {
       showNotification('Promotion JSON copied to clipboard! You can paste this into assets/data/promo.json', 'success');
     }).catch(err => {
@@ -2521,10 +3198,10 @@ function copyPromotionJson() {
       textarea.select();
       document.execCommand('copy');
       document.body.removeChild(textarea);
-      
+
       showNotification('Promotion JSON copied to clipboard!', 'success');
     });
-    
+
     console.log('JSON data copied:', jsonData);
   } catch (error) {
     console.error('Error copying JSON:', error);
@@ -2540,7 +3217,8 @@ function previewPromotion() {
     title: document.getElementById('promoTitle')?.value || '',
     description: document.getElementById('promoDescription')?.value || '',
     link: document.getElementById('promoLink')?.value || '',
-    images: currentPromoData.images || [],
+    media: currentPromoData.media || [],
+    mediaFit: currentPromoData.mediaFit || 'contain',
     isLimitedOffer: document.getElementById('isLimitedOffer')?.checked || false,
     startDate: document.getElementById('promoStartDate')?.value || '',
     endDate: document.getElementById('promoEndDate')?.value || '',
@@ -2556,12 +3234,12 @@ function previewPromotion() {
 
   // Update the existing promo modal in the page
   updateExistingPromoModal(formData);
-  
+
   // Also update the promotions script data for consistency
   if (window.promoData) {
     window.promoData = formData;
   }
-  
+
   // Show the modal
   const modal = document.getElementById('promoModal');
   if (modal) {
@@ -2604,7 +3282,7 @@ function updateExistingPromoModal(data) {
         p.remove();
       }
     });
-    
+
     // Update the first remaining paragraph with the description
     const mainDesc = modal.querySelector('p:not(.promo-date-info)');
     if (mainDesc) {
@@ -2612,16 +3290,23 @@ function updateExistingPromoModal(data) {
     }
   }
 
-  // Update and show image if available
+  // Update and show media if available (support both 'media' and legacy 'images')
   const imageEl = modal.querySelector('.promo-cover');
-  if (imageEl && data.images && data.images.length > 0) {
-    imageEl.src = data.images[0];
+  const mediaItems = data.media || data.images || [];
+
+  if (imageEl && mediaItems.length > 0) {
+    imageEl.src = mediaItems[0];
     imageEl.alt = data.title;
     imageEl.style.display = 'block';
-    
-    // Setup image rotation if multiple images
-    if (data.images.length > 1) {
-      setupImageRotationForPreview(data.images);
+
+    // Apply media fit style
+    if (data.mediaFit) {
+      imageEl.style.objectFit = data.mediaFit;
+    }
+
+    // Setup image rotation if multiple media items
+    if (mediaItems.length > 1) {
+      setupImageRotationForPreview(mediaItems);
     }
   } else if (imageEl) {
     imageEl.style.display = 'none';
@@ -2631,11 +3316,11 @@ function updateExistingPromoModal(data) {
   const linkEl = modal.querySelector('.promo-link, a[href]');
   const buttonTextEl = modal.querySelector('.promo-button-text');
   const buttonEl = modal.querySelector('#offerButton');
-  
+
   if (linkEl && data.link) {
     linkEl.href = data.link;
     linkEl.style.display = 'inline-block';
-    
+
     if (buttonTextEl) {
       buttonTextEl.textContent = 'View Offer!';
     } else if (buttonEl) {
@@ -2648,7 +3333,7 @@ function updateExistingPromoModal(data) {
   if (data.isLimitedOffer && data.startDate && data.endDate) {
     const endDate = new Date(data.endDate);
     const dateText = `Offer valid till ${endDate.toLocaleDateString()}`;
-    
+
     // Create date info paragraph
     const dateInfo = document.createElement('p');
     dateInfo.className = 'promo-date-info';
@@ -2657,7 +3342,7 @@ function updateExistingPromoModal(data) {
     dateInfo.style.fontSize = '0.9em';
     dateInfo.style.marginTop = '10px';
     dateInfo.textContent = dateText;
-    
+
     // Insert before the button
     const buttonContainer = modal.querySelector('.promo-link, a[href]');
     if (buttonContainer && buttonContainer.parentNode) {
@@ -2674,7 +3359,7 @@ function setupImageRotationForPreview(images) {
   if (!images || images.length <= 1) return;
 
   let currentIndex = 0;
-  
+
   // Clear any existing timer
   if (previewImageRotationTimer) {
     clearInterval(previewImageRotationTimer);
@@ -2683,12 +3368,12 @@ function setupImageRotationForPreview(images) {
   // Setup rotation timer
   previewImageRotationTimer = setInterval(() => {
     currentIndex = (currentIndex + 1) % images.length;
-    
+
     const imageEl = document.querySelector('#promoModal .promo-cover');
     if (imageEl) {
       // Add fade effect
       imageEl.style.opacity = '0.5';
-      
+
       setTimeout(() => {
         imageEl.src = images[currentIndex];
         imageEl.style.opacity = '1';
@@ -2698,9 +3383,10 @@ function setupImageRotationForPreview(images) {
 }
 
 function openPreviewWindow(data) {
-  const imageSlider = data.images && data.images.length > 1 ? 
-    generateImageSliderHTML(data.images) : 
-    (data.images && data.images.length === 1 ? `<img src="${data.images[0]}" alt="Promotion" class="preview-image">` : '');
+  const mediaItems = data.media || data.images || [];
+  const imageSlider = mediaItems.length > 1 ?
+    generateImageSliderHTML(mediaItems) :
+    (mediaItems.length === 1 ? `<img src="${mediaItems[0]}" alt="Promotion" class="preview-image" style="object-fit: ${data.mediaFit || 'cover'};">` : '');
 
   const previewHtml = `
     <!DOCTYPE html>
@@ -2790,8 +3476,8 @@ function openPreviewWindow(data) {
         ${imageSlider}
         <p class="preview-description">${data.description}</p>
         ${data.link ? `<a href="${data.link}" class="preview-link" target="_blank">View Offer</a>` : ''}
-        ${data.isLimitedOffer && data.startDate && data.endDate ? 
-          `<div class="preview-dates">Limited Time: ${new Date(data.startDate).toLocaleDateString()} - ${new Date(data.endDate).toLocaleDateString()}</div>` : ''}
+        ${data.isLimitedOffer && data.startDate && data.endDate ?
+      `<div class="preview-dates">Limited Time: ${new Date(data.startDate).toLocaleDateString()} - ${new Date(data.endDate).toLocaleDateString()}</div>` : ''}
       </div>
 
       <script>
@@ -2841,16 +3527,16 @@ function openPreviewWindow(data) {
 
 function generateImageSliderHTML(images) {
   if (!images || images.length === 0) return '';
-  
+
   if (images.length === 1) {
     return `<img src="${images[0]}" alt="Promotion" class="preview-image">`;
   }
 
-  const slidesHTML = images.map((image, index) => 
+  const slidesHTML = images.map((image, index) =>
     `<img src="${image}" alt="Promotion ${index + 1}" class="slider-image ${index === 0 ? 'active' : ''}">`
   ).join('');
 
-  const dotsHTML = images.map((_, index) => 
+  const dotsHTML = images.map((_, index) =>
     `<span class="dot ${index === 0 ? 'active' : ''}" data-slide="${index}"></span>`
   ).join('');
 
@@ -2874,33 +3560,34 @@ function clearPromotion() {
     document.getElementById('isLimitedOffer').checked = false;
     document.getElementById('promoStartDate').value = '';
     document.getElementById('promoEndDate').value = '';
-    
-    // Clear images
-    currentPromoData.images = [];
+
+    // Clear media
+    currentPromoData.media = [];
     const uploadPlaceholder = document.getElementById('uploadPlaceholder');
     const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-    
+
     if (uploadPlaceholder) uploadPlaceholder.style.display = 'flex';
     if (imagePreviewContainer) imagePreviewContainer.style.display = 'none';
-    
+
     // Reset current data
     currentPromoData = {
       enabled: false,
       title: "",
       description: "",
       link: "",
-      images: [],
+      media: [],
+      mediaFit: "contain",
       imageRotationInterval: 5000,
       isLimitedOffer: false,
       startDate: "",
       endDate: "",
       lastUpdated: ""
     };
-    
+
     // Update displays
     updateStatusDisplay();
     toggleDateRangeSection();
-    
+
     showNotification('Promotion data cleared', 'info');
   }
 }
@@ -2913,49 +3600,50 @@ function updatePromotionStatus() {
 }
 
 // Image URL functionality
-  const addImageUrlBtn = document.getElementById('addImageUrl');
-  const promoImageUrl = document.getElementById('promoImageUrl');
-  
-  if (addImageUrlBtn && promoImageUrl) {
-    addImageUrlBtn.addEventListener('click', async () => {
-      try {
-        const imageUrl = promoImageUrl.value.trim();
-        
-        if (!imageUrl) {
-          showNotification('Please enter a valid image URL', 'error');
-          return;
-        }
-        
-        // Validate URL format
-        try {
-          new URL(imageUrl);
-        } catch (e) {
-          showNotification('Please enter a valid URL', 'error');
-          return;
-        }
-        
-        // Add the URL to images array
-        currentPromoData.images.push(imageUrl);
-        
-        // Update UI
-        displayExistingImages();
-        
-        // Clear input
-        promoImageUrl.value = '';
-        
-        showNotification('Image URL added successfully', 'success');
-      } catch (error) {
-        console.error('Error adding image URL:', error);
-        showNotification('Failed to add image URL', 'error');
-      }
-    });  }
+const addImageUrlBtn = document.getElementById('addImageUrl');
+const promoImageUrl = document.getElementById('promoImageUrl');
 
-  // Setup other event listeners
+if (addImageUrlBtn && promoImageUrl) {
+  addImageUrlBtn.addEventListener('click', async () => {
+    try {
+      const imageUrl = promoImageUrl.value.trim();
+
+      if (!imageUrl) {
+        showNotification('Please enter a valid image URL', 'error');
+        return;
+      }
+
+      // Validate URL format
+      try {
+        new URL(imageUrl);
+      } catch (e) {
+        showNotification('Please enter a valid URL', 'error');
+        return;
+      }
+
+      // Add the URL to media array
+      currentPromoData.media.push(imageUrl);
+
+      // Update UI
+      displayExistingImages();
+
+      // Clear input
+      promoImageUrl.value = '';
+
+      showNotification('Image URL added successfully', 'success');
+    } catch (error) {
+      console.error('Error adding image URL:', error);
+      showNotification('Failed to add image URL', 'error');
+    }
+  });
+}
+
+// Setup other event listeners
 
 // Function to check if we're in local development mode
 function isLocalDevelopment() {
-  return window.location.hostname === 'localhost' || 
-         window.location.hostname === '127.0.0.1';
+  return window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1';
 }
 
 // Share Modal Functions
@@ -2966,52 +3654,46 @@ function openShareModal(inviteCode) {
   currentInviteCode = inviteCode;
   const modal = document.getElementById('shareInviteModal');
   const shareUrl = document.getElementById('shareUrl');
-  
+
   // Determine the base URL based on the current location
   const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   const baseUrl = isLocalhost ? `${window.location.protocol}//${window.location.host}` : 'https://materioa.netlify.app';
-  
+
   // Set the default URL
   shareUrl.value = `${baseUrl}/invites/${inviteCode}`;
-  
+
   // Reset form
   document.getElementById('customHeading').value = '';
   document.getElementById('headingTemplate').value = '';
-  
+
   // Check if sharelinks database is working
-  fetch('/debug-sharelink')
+  fetch('/api/v2/invites/diagnostic', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ inviteCode: inviteCode })
+  })
     .then(response => {
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // If 404, it might be because the endpoint is not available or path is wrong
+        // Try the features endpoint as fallback if needed, or just ignore for now
+        console.warn(`Diagnostic check failed with status: ${response.status}`);
+        return null;
       }
       return response.json();
     })
     .then(data => {
-      console.log('Debug info:', data);
-      if (!data.tableExists) {
-        showNotification('Sharelinks table not found. Attempting to create it...', 'warning');
-        
-        // Run the migration to create the table
-        fetch('/.netlify/functions/run-migrations')
-          .then(response => response.json())
-          .then(migrationResult => {
-            console.log('Migration result:', migrationResult);
-            if (migrationResult.results && migrationResult.results[0] && migrationResult.results[0].success) {
-              showNotification('Sharelinks table created successfully! Try updating again.', 'success');
-            } else {
-              showNotification('Failed to create sharelinks table. Please contact support.', 'error');
-            }
-          })
-          .catch(error => {
-            console.error('Migration error:', error);
-            showNotification('Error running migrations: ' + error.message, 'error');
-          });
+      if (data) {
+        console.log('Debug info:', data);
+        if (!data.tableExists && data.found === false && data.error && data.error.includes('relation "sharelinks" does not exist')) {
+          showNotification('Sharelinks table not found. Please contact admin.', 'warning');
+        }
       }
     })
     .catch(error => {
-      console.error('Error checking database:', error);
+      console.error('Debug check failed:', error);
+      // Don't show error to user, just log it
     });
-  
+
   // Show modal
   modal.style.display = 'flex';
   modal.classList.add('show');
@@ -3027,7 +3709,7 @@ function closeShareModal() {
 function updateCustomHeading() {
   const template = document.getElementById('headingTemplate').value;
   const customHeading = document.getElementById('customHeading');
-  
+
   if (template) {
     customHeading.value = template;
     console.log('Template selected:', template);
@@ -3040,27 +3722,27 @@ async function updateShareLink() {
     const customHeading = document.getElementById('customHeading').value.trim();
     const shareUrl = document.getElementById('shareUrl');
     const updateBtn = document.getElementById('updateShareLinkBtn');
-    
+
     // Show loading state
     updateBtn.disabled = true;
     updateBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
-    
+
     console.log('Updating share link for invite code:', currentInviteCode);
     console.log('Custom heading:', customHeading);
-    
+
     // Determine base URL for share links
     const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
     const baseUrl = isLocalhost ? `${window.location.protocol}//${window.location.host}` : 'https://materioa.netlify.app';
-    
+
     // Try multiple approaches, with fallbacks for each
     let successfulUpdate = false;
     let errorDetails = null;
-    
+
     // Approach 1: Use the dedicated sharelink endpoint
     if (!successfulUpdate) {
       try {
         console.log('Attempting to update using sharelink endpoint...');
-        const response = await fetch('/.netlify/functions/sharelink', {
+        const response = await fetch('/api/v2/features?action=sharelink', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -3071,11 +3753,11 @@ async function updateShareLink() {
             customHeading: customHeading || null
           })
         });
-        
+
         console.log('Response status:', response.status);
         const data = await response.json();
         console.log('Response data:', data);
-        
+
         if (response.ok) {
           // Always use clean URL regardless of what's returned
           shareUrl.value = `${baseUrl}/invites/${currentInviteCode}`;
@@ -3090,7 +3772,7 @@ async function updateShareLink() {
         errorDetails = e.message;
       }
     }
-    
+
     // Approach 2: Try using the debug endpoint which might have less restrictive policies
     if (!successfulUpdate) {
       try {
@@ -3105,9 +3787,9 @@ async function updateShareLink() {
             customHeading: customHeading || null
           })
         });
-        
+
         const data = await response.json();
-        
+
         if (response.ok) {
           if (data.sharelink && data.sharelink.url) {
             shareUrl.value = data.sharelink.url;
@@ -3126,7 +3808,7 @@ async function updateShareLink() {
         console.warn('Error using debug-sharelink endpoint:', e.message);
       }
     }
-    
+
     // Approach 3: Fallback to just updating the UI with a URL parameter approach
     if (!successfulUpdate) {
       console.log('Using fallback URL parameter approach...');
@@ -3136,29 +3818,29 @@ async function updateShareLink() {
       } else {
         shareUrl.value = `${baseUrl}/invites/${currentInviteCode}`;
       }
-      
+
       // Show a special message about the fallback
       if (errorDetails && errorDetails.includes("no data returned")) {
         showNotification('Using URL parameter fallback - database updated but no data returned', 'info');
       } else {
         showNotification('Using URL parameter fallback - link will still work correctly', 'info');
       }
-      
+
       successfulUpdate = true;
       console.log('Using URL parameter fallback');
     }
-    
+
     if (successfulUpdate) {
       // After a successful update, let's make sure we fetch the URL without parameters
       try {
         // Wait a moment for the database to update
         await new Promise(resolve => setTimeout(resolve, 500));
-        
+
         // Try to check if the URL is available without parameters
         console.log('Verifying sharelink in database...');
         try {
-          const response = await fetch(`/sharelink-info?code=${currentInviteCode}`);
-          
+          const response = await fetch(`/api/v2/invites/sharelink-info?code=${currentInviteCode}`);
+
           if (response.ok) {
             // Data exists in database, use a clean URL
             shareUrl.value = `${baseUrl}/invites/${currentInviteCode}`;
@@ -3177,7 +3859,7 @@ async function updateShareLink() {
         console.warn('Error in verification process:', verifyError);
         // Keep existing URL if verification fails
       }
-      
+
       showNotification('Share link updated successfully', 'success');
     } else {
       throw new Error(errorDetails || 'Failed to update sharelink');
@@ -3196,13 +3878,13 @@ async function updateShareLink() {
 function shareViaWhatsApp() {
   const shareUrl = document.getElementById('shareUrl').value;
   const customHeading = document.getElementById('customHeading').value;
-  
+
   let message = `Check out this invitation to join Materio!`;
   if (customHeading) {
     message = customHeading.replace('{name}', 'you');
   }
   message += `\n\n${shareUrl}`;
-  
+
   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
   window.open(whatsappUrl, '_blank');
 }
@@ -3210,18 +3892,18 @@ function shareViaWhatsApp() {
 function shareViaTwitter() {
   const shareUrl = document.getElementById('shareUrl').value;
   const customHeading = document.getElementById('customHeading').value;
-  
+
   let text = `Join me on Materio - where e-learning doesn't feel like suffering!`;
   if (customHeading) {
     text = customHeading.replace('{name}', 'everyone');
   }
-  
+
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(shareUrl)}`;
   window.open(twitterUrl, '_blank');
 }
 
 // Close modal when clicking outside
-document.addEventListener('click', function(event) {
+document.addEventListener('click', function (event) {
   const modal = document.getElementById('shareInviteModal');
   if (event.target === modal) {
     closeShareModal();
@@ -3229,8 +3911,249 @@ document.addEventListener('click', function(event) {
 });
 
 // Close modal with escape key
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
   if (event.key === 'Escape') {
     closeShareModal();
+    closeJsonEditor();
   }
 });
+
+// =============================================
+// JSON Editor Functions
+// =============================================
+
+// Store for staged JSON changes
+let stagedJsonChanges = {}; // { path: { content: string, originalContent: string } }
+let currentJsonFile = null;
+let originalJsonContent = '';
+
+// Open JSON editor for a file
+async function openJsonEditor(filePath, downloadUrl) {
+  const panel = document.getElementById('jsonEditorPanel');
+  const textarea = document.getElementById('jsonEditorTextarea');
+  const fileName = document.getElementById('jsonEditorFileName');
+  const status = document.getElementById('jsonEditorStatus');
+  const statusText = document.getElementById('jsonEditorStatusText');
+
+  // Set the file name
+  fileName.textContent = filePath.split('/').pop();
+  currentJsonFile = filePath;
+
+  // Show loading state
+  textarea.value = 'Loading...';
+  textarea.disabled = true;
+  panel.classList.add('open');
+
+  try {
+    // Fetch the JSON content
+    const response = await fetch(downloadUrl);
+    if (!response.ok) throw new Error('Failed to fetch file');
+
+    const content = await response.text();
+    originalJsonContent = content;
+
+    // Check if there's already a staged version
+    if (stagedJsonChanges[filePath]) {
+      textarea.value = stagedJsonChanges[filePath].content;
+      statusText.textContent = 'Loaded (has staged changes)';
+      status.className = 'json-editor-status success';
+    } else {
+      // Try to format it
+      try {
+        const parsed = JSON.parse(content);
+        textarea.value = JSON.stringify(parsed, null, 2);
+      } catch {
+        textarea.value = content;
+      }
+      statusText.textContent = 'Ready';
+      status.className = 'json-editor-status';
+    }
+
+    textarea.disabled = false;
+  } catch (error) {
+    console.error('Error loading JSON:', error);
+    textarea.value = '// Error loading file: ' + error.message;
+    statusText.textContent = 'Error loading file';
+    status.className = 'json-editor-status error';
+  }
+
+  // Set up live validation
+  textarea.oninput = validateJsonLive;
+}
+
+// Close JSON editor
+function closeJsonEditor() {
+  const panel = document.getElementById('jsonEditorPanel');
+  panel.classList.remove('open');
+  currentJsonFile = null;
+  originalJsonContent = '';
+}
+
+// Format JSON in the editor
+function formatJson() {
+  const textarea = document.getElementById('jsonEditorTextarea');
+  const status = document.getElementById('jsonEditorStatus');
+  const statusText = document.getElementById('jsonEditorStatusText');
+
+  try {
+    const parsed = JSON.parse(textarea.value);
+    textarea.value = JSON.stringify(parsed, null, 2);
+    statusText.textContent = 'Formatted successfully';
+    status.className = 'json-editor-status success';
+  } catch (error) {
+    statusText.textContent = 'Invalid JSON: ' + error.message;
+    status.className = 'json-editor-status error';
+  }
+}
+
+// Reset JSON editor to original content
+function resetJsonEditor() {
+  const textarea = document.getElementById('jsonEditorTextarea');
+  const status = document.getElementById('jsonEditorStatus');
+  const statusText = document.getElementById('jsonEditorStatusText');
+
+  if (originalJsonContent) {
+    try {
+      const parsed = JSON.parse(originalJsonContent);
+      textarea.value = JSON.stringify(parsed, null, 2);
+    } catch {
+      textarea.value = originalJsonContent;
+    }
+    statusText.textContent = 'Reset to original';
+    status.className = 'json-editor-status';
+  }
+}
+
+// Validate JSON live as user types
+function validateJsonLive() {
+  const textarea = document.getElementById('jsonEditorTextarea');
+  const status = document.getElementById('jsonEditorStatus');
+  const statusText = document.getElementById('jsonEditorStatusText');
+  const lineInfo = document.getElementById('jsonEditorLineInfo');
+
+  // Update line info
+  const lines = textarea.value.split('\n').length;
+  const chars = textarea.value.length;
+  lineInfo.textContent = `${lines} lines, ${chars} chars`;
+
+  try {
+    JSON.parse(textarea.value);
+    statusText.textContent = 'Valid JSON';
+    status.className = 'json-editor-status success';
+    return true;
+  } catch (error) {
+    statusText.textContent = 'Invalid: ' + error.message.substring(0, 50);
+    status.className = 'json-editor-status error';
+    return false;
+  }
+}
+
+// Load staged changes from localStorage on init
+const STAGED_JSON_STORAGE_KEY = 'materio_staged_json';
+try {
+  const savedStagedJson = localStorage.getItem(STAGED_JSON_STORAGE_KEY);
+  if (savedStagedJson) {
+    stagedJsonChanges = JSON.parse(savedStagedJson);
+    setTimeout(updateStagedJsonCount, 1000); // Update UI after page load
+  }
+} catch (e) {
+  console.error('Failed to load staged JSON from storage:', e);
+}
+
+// Warn user if leaving with staged changes
+window.addEventListener('beforeunload', (e) => {
+  if (Object.keys(stagedJsonChanges).length > 0) {
+    e.preventDefault();
+    e.returnValue = 'You have staged JSON changes that have not been uploaded. Are you sure you want to leave?';
+  }
+});
+
+// Stage JSON changes for next upload
+function stageJsonChanges() {
+  const textarea = document.getElementById('jsonEditorTextarea');
+  const status = document.getElementById('jsonEditorStatus');
+  const statusText = document.getElementById('jsonEditorStatusText');
+
+  if (!currentJsonFile) {
+    showNotification('No file open', 'error');
+    return;
+  }
+
+  // Validate JSON first
+  try {
+    JSON.parse(textarea.value);
+  } catch (error) {
+    showNotification('Cannot stage invalid JSON: ' + error.message, 'error');
+    return;
+  }
+
+  // Check if content has changed
+  const currentContent = textarea.value;
+  let originalFormatted;
+  try {
+    originalFormatted = JSON.stringify(JSON.parse(originalJsonContent), null, 2);
+  } catch {
+    originalFormatted = originalJsonContent;
+  }
+
+  if (currentContent === originalFormatted) {
+    showNotification('No changes to stage', 'info');
+    return;
+  }
+
+  // Stage the changes
+  stagedJsonChanges[currentJsonFile] = {
+    content: currentContent,
+    originalContent: originalJsonContent,
+    path: currentJsonFile
+  };
+
+  // Save to localStorage
+  localStorage.setItem(STAGED_JSON_STORAGE_KEY, JSON.stringify(stagedJsonChanges));
+
+  statusText.textContent = 'Changes staged!';
+  status.className = 'json-editor-status success';
+
+  showNotification(`Staged changes to ${currentJsonFile.split('/').pop()}`, 'success');
+  updateStagedJsonCount();
+
+  // Close the editor
+  setTimeout(() => closeJsonEditor(), 500);
+}
+
+// Update the staged JSON count display
+function updateStagedJsonCount() {
+  const count = Object.keys(stagedJsonChanges).length;
+
+  // Update the global upload options to show staged count
+  const globalOptions = document.getElementById('globalUploadOptions');
+  if (globalOptions) {
+    let badge = globalOptions.querySelector('.staged-json-count');
+    if (count > 0) {
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'staged-json-count';
+        globalOptions.querySelector('.upload-all-container')?.prepend(badge);
+      }
+      badge.innerHTML = `<i class="fas fa-code"></i> ${count} JSON file(s) staged`;
+      globalOptions.style.display = 'block';
+    } else if (badge) {
+      badge.remove();
+    }
+  }
+}
+
+// Get staged JSON for the commit
+function getStagedJsonForCommit() {
+  return Object.values(stagedJsonChanges).map(item => ({
+    path: item.path,
+    content: item.content
+  }));
+}
+
+// Clear staged JSON after successful upload
+function clearStagedJson() {
+  stagedJsonChanges = {};
+  localStorage.removeItem(STAGED_JSON_STORAGE_KEY);
+  updateStagedJsonCount();
+}

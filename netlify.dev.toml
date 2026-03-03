@@ -1,0 +1,24 @@
+# This file contains settings that apply only to `netlify dev`
+[dev]
+  command = "bundle exec jekyll serve --watch"
+  framework = "jekyll"
+  port = 8888
+  targetPort = 4000
+  publish = "_site"
+  autoLaunch = true
+  
+[functions]
+  directory = "api/v1"
+  
+[[redirects]]
+  from = "/api/v1/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Specific rule for the OPTIONS preflight requests
+[[redirects]]
+  from = "/api/v1/_preflight/*"
+  to = "/.netlify/functions/cors"
+  status = 200
+  method = "OPTIONS"
+  force = true

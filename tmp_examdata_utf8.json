@@ -1,0 +1,131 @@
+﻿{
+    "enabled": true,
+    "viewRotationInterval": 15000,
+    "showBeforeDays": 9,
+    "semesters": [
+        {
+            "semester": 6,
+            "examPeriod": {
+                "name": "Mid Semester Exams",
+                "shortName": "Mid Semester",
+                "startDate": "2026-02-16T09:00:00",
+                "endDate": "2026-02-24T11:15:00"
+            },
+            "exams": [
+                {
+                    "id": 1,
+                    "subject": "Mobile App Development",
+                    "aliases": [
+                        "MAD",
+                        "Mobile App",
+                        "Mobile Application",
+                        "Android",
+                        "Mobile App Development"
+                    ],
+                    "code": "303105379",
+                    "date": "2026-02-16",
+                    "time": "09:45",
+                    "duration": "1.5 hours",
+                    "syllabus": [
+                        "Android Operating System and Development Environment",
+                        "Android Components and Resource Handling",
+                        "Android User Interface Elements"
+                    ]
+                },
+                {
+                    "id": 2,
+                    "subject": "Machine Learning",
+                    "aliases": [
+                        "ML",
+                        "Machine Learning"
+                    ],
+                    "code": "303105353",
+                    "date": "2026-02-17",
+                    "time": "09:45",
+                    "duration": "1.5 hours",
+                    "syllabus": [
+                        "Linear Regression",
+                        "Classification",
+                        "Neural Networks",
+                        "Deep Learning Basics"
+                    ]
+                },
+                {
+                    "id": 3,
+                    "subject": "Compiler Design",
+                    "aliases": [
+                        "CD",
+                        "Compiler",
+                        "Compiler Design"
+                    ],
+                    "code": "303105349",
+                    "date": "2026-02-19",
+                    "time": "09:45",
+                    "duration": "1.5 hours",
+                    "syllabus": [
+                        "Lexical Analysis",
+                        "Parsing",
+                        "Code Generation",
+                        "Optimization"
+                    ]
+                },
+                {
+                    "id": 4,
+                    "subject": "MEAN Stack Web Development",
+                    "aliases": [
+                        "MEAN",
+                        "MEAN Stack",
+                        "Web Development",
+                        "Full Stack"
+                    ],
+                    "code": "303105385",
+                    "date": "2026-02-20",
+                    "time": "09:45",
+                    "duration": "1.5 hours",
+                    "syllabus": [
+                        "Introduction to MEAN Stack",
+                        "Setting up the Development Environment",
+                        "Creating a MEAN Stack Application",
+                        "Deployment of MEAN Stack Application"
+                    ]
+                },
+                {
+                    "id": 5,
+                    "subject": "Employability Skills",
+                    "aliases": [
+                        "ES",
+                        "Employability",
+                        "Soft Skills"
+                    ],
+                    "code": "303193353",
+                    "date": "2026-02-23",
+                    "time": "09:45",
+                    "duration": "1 hour",
+                    "syllabus": [
+                        "Introduction to Employability Skills",
+                        "Communication Skills"
+                    ]
+                },
+                {
+                    "id": 6,
+                    "subject": "Quant and Reasoning",
+                    "aliases": [
+                        "QR",
+                        "Aptitude",
+                        "Reasoning",
+                        "Quant"
+                    ],
+                    "code": "303105311",
+                    "date": "2026-02-24",
+                    "time": "09:45",
+                    "duration": "1.5 hours",
+                    "syllabus": [
+                        "Introduction to Quant and Reasoning",
+                        "Reasoning",
+                        "Quant"
+                    ]
+                }
+            ]
+        }
+    ]
+}

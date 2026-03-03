@@ -1,43 +1,83 @@
-window.addEventListener("DOMContentLoaded", function () {
-    var url = window.location.href;
-    var branch = "stable";
-    if (url.indexOf("/channels/") !== -1) {
-        branch = "channels";
-    } else if (url.indexOf("/labs") !== -1) {
-        branch = "labs";
+/**
+ * Releases Module (ESM)
+ * Fetches and displays release information based on current branch.
+ * 
+ * @module releases
+ */
+
+/**
+ * Determine the current branch from URL
+ * @returns {string} Branch name ('stable', 'channels', or 'labs')
+ */
+function getCurrentBranch() {
+    const url = window.location.href;
+    if (url.includes('/channels/')) {
+        return 'channels';
+    } else if (url.includes('/labs')) {
+        return 'labs';
     }
-    fetch('/assets/data/releases.json')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (releases) {
-            var releaseFound = null;
-            for (var i = 0; i < releases.length; i++) {
-                if (releases[i].branch.toLowerCase() === branch) {
-                    releaseFound = releases[i];
-                    break;
-                }
+    return 'stable';
+}
+
+/**
+ * Fetch and display release information
+ * @returns {Promise<void>}
+ */
+async function loadReleases() {
+    const branch = getCurrentBranch();
+
+    try {
+        const response = await fetch('/assets/data/releases.json');
+        const releases = await response.json();
+
+        // Find release for current branch
+        const releaseFound = releases.find(
+            release => release.branch.toLowerCase() === branch
+        );
+
+        const versionElem = document.getElementById('versionInfoText');
+        const buildElem = document.getElementById('buildInfoText');
+        const logElem = document.getElementById('changeLogContent');
+
+        if (releaseFound) {
+            if (versionElem) {
+                versionElem.textContent = 'Version: ' + releaseFound.version;
             }
-            if (releaseFound) {
-                var versionElem = document.getElementById("versionInfoText");
-                var buildElem = document.getElementById("buildInfoText");
-                var logElem = document.getElementById("changeLogContent");
-                versionElem.textContent = "Version: " + releaseFound.version;
-                buildElem.textContent = "Build: " + releaseFound.build;
+            if (buildElem) {
+                buildElem.textContent = 'Build: ' + releaseFound.build;
+            }
+            if (logElem) {
                 if (Array.isArray(releaseFound.logs)) {
-                    var html = "";
-                    for (var j = 0; j < releaseFound.logs.length; j++) {
-                        html += "<p>" + releaseFound.logs[j] + "</p>";
-                    }
-                    logElem.innerHTML = html;
+                    logElem.innerHTML = releaseFound.logs
+                        .map(log => `<p>${log}</p>`)
+                        .join('');
                 } else {
                     logElem.textContent = releaseFound.logs;
                 }
-            } else {
-                document.getElementById("changeLogContent").textContent = "No changelog available for this branch.";
             }
-        })
-        .catch(function (err) {
-            console.error("Error loading releases:", err);
-        });
-});
+        } else {
+            if (logElem) {
+                logElem.textContent = 'No changelog available for this branch.';
+            }
+        }
+    } catch (err) {
+        console.error('Error loading releases:', err);
+    }
+}
+
+/**
+ * Initialize releases module
+ */
+function init() {
+    loadReleases();
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
+
+// Export for potential future use
+export { loadReleases, getCurrentBranch, init };

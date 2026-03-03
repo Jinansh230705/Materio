@@ -12,6 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
 .messageBar {
   --closing-button-icon: url(images/messageBar_closingButton.svg);
@@ -4230,6 +4231,11 @@
 }
 
 /* Custom overlay effects for Materio reader modes */
+/* Paper texture CSS variable - can be changed dynamically */
+body.paper-mode {
+  --paper-texture-url: url('/assets/textures/black-paper.png');
+}
+
 body.paper-mode .pdfViewer .canvasWrapper {
   position: relative;
 }
@@ -4244,12 +4250,18 @@ body.paper-mode .pdfViewer .canvasWrapper::after,
 body.night-reading .pdfViewer .canvasWrapper::before,
 body.eink-mode .pdfViewer .canvasWrapper::before {
   will-change: opacity;
-  transform: translateZ(0); /* Force GPU layer */
+  transform: translateZ(0);
+  /* Force GPU layer */
+}
+
+.pdfViewer.invert .page {
+  filter: invert(100%) hue-rotate(180deg);
 }
 
 body:is(.paper-mode, .night-reading, .eink-mode) :is(.pdfViewer .canvasWrapper) canvas {
   will-change: filter;
-  transform: translateZ(0); /* Force GPU layer */
+  transform: translateZ(0);
+  /* Force GPU layer */
 }
 
 body.paper-mode .pdfViewer .canvasWrapper::after {
@@ -4259,8 +4271,8 @@ body.paper-mode .pdfViewer .canvasWrapper::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/assets/textures/black-paper.png');
-  background-size: 800px 800px;
+  background-image: var(--paper-texture-url, url('/assets/textures/black-paper.png'));
+  background-size: var(--grain-size, 800px) var(--grain-size, 800px);
   background-repeat: repeat;
   opacity: 0.25;
   pointer-events: none;
@@ -4279,24 +4291,19 @@ body.night-reading .pdfViewer .canvasWrapper::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-      45deg,
+  background: linear-gradient(45deg,
       rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 0%,
       rgba(255, 236, 179, var(--warmth-opacity, 0.15)) 25%,
       rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 50%,
       rgba(255, 236, 179, var(--warmth-opacity, 0.15)) 75%,
-      rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 100%
-  );
+      rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 100%);
   pointer-events: none;
   z-index: 1;
   mix-blend-mode: multiply;
 }
 
 body.night-reading :is(.pdfViewer .canvasWrapper) canvas {
-  filter: sepia(calc(var(--warmth-opacity, 0.15) * var(--warmth-sepia-factor, 2.67))) 
-         hue-rotate(var(--warmth-hue-rotate, 15deg)) 
-         saturate(0.8) 
-         brightness(0.88);
+  filter: sepia(calc(var(--warmth-opacity, 0.15) * var(--warmth-sepia-factor, 2.67))) hue-rotate(var(--warmth-hue-rotate, 15deg)) saturate(0.8) brightness(0.88);
 }
 
 /* Ensure overlays work in presentation mode */
@@ -4312,7 +4319,7 @@ body.paper-mode #viewerContainer.pdfPresentationMode .pdfViewer .canvasWrapper::
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/assets/textures/black-paper.png');
+  background-image: var(--paper-texture-url, url('/assets/textures/black-paper.png'));
   background-size: 800px 800px;
   background-repeat: repeat;
   opacity: 0.25;
@@ -4328,14 +4335,12 @@ body.night-reading #viewerContainer.pdfPresentationMode .pdfViewer .canvasWrappe
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-      45deg,
+  background: linear-gradient(45deg,
       rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 0%,
       rgba(255, 236, 179, var(--warmth-opacity, 0.15)) 25%,
       rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 50%,
       rgba(255, 236, 179, var(--warmth-opacity, 0.15)) 75%,
-      rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 100%
-  );
+      rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 100%);
   pointer-events: none;
   z-index: 1;
   mix-blend-mode: multiply;
@@ -4349,21 +4354,19 @@ body.night-reading.paper-mode .pdfViewer .canvasWrapper::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-      45deg,
+  background: linear-gradient(45deg,
       rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 0%,
       rgba(255, 236, 179, var(--warmth-opacity, 0.15)) 25%,
       rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 50%,
       rgba(255, 236, 179, var(--warmth-opacity, 0.15)) 75%,
-      rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 100%
-  );
+      rgba(255, 248, 220, calc(var(--warmth-opacity, 0.15) * 1.67)) 100%);
   pointer-events: none;
   z-index: 1;
   mix-blend-mode: multiply;
 }
 
 body.paper-mode.night-reading .pdfViewer .canvasWrapper::after {
-  background-image: url('/assets/textures/black-paper.png');
+  background-image: var(--paper-texture-url, url('/assets/textures/black-paper.png'));
   background-size: 800px 800px;
   background-repeat: repeat;
   opacity: 0.22;
@@ -4417,7 +4420,7 @@ body.paper-mode.eink-mode :is(.pdfViewer .canvasWrapper) canvas {
 }
 
 body.paper-mode.eink-mode .pdfViewer .canvasWrapper::after {
-  background-image: url('/assets/textures/black-paper.png');
+  background-image: var(--paper-texture-url, url('/assets/textures/black-paper.png'));
   background-size: 800px 800px;
   background-repeat: repeat;
   opacity: 0.25;
@@ -5515,6 +5518,7 @@ dialog :link {
 
 #documentPropertiesDialog {
   text-align: left;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 #documentPropertiesDialog .row>* {
@@ -5534,6 +5538,10 @@ dialog :link {
 
 #documentPropertiesDialog .buttonRow {
   margin-top: 10px;
+}
+
+#documentPropertiesClose {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .grab-to-pan-grab {
@@ -5627,6 +5635,7 @@ dialog :link {
 }
 
 .toolbarButton.labeled {
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   width: 100%;
   min-height: var(--menuitem-height);
   justify-content: flex-start;
@@ -5772,6 +5781,7 @@ dialog :link {
   cursor: default;
   min-height: 26px;
   max-height: calc(var(--viewer-container-height) - 40px);
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 :is(#secondaryToolbar #secondaryToolbarButtonContainer) #secondaryOpenFile::before {
@@ -5872,6 +5882,11 @@ dialog :link {
 :is(#secondaryToolbar #secondaryToolbarButtonContainer) #documentProperties::before {
   -webkit-mask-image: var(--secondaryToolbarButton-documentProperties-icon);
   mask-image: var(--secondaryToolbarButton-documentProperties-icon);
+}
+
+:is(#secondaryToolbar #secondaryToolbarButtonContainer) #toggleInvert::before {
+  -webkit-mask-image: var(--toolbarButton-toggleInvert-icon);
+  mask-image: var(--toolbarButton-toggleInvert-icon);
 }
 
 #findbar {
@@ -6129,6 +6144,7 @@ dialog :link {
   min-width: inherit;
   height: 28px;
   font: message-box;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 12px;
   color: var(--main-color);
   margin: 0;
@@ -6188,6 +6204,7 @@ dialog :link {
   width: 100%;
   height: 100%;
   justify-content: space-between;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 :is(#toolbarContainer #toolbarViewer)>* {
@@ -6196,6 +6213,7 @@ dialog :link {
 
 :is(#toolbarContainer #toolbarViewer) input {
   font: message-box;
+  font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 :is(#toolbarContainer #toolbarViewer) .toolbarButtonSpacer {

@@ -21,7 +21,12 @@ body {
 
 /* Hide sidebar close button by default - especially on desktop */
 .sidebar-close-btn {
-    display: none !important; /* Base rule to ensure it's hidden by default */
+    display: none !important;
+    /* Base rule to ensure it's hidden by default */
+}
+
+.hidden {
+    display: none !important;
 }
 
 .container {
@@ -220,11 +225,13 @@ body {
 }
 
 /* Card styling from main.css */
-.card-one, .card-layout {
+.card-one,
+.card-layout {
     background-color: rgba(231, 231, 221, 0.5);
     backdrop-filter: blur(10px);
+    corner-shape: squircle;
     -webkit-backdrop-filter: blur(10px);
-    border-radius: 10px;
+    border-radius: 40px;
     padding: 20px;
     margin-bottom: 20px;
     transition: background-color 0.3s ease;
@@ -273,7 +280,8 @@ input[type="password"] {
     width: 100%;
     padding: 10px 12px;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    corner-shape: squircle;
+    border-radius: 24px;
     font-size: 14px;
     background-color: rgba(255, 255, 255, 0.9);
     color: #333;
@@ -350,11 +358,12 @@ input[type="password"]:focus {
 }
 
 .btn {
-    background-color: #ff8400;
+    background-color: #ff5400;
     color: #ffffff;
     border: none;
     padding: 12px 20px;
-    border-radius: 10px;
+    corner-shape: squircle;
+    border-radius: 24px;
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
@@ -502,7 +511,8 @@ input[type="password"]:focus {
     margin-bottom: 20px;
 }
 
-.remember-me, .terms-agreement {
+.remember-me,
+.terms-agreement {
     display: flex;
     align-items: center;
     font-size: 14px;
@@ -552,10 +562,12 @@ input[type="password"]:focus {
         transform: translate(-50%, -50%) scale(0) rotate(-45deg);
         opacity: 0;
     }
+
     50% {
         transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
         opacity: 1;
     }
+
     100% {
         transform: translate(-50%, -50%) scale(1) rotate(0deg);
         opacity: 1;
@@ -582,7 +594,8 @@ body.dark-mode .terms-agreement input[type="checkbox"]:checked {
     border-color: #ff8200;
 }
 
-.remember-me input, .terms-agreement input {
+.remember-me input,
+.terms-agreement input {
     margin-right: 8px;
 }
 
@@ -633,7 +646,7 @@ body.dark-mode .terms-agreement input[type="checkbox"]:checked {
 }
 
 /* Responsive adjustments for the horizontal layout */
-@media (max-width: 768px) {  
+@media (max-width: 768px) {
     .profile-picture-input.horizontal .profile-picture-preview {
         margin-bottom: 15px;
     }
@@ -995,7 +1008,7 @@ body.dark-mode .form-section-title {
     .profile-container {
         flex-direction: column;
     }
-    
+
     .sidebar {
         width: 100%;
         height: auto;
@@ -1004,53 +1017,54 @@ body.dark-mode .form-section-title {
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         padding-bottom: 0;
     }
-    
+
     .sidebar-nav {
         flex-direction: row;
         justify-content: center;
         padding: 10px 0;
         overflow-x: auto;
     }
-    
+
     .sidebar-nav-item {
         margin: 0 5px;
         padding: 8px 15px;
         border-left: none;
         border-bottom: 3px solid transparent;
     }
-    
+
     .sidebar-nav-item.active {
         border-left: none;
         border-bottom: 3px solid #ff8200;
     }
-    
+
     .sidebar-nav-item i {
         margin-right: 5px;
     }
-    
+
     .sidebar-footer {
         padding: 10px;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
     }
-      .main-content {
+
+    .main-content {
         margin-left: 0;
         padding: 20px;
     }
-    
+
     /* Keep profile info horizontal on mobile */
     .profile-info {
         flex-direction: row;
         text-align: left;
         align-items: center;
     }
-    
+
     .profile-image-container {
         margin-right: 15px;
         margin-bottom: 0;
     }
-    
+
     .profile-image-container img {
         width: 60px;
         height: 60px;
@@ -1062,11 +1076,11 @@ body.dark-mode .form-section-title {
     .sidebar-nav {
         flex-wrap: wrap;
     }
-    
+
     .sidebar-footer {
         flex-direction: column !important;
     }
-    
+
     /* Ensure theme switcher is full width on mobile */
     .theme-switcher-card {
         width: 100%;
@@ -1132,7 +1146,7 @@ body.dark-mode #hamburgerButton:hover {
     .mobile-menu-toggle {
         display: block;
     }
-    
+
     .sidebar {
         transform: translateX(-100%);
         transition: transform 0.3s ease;
@@ -1142,44 +1156,44 @@ body.dark-mode #hamburgerButton:hover {
         position: fixed;
         overflow-y: auto;
     }
-    
+
     .sidebar.open {
         transform: translateX(0);
     }
-    
+
     .content-overlay.active {
         display: block;
     }
-    
+
     /* Reset sidebar layout to vertical for mobile when using hamburger */
     body.sidebar-open .sidebar {
         flex-direction: column;
         height: 100vh;
         padding: 20px 0;
     }
-    
+
     body.sidebar-open .sidebar-nav {
         flex-direction: column;
         padding: 20px 0;
     }
-    
+
     body.sidebar-open .sidebar-nav-item {
         margin: 5px 0;
         padding: 12px 20px;
         border-left: 3px solid transparent;
         border-bottom: none;
     }
-    
+
     body.sidebar-open .sidebar-nav-item.active {
         border-left: 3px solid #ff8200;
         border-bottom: none;
     }
-    
+
     body.sidebar-open .sidebar-footer {
         flex-direction: column;
         padding: 20px;
     }
-    
+
     /* Main content positioning */
     .main-content {
         margin-left: 0;
@@ -1194,12 +1208,12 @@ body.dark-mode #hamburgerButton:hover {
         background-color: #121212;
         color: #e0e0e0;
     }
-    
+
     body:not(.light-mode) .card-one,
     body:not(.light-mode) .card-layout {
         background-color: rgba(30, 30, 30, 0.8);
     }
-    
+
     body:not(.light-mode) input[type="text"],
     body:not(.light-mode) input[type="email"],
     body:not(.light-mode) input[type="password"] {
@@ -1285,21 +1299,22 @@ body.dark-mode .btn-danger:hover {
 
 /* Updated Danger Zone styling */
 .card-layout .card-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .card-layout .card-header h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-primary);
-  display: flex;
-  align-items: center;
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
 }
+
 /* Theme Switcher Card */
 .theme-switcher-card {
     background-color: rgba(255, 255, 255, 0.5);
@@ -1337,7 +1352,7 @@ body.dark-mode .btn-danger:hover {
 
 input:-internal-autofill-selected {
     appearance: menulist-button;
-    background-image: none ;
+    background-image: none;
     background-color: none;
     color: none;
 }
@@ -1415,25 +1430,25 @@ body.dark-mode .theme-option.active span {
 
 /* Sub-tabs horizontal scrolling for mobile */
 @media (max-width: 768px) {
-  .sub-tab-nav {
-    overflow-x: auto;
-    white-space: nowrap;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    display: flex;
-    flex-wrap: nowrap;
-    padding-bottom: 5px;
-  }
-  
-  .sub-tab-nav::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .sub-tab-btn {
-    flex: 0 0 auto;
-  }
-  
-  .files-sub-tabs {
-    overflow: hidden;
-  }
+    .sub-tab-nav {
+        overflow-x: auto;
+        white-space: nowrap;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 5px;
+    }
+
+    .sub-tab-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sub-tab-btn {
+        flex: 0 0 auto;
+    }
+
+    .files-sub-tabs {
+        overflow: hidden;
+    }
 }

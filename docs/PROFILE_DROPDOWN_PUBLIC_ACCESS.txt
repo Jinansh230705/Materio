@@ -1,0 +1,13 @@
+﻿Profile Dropdown - Now Available to Everyone
+
+Changes:
+ Profile icon now shows for ALL users (logged in and out)
+ Dropdown menu accessible to everyone
+ Downloads tab accessible without login
+ Settings tab accessible without login
+ Profile link takes non-logged users to account/profile page
+
+Behavior:
+- Logged in: Shows user's profile picture
+- Logged out: Shows default avatar icon
+- Both: Can access dropdown menu with Profile, Downloads, and Settings

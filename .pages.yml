@@ -1,0 +1,125 @@
+# PagesCMS Configuration for Materio Jekyll Site
+# Learn more at https://pagescms.org
+
+# Backend configuration - MUST be at the top
+backend:
+  name: git-gateway
+  branch: octo-parakeet
+
+# Site information
+title: "Materio"
+description: "Content management for the Materio educational platform"
+
+# Media configuration
+media_folder: "assets/img"
+public_folder: "/assets/img"
+
+# Collections configuration
+collections:
+  # Blog Posts Collection
+  - name: "posts"
+    label: "Blog Posts"
+    folder: "_posts"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    editor:
+      preview: true
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        required: true
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        required: true
+        date_format: "YYYY-MM-DD"
+        time_format: "HH:mm"
+        format: "YYYY-MM-DD HH:mm:ss"
+      - label: "Layout"
+        name: "layout"
+        widget: "select"
+        options: ["post"]
+        default: "post"
+      - label: "Categories"
+        name: "categories"
+        widget: "select"
+        multiple: true
+        options:
+          - { label: "Notes", value: "notes" }
+          - { label: "Demo", value: "demo" }
+          - { label: "Tutorial", value: "tutorial" }
+          - { label: "How To", value: "howto" }
+        required: false
+      - label: "Excerpt"
+        name: "excerpt"
+        widget: "text"
+        required: false
+        hint: "Brief description of the post"
+      - label: "Featured Image"
+        name: "image"
+        widget: "image"
+        required: false
+        hint: "Main image for the post"
+      - label: "Content"
+        name: "body"
+        widget: "markdown"
+        required: true
+  # Static Pages Collection
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "About Page"
+        name: "about"
+        file: "about.md"
+        fields:
+          - label: "Title"
+            name: "title"
+            widget: "string"
+            default: "About"
+          - label: "Layout"
+            name: "layout"
+            widget: "select"
+            options: ["page"]
+            default: "page"
+          - label: "Permalink"
+            name: "permalink"
+            widget: "string"
+            default: "/whatisthis"
+          - label: "Content"
+            name: "body"
+            widget: "markdown"
+      - label: "Privacy Policy"
+        name: "privacy"
+        file: "privacy.md"
+        fields:
+          - label: "Title"
+            name: "title"
+            widget: "string"
+            default: "Privacy Policy"
+          - label: "Layout"
+            name: "layout"
+            widget: "select"
+            options: ["page"]
+            default: "page"
+          - label: "Permalink"
+            name: "permalink"
+            widget: "string"
+            default: "/privacy"
+          - label: "Content"
+            name: "body"
+            widget: "markdown"
+
+# Site settings
+site_url: "https://materioa.netlify.app"
+display_url: "https://materioa.netlify.app"
+logo_url: "/assets/img/materio_new_wh.svg"
+
+# Editorial workflow
+publish_mode: editorial_workflow
+
+# Show preview links
+show_preview_links: true

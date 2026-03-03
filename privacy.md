@@ -1,11 +1,13 @@
 ---
-layout: page
 title: Privacy Policy
-heading: Privacy Policy
+layout: post
+category: legal
+date: '2025-09-30'
+hide_author_share_row: true 
+image: null 
 permalink: /privacy
+no-ads: true
 ---
-
-> **Last updated:** 30/09/2025
 
 At Materio we prioritise your privacy. This Privacy Policy describes what information we collect, how we use it, and the choices you have when you use our platform.
 

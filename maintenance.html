@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Materio - Under Maintenance</title>
+  <link rel="icon" type="image/png" href="/assets/img/materio.png">
+  
+  <!-- Manrope Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --text: #e0e0e0;
+      --accent: #ff8200;
+      --card-bg: #1a1a1a;
+      --border: #2a2a2a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Manrope', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header styles */
+    .site-header {
+      position: relative;
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-logo {
+      width: 120px;
+      height: 32px;
+      background-image: url('/assets/img/materio_new_wh.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      display: block;
+      cursor: pointer;
+    }
+
+    /* Main content */
+    .maintenance-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .maintenance-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 48px;
+      max-width: 700px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .maintenance-icon {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .maintenance-icon i {
+      font-size: 64px;
+      color: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .category-badge {
+      display: inline-block;
+      background: rgba(255, 130, 0, 0.1);
+      color: var(--accent);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .description {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 32px;
+      white-space: pre-line;
+    }
+
+    .image-container {
+      margin: 32px 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .date-info {
+      background: rgba(255, 130, 0, 0.05);
+      border: 1px solid rgba(255, 130, 0, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 24px 0;
+    }
+
+    .date-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+
+    .date-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .date-row i {
+      color: var(--accent);
+      width: 20px;
+    }
+
+    .date-label {
+      font-weight: 600;
+      color: var(--accent);
+      min-width: 80px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: 'Manrope', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #ff9933;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(255, 130, 0, 0.3);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--border);
+      border-color: var(--accent);
+    }
+
+    .last-updated {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    @media (max-width: 640px) {
+      .maintenance-card {
+        padding: 32px 24px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      .maintenance-icon i {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <a href="/" class="header-logo" role="button" aria-label="Go to homepage"></a>
+  </header>
+
+  <!-- Main content -->
+  <div class="maintenance-container">
+    <div class="maintenance-card">
+      <div class="maintenance-icon">
+        <i class="fa-solid fa-wrench"></i>
+      </div>
+
+      <div id="content">
+        <!-- Content will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load and display promo data
+    async function loadMaintenanceData() {
+      try {
+        const timestamp = new Date().getTime();
+        const response = await fetch(`/assets/data/promo.json?t=${timestamp}`);
+        
+        if (!response.ok) {
+          displayFallback();
+          return;
+        }
+
+        const data = await response.json();
+        displayMaintenanceInfo(data);
+      } catch (error) {
+        console.error('Error loading maintenance data:', error);
+        displayFallback();
+      }
+    }
+
+    function displayMaintenanceInfo(data) {
+      const content = document.getElementById('content');
+      
+      let html = '';
+      
+      // Category badge
+      if (data.category) {
+        html += `<div class="category-badge">${data.category}</div>`;
+      }
+      
+      // Title
+      html += `<h1>${data.title || 'Under Maintenance'}</h1>`;
+      
+      // Description
+      if (data.description) {
+        html += `<div class="description">${data.description}</div>`;
+      }
+      
+      // Image (only if showImageOnMaintenance is true)
+      if (data.images && data.images.length > 0 && data.showImageOnMaintenance !== false) {
+        html += `
+          <div class="image-container">
+            <img src="/${data.images[0]}" alt="Maintenance notice">
+          </div>
+        `;
+      }
+      
+      // Date info
+      if (data.isLimitedOffer && data.startDate && data.endDate) {
+        const startDate = new Date(data.startDate);
+        const endDate = new Date(data.endDate);
+        
+        html += `
+          <div class="date-info">
+            <div class="date-row">
+              <i class="fa-solid fa-clock"></i>
+              <span class="date-label">Start Time:</span>
+              <span>${formatDate(startDate)}</span>
+            </div>
+            <div class="date-row">
+              <i class="fa-solid fa-clock"></i>
+              <span class="date-label">End Time:</span>
+              <span>${formatDate(endDate)}</span>
+            </div>
+          </div>
+        `;
+      }
+      
+      // Buttons
+      if (data.buttons) {
+        html += '<div class="buttons">';
+        
+        if (data.buttons.primary && data.buttons.primary.show) {
+          const icon = data.buttons.primary.icon || '';
+          html += `
+            <a href="${data.link || '#'}" class="btn btn-primary" target="_blank">
+              ${icon ? `<span>${icon}</span>` : ''}
+              <span>${data.buttons.primary.text || 'Learn More'}</span>
+            </a>
+          `;
+        }
+        
+        if (data.buttons.secondary && data.buttons.secondary.show) {
+          const icon = data.buttons.secondary.icon || '';
+          html += `
+            <button class="btn btn-secondary" onclick="window.location.href='/'">
+              ${icon ? `<span>${icon}</span>` : ''}
+              <span>${data.buttons.secondary.text || 'Go Back'}</span>
+            </button>
+          `;
+        }
+        
+        html += '</div>';
+      }
+      
+      // Last updated
+      if (data.lastUpdated) {
+        const updated = new Date(data.lastUpdated);
+        html += `
+          <div class="last-updated">
+            Last updated: ${formatDate(updated)}
+          </div>
+        `;
+      }
+      
+      content.innerHTML = html;
+    }
+
+    function formatDate(date) {
+      return date.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+    }
+
+    function displayFallback() {
+      const content = document.getElementById('content');
+      content.innerHTML = `
+        <div class="category-badge">NOTICE</div>
+        <h1>Under Maintenance</h1>
+        <div class="description">
+          We're currently performing scheduled maintenance to improve your experience.
+          We'll be back soon. Thank you for your patience!
+        </div>
+        <div class="buttons">
+          <button class="btn btn-secondary" onclick="window.location.href='/'">
+            <span>Go Back</span>
+          </button>
+        </div>
+      `;
+    }
+
+    // Load data when page loads
+    loadMaintenanceData();
+  </script>
+</body>
+</html>
